@@ -18,10 +18,10 @@
                                 class="w-full h-full border-[1px]  text-black @if ($curso->calificacion == 'aprovado') bg-green-400 @endif ">
                                 <label class="w-full h-full cursor-pointer block overflow-hidden">
                                     <input class="hidden peer" type="checkbox" name="cursos[]"
-                                        value="{{ $curso->id_curso }}"
+                                        value="usuario_id:{{$id}}-curso_id:{{ $curso->id_curso }}"
                                         @if ($curso->calificacion == 'aprovado') disabled @endif />
 
-                                    <div class="peer-checked:bg-fuchsia-200 h-full py-2 px-2">
+                                    <div class="peer-checked:bg-indigo-600 h-full py-2 px-2">
                                         <h2 class="uppercase text-sm">{{ $curso->nombre_curso }}</h2>
                                     </div>
                                 </label>

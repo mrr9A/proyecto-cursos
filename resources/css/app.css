@@ -1,3 +1,62 @@
+/* font family poppins */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+/* Roboto family 400,500 */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body{
+  margin: 0;
+  height: 100vh;
+  position: relative;
+}
+
+.tile{
+  @apply rounded-sm
+}
+
+a{
+  @apply cursor-pointer
+}
+
+.size{
+  width: 240px;
+}
+
+.nav-item{
+  display: block;
+  width: inherit;
+  margin: 0 0 2px 0;
+  border-radius: 10px;
+  padding: 5px 10px;
+  @apply text-white
+}
+.nav-item > a, .nav-item> button{
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  gap: 5px;
+  
+}
+
+.item-active{
+  border-radius: 10px;
+  color: #c4dbff;
+  @apply bg-primary
+}
+
+.nav-item > a:hover, .nav-item > button:hover{
+  border-radius: 8px;
+  @apply bg-primary
+}
+
+::placeholder{
+  @apply text-white
+}

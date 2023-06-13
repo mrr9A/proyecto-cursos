@@ -17,8 +17,6 @@ class PlanesFormacion extends Model
         return $this->hasMany(Puesto::class, "plan_formacion_id");
     }
 
-
-
     public static function getMatrizVentas()
     {
         $usuarios = User::with(['puestos.cursos.tipo', 'calificaciones'])

@@ -9,8 +9,9 @@ use Illuminate\Support\Facades\DB;
 class Curso extends Model
 {
     use HasFactory;
-    protected $fillable = ['nombre', 'fecha_inicio', 'fecha_final', 'estado'];
+    protected $fillable = ['nombre', 'fecha_inicio', 'fecha_final', 'estado', 'modalidad_id', 'tipo_curso_id', 'codigo'];
     protected $primaryKey = "id_curso";
+    public $timestamps = false;
 
 
     public function modalidad()
@@ -52,36 +53,12 @@ class Curso extends Model
             )
             ->leftjoin("modalidad_cursos as mc", "c.modalidad_id", "=", "mc.id_modalidad")
             ->leftjoin("tipo_cursos as tc", "c.tipo_curso_id", "=", "tc.id_tipo_curso")
-            ->where('c.estado', '=', 0)
+            ->where('c.estado', '=', 1)
             ->get();
 
         return $cursos;
     }
 
-    public static function getCursesByPuestoAndUser($puesto, $usuario)
-    {
-        // retorna los cursos del usuario dependiendo el puesto
-        $cursos = DB::table("puestos_trabajos_cursos as ptc")->select(
-            "trabajo_id",
-            "id_curso",
-            "codigo",
-            "c.nombre as curso",
-            "tc.nombre as tipo",
-            "modalidad",
-            "cal.valor",
-        )
-            ->join('cursos AS c', 'ptc.curso_id', '=', 'c.id_curso')
-            ->leftjoin("modalidad_cursos as mc", "c.modalidad_id", "=", "mc.id_modalidad")
-            ->leftjoin("tipo_cursos as tc", "c.tipo_curso_id", "=", "tc.id_tipo_curso")
-            ->leftJoin('calificaciones AS cal', function ($join) use ($usuario) {
-                $join->on('c.id_curso', '=', 'cal.curso_id')
-                    ->where('cal.usuario_id', '=', $usuario);
-            })
-            ->where("trabajo_id", '=', $puesto)
-            ->orderBy("id_tipo_curso", "asc")
-            ->get();
-        return $cursos;
-    }
 
     public static function getCursesByPuesto($puesto)
     {
@@ -90,16 +67,17 @@ class Curso extends Model
             "puesto_id",
             "id_curso",
             "codigo",
-            "c.nombre as curso",
+            "c.nombre as nombre",
             "tc.nombre as tipo",
             "modalidad",
         )
             ->join("modalidad_cursos as mc", "c.modalidad_id", "=", "mc.id_modalidad")
             ->join("tipo_cursos as tc", "c.tipo_curso_id", "=", "tc.id_tipo_curso")
-            ->join("puestos_trabajos_cursos as ptc", "c.id_curso", "=", "ptc.curso_id")
+            ->join("puestos_cursos as pc", "c.id_curso", "=", "pc.curso_id")
             ->where("pc.puesto_id", '=', $puesto)
             ->orderBy("id_tipo_curso", "asc")
             ->get();
+
         return $cursos;
     }
 
