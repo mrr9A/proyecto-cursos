@@ -46,7 +46,7 @@ class Puesto extends Model
             ->select(
                 'usuarios.id_usuario',
                 DB::raw('COUNT(cursos.nombre) AS total_cursos'),
-                // DB::raw('COUNT(DISTINCT cursos.nombre) AS total_cursos'),
+                // DB::raw('COUNT(DISTINCT cursos.nombre) AS total_cursos') -> se elimino por que hay cursos con el mismo nombre pero en caso de que no sea el caso se puede descomentar,
                 DB::raw('COUNT(calificaciones.valor) AS cursos_pasados'),
                 DB::raw('CONCAT(usuarios.nombre, " ", IFNULL(usuarios.segundo_nombre, ""), " ", usuarios.apellido_paterno, " ", usuarios.apellido_materno) AS empleados'),
                 'puestos.puesto',
@@ -84,7 +84,6 @@ class Puesto extends Model
 
             $totalCursos = $cur['total_cursos'] + $acc[$usuario_id]->total;
             $totalCursosPasados = $cur['cursos_pasados'] + $acc[$usuario_id]->totalCursosPasados;
-            echo "<script>console.log('$totalCursos total cursos', 'cursos pasados $totalCursosPasados')</script>";
 
             $acc[$usuario_id]->total = $totalCursos;
             $acc[$usuario_id]->totalCursosPasados = $totalCursosPasados;

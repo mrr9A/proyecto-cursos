@@ -31,23 +31,8 @@ slot con nombre
             <main class=" h-full m-auto px-4 relative  overflow-x-auto min-w-[100%] z-20">
                 <div class="flex items-center justify-between">
                     <h1 class="uppercase font-bold text-title">{{ $title ?? 'INICIO' }}</h1>
-                    <div class="flex gap-2 items-center">
-                        <div class="w-9 h-9 bg-primary rounded-full"></div>
-                        <ul>
-                            <li>
-                                <a>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
-                                        viewBox="0 0 16 16">
-                                        <g fill="none" stroke="currentColor" stroke-linecap="round"
-                                            stroke-linejoin="round" stroke-width="1.5">
-                                            <circle cx="8" cy="2.5" r=".75" />
-                                            <circle cx="8" cy="8" r=".75" />
-                                            <circle cx="8" cy="13.5" r=".75" />
-                                        </g>
-                                    </svg>
-                                </a>
-                            </li>
-                        </ul>
+                    <div class="flex gap-2 items-center cursor-pointer" id="dropdownInformationButton" data-dropdown-toggle="dropdownInformation">
+                        <x-navs.menu-profile />
                     </div>
                 </div>
 
