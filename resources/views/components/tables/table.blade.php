@@ -11,11 +11,9 @@
         <tbody>
             @foreach ($empleados as $empleado)
                 <tr class="border-b-[2px] border-black">
-                    <td
-                        class="border-[1px]  text-black">
+                    <td class="border-[1px] flex flex-1 text-black">
                         <label class="w-full h-full cursor-pointer block overflow-hidden">
                             <input class="hidden peer" type="checkbox" name="empleado" value="{{ $empleado->id_usuario }}" />
-
                             <div class="peer-checked:bg-input h-full py-2 px-2">
                                 <h2 class="uppercase text-sm">{{ $empleado->empleado }}</h2>
                             </div>

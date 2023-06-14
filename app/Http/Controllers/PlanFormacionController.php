@@ -22,9 +22,8 @@ class PlanFormacionController extends Controller
 
     public function store(Request $request)
     {
-        // plan_id, puesto_id, cursos
         $data = array();
-        if (is_null($request->trabajo_id)) {
+        if (is_null($request->trabajos)) {
             foreach ($request->cursos as $curso) {
                 $consulta = [
                     "curso_id" => $curso,
@@ -37,12 +36,15 @@ class PlanFormacionController extends Controller
         }
 
 
-        foreach ($request->cursos as $curso) {
-            $consulta = [
-                "curso_id" => $curso,
-                "trabajo_id" => $request->trabajo_id
-            ];
-            array_push($data, $consulta);
+        foreach ($request->trabajos as $trabajo) {
+            $trabajo_id = $trabajo;
+            foreach ($request->cursos as $curso) {
+                $consulta = [
+                    "curso_id" => $curso,
+                    "trabajo_id" => $trabajo_id
+                ];
+                array_push($data, $consulta);
+            }
         }
         DB::table("trabajos_cursos")->insert($data);
         return redirect()->route("matrices.index")->with('status', 'cursos agregados correctamente');

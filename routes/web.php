@@ -7,6 +7,7 @@ use App\Http\Controllers\MatrizController;
 use App\Http\Controllers\MenuCursosController;
 use App\Http\Controllers\PlanFormacionController;
 use App\Http\Controllers\PuestoController;
+use App\Http\Controllers\TrabajoController;
 use App\Http\Controllers\UsuarioController;
 use App\Models\PlanesFormacion;
 use App\Models\Puesto;
@@ -29,6 +30,7 @@ Route::get('/graficas', function (){
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/cursosplanta/cursos-puestos/asignar-cursos', [PuestoController::class, 'asignarCursos'])->name('cursos.puestos');
+Route::delete('/cursosplanta/cursos/puestos/trabajos/{id}',[TrabajoController::class, 'destroy'])->name("trabajos.destroy");
 
 Route::resource("cursosplanta/puestos", PuestoController::class,[
     "names" => "puestos"
@@ -49,10 +51,9 @@ Route::resource("cursosplanta/planes", PlanFormacionController::class, [
 Route::resource("cursosplanta/calificaciones", CalificacionController::class, [
     "names"=>"calificaciones"
 ]);
+
+
 Route::fallback(function () {
     return redirect('/');
 });
 
-
-Route::get('/opcion1',[MenuCursosController::class, 'opcion1']);
-Route::get('/opcion2', [MenuCursosController::class, 'opcion2']);

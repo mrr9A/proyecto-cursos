@@ -45,7 +45,8 @@ class Puesto extends Model
         $resultado = User::with(['puestos.cursos.tipo'])
             ->select(
                 'usuarios.id_usuario',
-                DB::raw('COUNT(DISTINCT cursos.nombre) AS total_cursos'),
+                DB::raw('COUNT(cursos.nombre) AS total_cursos'),
+                // DB::raw('COUNT(DISTINCT cursos.nombre) AS total_cursos'),
                 DB::raw('COUNT(calificaciones.valor) AS cursos_pasados'),
                 DB::raw('CONCAT(usuarios.nombre, " ", IFNULL(usuarios.segundo_nombre, ""), " ", usuarios.apellido_paterno, " ", usuarios.apellido_materno) AS empleados'),
                 'puestos.puesto',
@@ -60,7 +61,7 @@ class Puesto extends Model
                     ->on('usuarios.id_usuario', '=', 'calificaciones.usuario_id');
             })
             ->groupBy('id_usuario', 'puestos.puesto', 'tipo_cursos.nombre')
-            ->where("tipo_cursos.nombre", "!=" , "complementarios")
+            ->where("tipo_cursos.nombre", "!=", "complementarios")
             ->orderBy('puestos.puesto')
             ->orderBy('empleados')
             ->get();
@@ -80,18 +81,20 @@ class Puesto extends Model
                     "cursos" => []
                 ];
             }
+
             $totalCursos = $cur['total_cursos'] + $acc[$usuario_id]->total;
             $totalCursosPasados = $cur['cursos_pasados'] + $acc[$usuario_id]->totalCursosPasados;
+            echo "<script>console.log('$totalCursos total cursos', 'cursos pasados $totalCursosPasados')</script>";
 
             $acc[$usuario_id]->total = $totalCursos;
             $acc[$usuario_id]->totalCursosPasados = $totalCursosPasados;
-            $acc[$usuario_id]->promedioTotal = bcdiv($totalCursosPasados / $totalCursos * 100,'1', 2) ;
+            $acc[$usuario_id]->promedioTotal = bcdiv($totalCursosPasados / $totalCursos * 100, '1', 2);
 
             $obj = [
                 "tipo" => $cur["tipo"],
                 "objetivo" => $cur["total_cursos"],
                 "real" => $cur["cursos_pasados"],
-                "progeso" => bcdiv(($cur["total_cursos"] != 0) ? ($cur["cursos_pasados"] / $cur["total_cursos"]) * 100 : 0,'1', 2),
+                "progeso" => bcdiv(($cur["total_cursos"] != 0) ? ($cur["cursos_pasados"] / $cur["total_cursos"]) * 100 : 0, '1', 2),
             ];
 
             array_push($acc[$usuario_id]->cursos, $obj);
@@ -160,13 +163,13 @@ class Puesto extends Model
                     ->on('usuarios.id_usuario', '=', 'calificaciones.usuario_id');
             })
             ->groupBy('id_usuario', 'puestos.puesto', 'tipo_cursos.nombre')
-            ->where("tipo_cursos.nombre", "!=" , "complementarios")
+            ->where("tipo_cursos.nombre", "!=", "complementarios")
             ->orderBy('puestos.puesto')
             ->orderBy('empleados')
             ->get();
 
 
-            // return $resultado;
+        // return $resultado;
 
         $resultado = $resultado->toArray();
         $totalCursos = 0;
@@ -188,13 +191,13 @@ class Puesto extends Model
 
             $acc[$usuario_id]->total = $totalCursos;
             $acc[$usuario_id]->totalCursosPasados = $totalCursosPasados;
-            $acc[$usuario_id]->promedioTotal = bcdiv($totalCursosPasados / $totalCursos * 100,'1', 2) ;
+            $acc[$usuario_id]->promedioTotal = bcdiv($totalCursosPasados / $totalCursos * 100, '1', 2);
 
             $obj = [
                 "tipo" => $cur["tipo"],
                 "objetivo" => $cur["total_cursos"],
                 "real" => $cur["cursos_pasados"],
-                "progeso" => bcdiv(($cur["total_cursos"] != 0) ? ($cur["cursos_pasados"] / $cur["total_cursos"]) * 100 : 0,'1', 2),
+                "progeso" => bcdiv(($cur["total_cursos"] != 0) ? ($cur["cursos_pasados"] / $cur["total_cursos"]) * 100 : 0, '1', 2),
             ];
 
             array_push($acc[$usuario_id]->cursos, $obj);

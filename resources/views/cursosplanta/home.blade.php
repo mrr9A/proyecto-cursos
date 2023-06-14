@@ -1,5 +1,4 @@
-<x-app>
-    <h1>INICIO</h1>
+<x-app title="INICIO">
     <h2>Empleados por puesto</h2>
     <div style="witdh: 100px; height: 200px;">
         <canvas id="myChart"></canvas>

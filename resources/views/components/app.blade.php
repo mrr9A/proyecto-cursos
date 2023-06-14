@@ -19,7 +19,6 @@ slot con nombre
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-{{-- 1366 --}}
 
 <body>
     <div class="flex h-full fixed w-[100vw]">

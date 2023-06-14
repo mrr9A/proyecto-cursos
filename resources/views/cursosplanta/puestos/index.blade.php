@@ -1,7 +1,6 @@
 <x-app title="puestos">
 
-    <form method="POST" id="crear_puesto" action="{{ route('puestos.store') }}"
-        class="flex flex-wrap flex-col gap-4 mt-4">
+    <form method="POST" id="crear_puesto" action="{{ route('puestos.store') }}" class="flex flex-wrap flex-col gap-4 mt-4">
         @csrf
 
         <div class="flex gap-3 items-center">
@@ -22,7 +21,7 @@
         </div>
 
         <span class="flex items-center gap-2">
-            ¿Desea asignar trbajos para este puesto?
+            ¿Desea asignar trabajos para este puesto?
             <button id="add_trabajo" type="button">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
                     <path fill="currentColor"
@@ -35,14 +34,12 @@
         <div id="trabajos" class="flex flex-wrap gap-3 items-center">
         </div>
 
-        <x-input-submit text="aceptar" />
+        <x-input-submit text="aceptar"  class="w-32"/>
     </form>
 
 
-
-    <h2>Lista de puestos</h2>
-
-    <div>
+    <div class="flex flex-col gap-3 mt-5">
+        <h2 class="text-subtitle">Lista de puestos</h2>
         <ul>
             @foreach ($puestos as $puesto)
                 <li class="mb-4">
@@ -60,18 +57,17 @@
                                 </svg>
                             </button>
 
-                            <form method="POST" action="{{ route('puestos.destroy', $puesto->id_puesto) }}">
-                                @csrf
-                                @method("DELETE")
-                                <button>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
-                                        viewBox="0 0 256 256">
-                                        <path fill="red"
-                                            d="M216 50h-42V40a22 22 0 0 0-22-22h-48a22 22 0 0 0-22 22v10H40a6 6 0 0 0 0 12h10v146a14 14 0 0 0 14 14h128a14 14 0 0 0 14-14V62h10a6 6 0 0 0 0-12ZM94 40a10 10 0 0 1 10-10h48a10 10 0 0 1 10 10v10H94Zm100 168a2 2 0 0 1-2 2H64a2 2 0 0 1-2-2V62h132Zm-84-104v64a6 6 0 0 1-12 0v-64a6 6 0 0 1 12 0Zm48 0v64a6 6 0 0 1-12 0v-64a6 6 0 0 1 12 0Z" />
-                                    </svg>
-                                </button>
-                            </form>
+                            <button data-modal-target="puesto-{{ $puesto->id_puesto }}"
+                                data-modal-toggle="puesto-{{ $puesto->id_puesto }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
+                                    viewBox="0 0 256 256">
+                                    <path fill="red"
+                                        d="M216 50h-42V40a22 22 0 0 0-22-22h-48a22 22 0 0 0-22 22v10H40a6 6 0 0 0 0 12h10v146a14 14 0 0 0 14 14h128a14 14 0 0 0 14-14V62h10a6 6 0 0 0 0-12ZM94 40a10 10 0 0 1 10-10h48a10 10 0 0 1 10 10v10H94Zm100 168a2 2 0 0 1-2 2H64a2 2 0 0 1-2-2V62h132Zm-84-104v64a6 6 0 0 1-12 0v-64a6 6 0 0 1 12 0Zm48 0v64a6 6 0 0 1-12 0v-64a6 6 0 0 1 12 0Z" />
+                                </svg>
+                            </button>
 
+
+                            <x-modals.alert-modal id="puesto-{{ $puesto->id_puesto }}" :puesto="$puesto->id_puesto" />
                             <div class="h-5">
                                 <button data-popover-target="popover-click-{{ $puesto->id_puesto }}"
                                     data-popover-trigger="click" data-popover-placement="right" type="button"
@@ -101,27 +97,19 @@
                             <ul>
                                 @foreach ($puesto->trabajos as $trabajo)
                                     <li>
-                                        <div class="flex items-center">
-                                            <button>
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="38" height="38"
-                                                    viewBox="0 0 24 24">
-                                                    <g fill="none" stroke="#716ef9" stroke-linecap="round"
-                                                        stroke-linejoin="round" stroke-width="1">
-                                                        <path
-                                                            d="m16.474 5.408l2.118 2.117m-.756-3.982L12.109 9.27a2.118 2.118 0 0 0-.58 1.082L11 13l2.648-.53c.41-.082.786-.283 1.082-.579l5.727-5.727a1.853 1.853 0 1 0-2.621-2.621Z" />
-                                                        <path
-                                                            d="M19 15v3a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3" />
-                                                    </g>
-                                                </svg>
-                                            </button>
-
-                                            <button>
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
-                                                    viewBox="0 0 256 256">
-                                                    <path fill="red"
-                                                        d="M216 50h-42V40a22 22 0 0 0-22-22h-48a22 22 0 0 0-22 22v10H40a6 6 0 0 0 0 12h10v146a14 14 0 0 0 14 14h128a14 14 0 0 0 14-14V62h10a6 6 0 0 0 0-12ZM94 40a10 10 0 0 1 10-10h48a10 10 0 0 1 10 10v10H94Zm100 168a2 2 0 0 1-2 2H64a2 2 0 0 1-2-2V62h132Zm-84-104v64a6 6 0 0 1-12 0v-64a6 6 0 0 1 12 0Zm48 0v64a6 6 0 0 1-12 0v-64a6 6 0 0 1 12 0Z" />
-                                                </svg>
-                                            </button>
+                                        <div class="flex items-center gap-2">
+                                            <form action='{{ route('trabajos.destroy', $trabajo->id_trabajo) }}'
+                                                method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="22"
+                                                        height="22" viewBox="0 0 256 256">
+                                                        <path fill="red"
+                                                            d="M216 50h-42V40a22 22 0 0 0-22-22h-48a22 22 0 0 0-22 22v10H40a6 6 0 0 0 0 12h10v146a14 14 0 0 0 14 14h128a14 14 0 0 0 14-14V62h10a6 6 0 0 0 0-12ZM94 40a10 10 0 0 1 10-10h48a10 10 0 0 1 10 10v10H94Zm100 168a2 2 0 0 1-2 2H64a2 2 0 0 1-2-2V62h132Zm-84-104v64a6 6 0 0 1-12 0v-64a6 6 0 0 1 12 0Zm48 0v64a6 6 0 0 1-12 0v-64a6 6 0 0 1 12 0Z" />
+                                                    </svg>
+                                                </button>
+                                            </form>
 
                                             <p>{{ $trabajo->nombre }}</p>
                                         </div>
@@ -136,11 +124,13 @@
         </ul>
     </div>
 
+    <div id="loader" />
     <script>
         const API_URL = "http://localhost:8000/api/"
 
         const buttonAddTrabajo = $('#add_trabajo');
         const containerTrabajos = $('#trabajos')
+        const loader = $('#loader')
 
         const formCrearPuesto = $('#crear_puesto'); //-> formulario
         const editButtons = $$('.edit_button')
@@ -209,6 +199,7 @@
 
         // OBTIENE LA INFORMACION DEL PUESTO A EDITAR Y LOS MUESTRA EN EL FORMULARIO
         function getPuestoInfo(id) {
+            loader.innerHTML = `<x-loader.loader />`
             return fetch(`${API_URL}cursosplanta/puesto/${id}`)
                 .then(res => res.json())
                 .then(data => {
@@ -233,6 +224,8 @@
                     )
                     $('#puesto').value = data.puesto
                     $('#puesto').name = data.id_puesto
+
+                    loader.innerHTML=""
                 })
         }
     </script>

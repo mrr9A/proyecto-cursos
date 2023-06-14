@@ -93,7 +93,7 @@ class PuestoController extends Controller
         $puesto = Puesto::find($id);
         $puesto->delete();
 
-        return to_route("puestos.index");
+        return to_route("puestos.index")->with("status", "Puesto eliminado correctamente");
     }
 
 
