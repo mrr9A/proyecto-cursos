@@ -10,10 +10,9 @@ class HomeController extends Controller
     //
     public function index(Request $request)
     {
-        // $data = Puesto::prueba();
-        // dd($request -> $empleados)
+        $data = Puesto::progresoEmpleados();
         if (!is_null($request->empleados) && $request->empleados == "tecnicos") {
-            $data = Puesto::prueba2();
+            $data = Puesto::progresoEmpleados();
         }
 
         return view('cursosplanta.home', compact('data'));
