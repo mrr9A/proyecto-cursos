@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SavePuestoRequest;
 use App\Models\Curso;
 use App\Models\PlanesFormacion;
 use App\Models\Puesto;
@@ -25,7 +26,7 @@ class PuestoController extends Controller
         return view("cursosplanta.puestos.create");
     }
 
-    public function store(Request $request)
+    public function store(SavePuestoRequest $request)
     {
         $puesto = Puesto::create([
             "puesto" => $request->puesto,
@@ -35,7 +36,13 @@ class PuestoController extends Controller
 
         $data = [];
         if (!is_null($request->trabajo)) {
+            $trabajo = Trabajo::create([
+                "nombre" => $request->puesto,
+                "puesto_id" => $puesto->id_puesto,
+                "estado" => 1
+            ]);
             foreach ($request->trabajo as $trabajo) {
+                if (is_null($trabajo)) continue;
                 $consulta = [
                     "nombre" => $trabajo,
                     "puesto_id" => $puesto->id_puesto,
@@ -44,6 +51,12 @@ class PuestoController extends Controller
                 array_push($data, $consulta);
             }
             DB::table("trabajos_sumtotal")->insert($data);
+        } else {
+            $trabajo = Trabajo::create([
+                "nombre" => $request->puesto,
+                "puesto_id" => $puesto->id_puesto,
+                "estado" => 1
+            ]);
         }
 
         return to_route("puestos.index")->with("status", "puesto creado correctamente");
@@ -89,7 +102,8 @@ class PuestoController extends Controller
         ]);
     }
 
-    public function destroy($id){
+    public function destroy($id)
+    {
         $puesto = Puesto::find($id);
         $puesto->delete();
 
@@ -97,7 +111,8 @@ class PuestoController extends Controller
     }
 
 
-    public function asignarCursos(){
+    public function asignarCursos()
+    {
         $planesFormacion = PlanesFormacion::all();
         $puestos = PlanesFormacion::with('puestos')->get();
         $cursos = Curso::getAllCursos();

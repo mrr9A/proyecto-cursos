@@ -1,6 +1,5 @@
 <x-app>
-    <form method="POST" action="{{ route('usuarios.store') }}"
-        class="w-[400px] flex flex-col gap-2 p-4 rounded">
+    <form method="POST" action="{{ route('usuarios.store') }}" class="w-[400px] flex flex-col gap-2 p-4 rounded">
         @csrf
         <x-input-text text="Nombre" nombre="nombre" placeholder="nombre" />
         <x-input-text text="Segundo Nombre" nombre="segundo_nombre" placeholder="segundo nombre" />
@@ -15,9 +14,11 @@
     <script>
         const puestoSelecter = document.getElementById('puesto_id');
         const trabajosSelector = document.getElementById("trabajos")
+        let puesto = "";
 
         puestoSelecter.addEventListener('change', (e) => {
             let id = e.target.value
+            puesto = puestoSelecter.options[id].text
             document.getElementById("select_puesto").setAttribute("disabled", true);
             getJobsByPosition(id)
         })
@@ -43,12 +44,13 @@
                         trabajosSelector.innerHTML = trabajos
                         return;
                     }
+                    console.log(data)
                     data.forEach(trabajo => {
                         trabajos +=
                             `<label
                             class="cursor-pointer block w-52 h-auto rounded-lg shadow-[0_1px_5px_1px_rgba(150,50,200,0.4)] bg-gray-400 border-fuchsia-400 mb-4 overflow-hidden">
-                            <input class="hidden peer" type="checkbox" name="trabajos[]" value="${trabajo.id_trabajo}" />
-    
+                            <input class="hidden peer" type="checkbox" ${puesto === trabajo.nombre ? "checked disabled" : ""}   name="trabajos[]" value="${trabajo.id_trabajo}" />
+                            ${puesto === trabajo.nombre ? `<input type="hidden" name="trabajos[]" value="${trabajo.id_trabajo}" />` : ""}
                             <div class="relative peer-checked:bg-blue-100 h-full p-2">
                                 <h2 class="uppercase text-sm text-black">${trabajo.nombre}</h2>
                             </div>

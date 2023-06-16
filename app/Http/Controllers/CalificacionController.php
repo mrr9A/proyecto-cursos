@@ -12,7 +12,7 @@ class CalificacionController extends Controller
     public function store(Request $request)
     {
         $cursos = $request->cursos;
-
+        // "usuario_id:{{ $id }}-curso_id:{{ $curso->id_curso }}"
         $calificaciones = array();
         foreach ($cursos as $curso) {
             $cadena = $curso;
@@ -28,6 +28,7 @@ class CalificacionController extends Controller
             array_push($calificaciones, $resultado);
             
         }
+
         DB::table("calificaciones")->insert($calificaciones);
         return to_route("matrices.index");
     }

@@ -13,18 +13,13 @@ class CursoController extends Controller
     //
     public function index(Request $request)
     {
-        $puesto = $request->puesto_id;
-        $opcionSeleccionada = null;
+        $puesto = $request->buscar;
         // dd($puesto);
         $cursos = Curso::getAllCursos();
-        if (!is_null($puesto)) {
-            echo "<script>console.log($puesto)</script>";
-            $cursos = Curso::getCursesByPuesto(intval($puesto));
-        }
         $puestos = Puesto::all();
         $modalidad = ModalidadCurso::all();
         $tipo = TipoCurso::all();
-        return view("cursosplanta.cursos.index", compact("cursos", "puestos", "puesto", "modalidad", "tipo", "opcionSeleccionada"));
+        return view("cursosplanta.cursos.index", compact("cursos", "puestos", "puesto", "modalidad", "tipo"));
     }
 
     public function store(Request $request)

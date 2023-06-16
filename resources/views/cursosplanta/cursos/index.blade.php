@@ -22,7 +22,7 @@
         <div>
             <div class="flex justify-between items-center mb-3">
                 <h2>Lista de cursos</h2>
-                <x-search.search-input />
+                <x-search.search-input placeholder="nombre, codigo, tipo ..." />
             </div>
             <div class="bg-primary flex flex-wrap rounded-md p-5 gap-2 ">
 

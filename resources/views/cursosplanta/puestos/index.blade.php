@@ -6,7 +6,12 @@
         <div class="flex gap-3 items-center">
             <x-input-text placeholder="Ej. jefe de taller" nombre="puesto" text="Puesto" />
 
-            <div class="flex flex-col font-poppins gap-21 text-text-input">
+            <div class="relative flex flex-col font-poppins gap-21 text-text-input">
+                @error('plan_id')
+                    <!-- variable mensaje disponible por laravel -->
+                    <small
+                        class="absolute top-5 left-2 text-sm text-red-500 font-semibold italic">{{ $message }}</small>
+                @enderror
                 <label class="mb-2 font-semi-bold">Seleccionar plan de informacion</label>
                 <select name="plan_id"
                     class="py-1.5 px-2 leading-tight text-gray-700 border-2 rounded-lg border-input cursor-pointer uppercase">
@@ -20,6 +25,28 @@
             </div>
         </div>
 
+        <div id="alert-additional-content-1"
+            class="px-4 py-2 mb-4 text-blue-800 border border-blue-300 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400 dark:border-blue-800"
+            role="alert">
+            <div class="text-sm flex items-center">
+                <svg aria-hidden="true" class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                        d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                        clip-rule="evenodd"></path>
+                </svg>
+                
+                <span class="">si no crea trabajos para el puesto en automatico se creara un trabajo con el mismo nombre del puesto y en automatico se crea un puesto con el mismo nombre del puesto para cada puesto</span>
+            </div>
+
+            <div class="flex">
+                <button type="button"
+                    class="border-none text-blue-800 bg-transparent border border-blue-800 hover:bg-blue-900 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-sm px-3 py-1.5 text-center dark:hover:bg-blue-600 dark:border-blue-600 dark:text-blue-400 dark:hover:text-white dark:focus:ring-blue-800"
+                    data-dismiss-target="#alert-additional-content-1" aria-label="Close">
+                    cerrar
+                </button>
+            </div>
+        </div>
         <span class="flex items-center gap-2">
             ¿Desea asignar trabajos para este puesto?
             <button id="add_trabajo" type="button">
@@ -34,7 +61,7 @@
         <div id="trabajos" class="flex flex-wrap gap-3 items-center">
         </div>
 
-        <x-input-submit text="aceptar"  class="w-32"/>
+        <x-input-submit text="aceptar" class="w-32" />
     </form>
 
 
@@ -225,7 +252,7 @@
                     $('#puesto').value = data.puesto
                     $('#puesto').name = data.id_puesto
 
-                    loader.innerHTML=""
+                    loader.innerHTML = ""
                 })
         }
     </script>

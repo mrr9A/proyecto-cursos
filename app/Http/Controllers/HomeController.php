@@ -10,7 +10,7 @@ class HomeController extends Controller
     //
     public function index(Request $request)
     {
-        $data = Puesto::prueba();
+        // $data = Puesto::prueba();
         // dd($request -> $empleados)
         if (!is_null($request->empleados) && $request->empleados == "tecnicos") {
             $data = Puesto::prueba2();

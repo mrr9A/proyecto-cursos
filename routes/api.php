@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\api\ApiController;
 use App\Http\Controllers\PuestoController;
 use App\Models\Curso;
 use App\Models\Puesto;
@@ -57,5 +58,7 @@ Route::get('cursosplanta/puesto/{id}', function ($id){
 
 // editar la informacion de puesto
 Route::put('cursosplanta/puesto/edit/{id}', [PuestoController::class, 'update']);
+
+Route::get('buscador', [ApiController::class, 'buscar']);
 
 // http://localhost:8000/api/puesto/${id}/trabajos/
