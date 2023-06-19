@@ -4,9 +4,10 @@ use App\Http\Controllers\CalificacionController;
 use App\Http\Controllers\CursoController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MatrizController;
-use App\Http\Controllers\MenuCursosController;
+use App\Http\Controllers\ModalidadController;
 use App\Http\Controllers\PlanFormacionController;
 use App\Http\Controllers\PuestoController;
+use App\Http\Controllers\TipoController;
 use App\Http\Controllers\TrabajoController;
 use App\Http\Controllers\UsuarioController;
 use App\Models\PlanesFormacion;
@@ -24,36 +25,44 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::get('/graficas', function (){
+
+Route::get('/graficas', function () {
     return view("cursosplanta.grafica");
 });
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/cursosplanta/cursos-puestos/asignar-cursos', [PuestoController::class, 'asignarCursos'])->name('cursos.puestos');
-Route::delete('/cursosplanta/cursos/puestos/trabajos/{id}',[TrabajoController::class, 'destroy'])->name("trabajos.destroy");
+Route::delete('/cursosplanta/cursos/puestos/trabajos/{id}', [TrabajoController::class, 'destroy'])->name("trabajos.destroy");
 
-Route::resource("cursosplanta/puestos", PuestoController::class,[
+Route::resource("cursosplanta/puestos", PuestoController::class, [
     "names" => "puestos"
 ]);
-Route::resource("cursosplanta/usuarios", UsuarioController::class,[
+Route::resource("cursosplanta/usuarios", UsuarioController::class, [
     "names" => "usuarios"
 ]);
-Route::resource("cursosplanta/matrices", MatrizController::class,[
+Route::resource("cursosplanta/matrices", MatrizController::class, [
     "names" => "matrices"
 ]);
 
+Route::resource("cursosplanta/cursos/modalidad", ModalidadController::class, [
+    "names" => "modalidad"
+]);
+Route::resource("cursosplanta/cursos/tipos", TipoController::class, [
+    "names" => "tipos"
+]);
+
 Route::resource("cursosplanta/cursos", CursoController::class, [
-    "names"=>"cursos"
+    "names" => "cursos"
 ]);
 Route::resource("cursosplanta/planes", PlanFormacionController::class, [
-    "names"=>"planes"
+    "names" => "planes"
 ]);
 Route::resource("cursosplanta/calificaciones", CalificacionController::class, [
-    "names"=>"calificaciones"
+    "names" => "calificaciones"
 ]);
+
 
 
 Route::fallback(function () {
     return redirect('/');
 });
-

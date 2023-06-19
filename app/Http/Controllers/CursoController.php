@@ -18,8 +18,8 @@ class CursoController extends Controller
         $cursos = Curso::getAllCursos();
         $puestos = Puesto::all();
         $modalidad = ModalidadCurso::all();
-        $tipo = TipoCurso::all();
-        return view("cursosplanta.cursos.index", compact("cursos", "puestos", "puesto", "modalidad", "tipo"));
+        $tipos = TipoCurso::all();
+        return view("cursosplanta.cursos.index", compact("cursos", "puestos", "puesto", "modalidad", "tipos"));
     }
 
     public function store(Request $request)

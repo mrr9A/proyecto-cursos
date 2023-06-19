@@ -10,8 +10,10 @@ class HomeController extends Controller
     //
     public function index(Request $request)
     {
-        $data = Puesto::progresoEmpleados();
-        if (!is_null($request->empleados) && $request->empleados == "tecnicos") {
+        $data = [];
+        if (!is_null($request->buscador)) {
+            $data = Puesto::progresoEmpleados($request->buscador);
+        }else{
             $data = Puesto::progresoEmpleados();
         }
 

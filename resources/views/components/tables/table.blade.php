@@ -18,19 +18,19 @@
                                 value="{{ $empleado->id_usuario }}" />
                             <div
                                 class="flex items-center peer-checked:bg-input peer-checked:text-white h-full py-2 px-2 ">
-                                <h2 class="uppercase text-sm ">{{ $empleado->empleado }}</h2>
+                                <h2 class="uppercase text-sm">{{ $empleado->empleado }}</h2>
                             </div>
                         </label>
                     </td>
 
-                    <td class="py-2 px-2.5">{{ $empleado->puesto ?? 'sin puesto' }}</td>
+                    <td class="py-2 px-2.5 uppercase text-sm">{{ $empleado->puesto ?? 'sin puesto' }}</td>
                     <td class="w-1/12 h-full border-r-[1px] border-l-[2px] border-black">
                         <div class="flex flex-col justify-evenly flex-1 h-full">
                             <?php
                             $keys = array_keys($empleado->trabajos);
                             ?>
                             @foreach ($keys as $trabajo)
-                                <p class="flex-1 border-b-[1px] border-black border-collapse py-2 px-2.5">
+                                <p class="uppercase text-sm flex-1 border-b-[1px] border-black border-collapse py-2 px-2.5 @if($trabajo == $empleado->puesto && count($empleado->trabajos) > 1) hidden @endif">
                                     {{ $trabajo ?? 'sin trabajos' }}</p>
                             @endforeach
                         </div>

@@ -82,7 +82,7 @@ class User extends Authenticatable
      {
          $empleados = DB::table('usuarios AS u')
              ->selectRaw('Count(u.id_usuario) as num_empleados, (Count(u.id_usuario) * 100 / (Select Count(id_usuario) From usuarios)) as promedio, p.puesto')
-             ->join('puestos AS p', 'u.puesto_id', '=', 'p.id_puesto')
+             ->leftJoin('puestos AS p', 'u.puesto_id', '=', 'p.id_puesto')
              ->groupBy('p.puesto')
              ->orderBy("puesto")
              ->get();

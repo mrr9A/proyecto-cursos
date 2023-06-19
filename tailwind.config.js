@@ -6,6 +6,10 @@ export default {
     "./resources/**/*.vue",
   ],
   theme: {
+    boxShadow:{
+      'all': ['1px 1px 8px -5px rgba(0, 0, 0, 0.3)','-1px -1px 8px -5px rgba(0, 0, 0, 0.3)' ]
+    }
+    ,
     fontFamily: {
       // para titulo, contenido, subtitulos, filtros etc
       "poppins" : ['Poppins', 'sans-serif'],

@@ -1,4 +1,4 @@
-<x-app>
+<x-app title="Crear Usuario">
     <form method="POST" action="{{ route('usuarios.store') }}" class="w-[400px] flex flex-col gap-2 p-4 rounded">
         @csrf
         <x-input-text text="Nombre" nombre="nombre" placeholder="nombre" />

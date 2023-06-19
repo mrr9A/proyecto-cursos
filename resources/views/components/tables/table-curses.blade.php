@@ -30,6 +30,9 @@
             </tbody>
         </table>
     @endforeach
+    @if (count($keys) < 1)
+        sin cursos
+    @endif
 @else
     sin cursos
 @endif

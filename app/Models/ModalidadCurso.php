@@ -9,4 +9,6 @@ class ModalidadCurso extends Model
 {
     use HasFactory;
     protected $table = "modalidad_cursos";
+    protected $fillable = ["modalidad", "estado"];
+    public $timestamps = false;
 }

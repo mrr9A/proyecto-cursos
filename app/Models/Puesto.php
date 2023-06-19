@@ -30,10 +30,12 @@ class Puesto extends Model
         return $this->hasMany(Trabajo::class, "puesto_id", 'id_puesto');
     }
 
-    public static function getPuestosByPlanformacion(){}
+    public static function getPuestosByPlanformacion()
+    {
+    }
 
 
-    public static function progresoEmpleados()
+    public static function progresoEmpleados($buscar = "")
     {
         // puestos que son tecnicos
         $puestos = DB::table('planes_formacion as pf')
@@ -66,6 +68,14 @@ class Puesto extends Model
             })
             ->groupBy('id_usuario', 'puestos.puesto', 'tipo_cursos.nombre')
             ->where("tipo_cursos.nombre", "!=", "complementarios")
+            ->where(function ($q) use ($buscar) {
+                $q->where('usuarios.nombre', 'like', $buscar . "%")
+                    ->orWhere(DB::raw('CONCAT(usuarios.nombre, " ", IFNULL(usuarios.segundo_nombre, ""), " ", usuarios.apellido_paterno, " ", usuarios.apellido_materno)'), 'like', $buscar . "%")
+                    ->orWhere('usuarios.segundo_nombre', 'like', $buscar . "%")
+                    ->orWhere('usuarios.apellido_paterno', 'like', $buscar . "%")
+                    ->orWhere('usuarios.apellido_materno', 'like', $buscar . "%")
+                    ->orWhere('puestos.puesto', 'like', $buscar . "%");
+            })
             ->orderBy('puestos.puesto')
             ->orderBy('empleados')
             ->get();

@@ -35,8 +35,10 @@
                         d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
                         clip-rule="evenodd"></path>
                 </svg>
-                
-                <span class="">si no crea trabajos para el puesto en automatico se creara un trabajo con el mismo nombre del puesto y en automatico se crea un puesto con el mismo nombre del puesto para cada puesto</span>
+
+                <span class="">si no crea trabajos para el puesto en automatico se creara un trabajo con el mismo
+                    nombre del puesto y en automatico se crea un puesto con el mismo nombre del puesto para cada
+                    puesto</span>
             </div>
 
             <div class="flex">
@@ -125,19 +127,22 @@
                                 @foreach ($puesto->trabajos as $trabajo)
                                     <li>
                                         <div class="flex items-center gap-2">
-                                            <form action='{{ route('trabajos.destroy', $trabajo->id_trabajo) }}'
-                                                method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="22"
-                                                        height="22" viewBox="0 0 256 256">
-                                                        <path fill="red"
-                                                            d="M216 50h-42V40a22 22 0 0 0-22-22h-48a22 22 0 0 0-22 22v10H40a6 6 0 0 0 0 12h10v146a14 14 0 0 0 14 14h128a14 14 0 0 0 14-14V62h10a6 6 0 0 0 0-12ZM94 40a10 10 0 0 1 10-10h48a10 10 0 0 1 10 10v10H94Zm100 168a2 2 0 0 1-2 2H64a2 2 0 0 1-2-2V62h132Zm-84-104v64a6 6 0 0 1-12 0v-64a6 6 0 0 1 12 0Zm48 0v64a6 6 0 0 1-12 0v-64a6 6 0 0 1 12 0Z" />
-                                                    </svg>
-                                                </button>
-                                            </form>
-
+                                            @if ($trabajo->nombre != $puesto->puesto)
+                                                <form action='{{ route('trabajos.destroy', $trabajo->id_trabajo) }}'
+                                                    method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="22"
+                                                            height="22" viewBox="0 0 256 256">
+                                                            <path fill="red"
+                                                                d="M216 50h-42V40a22 22 0 0 0-22-22h-48a22 22 0 0 0-22 22v10H40a6 6 0 0 0 0 12h10v146a14 14 0 0 0 14 14h128a14 14 0 0 0 14-14V62h10a6 6 0 0 0 0-12ZM94 40a10 10 0 0 1 10-10h48a10 10 0 0 1 10 10v10H94Zm100 168a2 2 0 0 1-2 2H64a2 2 0 0 1-2-2V62h132Zm-84-104v64a6 6 0 0 1-12 0v-64a6 6 0 0 1 12 0Zm48 0v64a6 6 0 0 1-12 0v-64a6 6 0 0 1 12 0Z" />
+                                                        </svg>
+                                                    </button>
+                                                </form>
+                                                @else
+                                                <div class="w-[22px]"></div>
+                                            @endif
                                             <p>{{ $trabajo->nombre }}</p>
                                         </div>
                                     </li>

@@ -2,29 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\TipoCurso;
 use App\Models\Trabajo;
 use Illuminate\Http\Request;
 
 class TipoController extends Controller
 {
-    //
-    public function index(){
+    public function store(Request $request)
+    {
 
-        return view("cursosplanta.trabajos.index");
-    }
-
-    public function create(){
-        return view("cursosplanta.trabajos.create");
-    }
-
-    public function store(Request $request){
-
-        $trabajo = Trabajo::create([
+        $tipoCurso = TipoCurso::create([
             "nombre" => $request->nombre,
             "estado" => 1,
-            "puesto_id" => $request->puesto_id
+            "duracion" => $request->duracion,
         ]);
 
-        return to_route("")->with("status", "trabajo creado correctamente");
+        return redirect()->route("cursos.index")->with("status", "tipo de curso creado correctamente");
     }
 }

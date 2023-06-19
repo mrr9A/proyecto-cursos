@@ -1,4 +1,4 @@
-    <form actions="{{ route('cursos.store') }}" method="POST" class="space-y-6">
+    <form action="{{ route('cursos.store') }}" method="POST" class="space-y-6">
         @method('POST')
         @csrf
         <x-input-text text="Nombre" nombre="nombre" placeholder="nombre" required />

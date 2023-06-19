@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" class="relative ">
+<html lang="en" class="relative">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $title ?? '' }}</title>
+    <title class="">{{ $title ?? '' }}</title>
     <!-- ?? para poner un valor por default -->
     <!-- title es una variable que puede ser
 recivida como atributo o encerrado en una etiqueta

@@ -9,6 +9,9 @@ class TipoCurso extends Model
 {
     use HasFactory;
     protected $primaryKey = "id_tipo_curso";
+    public $fillable = ["nombre", "duracion", "estado"];
+    protected $table = "tipo_cursos";
+    public $timestamps = false;
 
     public function curso(){
         return $this->belongsTo(Curso::class, 'id_tipo_curso');
