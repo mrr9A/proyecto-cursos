@@ -26,10 +26,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/graficas', function () {
-    return view("cursosplanta.grafica");
-});
-
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/cursosplanta/cursos-puestos/asignar-cursos', [PuestoController::class, 'asignarCursos'])->name('cursos.puestos');
 Route::delete('/cursosplanta/cursos/puestos/trabajos/{id}', [TrabajoController::class, 'destroy'])->name("trabajos.destroy");

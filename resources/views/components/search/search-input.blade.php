@@ -26,49 +26,6 @@
         <div id="resultados" class="absolute bg-white shadow-md z-20 p-3 top-10 w-[400px] h-[350px hidden"></div>
     </div>
 
-    {{-- ================================================== --}}
-    <button id="dropdownButton"
-        class="text-blue-600 border-black font-medium rounded-lg text-sm py-2 text-center inline-flex items-center"
-        type="button">Filtros <svg class="w-4 h-4 ml-2" aria-hidden="true" fill="none" stroke="currentColor"
-            viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-        </svg></button>
-
-    <!-- Dropdown menu -->
-    <div id="dropdownMenu"
-        class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-all dark:bg-gray-700 dark:divide-gray-600">
-        <div class="p-3">
-            <form class="w-full flex flex-wrap gap-2">
-                <select name="puesto_id" id="puesto_id"
-                    class="py-2 text-sm  border-[1px] border-blue-600 focus:outline-none  rounded-md uppercase">
-
-                    <option value="" id="select_puesto" class="text-gray-400">puestos</option>
-                    <option value="1">
-                        Consultor de experiencia
-                    </option>
-                </select>
-
-
-                <select name="puesto_id" id="puesto_id"
-                    class="py-2 text-sm  border-[1px] border-blue-600 focus:outline-none  rounded-md uppercase">
-                    <option value="" id="select_puesto" class="text-gray-400">sucursales</option>
-                    <option value="1">
-                        plaza valle
-                    </option>
-                </select>
-
-                <div class="py-2">
-                    <x-input-submit text="aceptar"
-                        class="cursor-pointer text-white capitalize bg-primary hover:bg-primary-light" />
-                </div>
-            </form>
-        </div>
-
-    </div>
-
-
-
-
 </form>
 
 <script>
@@ -76,21 +33,6 @@
     const resultados = $('#resultados')
 
     const debouncedGetInfo = debounce(getInfoByBuscador, 1000);
-
-    const dropMenu = document.getElementById('dropdownMenu');
-    // set the element that trigger the dropdown menu on click
-    const dropButton = document.getElementById('dropdownButton');
-
-    dropButton.addEventListener('click', (e) => {
-
-        if (dropMenu.classList.contains('hidden')) {
-            dropMenu.classList.remove('hidden');
-            dropMenu.classList.add('block');
-        } else {
-            dropMenu.classList.remove('block');
-            dropMenu.classList.add('hidden');
-        }
-    })
 
     /**Cuando el evento keyup se dispara, se invoca la función debouncedGetInfo en lugar de llamar directamente a getInfoByBuscador.
      *  Debido a la naturaleza de la función debounced, si se producen múltiples eventos keyup rápidamente, el temporizador se reinicia cada vez,
