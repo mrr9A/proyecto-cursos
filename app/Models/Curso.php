@@ -101,4 +101,14 @@ class Curso extends Model
         return $cursos;
     }
 
+    public function lecciones()
+    {
+        return $this->hasMany(Leccion::class, 'curso_id');
+    }
+    
+    public function users()
+    {
+        return $this->belongsToMany(User::class,'usuarios_cursos', 'usuario_id','curso_id');
+    }
+
 }

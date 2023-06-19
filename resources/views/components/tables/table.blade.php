@@ -45,12 +45,12 @@
                         @if (request()->q == 'tecnico')
                             <x-tables.table-curses-tecnica :empleado="$empleado" :id="$empleado->id_usuario" :keys="$keys" />
                         @else
-                            <x-tables.table-curses :cursos="$empleado->trabajos[$keys[0]][0]" :id="$empleado->id_usuario" />
+                            <x-tables.table-curses :cursos="$empleado->trabajos[$keys[0]][0] ?? $empleados->trabajos    " :id="$empleado->id_usuario" />
                         @endif
                     </td>
                 </tr>
             @endforeach
         </tbody>
     </table>
-    
+                            
 </form>

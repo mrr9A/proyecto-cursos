@@ -33,7 +33,7 @@ Route::delete('/cursosplanta/cursos/puestos/trabajos/{id}', [TrabajoController::
 Route::resource("cursosplanta/puestos", PuestoController::class, [
     "names" => "puestos"
 ]);
-Route::resource("cursosplanta/usuarios", UsuarioController::class, [
+Route::resource("/usuarios", UsuarioController::class, [
     "names" => "usuarios"
 ]);
 Route::resource("cursosplanta/matrices", MatrizController::class, [
@@ -57,7 +57,7 @@ Route::resource("cursosplanta/calificaciones", CalificacionController::class, [
     "names" => "calificaciones"
 ]);
 
-
+require __DIR__ . '/resource.php';
 
 Route::fallback(function () {
     return redirect('/');

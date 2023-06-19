@@ -17,6 +17,8 @@ slot con nombre
     <!-- <link href="/css/app.css" rel="stylesheet"/> -->
     <!-- cargando css y js con vite, renderiza en tiempo real -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @livewireStyles
+    
 </head>
 
 
@@ -48,6 +50,7 @@ slot con nombre
         </div>
         <!-- slot es una variable definida que indica donde se vacolocar el html dinamico -->
     </div>
+    @livewireScripts
 </body>
 
 </html>
