@@ -13,7 +13,8 @@
                 </tr>
             </thead>
             <tbody class=" border-[1px] border-black">
-                <tr class="bg-white w-full h-full min-h-[150px] grid overflow-auto grid-cols-[repeat(auto-fit,minmax(120px,1fr))]">
+                <tr
+                    class="bg-white w-full h-full min-h-[150px] grid overflow-auto grid-cols-[repeat(auto-fit,minmax(120px,1fr))]">
                     @foreach ($empleado->trabajos[$empleado->puesto][0]['cursos'][$tipo] as $curso)
                         <td
                             class="w-full h-full border-[1px]  text-black @if ($curso->calificacion == 'aprovado') bg-green-400 @endif ">
@@ -56,7 +57,8 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="bg-white w-full h-full grid overflow-auto grid-cols-[repeat(auto-fit,minmax(120px,1fr))]">
+                            <tr
+                                class="bg-white w-full h-full grid overflow-auto grid-cols-[repeat(auto-fit,minmax(120px,1fr))]">
                                 @foreach ($trabajo['cursos'][$tipo] as $curso)
                                     <td
                                         class="w-full h-full border-[1px]  text-black @if ($curso->calificacion == 'aprovado') bg-green-400 @endif ">
@@ -80,7 +82,6 @@
                 {{-- ===================== FIN DE LO QUE TENGO QUE CAMBIAR  ======================== --}}
             @endforeach
         @endforeach
-    @endif
-@else
-    sin cursos
+    @else
+        sin cursos
 @endif

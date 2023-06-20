@@ -12,6 +12,7 @@ use App\Http\Controllers\TrabajoController;
 use App\Http\Controllers\UsuarioController;
 use App\Models\PlanesFormacion;
 use App\Models\Puesto;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -25,6 +26,13 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+// Route::get('/pdf',function (){
+//     $data = User::getProgressByUser()[0];
+//     return view('prueba', compact('data'));
+// });
+Route::get('/pdf/{user}',[App\Http\Controllers\PDFController::class,
+'pdf'])->name('descargarPDF');
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/cursosplanta/cursos-puestos/asignar-cursos', [PuestoController::class, 'asignarCursos'])->name('cursos.puestos');
