@@ -91,11 +91,11 @@
         </div>
     </div> -->
 
-  <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+  <!-- <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
       <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
         <tr>
-          <th scope="col" class="px-6 py-3">
+          <th scope="col" class="text-uppercase text-secondary text-center text-xs text-dark font-weight-bolder opacity-7">
             Avatar
           </th>
           <th scope="col" class="px-6 py-3">
@@ -161,6 +161,73 @@
         @endforeach
       </tbody>
     </table>
-  </div>
+  </div> -->
+
+
+
+          <div>
+<nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 mt-4 shadow-none border-radius-xl loopple-navbar-empty" id="navbarTop">
+    <div class="navbar-add" data-toggle="modal" data-target="#navbarModal">
+        <div class="ms-md-auto pe-md-3 d-flex align-items-center">
+            <div class="input-group">
+                <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
+                <input type="text" class="form-control" placeholder="Buscar...">
+            </div>
+        </div>
+    </div>
+</nav>
+<div class="container-fluid pt-3">
+    <div>
+    <a href="{{route('usuarios.create')}}" class="btn btn-dark">
+            <img src="./img/agregar-usuario.png" alt=""><span>Agregar Usuario</span>
+        </a>
+    </div>
+    <div class="card mb-4">
+        <div class="card-header pb-0">
+            <h6>Usuarios</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive p-0">
+                
+  <table class="min-w-full text-center text-sm font-light">
+          <thead class="border-b  dark:border-neutral-500">
+            <tr>
+              <th scope="col" class="px-6 py-2">#</th>
+              <th scope="col" class="px-6 py-2">First</th>
+              <th scope="col" class="px-6 py-2">Last</th>
+              <th scope="col" class="px-6 py-2">Handle</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-b dark:border-neutral-500">
+              <td class="whitespace-nowrap px-6 py-2 ">1</td>
+              <td class="whitespace-nowrap px-6 py-2">Mark</td>
+              <td class="whitespace-nowrap px-6 py-2">Otto</td>
+              <td class="whitespace-nowrap px-6 py-2">@mdo</td>
+            </tr>
+            <tr class="border-b dark:border-neutral-500">
+              <td class="whitespace-nowrap px-6 py-2 ">2</td>
+              <td class="whitespace-nowrap px-6 py-2 ">Jacob</td>
+              <td class="whitespace-nowrap px-6 py-2">Thornton</td>
+              <td class="whitespace-nowrap px-6 py-2">@fat</td>
+            </tr>
+            <tr class="border-b dark:border-neutral-500">
+              <td class="whitespace-nowrap px-6 py-2 ">3</td>
+              <td colspan="2" class="whitespace-nowrap px-6 py-2">
+                Larry the Bird
+              </td>
+              <td class="whitespace-nowrap px-6 py-2">@twitter</td>
+            </tr>
+          </tbody>
+        </table>
+                <br>
+                <div class="row">
+                    <div class="col-sm-12">
+                        {{$usuarios->links()}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </x-app>

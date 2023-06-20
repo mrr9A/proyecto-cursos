@@ -2,9 +2,9 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Cursos;
-use App\Models\Modalidad_cursos;
-use App\Models\Tipo_cursos;
+use App\Models\Curso;
+use App\Models\ModalidadCurso;
+use App\Models\TipoCurso;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -19,8 +19,8 @@ class Wizard extends Component
 
     public function render()
     {
-        $modalidad = Modalidad_cursos::all();
-        $tipo = Tipo_cursos::all();
+        $modalidad = ModalidadCurso::all();
+        $tipo = TipoCurso::all();
         return view('livewire.wizard', compact('modalidad', 'tipo'));
     }
 
@@ -62,7 +62,7 @@ class Wizard extends Component
         $imgCurso = $this->imagen->store('public/imagenes');
         $url = Storage::url($imgCurso);
         
-        $curso = Cursos::create([
+        $curso = Curso::create([
             'codigo' => $this->codigo,
             'nombre' => $this->nombre,
             'fecha_inicio' => $this->fecha_inicio,
@@ -75,15 +75,15 @@ class Wizard extends Component
         ]);
         $this->clearForm();
 
-        return to_route("cursos.show",$curso->id_curso)->with('agregado', 'Agregado Correctamente');
+        return to_route("curs.show",$curso->id_curso)->with('agregado', 'Agregado Correctamente');
         // 36743137
     }
 
     public function show($id)
     {
-        $curso = Cursos::find($id);
+        $curso = Curso::find($id);
         // $autores = User::all();
-        return view('admin.cursos.configurarCursos', compact('curso'));
+        return view('admin.curs.configurarCursos', compact('curso'));
     }
 
     public function back($step)

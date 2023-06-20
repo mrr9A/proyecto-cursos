@@ -1,4 +1,4 @@
-<x-ap>
+<x-app>
 <form action="{{url('examenes')}}" method="POST" class="card col-11 mx-6">
     @csrf
     <div class="col-11">
@@ -45,7 +45,7 @@
     <button type="submit" class="btn bg-dark text-white">Crear examen</button>
 </form>
 
-</x-ap>
+</x-app>
 
 <script>
     // JavaScript para agregar preguntas dinámicamente

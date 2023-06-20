@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\ContenidosController;
 use App\Http\Controllers\Cursosinternos\ContenidoController;
 use Illuminate\Support\Facades\Route;
 
@@ -36,6 +35,7 @@ Route::get('curso', function () {
 // // // Route::resource('usuarios',\App\Http\Controllers\UsuarioController::class);
 
 Route::resource('sucursales',\App\Http\Controllers\Cursosinternos\SucursalesController::class);
+
 Route::resource('curs',\App\Http\Controllers\Cursosinternos\CursosController::class);
 
 Route::resource('Lecciones',\App\Http\Controllers\Cursosinternos\LeccionesController::class);
