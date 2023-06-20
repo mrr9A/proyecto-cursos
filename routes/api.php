@@ -55,6 +55,10 @@ Route::get('cursosplanta/puesto/{id}', function ($id){
     $puesto->planes_formacion;
     return response()->json($puesto);
 });
+Route::get('getProgressByUser', function (){
+    $puesto = User::getProgressByUser();
+    return response()->json($puesto);
+});
 
 // editar la informacion de puesto
 Route::put('cursosplanta/puesto/edit/{id}', [PuestoController::class, 'update']);

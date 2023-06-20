@@ -4,7 +4,7 @@
     
     <div class="card">
       <div class="card-header">
-        Nuevo Curso
+        Nuevo usuario
       </div>
       <div class="card-body">
       <livewire:usuarios />

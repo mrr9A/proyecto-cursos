@@ -157,14 +157,22 @@
 
                 <div class="form-group">
                     <label for="puesto_id">Puesto Laboral <span class="text-danger">*</span></label><br />
-                    <select class="form-select form-select" id="puesto_id" wire:model="puesto_id" aria-label=".form-select-sm example" required>
-                        <option selected>Selecciona su Puesto de trabajo</option>
+                    <select class="form-select form-select" name="puesto_id" id="puesto_id" wire:model="puesto_id" aria-label=".form-select-sm example" required>
+                        <option selected id="select_puesto">Selecciona su Puesto de trabajo</option>
                         @foreach ($puesto as $puest)
                         <option value="{{$puest->id_puesto}}">{{$puest->puesto}}</option>
                         @endforeach
                     </select>
                     @error('puesto_id') <span class="error">{{ $message }}</span> @enderror
                 </div>
+
+                <div id="trabajos">
+
+                </div>
+
+
+
+
 
                 <button class="btn btn-danger nextBtn btn-lg bg-dark" type="button" wire:click="back(2)">
                     <img src="./img/hacia-atras.png" alt=""><span>Retroceder</span>
@@ -255,3 +263,59 @@
         </div>
     </div>
 </div>
+
+
+
+<script>
+    const puestoSelecter = document.getElementById('puesto_id');
+    const trabajosSelector = document.getElementById("trabajos")
+    let puesto = "";
+    document.addEventListener('livewire:load', function () {
+        puestoSelecter.addEventListener('change', (e) => {
+            let id = e.target.value
+            puesto = puestoSelecter.options[id].text
+            document.getElementById("select_puesto").setAttribute("disabled", true);
+            getJobsByPosition(id)
+        })
+    })
+
+    function getJobsByPosition(id) {
+        // let loading = true;
+        trabajosSelector.innerHTML = `
+        <div role="status" class="flex flex-col items-center">
+            <svg aria-hidden="true" class="w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
+                <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
+            </svg>
+            <span class="sr-only">Loading...</span>
+        </div>
+        `
+        fetch(`http://localhost:8000/api/cursosplanta/puesto/${id}/trabajos`)
+            .then(res => res.json())
+            .then(data => {
+                let trabajos = ""
+                let msg = "<p>Selecciona los trabajos para el usuario</p>"
+                if (data.length < 1) {
+                    trabajos = "sin trabajos para el puesto, solo seleccion el puesto del usuario"
+                    trabajosSelector.innerHTML = trabajos
+                    return;
+                }
+                console.log(data)
+                data.forEach(trabajo => {
+                    trabajos +=
+                        `<label
+                        class="cursor-pointer block w-52 h-auto rounded-lg shadow-[0_1px_5px_1px_rgba(150,50,200,0.4)] bg-gray-400 border-fuchsia-400 mb-4 overflow-hidden">
+                        <input class="hidden peer" type="checkbox" ${puesto === trabajo.nombre ? "checked disabled" : ""}   name="trabajos[]"  wire:model="trabajos" value="${trabajo.id_trabajo}" />
+                        ${puesto === trabajo.nombre ? `<input type="hidden" name="trabajosw]" value="${trabajo.id_trabajo}" />` : ""}
+                        <div class="relative peer-checked:bg-blue-100 h-full p-2">
+                            <h2 class="uppercase text-sm text-black">${trabajo.nombre}</h2>
+                        </div>
+                    </label>`
+                });
+                trabajosSelector.innerHTML = msg + trabajos
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
+</script>
