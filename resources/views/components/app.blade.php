@@ -13,6 +13,7 @@ slot con nombre
 <x-slot name="title">Hola</x-slot>\
 -->
     <meta name="description" content="{{ $metaDescription ?? 'default meta description' }}" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
     <!-- cargando css desde la carpeta public -->
     <!-- <link href="/css/app.css" rel="stylesheet"/> -->
     <!-- cargando css y js con vite, renderiza en tiempo real -->

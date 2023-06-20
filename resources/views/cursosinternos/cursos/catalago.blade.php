@@ -1,91 +1,79 @@
 <x-app>
 
-<div>
-<nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 mt-3 shadow-none border-radius-xl loopple-navbar-empty" id="navbarTop">
-    <div class="navbar-add" data-toggle="modal" data-target="#navbarModal">
-        <div class="ms-md-auto pe-md-3 d-flex align-items-center">
-            <div class="input-group">
-                <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
-                <input type="text" class="form-control" placeholder="Buscar...">
-            </div>
-        </div>
-    </div>
-</nav>
-<!-- cuerpo de nuestras tablas -->
-<div class="container-fluid pt-3">
     <div>
-        <a class="btn btn-dark" href="{{route('crearCurso')}}">
-            <img src="./img/agregar-usuario.png" alt=""><span>Agregar Curso</span>
-        </a>
-    </div>
-    <div class="card mb-4">
-        <div class="card-header pb-0">
-            <h6>Cursos</h6>
-        </div>
-        <div class="card-body px-0 pt-0 pb-2">
-            <div class="table-responsive p-0">
-                <table class="table align-items-center mb-0 table-striped">
-                    <thead>
-                        <tr>
-                            <th class="text-uppercase text-secondary text-center text-xs text-dark font-weight-bolder opacity-7">Imagen</th>
-                            <th class="text-uppercase text-secondary text-center text-xs text-dark font-weight-bolder opacity-7">Nombre Completo del Curso</th>
-                            <th class="text-uppercase text-secondary text-center text-dark text-xs font-weight-bolder opacity-7 ps-4 col-6">Codígo del Curso</th>
-                            <th class="text-uppercase text-secondary text-center text-dark text-xs font-weight-bolder opacity-7 ps-4">Fecha de Inicio</th>
-                            <th class="text-uppercase text-secondary text-center text-dark text-xs font-weight-bolder opacity-7 ps-4">Fecha de Termino</th>
-                            <th class="text-uppercase text-secondary text-center text-dark text-xs font-weight-bolder opacity-7 ps-4">Interno / Planta</th>
-                            <th class="text-center text-uppercase text-center text-dark text-secondary text-xs font-weight-bolder opacity-7 col-3">Configuración</th>
-                            <th class="text-center text-uppercase text-center text-dark text-secondary text-xs font-weight-bolder opacity-7 col-3">Eliminar</th>
-                        </tr>
-                    </thead>
-                    <tbody class="table-group-divider">
-                        @foreach ($cursos as $curso)
-                        <tr>
-                            <td class="text-center">
-                                <img src="{{$curso->imagen}}" width="100" height="100">
-                            </td>
-                            <td class="text-center text-dark col-3">{{$curso->nombre}}</td>
-                            <td class="text-center text-dark textarea">{{$curso->codigo}}</td>
-                            <td class="text-center text-dark">{{$curso->fecha_inicio}}</td>
-                            <td class="text-center text-dark">{{$curso->fecha_termino}}</td>
-                            <td class="text-center text-dark">
-                                @if ($curso->interno_planta == 1)
-                                <span class="badge badge-sm bg-gradient-secondary">Planta</span>
-                                @elseif($curso->interno_planta == 0)
-                                <span class="badge badge-sm bg-gradient-dark">Interno</span>
-                                @endif
-                            </td>
-                            <td class="text-center text-dark">
-                                <a href="{{url('cursos',[$curso])}}" class="btn">
-                                    <img src="./img/mechanical.png" alt="">
-                                </a>
-                            </td>
-                            <td class="text-center">
-                                <form action="{{ url('cursos',[$curso]) }}" method="POST" class="formulario-eliminar" id="{{$curso->nombre}}">
+        <br>
+        <x-search.search-input route="curs.index"></x-search.search-input>
+        <br>
+        <div class="p-12">
+            <a type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700" href="{{route('crearCurso')}}">
+                <img src="./img/agregar-usuario.png" alt=""><span>Agregar Curso</span>
+            </a><br>
+            <div class="block max-w p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                <div class="text-subtitle font-bold">
+                    Cursos
+                </div><br>
+                <div class="card-body px-0 pt-0 pb-2">
 
-                                    @method("DELETE")
-                                    @csrf
-
-                                    <button type="submit" class="btn text-center">
-                                        <img src="./img/eliminar.png" alt="">
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-                <br>
-                <div class="row">
-                    <div class="col-sm-12">
-                        {{$cursos->links()}}
+                    <div class="relative overflow-x-auto">
+                        <table class="w-full text-center text-gray-500 dark:text-gray-400">
+                            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3">
+                                        Imagen
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Nombre Completo del Curso
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Codígo del Curso
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Fecha de Inicio
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Fecha de Termino
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Configuración
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($cursos as $curso)
+                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-800 text-center">
+                                    <td class="inline-block ">
+                                        <img src="{{$curso->imagen}}" width="50" height="50">
+                                    </td>
+                                    <td class="py-4 font-bold">
+                                        {{$curso->nombre}}
+                                    </td>
+                                    <td class=" font-bold">
+                                        {{$curso->codigo}}
+                                    </td>
+                                    <td class=" font-bold">
+                                        {{$curso->fecha_inicio}}
+                                    </td>
+                                    <td class=" font-bold">
+                                        {{$curso->fecha_termino}}
+                                    </td>
+                                    <td class=" text-center ">
+                                        <a href="{{url('curs',[$curso])}}" type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg   dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="32" viewBox="0 0 512 560">
+                                                <path fill="currentColor" d="m184.785 471.562l76.992-115.487l-76.992-115.487h57.743l76.993 115.487l-76.993 115.487h-57.743zm76.992 0l76.992-115.487l-76.992-115.487h57.744l153.982 230.974h-57.744l-48.118-72.178l-48.12 72.178h-57.744zm186.063-67.366L422.178 365.7l89.822-.003v38.498h-64.16zm-38.495-57.744l-25.665-38.495l128.32-.002v38.497H409.345zM169.028 176.54c50.881-29.318 112.082-6.227 135.345 41.445h65.802a154.223 154.223 0 0 0-13.278-33.034l35.475-62.993L357.014 86.6l-62.4 35.654a161.966 161.966 0 0 0-31.679-13.54l-18.869-68.275h-50.09l-18.337 66.874c-11.728 3.226-23.355 7.903-34.692 14.143L81.52 88.072L46.161 123.43l32.976 58.956c-6.21 11.113-10.972 22.86-14.3 34.948L0 236.378v50.09l65.185 17.707a156.965 156.965 0 0 0 14.572 34.737l-32.122 60.013l35.357 35.358l59.415-34.709c8.687 4.668 29.805 12.987 48.128 18.3l41.032-61.799C130.288 370.491 75.488 230.436 169.028 176.54z" />
+                                            </svg>
+                                        </a>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
+
                 </div>
             </div>
         </div>
-    </div>
-</div>
 
-</div>
+    </div>
 </x-app>
 
 
