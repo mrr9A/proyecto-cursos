@@ -4,29 +4,30 @@
         <div class="row mb-12">
             <div class="col-lg-12 mb-6 mb-lg-0 position-relative">
                 <div class="w-full p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700 items-center text-center">
-                    <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">BIENVENIDO ES MOMENTO DE AGREGAR LAS LECCIONES AL CURSO</h2><br>
+                    <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">BIENVENIDO ES MOMENTO DE EDITAR LA LECCION DEL CURSO</h2><br>
                     <h3 class="text-1xl font-bold tracking-tight text-dark-500 sm:text-2xl">En este apartado solo se Agregaran las Lecciones </h3><br>
                     <h5 class="text-1xl font-bold tracking-tight text-gray-600 sm:text-2"><span>Una vez creadas las Lecciones podrá agregar contenido en la pagina principal</span></h5>
                     <h5 class="text-1xl font-bold tracking-tight text-gray-600 sm:text-2"><span>Comencemos</span> ...</h5>
                 </div>
                 <br>
-                <form action="{{url('Lecciones')}}" method="POST" class="w-full p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700" enctype="multipart/form-data">
+                <form action="{{url('Lecciones',[$leccion])}}" method="POST" class="w-full p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700" enctype="multipart/form-data">
                     @csrf
+                    @method("PUT")
                     <div class="col-12">
                         <div class="col-12 mx-6">
                             <br>
-                            <h3 class="font-bold">Información General de la Lección</h3>
+                            <h3>Información General de la Lección</h3>
                             <br>
-                            <input hidden type="text" rows="3" name="curso_id" value="{{$id}}" require>
+                            <input hidden type="text" rows="3" name="curso_id" value="{{$leccion->curso_id}}" require>
                             <div class="grid col-4">
                                 <label for="nombre">Nombre de la Lección <span class="text-danger">*</span></label>
-                                <input type="text" rows="3" name="nombre" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="fecha_inicio" require>
+                                <input type="text" rows="3" name="nombre" value="{{$leccion->nombre}}" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="fecha_inicio" require>
                                 @error('nombre') <span class="error">{{ $message }}</span> @enderror
                             </div>
                             <br>
                             <div class="grid col-6 ">
-                                <label for="descripcion">Descripcion de la Lección <span class="text-danger">*</span></label>
-                                <textarea type="text" rows="3" name="descripcion" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="fecha_inicio" require></textarea>
+                                <label for="descripcion">Descripcion de la Lección <span class="text-red-500">*</span></label>
+                                <textarea type="text" rows="3" name="descripcion" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" require>{{$leccion->descripcion}}</textarea>
                                 @error('descripcion') <span class="error">{{ $message }}</span> @enderror
                             </div>
                             <br>
@@ -41,10 +42,13 @@
                                                 <input id="url_imagen" name="url_imagen" type="file" class="sr-only" accept="image/*" require>
                                                 @error('url_imagen') <span class="error">{{ $message }}</span> @enderror
                                             </label>
+                                            <div class="text-center">
+                                                <img src="{{$leccion->url_imagen}}" width="150" height="150" class="inline-block" alt="">
+                                            </div>
                                         </div>
                                         <p class="text-xs leading-5 text-gray-600">Formatos Admitidos: PNG, JPG</p>
                                     </div>
-                                </div>
+                                </div><br>
                             </div>
                             <br>
                             <div>
@@ -59,7 +63,7 @@
                                 </span>
                                 <span>Retroceder</span>
                             </button>
-                            <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                            <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
                                 <span>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24">
                                         <g fill="none" stroke="white" stroke-width="1.5">
@@ -80,3 +84,4 @@
     </div>
 
 </x-app>
+

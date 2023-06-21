@@ -157,7 +157,7 @@
 
                 <div class="form-group">
                     <label for="puesto_id">Puesto Laboral <span class="text-danger">*</span></label><br />
-                    <select class="form-select form-select" name="puesto_id" id="puesto_id" wire:model="puesto_id" aria-label=".form-select-sm example" required>
+                    <select class="form-select form-select" name="puesto_id" id="puesto_id" wire:model="puesto_id" wire:change="updateData" aria-label=".form-select-sm example" required>
                         <option selected id="select_puesto">Selecciona su Puesto de trabajo</option>
                         @foreach ($puesto as $puest)
                         <option value="{{$puest->id_puesto}}">{{$puest->puesto}}</option>
@@ -167,6 +167,18 @@
                 </div>
 
                 <div id="trabajos">
+                    @foreach($trabajos as $trabajo)
+                        {{$trabajo->nombre}}
+                        @dump($trabajo)
+                        <!-- <label
+                        class="cursor-pointer block w-52 h-auto rounded-lg shadow-[0_1px_5px_1px_rgba(150,50,200,0.4)] bg-gray-400 border-fuchsia-400 mb-4 overflow-hidden">
+                        <input class="hidden peer" type="checkbox" ${puesto_id === trabajo.nombre ? "checked disabled" : ""}   name="trabajos[]"  wire:model="trabajos.${trabajo.id_trabajo}" value="${trabajo.id_trabajo}" />
+                        ${puesto === trabajo.nombre ? `<input type="hidden" name="trabajos[]" value="${trabajo.id_trabajo}" />` : ""}
+                        <div class="relative peer-checked:bg-blue-100 h-full p-2">
+                            <h2 class="uppercase text-sm text-black">${trabajo.nombre}</h2>
+                        </div>
+                    </label> -->
+                    @endforeach
 
                 </div>
 
@@ -265,7 +277,7 @@
 </div>
 
 
-
+<!-- 
 <script>
     const puestoSelecter = document.getElementById('puesto_id');
     const trabajosSelector = document.getElementById("trabajos")
@@ -305,8 +317,8 @@
                     trabajos +=
                         `<label
                         class="cursor-pointer block w-52 h-auto rounded-lg shadow-[0_1px_5px_1px_rgba(150,50,200,0.4)] bg-gray-400 border-fuchsia-400 mb-4 overflow-hidden">
-                        <input class="hidden peer" type="checkbox" ${puesto === trabajo.nombre ? "checked disabled" : ""}   name="trabajos[]"  wire:model="trabajos" value="${trabajo.id_trabajo}" />
-                        ${puesto === trabajo.nombre ? `<input type="hidden" name="trabajosw]" value="${trabajo.id_trabajo}" />` : ""}
+                        <input class="hidden peer" type="checkbox" ${puesto === trabajo.nombre ? "checked disabled" : ""}   name="trabajos[]"  wire:model="trabajos.${trabajo.id_trabajo}" value="${trabajo.id_trabajo}" />
+                        ${puesto === trabajo.nombre ? `<input type="hidden" name="trabajos[]" value="${trabajo.id_trabajo}" />` : ""}
                         <div class="relative peer-checked:bg-blue-100 h-full p-2">
                             <h2 class="uppercase text-sm text-black">${trabajo.nombre}</h2>
                         </div>
@@ -318,4 +330,4 @@
                 console.log(err)
             })
     }
-</script>
+</script> -->

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Cursosinternos\ContenidoController;
+use App\Http\Controllers\Cursosinternos\LeccionesController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -45,3 +46,7 @@ Route::resource('contenidos',\App\Http\Controllers\Cursosinternos\ContenidoContr
 Route::resource('examenes',\App\Http\Controllers\Cursosinternos\ExamenController::class);
 
 Route::get('ver/{id}',[ContenidoController::class,'ver'])->name('ver');
+
+Route::get('editar/{id}',[LeccionesController::class,'edit'])->name('editLec');
+
+Route::get('edi/{id}',[ContenidoController::class,'edi'])->name('ediConte');
