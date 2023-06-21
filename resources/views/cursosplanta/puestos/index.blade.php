@@ -75,24 +75,12 @@
                     <div>
                         <div class="flex items-center">
                             <button class="edit_button" name="{{ $puesto->id_puesto }}">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="38" height="38"
-                                    viewBox="0 0 24 24">
-                                    <g fill="none" stroke="#716ef9" stroke-linecap="round" stroke-linejoin="round"
-                                        stroke-width="1">
-                                        <path
-                                            d="m16.474 5.408l2.118 2.117m-.756-3.982L12.109 9.27a2.118 2.118 0 0 0-.58 1.082L11 13l2.648-.53c.41-.082.786-.283 1.082-.579l5.727-5.727a1.853 1.853 0 1 0-2.621-2.621Z" />
-                                        <path d="M19 15v3a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3" />
-                                    </g>
-                                </svg>
+                                <img src="/svg/edit.svg" />
                             </button>
 
                             <button data-modal-target="puesto-{{ $puesto->id_puesto }}"
                                 data-modal-toggle="puesto-{{ $puesto->id_puesto }}">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
-                                    viewBox="0 0 256 256">
-                                    <path fill="red"
-                                        d="M216 50h-42V40a22 22 0 0 0-22-22h-48a22 22 0 0 0-22 22v10H40a6 6 0 0 0 0 12h10v146a14 14 0 0 0 14 14h128a14 14 0 0 0 14-14V62h10a6 6 0 0 0 0-12ZM94 40a10 10 0 0 1 10-10h48a10 10 0 0 1 10 10v10H94Zm100 168a2 2 0 0 1-2 2H64a2 2 0 0 1-2-2V62h132Zm-84-104v64a6 6 0 0 1-12 0v-64a6 6 0 0 1 12 0Zm48 0v64a6 6 0 0 1-12 0v-64a6 6 0 0 1 12 0Z" />
-                                </svg>
+                                <img src="/svg/delete.svg" />
                             </button>
 
 
@@ -133,11 +121,7 @@
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="22"
-                                                            height="22" viewBox="0 0 256 256">
-                                                            <path fill="red"
-                                                                d="M216 50h-42V40a22 22 0 0 0-22-22h-48a22 22 0 0 0-22 22v10H40a6 6 0 0 0 0 12h10v146a14 14 0 0 0 14 14h128a14 14 0 0 0 14-14V62h10a6 6 0 0 0 0-12ZM94 40a10 10 0 0 1 10-10h48a10 10 0 0 1 10 10v10H94Zm100 168a2 2 0 0 1-2 2H64a2 2 0 0 1-2-2V62h132Zm-84-104v64a6 6 0 0 1-12 0v-64a6 6 0 0 1 12 0Zm48 0v64a6 6 0 0 1-12 0v-64a6 6 0 0 1 12 0Z" />
-                                                        </svg>
+                                                        <img src="/svg/delete.svg" />
                                                     </button>
                                                 </form>
                                                 @else

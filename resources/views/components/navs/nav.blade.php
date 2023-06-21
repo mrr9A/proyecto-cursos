@@ -24,7 +24,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a href="{{ route('usuarios.create') }}"
+            <a href="{{ route('usuarios.index') }}"
                 class="{{ request()->routeIs('usuarios.*') ? 'item-active' : '' }}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 520 520"
                     preserveAspectRatio="xMaxYMax meet">
