@@ -177,10 +177,12 @@ i {
 }
 
 /* ===========FORMULARIO */
-.step {
-    display: none;
+.step h3 {
+    @apply text-section-subtitle mb-2
 }
-
+/* .step{
+    display: none;
+} */
 .step.active {
     display: block;
 }

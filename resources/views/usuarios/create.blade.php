@@ -1,5 +1,5 @@
 <x-app title="Crear Usuario">
-    <div class="grid grid-cols-4 mx-5">
+    {{-- <div class="progreso grid grid-cols-4 mx-5">
         <div class="flex flex-col items-center w-full relative">
             <div class="num">
                 <span class="">1</span>
@@ -24,14 +24,17 @@
             </div>
             <p class="text-1xl font-bold tracking-tight text-dark-900 sm:text-1xl">Conmfirmar Datos</p>
         </div>
-    </div>
-    <div>
-        <form id="multi-step-form" method="POST" action="{{ route('usuarios.store') }}" class="w-10/12 mx-auto mt-6">
+    </div> --}}
+    <div class="container w-full ">
+        <form id="multi-step-form" method="POST" action="{{ route('usuarios.store') }}"
+            class="min-w-[100%]  mt-6 grid grid-cols-2 gap-8">
             @csrf
 
-            <div class="step active" data-step="1">
-                <h3 class="text-3xl font-bold tracking-tight text-gray-900 text-section-subtitle">Datos Personales</h3>
-                <div class=" grid grid-cols-2 gap-6">
+            <div class="step active rounded-md" data-step="1">
+                <h3
+                    class="text-3xl font-bold tracking-tight text-gray-900 text-section-subtitle text-center bg-gray-100">
+                    Datos Personales</h3>
+                <div class=" grid grid-cols-2 gap-6 border border-gray-200 shadow-sm rounded-md px-3 py-2">
                     <x-input-text type="text" nombre="nombre" text="Nombre" placeholder="nombre" required
                         classLabel="text-base" />
                     <x-input-text type="text" nombre="segundo_nombre" text="Segundo Nombre"
@@ -40,34 +43,26 @@
                         placeholder="apellido paterno" required classLabel="text-base" />
                     <x-input-text type="text" nombre="apellido_materno" text="Apellido materno"
                         placeholder="apellido materno" classLabel="text-base" />
-                    <button class="next-button bg-blue-300 py-2 rounded-md" type="button">
-                        <img src="./img/siguiente-boton.png" alt=""><span>Continuar</span>
-                    </button>
                 </div>
             </div>
 
             <div class="step" data-step="2">
-                <h3 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Datos de Autenticación
+                <h3 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl text-center bg-gray-100">Datos de
+                    Autenticación
                 </h3>
-                <div class="grid grid-cols-2 gap-6">
+                <div class="grid grid-cols-1 gap-6 border border-gray-200 shadow-sm rounded-md px-3 py-2">
                     <x-input-text type="email" nombre="email" text="Correo electronico"
                         placeholder="user@grupobonn.com" required classLabel="text-base" />
                     <x-input-text type="password" nombre="password" text="contraseña" placeholder="123456" required
                         classLabel="text-base" />
-                    <button class="previous-button btn btn-primary nextBtn btn-lg bg-dark" type="button">
-                        <img src="./img/siguiente-boton.png" alt=""><span>Atras</span>
-                    </button>
-                    <button class="next-button  btn btn-primary nextBtn btn-lg bg-dark" type="button">
-                        <img src="./img/siguiente-boton.png" alt=""><span>Continuar</span>
-                    </button>
                 </div>
             </div>
 
-            <div class="step" data-step="3">
-                <h3 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Información Empresarial
+            <div class="step col-span-2" data-step="3">
+                <h3 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl text-center bg-gray-100 px-3">
+                    Información Empresarial
                 </h3>
-                <div class="grid grid-cols-2 gap-6">
-
+                <div class="grid grid-cols-4 gap-6 border border-gray-200 shadow-sm rounded-md px-3 py-2">
                     <x-input-text type="number" nombre="id_sgp" text="ID SGP" placeholder="1351" required
                         classLabel="text-base" />
                     <x-input-text type="number" nombre="id_sumtotal" text="ID SUMTOTAL" placeholder="1351" required
@@ -127,19 +122,19 @@
                         @enderror
                     </div>
 
-                    <div id="trabajos" class="col-span-2">
+                    <div id="trabajos" class="col-span-4">
 
                     </div>
 
-
-                    <button class="previous-button btn btn-primary nextBtn btn-lg bg-dark" type="button">
-                        <img src="./img/siguiente-boton.png" alt=""><span>Atras</span>
-                    </button>
-                    <button class="next-button  " type="submit" require>
-                        <img src="./img/siguiente-boton.png" alt=""><span>Enviar</span>
-                    </button>
                 </div>
             </div>
+            <div class="col-span-2">
+            {{-- <div class="col-span-2 grid grid-cols-3"> --}}
+                {{-- <div class="col-start-2 col-span-1 flex justify-center"> --}}
+                  <x-input-submit text="Enviar" class="w-full" />
+                {{-- </div> --}}
+              </div>
+            {{-- <input value="Enviar" class=""/> --}}
     </div>
 
 
