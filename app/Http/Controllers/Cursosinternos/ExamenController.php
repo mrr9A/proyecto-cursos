@@ -3,62 +3,91 @@
 namespace App\Http\Controllers\Cursosinternos;
 
 use App\Http\Controllers\Controller;
+use App\Models\Contenido;
+use App\Models\Curso;
+use App\Models\Examen;
+use App\Models\Leccion;
+use App\Models\Opcion;
+use App\Models\Pregunta;
+use App\Models\Respuesta;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ExamenController extends Controller
 {
-
     public function store(Request $request)
     {
-        dd($request->all());
-        return $request->all();
-        // $data = $request->except('_token', 'nombre', "contenido_id");
-        // $keys = array_keys($data);
+        $dataExamen = [
+            "nombre" => $request->nombre,
+            "duracion" => $request->duracion,
+            "leccion_id" => $request->contenido_id,
+        ];
+
+        $examen = Examen::create($dataExamen);
+
+        foreach ($request->arreglo as $preguntas) {
+
+            $dataPregunta = [
+                "pregunta" => $preguntas[0],
+                "examen_id" => $examen->id_examen
+            ];
+
+            $pregunta = Pregunta::create($dataPregunta);
 
 
-        // // dd($keys);
-        // // dd ($request->all());
 
-        // $i = 0;
-        // while($i < count($keys) /2){
-        //     $preguntas = [
-        //         "pregunta" => $data[$keys[$i]],
-        //         "opciones" => $data[$keys[++$i]],
-        //         "respuesta" => $data[$keys[++$i]]
-        //     ];
+            $dataOpciones = [];
+            $opcionCorrecta = $preguntas['respuesta'];
+            for ($i = 0; $i < count($preguntas['opciones']); $i++) {
+                if ($opcionCorrecta == $i) {
+                    $consulta = [
+                        'opcion' => $preguntas['opciones'][$i],
+                        "pregunta_id" => $pregunta->id_pregunta,
+                        "correcta" => true,
+                    ];
+                    array_push($dataOpciones, $consulta);
+                    continue;
+                }
 
-        //     echo "<script>console.log(".json_encode($preguntas).")</script>";   
-        //     ++$i;
-        //     // echo "<script>console.log(".json_encode($data[$keys[$i]]).")</script>";   
-        // }
-        // dd($keys);
-        // dd ($request->all());
-        // // $examen = new Examen();
-        // // $examen->nombre = $request->input('nombre');
-        // // // $examen->save();
-        // // $preguntas = [];
+                $consulta = [
+                    'opcion' => $preguntas['opciones'][$i],
+                    "pregunta_id" => $pregunta->id_pregunta,
+                    "correcta" => false,
+                ];
 
-        // // foreach ($request->except('_token', 'nombre') as $key => $value) {
+                array_push($dataOpciones, $consulta);
+            }
+            DB::table("opciones")->insert($dataOpciones);
+        }
 
-        // // }
-
-        // // dd($request->all());
-        // $examen = new Examen();
-        // $examen->nombre = $request->input('nombre');
-        // $examen->leccion_id = $request->input('contenido_id');
-        // // $examen->save();
-        // return $examen;
-        // $createMultiplePregunt = [
-        //     ['pregunta' =>$request->input('pregunta'), 'email' => 'Cursosinternos@techvblogs.com', 'password' => bcrypt('TechvBlogs@123')]
-        // ];
-
-        // Preguntas::insert($createMultiplePregunt); // Eloquent
-        // DB::table('users')->insert($createMultiplePregunt); // Query Builder
+    
+        $conT = Contenido::find($request->contenido_id);
+        $LecC = $conT->leccion_id;
+        $LecCI = Leccion::find($LecC);
+        $idCuS = $LecCI->curso_id;
+        $CuRsO = Curso::find($idCuS);
+        // return "HOLIS SI GUARDO";
+        return to_route("curs.show",$CuRsO)->with('agregado', 'Examen Agregado Correctamente');
     }
 
 
     public function show(string $id)
     {
         return view('Cursosinternos.examenes.examen', compact('id'));
+    }
+
+    public function destroy(string $id)
+    {
+        // $examen = Examen::find($id);
+        // $id_pregunta = $examen->preguntas[0]->id_pregunta;
+        // $pregunta = Pregunta::find($id_pregunta);
+        // // $id_opcion[] = $pregunta->opciones[0]->id_opciones;
+        // // $opcion = Opcion::find($id_opcion);
+        // return $pregunta;
+        // // $id_media = $contenido->media[0]->id_media;
+        // // $media = Media_contenido::find($id_media);
+        // // $media->delete();
+        // // $contenido->delete();
+        // // return redirect()->back()->with('eliminado', 'Eliminado Correctamente');
     }
 }

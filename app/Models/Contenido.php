@@ -25,4 +25,9 @@ class Contenido extends Model
     {
         return $this->hasMany(Media_contenido::class, 'contenido_id');
     }
+
+    public function examen()
+    {
+        return $this->hasMany(Examen::class, 'leccion_id');
+    }
 }

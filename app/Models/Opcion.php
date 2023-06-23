@@ -14,7 +14,7 @@ class Opcion extends Model
     protected $table = "opciones";
     public $timestamps = false;
 
-    protected $fillable = ['opcion','pregunta_id','respuesta'];
+    protected $fillable = ['opcion','pregunta_id','correcta'];
 
     public function preguntas()
     {

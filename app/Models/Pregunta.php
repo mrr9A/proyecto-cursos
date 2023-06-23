@@ -16,7 +16,7 @@ class Pregunta extends Model
 
     protected $fillable = ['pregunta','examen_id'];
 
-    public function examenes()
+    public function examen()
     {
         return $this->belongsTo(Examen::class, 'id_examen');
     }
@@ -24,5 +24,10 @@ class Pregunta extends Model
     public function opciones()
     {
         return $this->hasMany(Opcion::class, 'pregunta_id');
+    }
+
+    public function respuesta()
+    {
+        return $this->belongsTo(Respuesta::class, 'pregunta_id');
     }
 }

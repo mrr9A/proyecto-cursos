@@ -89,7 +89,10 @@ class User extends Authenticatable
         return $this->hasMany(Calificacion::class, "usuario_id");
     }
 
-
+    public function cursos()
+    {
+        return $this->belongsToMany(Curso::class, "usuarios_cursos",'usuario_id', 'curso_id');
+    }
 
     // FUNCIONES
     public static function getCountEmployesByPuesto()

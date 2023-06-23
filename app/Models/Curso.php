@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 class Curso extends Model
 {
     use HasFactory;
-    protected $fillable = ['nombre', 'fecha_inicio', 'fecha_final', 'estado', 'modalidad_id', 'tipo_curso_id', 'codigo','imagen'];
+    protected $fillable = ['nombre', 'fecha_inicio', 'fecha_termino','interno_planta', 'estado', 'modalidad_id', 'tipo_curso_id', 'codigo','imagen'];
     protected $primaryKey = "id_curso";
     public $timestamps = false;
 
@@ -24,7 +24,11 @@ class Curso extends Model
     }
     public function usuarios()
     {
-        return $this->belongsToMany(User::class, "calificaciones", 'usuario_id_usuario', 'curso_id_curso');
+        return $this->belongsToMany(User::class, "calificaciones", 'usuario_id_usuario', 'curso_id_curso', 'usuario_id');
+    }
+    public function usuarioCurso()
+    {
+        return $this->belongsToMany(User::class, "usuarios_cursos",'curso_id','usuario_id');
     }
 
     public function puestos()

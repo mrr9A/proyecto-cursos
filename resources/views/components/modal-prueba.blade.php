@@ -1,8 +1,4 @@
-<!-- Modal toggle -->
-<button data-modal-target="{{$id}}" data-modal-toggle="{{$id}}"
-    class="block text-gray-50 bg-blue-800 border-b-2 border-2 rounded-md  focus:outline-none  font-medium text-sm px-5 py-2.5 text-center hover:bg-blue-900 hover:text-gray-200 hover:rounded-t-md"
-    type="button"> {{$textButton}}
-</button>
+
 
 <!-- Main modal -->
 <div id="{{$id}}" tabindex="-1" aria-hidden="true"
