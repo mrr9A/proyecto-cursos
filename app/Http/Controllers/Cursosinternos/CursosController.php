@@ -4,25 +4,70 @@ namespace App\Http\Controllers\Cursosinternos;
 
 use App\Http\Controllers\Controller;
 use App\Models\Curso;
+use App\Models\Examen;
 use App\Models\ModalidadCurso;
 use App\Models\TipoCurso;
 use App\Models\User;
+use App\Models\Usuario_curso;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class CursosController extends Controller
 {
     public function index()
     {
+<<<<<<< HEAD
         $cursos = Curso::where('interno_planta', '=', '1')->orderBy('id_curso', 'desc')->paginate('10');
         $autores = User::all();
         return view('Cursosinternos.cursos.catalago', compact('cursos', 'autores'));
+=======
+        $cursos = Curso::orderBy('id_curso', 'desc')->paginate('10');
+        return view('Cursosinternos.cursos.catalago', compact('cursos'));
+>>>>>>> f989ac1ef1b80bc5b4cc9fcbed90324c8aa40479
     }
     public function show($id)
     {
         $curso = Curso::find($id);
         $modalidad = ModalidadCurso::all();
         $tipo = TipoCurso::all();
-        return view('Cursosinternos.cursos.configurarCursos', compact('curso','modalidad','tipo'));
+        $usuarios = User::all();
+        return view('Cursosinternos.cursos.configurarCursos', compact('curso', 'modalidad', 'tipo', 'usuarios'));
+    }
+
+
+    public function update(Request $request, string $id)
+    {
+        $curso = Curso::find($id);
+        if ($request->hasFile('imagen')) {
+            $img = $request->file('imagen')->store('public/imagenes');
+            $url = Storage::url($img);
+            $curso->imagen = $url;
+        }
+        $curso->codigo = $request->post('codigo');
+        $curso->nombre = $request->post('nombre');
+        $curso->fecha_inicio = $request->post('fecha_inicio');
+        $curso->fecha_termino = $request->post('fecha_termino');
+        $curso->estado = $request->post('estado');
+        $curso->modalidad_id = $request->post('modalidad_id');
+        $curso->tipo_curso_id = $request->post('tipo_curso_id');
+        $curso->saveOrFail();
+        return redirect()->back()->with('actualizado', 'Actualizado Correctamente');
+    }
+
+    public function store(Request $request)
+    {
+        $dataUsuarios = [];
+        foreach ($request->usuarios as $usuario) {
+
+            $consulta = [
+                "usuario_id" => $usuario,
+                "curso_id" => $request->curso_id
+            ];
+            array_push($dataUsuarios, $consulta);
+        }
+        DB::table("usuarios_cursos")->insert($dataUsuarios);
+        return redirect()->back()->with('agregado', 'Usuario agregado a curso');
     }
 
     public function destroy(string $id)
@@ -30,5 +75,13 @@ class CursosController extends Controller
         $cursos = Curso::find($id);
         $cursos->delete();
         return redirect('cursos')->with('eliminado', 'Eliminado Correctamente');
+    }
+
+    public function destroyUser(string $id)
+    {
+        $user = User::find($id);
+        $Curso = $user->cursos[0]->id_curso;
+        $user->cursos()->detach($Curso);
+        return redirect()->back()->with('eliminado', 'Eliminado Correctamente');
     }
 }

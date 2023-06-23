@@ -14,10 +14,15 @@ class Examen extends Model
     protected $table = "examen";
     public $timestamps = false;
 
-    protected $fillable = ['nombre','leccion_id'];
+    protected $fillable = ['nombre','duracion','leccion_id'];
 
     public function preguntas()
     {
         return $this->hasMany(Pregunta::class, 'examen_id');
+    }
+
+    public function contenido()
+    {
+        return $this->belongsTo(Contenido::class, 'id_contenido');
     }
 }

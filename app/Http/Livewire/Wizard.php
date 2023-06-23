@@ -51,7 +51,6 @@ class Wizard extends Component
         $validatedData = $this->validate([
             'modalidad_id' => 'required',
             'tipo_curso_id' => 'required',
-            // 'interno_planta' => 'required',
         ]);
 
         $this->currentStep = 4;
@@ -76,7 +75,6 @@ class Wizard extends Component
         $this->clearForm();
 
         return to_route("curs.show",$curso->id_curso)->with('agregado', 'Agregado Correctamente');
-        // 36743137
     }
 
     public function show($id)

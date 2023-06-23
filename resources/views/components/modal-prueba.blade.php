@@ -1,8 +1,4 @@
-<!-- Modal toggle -->
-<button data-modal-target="{{$id}}" data-modal-toggle="{{$id}}"
-    class="{{$class ?? "" ? $class : 'flex items-center gap-2 text-gray-50 bg-blue-800 border-b-2 border-2 rounded-md  focus:outline-none  font-medium text-sm px-2 py-1.5  hover:bg-blue-900 hover:text-gray-200 hover:rounded-t-md'}} "
-    type="button"><i class='{{ $icon ?? '' ? $icon : 'bx bxs-plus-circle' }}'></i> @if(($textButton ?? "" ))<span>{{$textButton}}</span>@endif
-</button>
+
 
 <!-- Main modal -->
 <div id="{{$id}}" tabindex="-1" aria-hidden="true"
@@ -23,7 +19,7 @@
             </button>
             <div class="px-6 py-6 lg:px-8">
                 <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">{{$title}}</h3>
-                @include($vistaContenidoModal, ['modalidad', 'tipo', 'sucursale'])
+                @include($vistaContenidoModal, ['modalidad', 'tipo'])
             </div>
         </div>
     </div>
