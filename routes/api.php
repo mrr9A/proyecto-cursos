@@ -24,38 +24,38 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 // http://localhost:8000/api/cursosxplanes/1
-Route::get('cursosxplanes/{id}', function ($id){
+Route::get('cursosxplanes/{id}', function ($id) {
     $data = Curso::getCursesByPuesto($id);
     return response()->json($data);
 });
 // get numero de empleados por puesto
-Route::get('cursosplanta/trabajadores/datos', function (){
+Route::get('cursosplanta/trabajadores/datos', function () {
     $data = User::getCountEmployesByPuesto();
     return response()->json($data);
 });
 //get trabajos por puesto
-Route::get('cursosplanta/puesto/{id}/trabajos', function ($id){
+Route::get('cursosplanta/puesto/{id}/trabajos', function ($id) {
     $data = Puesto::find($id)->trabajos;
     return response()->json($data);
 });
 // get progreso de los empleados de ventas
-Route::get('prueba', function (){
+Route::get('prueba', function () {
     $data = Puesto::prueba2();
     return response()->json($data);
 });
 // get cursos por puesto
-Route::get("cursosplanta/cursos/{puesto}", function ($puesto){
+Route::get("cursosplanta/cursos/{puesto}", function ($puesto) {
     $cursos = Curso::getCursesByPuesto($puesto);
     return response()->json($cursos);
 });
 
-Route::get('cursosplanta/puesto/{id}', function ($id){
+Route::get('cursosplanta/puesto/{id}', function ($id) {
     $puesto = Puesto::find($id);
     $puesto->trabajos;
     $puesto->planes_formacion;
     return response()->json($puesto);
 });
-Route::get('getProgressByUser', function (){
+Route::get('getProgressByUser', function () {
     $puesto = User::getProgressByUser();
     return response()->json($puesto);
 });

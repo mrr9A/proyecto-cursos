@@ -1,7 +1,7 @@
 <!-- Modal toggle -->
 <button data-modal-target="{{$id}}" data-modal-toggle="{{$id}}"
-    class="block text-gray-50 bg-blue-800 border-b-2 border-2 rounded-md  focus:outline-none  font-medium text-sm px-5 py-2.5 text-center hover:bg-blue-900 hover:text-gray-200 hover:rounded-t-md"
-    type="button"> {{$textButton}}
+    class="{{$class ?? "" ? $class : 'flex items-center gap-2 text-gray-50 bg-blue-800 border-b-2 border-2 rounded-md  focus:outline-none  font-medium text-sm px-2 py-1.5  hover:bg-blue-900 hover:text-gray-200 hover:rounded-t-md'}} "
+    type="button"><i class='{{ $icon ?? '' ? $icon : 'bx bxs-plus-circle' }}'></i> @if(($textButton ?? "" ))<span>{{$textButton}}</span>@endif
 </button>
 
 <!-- Main modal -->
@@ -23,7 +23,7 @@
             </button>
             <div class="px-6 py-6 lg:px-8">
                 <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">{{$title}}</h3>
-                @include($vistaContenidoModal, ['modalidad', 'tipo'])
+                @include($vistaContenidoModal, ['modalidad', 'tipo', 'sucursale'])
             </div>
         </div>
     </div>

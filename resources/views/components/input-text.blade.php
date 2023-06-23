@@ -1,5 +1,5 @@
-<div class="text-text-input relative">
-    <label for="{{ $id ?? $nombre }}" class="block mb-2 font-semi-bold font-poppins text-gray-900 dark:text-white {{$classLabel ?? ""}}">
+<div class="{{$class ?? ""}} text-text-input relative">
+    <label for="{{ $id ?? $nombre }}" class="block mb-2 font-semi-bold font-poppins text-gray-600 dark:text-white {{$classLabel ?? ""}}">
         {{ $text }}
         @if ($required ?? '')
             <span>*</span>

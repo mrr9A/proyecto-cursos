@@ -36,7 +36,7 @@ Route::get('curso', function () {
 
 // // // Route::resource('usuarios',\App\Http\Controllers\UsuarioController::class);
 
-Route::resource('sucursales',\App\Http\Controllers\Cursosinternos\SucursalesController::class);
+
 
 Route::resource('curs',\App\Http\Controllers\Cursosinternos\CursosController::class);
 

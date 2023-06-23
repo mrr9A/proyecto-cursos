@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SaveUserRequest;
 use App\Models\Puesto;
 use App\Models\Sucursal;
 use App\Models\User;
@@ -21,7 +22,7 @@ class UsuarioController extends Controller
       return view('usuarios.index', compact('usuarios', 'sucursal', 'puesto'));
    }
 
-   public function store(Request $request)
+   public function store(SaveUserRequest $request)
    {
       $data = [
          'nombre' => $request->nombre,
@@ -67,5 +68,16 @@ class UsuarioController extends Controller
       $sucursal = Sucursal::all();
       $puestos = Puesto::all();
       return view('usuarios.create', compact('sucursal', 'puestos'));
+   }
+
+   public function edit($id){
+      $usuario = User::find($id);
+      $sucursal = Sucursal::all();
+      $puestos = Puesto::all();
+      return view('usuarios.create', compact('usuario', 'sucursal', 'puestos'));
+   }
+
+   public function update(SaveUserRequest $request){
+
    }
 }
