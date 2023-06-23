@@ -13,7 +13,7 @@ class CursosController extends Controller
 {
     public function index()
     {
-        $cursos = Curso::orderBy('id_curso', 'desc')->paginate('10');
+        $cursos = Curso::where('interno_planta', '=', '1')->orderBy('id_curso', 'desc')->paginate('10');
         $autores = User::all();
         return view('Cursosinternos.cursos.catalago', compact('cursos', 'autores'));
     }

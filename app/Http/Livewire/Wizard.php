@@ -14,7 +14,7 @@ class Wizard extends Component
     use WithFileUploads;
 
     public $currentStep = 1;
-    public $codigo, $nombre, $fecha_inicio, $fecha_termino, $estado = 1, $modalidad_id, $tipo_curso_id, $interno_planta = 0 , $imagen;
+    public $codigo, $nombre, $fecha_inicio, $fecha_termino, $estado = 1, $modalidad_id, $tipo_curso_id, $interno_planta = 1 , $imagen;
     public $successMessage = '';
 
     public function render()

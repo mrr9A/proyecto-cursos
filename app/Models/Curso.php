@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 class Curso extends Model
 {
     use HasFactory;
-    protected $fillable = ['nombre', 'fecha_inicio', 'fecha_final', 'estado', 'modalidad_id', 'tipo_curso_id', 'codigo','imagen'];
+    protected $fillable = ['nombre', 'fecha_inicio', 'fecha_final', 'estado', 'modalidad_id', 'tipo_curso_id', 'codigo','imagen', 'interno_planta'];
     protected $primaryKey = "id_curso";
     public $timestamps = false;
 
@@ -53,7 +53,7 @@ class Curso extends Model
             )
             ->leftjoin("modalidad_cursos as mc", "c.modalidad_id", "=", "mc.id_modalidad")
             ->leftjoin("tipo_cursos as tc", "c.tipo_curso_id", "=", "tc.id_tipo_curso")
-            ->where('c.estado', '=', 1)
+            ->where([['c.estado', '=', 1 ], ['c.interno_planta', '=', 0]])
             ->get();
 
         return $cursos;
