@@ -26,6 +26,15 @@ a {
     @apply cursor-pointer;
 }
 
+i {
+    text-align: center;
+    line-height: 50px;
+    font-size: 32px;
+    cursor: pointer;
+    font-weight: 300;
+    transition: all 0.2s ease;
+}
+
 .size {
     width: 260px;
 }

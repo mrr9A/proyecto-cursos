@@ -18,6 +18,7 @@ slot con nombre
     <!-- <link href="/css/app.css" rel="stylesheet"/> -->
     <!-- cargando css y js con vite, renderiza en tiempo real -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     @livewireStyles
 
 </head>
