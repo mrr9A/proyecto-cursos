@@ -19,7 +19,7 @@ slot con nombre
     <!-- cargando css y js con vite, renderiza en tiempo real -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
-    
+
 </head>
 
 
@@ -34,7 +34,8 @@ slot con nombre
             <main class=" h-full m-auto px-4 relative  overflow-x-auto min-w-[100%] z-20">
                 <div class="flex items-center justify-between">
                     <h1 class="uppercase font-bold text-title">{{ $title ?? 'INICIO' }}</h1>
-                    <div class="flex gap-2 items-center cursor-pointer" id="dropdownInformationButton" data-dropdown-toggle="dropdownInformation">
+                    <div class="flex gap-2 items-center cursor-pointer" id="dropdownInformationButton"
+                        data-dropdown-toggle="dropdownInformation">
                         <x-navs.menu-profile />
                     </div>
                 </div>

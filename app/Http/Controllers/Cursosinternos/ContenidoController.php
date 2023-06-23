@@ -62,7 +62,7 @@ class ContenidoController extends Controller
         }
         $media->contenido_id = $id_cont;
         $media->saveOrFail();
-        return redirect()->back()->with('agregado', 'Agregado Correctamente');
+        return redirect()->back()->with('actualizado', 'Actualizado Correctamente');
     }
 
     public function edi ($id)

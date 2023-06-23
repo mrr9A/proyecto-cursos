@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Cursosinternos\ContenidoController;
+use App\Http\Controllers\Cursosinternos\CursosController;
 use App\Http\Controllers\Cursosinternos\LeccionesController;
 use Illuminate\Support\Facades\Route;
 
@@ -50,3 +51,5 @@ Route::get('ver/{id}',[ContenidoController::class,'ver'])->name('ver');
 Route::get('editar/{id}',[LeccionesController::class,'edit'])->name('editLec');
 
 Route::get('edi/{id}',[ContenidoController::class,'edi'])->name('ediConte');
+
+Route::delete('/eliminarpuesto/{id}', [CursosController::class,'destroyUser'])->name('destroyuser');

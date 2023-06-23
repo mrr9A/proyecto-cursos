@@ -40,6 +40,7 @@
                             </thead>
                             <tbody>
                                 @foreach ($cursos as $curso)
+                                @if($curso->interno_planta == 1)
                                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-800 text-center">
                                     <td class="inline-block ">
                                         <img src="{{$curso->imagen}}" width="50" height="50">
@@ -64,6 +65,7 @@
                                         </a>
                                     </td>
                                 </tr>
+                                @endif
                                 @endforeach
                             </tbody>
                         </table>

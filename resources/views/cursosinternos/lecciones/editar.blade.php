@@ -27,7 +27,7 @@
                             <br>
                             <div class="grid col-6 ">
                                 <label for="descripcion">Descripcion de la Lección <span class="text-red-500">*</span></label>
-                                <textarea type="text" rows="3" name="descripcion" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" require>{{$leccion->descripcion}}</textarea>
+                                <textarea type="text" rows="8" name="descripcion" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" require>{{$leccion->descripcion}}</textarea>
                                 @error('descripcion') <span class="error">{{ $message }}</span> @enderror
                             </div>
                             <br>
@@ -42,9 +42,9 @@
                                                 <input id="url_imagen" name="url_imagen" type="file" class="sr-only" accept="image/*" require>
                                                 @error('url_imagen') <span class="error">{{ $message }}</span> @enderror
                                             </label>
-                                            <div class="text-center">
-                                                <img src="{{$leccion->url_imagen}}" width="150" height="150" class="inline-block" alt="">
-                                            </div>
+                                        </div>
+                                        <div class="text-center">
+                                            <img src="{{$leccion->url_imagen}}" width="150" height="150" class="inline-block" alt="">
                                         </div>
                                         <p class="text-xs leading-5 text-gray-600">Formatos Admitidos: PNG, JPG</p>
                                     </div>
@@ -84,4 +84,3 @@
     </div>
 
 </x-app>
-

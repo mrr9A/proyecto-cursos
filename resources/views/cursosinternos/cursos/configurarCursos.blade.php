@@ -1,40 +1,18 @@
 <x-app>
+    <!-- La cotorisa  podcats-->
     <div class="container mt-2 mx-3">
         <div class="flex">
+            <!-- CUERPO DE TODO INFORMACION DEL CURSO, LECCIONES. CONTENIDO -->
             <div class="w-full p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
                 <!-- OPCIONES -->
-                <div class="flex justify-end items-center">
-                    <button id="dropdownButton2" data-dropdown-toggle="dropdown2" class="flex items-center text-input font-bold dark:text-gray-400 hover:bg-gray-300 dark:hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg p-1.5" type="button">
-                        <span>Opciones</span>
-                        <span class="justify-end">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 16 16">
-                                <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
-                                    <circle cx="8" cy="2.5" r=".75" />
-                                    <circle cx="8" cy="8" r=".75" />
-                                    <circle cx="8" cy="13.5" r=".75" />
-                                </g>
-                            </svg>
-                        </span>
-                    </button>
-                    <!-- Dropdown menu -->
-                    <div id="dropdown2" class=" hidden text-base items-center list-none bg-white divide-y divide-gray-100 rounded-lg shadow w-44 font-bold dark:bg-gray-700">
-                        <ul class="py-2 items-center" aria-labelledby="dropdownButton2">
-                            <li class="items-center">
-                                <!-- Modal toggle -->
-                                <a data-modal-target="staticModal" data-modal-toggle="staticModal" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
-                                    Editar Información Curso
-                                </a>
-                            </li>
-                            <li class="items-center">
-                                <div>
-                                    <form action="{{ url('Lecciones',[$curso]) }}">
-                                        <button class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Agregar una Lección</button>
-                                    </form>
-                                </div>
-                            </li>
-                        </ul>
+                <div class="flex justify-start mx-12 items-center">
+                    <x-modal title="EDITAR CURSO" textButton="Editar Información Curso" id="editar_curso_interno" vistaContenidoModal="cursosinternos.cursos.editarCurso" :curso="$curso" :modalidad="$modalidad" :tipo="$tipo" />
+                    <div>
+                        <form action="{{ url('Lecciones',[$curso]) }}">
+                            <button class="block text-gray-50 bg-blue-800 border-b-2 border-2 rounded-md  focus:outline-none  font-medium text-sm px-5 py-2.5 text-center hover:bg-blue-900 hover:text-gray-200 hover:rounded-t-md">Agregar una Lección</button>
+                        </form>
                     </div>
-                </div>
+                </div><br>
                 <!-- FIN -->
                 <div class="p-2 bg-white border border-gray-200 rounded-lg shadow mx-12 text-center">
                     <img src="{{$curso['imagen']}}" class="rounded-full w-96 h-96 inline-block " width="350" height="350">
@@ -97,12 +75,12 @@
                                     <div id="dropdown3-{{$leccion->id_leccion}}" class=" hidden text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
                                         <ul class="py-2" aria-labelledby="dropdownButton3-{{$leccion->id_leccion}}">
                                             <li>
-                                                <a href="{{ url('contenidos',[$leccion]) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                                <a href="{{ url('contenidos',[$leccion]) }}" class="block text-gray-50 bg-blue-800 border-b-2 border-2 rounded-md  focus:outline-none  font-medium text-sm px-5 py-2.5 text-center hover:bg-blue-900 hover:text-gray-200 hover:rounded-t-md">
                                                     Agregar Contenido
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="{{ route('editLec',[$leccion]) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                                <a href="{{ route('editLec',[$leccion]) }}" class="block text-gray-50 bg-blue-800 border-b-2 border-2 rounded-md  focus:outline-none  font-medium text-sm px-5 py-2.5 text-center hover:bg-blue-900 hover:text-gray-200 hover:rounded-t-md">
                                                     Editar Leccion
                                                 </a>
                                             </li>
@@ -110,7 +88,7 @@
                                                 <form action="{{ url('Lecciones',[$leccion]) }}" method="POST" class="formulario-eliminar">
                                                     @method("DELETE")
                                                     @csrf
-                                                    <button type="submit" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                                    <button type="submit" class="block text-gray-50 bg-blue-800 border-b-2 border-2 rounded-md  focus:outline-none  font-medium text-sm px-5 py-2.5 text-center hover:bg-blue-900 hover:text-gray-200 hover:rounded-t-md">
                                                         Eliminar Lección
                                                     </button>
                                                 </form>
@@ -129,27 +107,47 @@
                                         </svg>
                                     </span>{{$conteni->nombre}}
                                     <div class="flex overflow-auto gap-3 items-center">
+                                        <form action="{{url('contenidos',[$conteni])}}" method="POST" id="{{$conteni->nombre}}" class="text-secondary formulario-eliminarCont">
+                                            @method("DELETE")
+                                            @csrf
+
+                                            <button type="submit" class="btn text-red-500 text-center">
+                                                <span class="text-red-700">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="25" height="25" viewBox="0 0 50 50">
+                                                        <path d="M 21.800781 10.099609 C 20.916781 10.099609 20.199219 10.815219 20.199219 11.699219 L 20.199219 12.099609 L 9.8007812 12.099609 C 9.5247813 12.099609 9.3007812 12.323609 9.3007812 12.599609 C 9.3007812 12.875609 9.5247813 13.099609 9.8007812 13.099609 L 11.740234 13.099609 L 13.857422 38.507812 C 14.017422 40.410812 15.636922 41.900391 17.544922 41.900391 L 32.455078 41.900391 C 34.363078 41.900391 35.982625 40.410812 36.140625 38.507812 L 38.257812 13.099609 L 40.199219 13.099609 C 40.476219 13.099609 40.699219 12.875609 40.699219 12.599609 C 40.699219 12.323609 40.475219 12.099609 40.199219 12.099609 L 29.800781 12.099609 L 29.800781 11.699219 C 29.800781 10.815219 29.083219 10.099609 28.199219 10.099609 L 21.800781 10.099609 z M 12.742188 13.099609 L 37.255859 13.099609 L 35.144531 38.423828 C 35.028531 39.812828 33.848078 40.900391 32.455078 40.900391 L 17.542969 40.900391 C 16.150969 40.900391 14.969516 39.811828 14.853516 38.423828 L 12.742188 13.099609 z"></path>
+                                                    </svg>
+                                                </span>
+                                                <span class="text-sm">Eliminar Contenido</span>
+                                            </button>
+                                        </form>
                                         <a href="{{route('ediConte',[$conteni])}}" class="text-secondary">
                                             <span>
                                                 <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="25" height="25" viewBox="0 0 50 50">
                                                     <path d="M40.561,11.987c0.586,0.586,0.586,1.536,0,2.121L15.488,39.181l-5.292,1.77c-0.709,0.237-1.384-0.438-1.147-1.147	l1.77-5.292L35.892,9.439c0.586-0.586,1.536-0.586,2.121,0L40.561,11.987z M33.274,13.294L11.583,34.985l-1.058,3.164l1.325,1.325	l3.165-1.058l21.691-21.691L33.274,13.294z"></path>
                                                 </svg>
                                             </span>
-                                            <span>Editar</span>
+                                            <span class="text-sm">Edita Contenido</span>
                                         </a>
-                                        <form action="{{url('contenidos',[$conteni])}}" method="POST" id="{{$conteni->nombre}}" class="text-secondary formulario-eliminar">
+                                        @if(count($conteni->examen) > 0 )
+                                        <form action="{{url('examenes',[$conteni->examen[0]->id_examen])}}" method="POST" id="{{$conteni->nombre}}" class="text-secondary formulario-eliminarEx">
                                             @method("DELETE")
                                             @csrf
 
                                             <button type="submit" class="btn text-center">
-                                                <span>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="25" height="25" viewBox="0 0 50 50">
-                                                        <path d="M 21.800781 10.099609 C 20.916781 10.099609 20.199219 10.815219 20.199219 11.699219 L 20.199219 12.099609 L 9.8007812 12.099609 C 9.5247813 12.099609 9.3007812 12.323609 9.3007812 12.599609 C 9.3007812 12.875609 9.5247813 13.099609 9.8007812 13.099609 L 11.740234 13.099609 L 13.857422 38.507812 C 14.017422 40.410812 15.636922 41.900391 17.544922 41.900391 L 32.455078 41.900391 C 34.363078 41.900391 35.982625 40.410812 36.140625 38.507812 L 38.257812 13.099609 L 40.199219 13.099609 C 40.476219 13.099609 40.699219 12.875609 40.699219 12.599609 C 40.699219 12.323609 40.475219 12.099609 40.199219 12.099609 L 29.800781 12.099609 L 29.800781 11.699219 C 29.800781 10.815219 29.083219 10.099609 28.199219 10.099609 L 21.800781 10.099609 z M 12.742188 13.099609 L 37.255859 13.099609 L 35.144531 38.423828 C 35.028531 39.812828 33.848078 40.900391 32.455078 40.900391 L 17.542969 40.900391 C 16.150969 40.900391 14.969516 39.811828 14.853516 38.423828 L 12.742188 13.099609 z"></path>
+                                                <span class="text-center text-red-500">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 48 48">
+                                                        <g fill="currentColor">
+                                                            <path d="M20 15a1 1 0 0 1 1-1h8a1 1 0 1 1 0 2h-8a1 1 0 0 1-1-1Zm1 3a1 1 0 1 0 0 2h8a1 1 0 1 0 0-2h-8Zm-1 10a1 1 0 0 1 1-1h8a1 1 0 1 1 0 2h-8a1 1 0 0 1-1-1Zm1 3a1 1 0 1 0 0 2h8a1 1 0 1 0 0-2h-8Z" />
+                                                            <path fill-rule="evenodd" d="M10 27a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1v-5Zm2 1v3h3v-3h-3Z" clip-rule="evenodd" />
+                                                            <path d="M17.707 15.707a1 1 0 0 0-1.414-1.414L13 17.586l-1.293-1.293a1 1 0 0 0-1.414 1.414L13 20.414l4.707-4.707Z" />
+                                                            <path fill-rule="evenodd" d="M10 6a4 4 0 0 0-4 4v28a4 4 0 0 0 4 4h20a4 4 0 0 0 4-4V10a4 4 0 0 0-4-4H10Zm-2 4a2 2 0 0 1 2-2h20a2 2 0 0 1 2 2v28a2 2 0 0 1-2 2H10a2 2 0 0 1-2-2V10Zm28 6a3 3 0 1 1 6 0v20.303l-3 4.5l-3-4.5V16Zm3-1a1 1 0 0 0-1 1v2h2v-2a1 1 0 0 0-1-1Zm0 22.197l-1-1.5V20h2v15.697l-1 1.5Z" clip-rule="evenodd" />
+                                                        </g>
                                                     </svg>
                                                 </span>
-                                                <span>Eliminar</span>
+                                                <span class="text-center text-sm text-red-500">Eliminar examen</span><br>
                                             </button>
                                         </form>
+                                        @else
                                         <a href="{{url('examenes',[$conteni])}}">
                                             <span class="text-center">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 48 48">
@@ -163,6 +161,7 @@
                                             </span>
                                             <span class="text-center">examen</span>
                                         </a>
+                                        @endif
                                         <a href="{{route('ver',[$conteni])}}" class="text-secondary">
                                             <!-- Icon -->
                                             <span>
@@ -170,7 +169,7 @@
                                                     <path fill="currentColor" d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0a6.5 6.5 0 0 0-13 0Zm4.879-2.773l4.264 2.559a.25.25 0 0 1 0 .428l-4.264 2.559A.25.25 0 0 1 6 10.559V5.442a.25.25 0 0 1 .379-.215Z" />
                                                 </svg>
                                             </span>
-                                            <span>Ver</span>
+                                            <span class="text-sm">Ver Contenido</span>
                                         </a>
                                     </div>
                                 </div>
@@ -185,7 +184,7 @@
             </div>
 
             <div class="w-full max-w-md p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
-
+                <!-- CARDS DE LA INFORMACION MAS RELEVANTE DELCURSO -->
                 <div class="block p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
                     <div class="pt-5 pb-4 px-5 px-lg-3 px-xl-5">
                         <h3 class="mb-5 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Información General del Curso</h3>
@@ -262,6 +261,7 @@
                         </ul>
                     </div>
                 </div><br>
+                <!-- CARD DE USUARIOS INSCRITOS -->
                 <div class="block p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
                     <div class="flex justify-between px-4 items-center overflow-auto gap-3 mb-5 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
                         Usuarios Inscritos al Curso
@@ -283,9 +283,10 @@
                             <div id="dropdown1" class=" hidden text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
                                 <ul class="py-2" aria-labelledby="dropdownButton1">
                                     <li>
-                                        <a href="" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
-                                            Agregar Usuarios
-                                        </a>
+                                        <!-- Modal toggle -->
+                                        <button data-modal-target="agregar_usuario_curso_interno" data-modal-toggle="agregar_usuario_curso_interno" class="block text-gray-50 bg-blue-800 border-b-2 border-2 rounded-md  focus:outline-none  font-medium text-sm px-5 py-2.5 text-center hover:bg-blue-900 hover:text-gray-200 hover:rounded-t-md" type="button"> Agregar Usuario al Curso
+                                        </button>
+
                                     </li>
                                 </ul>
                             </div>
@@ -309,19 +310,23 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-800 text-center">
+                                    @foreach($curso->usuarioCurso as $userCurso)
+                                    <tr class="bg-white border-b dark:bg-gray-800 text-sm dark:border-gray-800 text-center">
                                         <td class="py-4 font-bold">
-                                            Codígo
+                                            {{$userCurso->id_sgp}}
                                         </td>
                                         <td class="py-4 font-bold">
-                                            Nombre
+                                            {{$userCurso->nombre}} {{$userCurso->segundo_nombre}} {{$userCurso->apellido_paterno}} {{$userCurso->apellido_materno}}
                                         </td>
                                         <td class="py-4 font-bold">
-                                            <form action="">
-                                                <a href="#" class="font-medium text-red-600 dark:text-red-500 hover:underline">Eliminar</a>
+                                            <form action="{{route('destroyuser',[$userCurso])}}" method="POST" class="formulario-eliminar-User">
+                                                @method("DELETE")
+                                                @csrf
+                                                <button class="font-medium text-red-600 dark:text-red-500 hover:underline">Eliminar</button>
                                             </form>
                                         </td>
                                     </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </ul>
@@ -331,66 +336,10 @@
 
         </div>
     </div>
-</x-app>
+    <!-- MODAL DE AÑADIR USUARIO -->
+    <x-modal-prueba title="Agregar Usuario al Curso" textButton="Agregar Usuarios" id="agregar_usuario_curso_interno" vistaContenidoModal="cursosinternos.cursos.agregarUsuarioCurso" :curso="$curso" :usuarios="$usuarios" :tipo="$tipo" />
 
-<!-- .------------------------------------------------------------------------------------------- -->
-<!-- MODAL DE EDITAR -->
-<div id="staticModal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
-    <div class="relative w-full max-w-2xl max-h-full">
-        <!-- Modal content -->
-        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-            <!-- Modal header -->
-            <div class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
-                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                    Actualizar Curso
-                </h3>
-                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="staticModal">
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-                    </svg>
-                </button>
-            </div>
-            <!-- Modal body -->
-            <div class="p-6 space-y-6">
-                <form class="space-y-6" action="" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    @method ('PATCH')
-                    <div>
-                        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Codígo del Curso</label>
-                        <input type="text" id="codigo" name="codigo" value="{{$curso->codigo}}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="name@company.com" required>
-                    </div>
-                    <div>
-                        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre del Curso</label>
-                        <input type="text" id="nombre" name="nombre" value="{{$curso->nombre}}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required>
-                    </div>
-                    <div>
-                        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha de Inicio: </label>
-                        <h3 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> {{$curso->fecha_inicio}}</h3>
-                        <input type="date" name="fecha_inicio" value="{{$curso->fecha_inicio}}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required>
-                    </div>
-                    <div>
-                        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha de Termino: </label>
-                        <h3 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{$curso->fecha_termino}}</h3>
-                        <input type="date" name="fecha_inicio" value="{{$curso->fecha_termino}}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required>
-                    </div>
-                    <div>
-                        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Imagen del Curso</label>
-                        <img src="{{$curso->imagen}}" width="150" height="150" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                        <input type="file" id="imagen" accept="image/*" value="{{$curso->imagen}}" name="imagen" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required>
-                    </div>
-                    <button type="submit" class="w-full text-white bg-blue-700 hover:bg-dark-800 focus:ring-4 focus:outline-none focus:ring-dark-300 font-medium rounded-lg px-5 py-2.5 text-center dark:bg-dark-900 dark:hover:bg-dark-700 dark:focus:ring-dark-800">
-                        <span class="inline-block">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
-                                <path fill="currentColor" d="M3 5.75A2.75 2.75 0 0 1 5.75 3h9.964a3.25 3.25 0 0 1 2.299.952l2.035 2.035c.61.61.952 1.437.952 2.299v3.736a6.471 6.471 0 0 0-1.5-.709V8.287c0-.465-.184-.91-.513-1.238l-2.035-2.035a1.75 1.75 0 0 0-.952-.49V7.25a2.25 2.25 0 0 1-2.25 2.25h-4.5A2.25 2.25 0 0 1 7 7.25V4.5H5.75c-.69 0-1.25.56-1.25 1.25v12.5c0 .69.56 1.25 1.25 1.25H6v-5.25A2.25 2.25 0 0 1 8.25 12h5.784a6.534 6.534 0 0 0-1.658 1.5H8.25a.75.75 0 0 0-.75.75v5.25h3.813c.173.534.412 1.037.709 1.5H5.75A2.75 2.75 0 0 1 3 18.25V5.75ZM8.5 4.5v2.75c0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75V4.5h-6Zm14.5 13a5.5 5.5 0 1 1-11 0a5.5 5.5 0 0 1 11 0Zm-8.5-.5a.5.5 0 0 0 0 1h4.793l-1.647 1.646a.5.5 0 0 0 .708.708l2.5-2.5a.5.5 0 0 0 0-.708l-2.5-2.5a.5.5 0 0 0-.708.708L19.293 17H14.5Z" />
-                            </svg>
-                            Guardar
-                        </span>
-                    </button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+</x-app>
 
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -408,7 +357,6 @@
     )
 </script>
 @endif
-
 @if (session('agregado') == 'Agregado Correctamente')
 <script>
     Swal.fire(
@@ -418,11 +366,38 @@
     )
 </script>
 @endif
+@if (session('agregado') == 'Usuario agregado a curso')
+<script>
+    Swal.fire(
+        'Usuarios Agregados Correctamente!!!!!',
+        'Felicidades!!!!',
+        'success'
+    )
+</script>
+@endif
 @if (session('agregado') == 'Leccion Agregado Correctamente')
 <script>
     Swal.fire(
         'Leccion Creada Correctamente!!!!!',
         'Felicidades ahora Puede Agregar Contenido a ella!!!!',
+        'success'
+    )
+</script>
+@endif
+@if (session('agregado') == 'Examen Agregado Correctamente')
+<script>
+    Swal.fire(
+        'Examen Creado Correctamente!!!!!',
+        'Felicidades!!!!',
+        'success'
+    )
+</script>
+@endif
+@if (session('actualizado') == 'Actualizado Correctamente')
+<script>
+    Swal.fire(
+        'Curso Actualizado Correctamente!!!!!',
+        'Felicidades!!!!',
         'success'
     )
 </script>
@@ -446,7 +421,6 @@
     )
 </script>
 @endif
-
 <script>
     const forms = document.querySelectorAll(".formulario-eliminar")
 
@@ -456,8 +430,104 @@
             e.preventDefault();
 
             swal.fire({
+                title: 'Estas Seguro de Eliminar esta Lección',
+                text: "Si lo eliminas ya no lo podras recuperar",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#252850',
+                confirmButtonText: 'Eliminar',
+                cancelButtonText: 'Cancelar',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    swal.fire(
+                        'Cancelado',
+                        'Cancelado Correctamente',
+                        'error'
+                    )
+                }
+            })
+        });
+    })
+</script>
+<script>
+    const forms1 = document.querySelectorAll(".formulario-eliminarCont")
+
+    forms1.forEach(form => {
+        form.addEventListener("submit", (e) => {
+            console.log('Hola');
+            e.preventDefault();
+
+            swal.fire({
                 title: 'Estas Seguro de Eliminar este Contenido',
-                text: "Si lo Eliminas no lo podras Recuperar",
+                text: "Asegurate de eliminar el Examen antes de Continuar",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#252850',
+                confirmButtonText: 'Eliminar',
+                cancelButtonText: 'Cancelar',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    swal.fire(
+                        'Cancelado',
+                        'Cancelado Correctamente',
+                        'error'
+                    )
+                }
+            })
+        });
+    })
+</script>
+<script>
+    const forms4 = document.querySelectorAll(".formulario-eliminar-User")
+
+    forms4.forEach(form => {
+        form.addEventListener("submit", (e) => {
+            console.log('Hola');
+            e.preventDefault();
+
+            swal.fire({
+                title: 'Estas Seguro de Eliminar a este Usuario del Curso',
+                text: "Si lo elimina ya no podra Tomar el curso",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#252850',
+                confirmButtonText: 'Eliminar',
+                cancelButtonText: 'Cancelar',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    swal.fire(
+                        'Cancelado',
+                        'Cancelado Correctamente',
+                        'error'
+                    )
+                }
+            })
+        });
+    })
+</script>
+<script>
+    const forms2 = document.querySelectorAll(".formulario-eliminarEx")
+
+    forms2.forEach(form => {
+        form.addEventListener("submit", (e) => {
+            console.log('Hola');
+            e.preventDefault();
+
+            swal.fire({
+                title: 'Estas Seguro de Eliminar este Contenido',
+                text: "Asegurate de eliminar el Examen antes de Continuar",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#d33',

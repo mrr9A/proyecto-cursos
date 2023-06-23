@@ -13,7 +13,7 @@ class PDFController extends Controller
         // $data = Puesto::progresoEmpleados();
         $data = User::getProgressByUser($user)[0];
 
-        $pdf = PDF::loadView('prueba', ['data' => $data]);
+        $pdf = PDF::loadView('pdfs.prueba', ['data' => $data]);
         $pdf->setOptions(['defaultFont' => 'poppins']);
 
         // Carga la hoja de estilos CSS para la fuente Poppins
@@ -22,7 +22,7 @@ class PDFController extends Controller
             src: url("' . public_path('fonts/Poppins-Regular.ttf') . '");
         }';
 
-        $pdf->loadHTML('<style>' . $css . '</style>' . view('prueba', ['data' => $data])->render());
+        $pdf->loadHTML('<style>' . $css . '</style>' . view('pdfs.prueba', ['data' => $data])->render());
 
         // Devuelve una respuesta PDF en lugar de descargarlo
         return $pdf->stream('prueba.pdf');
