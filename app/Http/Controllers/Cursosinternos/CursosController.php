@@ -17,14 +17,9 @@ class CursosController extends Controller
 {
     public function index()
     {
-<<<<<<< HEAD
         $cursos = Curso::where('interno_planta', '=', '1')->orderBy('id_curso', 'desc')->paginate('10');
         $autores = User::all();
         return view('Cursosinternos.cursos.catalago', compact('cursos', 'autores'));
-=======
-        $cursos = Curso::orderBy('id_curso', 'desc')->paginate('10');
-        return view('Cursosinternos.cursos.catalago', compact('cursos'));
->>>>>>> f989ac1ef1b80bc5b4cc9fcbed90324c8aa40479
     }
     public function show($id)
     {
