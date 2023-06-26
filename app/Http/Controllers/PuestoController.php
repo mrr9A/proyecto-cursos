@@ -7,6 +7,7 @@ use App\Models\Curso;
 use App\Models\PlanesFormacion;
 use App\Models\Puesto;
 use App\Models\Trabajo;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -17,7 +18,7 @@ class PuestoController extends Controller
     public function index()
     {
         $planesFormacion = PlanesFormacion::all();
-        $puestos = Puesto::all();
+        $puestos = Puesto::orderBy('id_puesto', 'desc')->paginate(10);
         return view("cursosplanta.puestos.index", compact("planesFormacion", "puestos"));
     }
 
@@ -104,10 +105,21 @@ class PuestoController extends Controller
 
     public function destroy($id)
     {
-        $puesto = Puesto::find($id);
-        $puesto->delete();
 
-        return to_route("puestos.index")->with("status", "Puesto eliminado correctamente");
+        $puesto = Puesto::find($id);
+        $puesto = Puesto::find($id);
+        $idsTrabajos = $puesto->trabajos->pluck('id_trabajo')->toArray();
+        $usuario = User::find($puesto->id_puesto);
+        $coincidencias = DB::table('trabajos_cursos')
+            ->whereIn('trabajo_id', $idsTrabajos)
+            ->exists();
+
+        if (is_null($usuario) && !$coincidencias) {
+            Trabajo::where('puesto_id', '=', $puesto->id_puesto)->delete();
+            $puesto->delete();
+            return to_route("puestos.index")->with("status", "Puesto eliminado correctamente");
+        }
+        return to_route("puestos.index")->with("status", "el puesto esta relacionado con usuarios o con cursos, no se puede eliminar");
     }
 
 

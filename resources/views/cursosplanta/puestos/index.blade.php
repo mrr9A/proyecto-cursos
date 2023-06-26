@@ -125,13 +125,53 @@
                                 <img src="/svg/delete.svg" />
                             </button>
 
-                            <x-modals.alert-modal id="puesto-{{ $puesto->id_puesto }}" route="usuarios.destroy"  :parametroDeRoute="$puesto->id_puesto" title="Esta seguro de eliminar el puesto" message="El puesto {{ $puesto->puesto }} sera eliminado"/>
+                            <x-modals.alert-modal id="puesto-{{ $puesto->id_puesto }}" route="puestos.destroy"  :parametroDeRoute="$puesto->id_puesto" title="Esta seguro de eliminar el puesto" message="El puesto {{ $puesto->puesto }} sera eliminado"/>
 
                         </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
+
+        <div class="mb-4">
+            <ul class="flex items-center justify-center space-x-2">
+                <!-- Enlace a la página anterior -->
+                @if ($puestos->onFirstPage())
+                    <li class="disabled" aria-disabled="true" aria-label="@lang('pagination.previous')">
+                        <span class="px-2 py-1 rounded bg-gray-300 text-gray-600 cursor-not-allowed" aria-hidden="true">&laquo;</span>
+                    </li>
+                @else
+                    <li>
+                        <a href="{{ $puestos->previousPageUrl() }}" rel="prev" class="px-2 py-1 rounded bg-blue-500 text-white hover:bg-blue-600" aria-label="@lang('pagination.previous')">&laquo;</a>
+                    </li>
+                @endif
+        
+                <!-- Enlaces a las páginas individuales -->
+                @foreach ($puestos->links() as $link)
+                    @if ($link['url'])
+                        <li>
+                            <a href="{{ $link['url'] }}" class="{{ $link['active'] ? 'px-2 py-1 rounded bg-blue-500 text-white hover:bg-blue-600' : 'px-2 py-1 rounded text-gray-600 hover:text-blue-500' }}">{{ $link['label'] }}</a>
+                        </li>
+                    @else
+                        <li class="disabled" aria-disabled="true">
+                            <span class="px-2 py-1 rounded text-gray-600">{{ $link['label'] }}</span>
+                        </li>
+                    @endif
+                @endforeach
+        
+                <!-- Enlace a la siguiente página -->
+                @if ($puestos->hasMorePages())
+                    <li>
+                        <a href="{{ $puestos->nextPageUrl() }}" rel="next" class="px-2 py-1 rounded bg-blue-500 text-white hover:bg-blue-600" aria-label="@lang('pagination.next')">&raquo;</a>
+                    </li>
+                @else
+                    <li class="disabled" aria-disabled="true" aria-label="@lang('pagination.next')">
+                        <span class="px-2 py-1 rounded bg-gray-300 text-gray-600 cursor-not-allowed" aria-hidden="true">&raquo;</span>
+                    </li>
+                @endif
+            </ul>
+        </div>
+
     </div>
 
     <div id="loader" />
