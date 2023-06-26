@@ -47,7 +47,8 @@ class SucursalesController extends Controller
     public function destroy(string $id)
     {
         $sucursale = Sucursal::find($id);
-        $sucursale->delete();
+        $sucursale->estado = 0;
+        $sucursale->save();
         return redirect()->route('sucursales.index')->with('eliminado','Eliminado Correctamente');
     }
 }

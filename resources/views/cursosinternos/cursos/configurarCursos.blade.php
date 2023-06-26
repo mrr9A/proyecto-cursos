@@ -1,6 +1,5 @@
 <x-app>
     <!-- La cotorisa  podcats-->
-    <div class="container mt-2 mx-3">
         <div class="flex">
             <!-- CUERPO DE TODO INFORMACION DEL CURSO, LECCIONES. CONTENIDO -->
             <div class="w-full p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
@@ -15,7 +14,7 @@
                 </div><br>
                 <!-- FIN -->
                 <div class="p-2 bg-white border border-gray-200 rounded-lg shadow mx-12 text-center">
-                    <img src="{{$curso['imagen']}}" class="rounded-full w-96 h-96 inline-block " width="350" height="350">
+                    <img src="{{$curso['imagen']}}" class="rounded-full w-96 h-96 inline-block object-cover" width="350" height="350">
                 </div>
                 <div class="p-2 bg-white border border-gray-200 rounded-lg shadow mx-12 text-center">
                     <div class="text-center">
@@ -335,7 +334,6 @@
             </div>
 
         </div>
-    </div>
     <!-- MODAL DE AÑADIR USUARIO -->
     <x-modal-prueba title="Agregar Usuario al Curso" textButton="Agregar Usuarios" id="agregar_usuario_curso_interno" vistaContenidoModal="cursosinternos.cursos.agregarUsuarioCurso" :curso="$curso" :usuarios="$usuarios" :tipo="$tipo" />
 

@@ -24,7 +24,7 @@ slot con nombre
 </head>
 
 
-<body>
+<body class="bg-white">
     <div class="flex h-full fixed w-[100vw]">
         <div>
             <header>
@@ -33,7 +33,7 @@ slot con nombre
         </div>
         <div class="flex flex-grow overflow-x-auto">
             <main class=" h-full m-auto px-4 relative  overflow-x-auto min-w-[100%] z-20">
-                <div class="flex items-center justify-between">
+                <div class="flex items-center justify-between border-b-[1px] border-nav mb-5">
                     <h1 class="uppercase font-bold text-title">{{ $title ?? 'INICIO' }}</h1>
                     <div class="flex gap-2 items-center cursor-pointer" id="dropdownInformationButton"
                         data-dropdown-toggle="dropdownInformation">

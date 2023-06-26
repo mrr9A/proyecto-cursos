@@ -41,6 +41,8 @@ class User extends Authenticatable
         'email',
         'estado',
         'password',
+        'fecha_alta_planta',
+        'fecha_ingreso_puesto'
     ];
     /**
      * The attributes that should be hidden for serialization.
@@ -91,7 +93,7 @@ class User extends Authenticatable
 
     public function cursos()
     {
-        return $this->belongsToMany(Curso::class, "usuarios_cursos",'usuario_id', 'curso_id');
+        return $this->belongsToMany(Curso::class, "usuarios_cursos", 'usuario_id', 'curso_id');
     }
 
     // FUNCIONES

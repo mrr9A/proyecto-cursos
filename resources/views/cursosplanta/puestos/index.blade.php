@@ -3,8 +3,8 @@
     <form method="POST" id="crear_puesto" action="{{ route('puestos.store') }}" class="flex flex-wrap flex-col gap-4 mt-4">
         @csrf
 
-        <div class="flex gap-3 items-center">
-            <x-input-text placeholder="Ej. jefe de taller" nombre="puesto" text="Puesto" />
+        <div class="flex gap-6 items-center">
+            <x-input-text placeholder="Ej. jefe de taller" nombre="puesto" text="Puesto" class="w-1/4"/>
 
             <div class="relative flex flex-col font-poppins gap-21 text-text-input">
                 @error('plan_id')
@@ -66,52 +66,34 @@
         <x-input-submit text="aceptar" class="w-32" />
     </form>
 
-
+    {{-- Lista de los puestos --}}
     <div class="flex flex-col gap-3 mt-5">
         <h2 class="text-subtitle">Lista de puestos</h2>
-        <ul>
-            @foreach ($puestos as $puesto)
-                <li class="mb-4">
-                    <div>
-                        <div class="flex items-center">
-                            <button class="edit_button" name="{{ $puesto->id_puesto }}">
-                                <img src="/svg/edit.svg" />
-                            </button>
-
-                            <button data-modal-target="puesto-{{ $puesto->id_puesto }}"
-                                data-modal-toggle="puesto-{{ $puesto->id_puesto }}">
-                                <img src="/svg/delete.svg" />
-                            </button>
-
-
-                            <x-modals.alert-modal id="puesto-{{ $puesto->id_puesto }}" :puesto="$puesto->id_puesto" />
-                            <div class="h-5">
-                                <button data-popover-target="popover-click-{{ $puesto->id_puesto }}"
-                                    data-popover-trigger="click" data-popover-placement="right" type="button"
-                                    class="uppercase">{{ $puesto->puesto }}</button>
-
-                                @if (count($puesto->trabajos) < 1)
-                                    <p class="text-sm text-gray-light">Este puesto no cuenta con trabajos</p>
-                                @else
-                                    <p class="text-sm text-gray-light">trabajos
-                                        <span
-                                            class="inline-flex items-center justify-center w-3 h-3 p-3 ml-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">{{ count($puesto->trabajos) }}</span>
-                                    </p>
-                                @endif
-                            </div>
-                        </div>
-
-
-                        <div data-popover id="popover-click-{{ $puesto->id_puesto }}" role="tooltip"
-                            class="absolute z-10 invisible inline-block w-64  max-h-64 overflow-auto text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 dark:text-gray-400 dark:border-gray-600 dark:bg-gray-800">
-                            <div
-                                class="px-3 py-2 bg-gray-100 border-b border-gray-200 rounded-t-lg dark:border-gray-600 dark:bg-gray-700">
-                                <h3 class="font-semibold text-gray-900 dark:text-white">Trabajos</h3>
-                            </div>
-                            @if (count($puesto->trabajos) < 1)
-                                <p>Este puesto no cuenta con trabajos</p>
-                            @endif
+        <table class="min-w-full">
+            <thead class="uppercase bg-blue-200 text-left">
+                <th class="px-6 py-2">id</th>
+                <th class="px-6 py-2">Plan de formacion</th>
+                <th class="px-6 py-2">puesto</th>
+                <th class="px-6 py-2">trabajos</th>
+                <th class="px-6 py-2">opciones</th>
+            </thead>
+            <tbody class="uppercase">
+                @foreach ($puestos as $puesto)
+                    <tr class="mb-4">
+                        <td class="whitespace-nowrap px-6 py-1 ">
+                            <span>{{ $puesto->id_puesto }}</span>
+                        </td>
+                        <td class="whitespace-nowrap px-6 py-1 ">
+                            {{ $puesto->planes_formacion->tema }} {{ $puesto->planes_formacion->area }}
+                        </td>
+                        <td class="whitespace-nowrap px-6 py-1 ">
+                            <span>{{ $puesto->puesto }}</span>
+                        </td>
+                        <td class="whitespace-nowrap px-6 py-1 text-sm">
                             <ul>
+                                @if (count($puesto->trabajos) < 1)
+                                    <li>Este puesto no cuenta con trabajos</li>
+                                @endif
                                 @foreach ($puesto->trabajos as $trabajo)
                                     <li>
                                         <div class="flex items-center gap-2">
@@ -124,20 +106,31 @@
                                                         <img src="/svg/delete.svg" />
                                                     </button>
                                                 </form>
-                                                @else
-                                                <div class="w-[22px]"></div>
+                                            @else
+                                                <div class="w-[21px]"></div>
                                             @endif
                                             <p>{{ $trabajo->nombre }}</p>
                                         </div>
                                     </li>
                                 @endforeach
                             </ul>
-                            <div data-popper-arrow></div>
-                        </div>
-                    </div>
-                </li>
-            @endforeach
-        </ul>
+                        </td>
+                        <td class="whitespace-nowrap px-6 py-1 ">
+                            <button class="edit_button" name="{{ $puesto->id_puesto }}">
+                                <img src="/svg/edit.svg" />
+                            </button>
+
+                            <button data-modal-target="puesto-{{ $puesto->id_puesto }}"
+                                data-modal-toggle="puesto-{{ $puesto->id_puesto }}">
+                                <img src="/svg/delete.svg" />
+                            </button>
+                            <x-modals.alert-modal id="puesto-{{ $puesto->id_puesto }}" :puesto="$puesto->id_puesto" />
+
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
     </div>
 
     <div id="loader" />
@@ -161,6 +154,11 @@
                 let id = event.currentTarget.name
                 // CUANDO ESCUCHA EL EVENTO LLAMA A LA FUNCION
                 getPuestoInfo(id)
+                window.scroll({
+                    top: 0,
+                    left: 0,
+                    behavior: 'smooth'
+                });
             })
         });
 
@@ -242,6 +240,7 @@
                     $('#puesto').name = data.id_puesto
 
                     loader.innerHTML = ""
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
                 })
         }
     </script>
