@@ -17,7 +17,7 @@
         @endif
         @if ($sucursales ?? '')
             @foreach ($sucursales as $sucursal)
-                <option value="{{ $sucursal->id_sucursal }}" @if($value->id_sucursal == $sucursal->id_sucursal) selected @endif >{{ $sucursal->nombre }}</option>
+                <option value="{{ $sucursal->id_sucursal }}" @if(($value->id_sucursal ?? "") == $sucursal->id_sucursal) selected @endif >{{ $sucursal->nombre }}</option>
             @endforeach
         @endif
 

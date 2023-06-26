@@ -42,9 +42,9 @@
                     <x-input-text type="number" nombre="id_sumtotal" text="ID SUMTOTAL" placeholder="1351" required
                         classLabel="text-base" :value="$usuario->id_sumtotal ?? ''" />
                     <x-input-text type="date" nombre="fecha_alta_planta" text="Fecha de alta en planta" required
-                        classLabel="text-base" value="{{ date('Y-m-d', strtotime($usuario->fecha_alta_planta ?? '')) }}" />
+                        classLabel="text-base" value="{{$usuario->fecha_alta_planta ?? '' ? date('Y-m-d', strtotime($usuario->fecha_alta_planta ?? '')) : '' }}" />
                     <x-input-text type="date" nombre="fecha_ingreso_puesto" text="Fecha de ingreso al puesto"
-                        required classLabel="text-base" value="{{ date('Y-m-d', strtotime($usuario->fecha_ingreso_puesto ?? '')) }}" />
+                        required classLabel="text-base" value="{{$usuario->fecha_ingreso_puesto ?? '' ?  date('Y-m-d', strtotime($usuario->fecha_ingreso_puesto ?? '')) : '' }}" />
                     {{-- SELECTS --}}
                     <?php
                     $estado = [(object) ['value' => 0, 'text' => 'inactivo'], (object) ['value' => 1, 'text' => 'activo']];
@@ -55,9 +55,9 @@
                     <x-selects.input-select-default textLabel="permisos" name="rol"
                         textOptionDefault="permiso del usuario" :opciones="$permisos" required />
                     <x-selects.input-select textLabel="Sucursales" name="sucursal_id"
-                        textOptionDefault="selecciona una sucursal" :sucursales="$sucursal" required :value="$usuario->sucursales[0]" />
+                        textOptionDefault="selecciona una sucursal" :sucursales="$sucursal" required :value="$usuario->sucursales[0] ?? ''" />
                     <x-selects.input-select textLabel="Puestos" name="puesto_id"
-                        textOptionDefault="selecciona un puesto" :puestos="$puestos" required :value="$usuario->puestos" />
+                        textOptionDefault="selecciona un puesto" :puestos="$puestos" required :value="$usuario->puestos ?? ''" />
 
                     <div id="trabajos" class="col-span-4"></div>
                 </div>
