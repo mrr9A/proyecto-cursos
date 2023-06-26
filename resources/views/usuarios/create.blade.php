@@ -1,8 +1,14 @@
 <x-app title="{{ is_null($usuario ?? null) ? 'Crear Usuario' : 'Actualizar Usuario' }}">
     <div class="container w-full ">
-        <form id="multi-step-form" method="POST" action="{{ route('usuarios.store') }}"
+        <form id="multi-step-form" method="POST"
+            action="{{ !is_null($usuario ?? null) ? route('usuarios.update', $usuario->id_usuario) : route('usuarios.store') }}"
             class="min-w-[100%]  mt-6 grid grid-cols-2 gap-8">
             @csrf
+
+            @if (!is_null($usuario ?? null))
+                @method('PATCH')
+            @endif
+
 
             <div class="step active rounded-md" data-step="1">
                 <h3
@@ -27,8 +33,13 @@
                 <div class="grid grid-cols-1 gap-6 border border-gray-200 shadow-sm rounded-md px-3 py-2 pb-6">
                     <x-input-text type="email" nombre="email" text="Correo electronico"
                         placeholder="user@grupobonn.com" required classLabel="text-base" :value="$usuario->email ?? ''" />
-                    <x-input-text type="password" nombre="password" text="contraseña" placeholder="123456" required
-                        classLabel="text-base" />
+                    @if (!is_null($usuario ?? null))
+                        <x-input-text type="password" nombre="password" text="contraseña" placeholder="********"
+                            classLabel="text-base" />
+                    @else
+                        <x-input-text type="password" nombre="password" text="contraseña" placeholder="********"
+                            classLabel="text-base" required/>
+                    @endif
                 </div>
             </div>
 
@@ -42,18 +53,23 @@
                     <x-input-text type="number" nombre="id_sumtotal" text="ID SUMTOTAL" placeholder="1351" required
                         classLabel="text-base" :value="$usuario->id_sumtotal ?? ''" />
                     <x-input-text type="date" nombre="fecha_alta_planta" text="Fecha de alta en planta" required
-                        classLabel="text-base" value="{{$usuario->fecha_alta_planta ?? '' ? date('Y-m-d', strtotime($usuario->fecha_alta_planta ?? '')) : '' }}" />
+                        classLabel="text-base"
+                        value="{{ $usuario->fecha_alta_planta ?? '' ? date('Y-m-d', strtotime($usuario->fecha_alta_planta ?? '')) : '' }}" />
                     <x-input-text type="date" nombre="fecha_ingreso_puesto" text="Fecha de ingreso al puesto"
-                        required classLabel="text-base" value="{{$usuario->fecha_ingreso_puesto ?? '' ?  date('Y-m-d', strtotime($usuario->fecha_ingreso_puesto ?? '')) : '' }}" />
+                        required classLabel="text-base"
+                        value="{{ $usuario->fecha_ingreso_puesto ?? '' ? date('Y-m-d', strtotime($usuario->fecha_ingreso_puesto ?? '')) : '' }}" />
                     {{-- SELECTS --}}
                     <?php
                     $estado = [(object) ['value' => 0, 'text' => 'inactivo'], (object) ['value' => 1, 'text' => 'activo']];
-                    $permisos = [(object) ['value' => 0, 'text' => 'administrado'], (object) ['value' => 1, 'text' => 'empleado']];
+                    $permisos = [(object) ['value' => 0, 'text' => 'administrador'], (object) ['value' => 1, 'text' => 'empleado']];
                     ?>
                     <x-selects.input-select-default textLabel="estado del usuario" name="estado"
-                        textOptionDefault="estado del usuario" :opciones="$estado" required />
+                        textOptionDefault="estado del usuario" :opciones="$estado" required
+                        value="{{ $usuario->estado ?? '' }}" />
                     <x-selects.input-select-default textLabel="permisos" name="rol"
-                        textOptionDefault="permiso del usuario" :opciones="$permisos" required />
+                        textOptionDefault="permiso del usuario" :opciones="$permisos" required
+                        value="{{ $usuario->rol ?? '' }}" />
+
                     <x-selects.input-select textLabel="Sucursales" name="sucursal_id"
                         textOptionDefault="selecciona una sucursal" :sucursales="$sucursal" required :value="$usuario->sucursales[0] ?? ''" />
                     <x-selects.input-select textLabel="Puestos" name="puesto_id"

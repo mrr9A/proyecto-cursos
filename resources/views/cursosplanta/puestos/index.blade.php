@@ -124,7 +124,8 @@
                                 data-modal-toggle="puesto-{{ $puesto->id_puesto }}">
                                 <img src="/svg/delete.svg" />
                             </button>
-                            <x-modals.alert-modal id="puesto-{{ $puesto->id_puesto }}" :puesto="$puesto->id_puesto" />
+
+                            <x-modals.alert-modal id="puesto-{{ $puesto->id_puesto }}" route="usuarios.destroy"  :parametroDeRoute="$puesto->id_puesto" title="Esta seguro de eliminar el puesto" message="El puesto {{ $puesto->puesto }} sera eliminado"/>
 
                         </td>
                     </tr>

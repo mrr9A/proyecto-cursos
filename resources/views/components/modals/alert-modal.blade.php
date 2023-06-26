@@ -21,13 +21,13 @@
                         d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
                 <div class="py-3">
-                  <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Esta seguro de eliminar este puesto</h3>
-                  <small class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">si elimina este trabajo todos los cursos relacionados a este se borraran. <br /> Si solo se equivo en el nombre le recomiendo fuertemente editar el trabajo en lugar de eliminarno</small>
+                  <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">{{$title}}</h3>
+                  <small class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">{{$message}}</small>
                 </div>
 
                 <div class="flex gap-2 flex-grow justify-center">
 
-                    <form method="POST" action="{{ route('puestos.destroy', $puesto) }}">
+                    <form method="POST" action="{{ route($route, $parametroDeRoute) }}">
                         @csrf
                         @method('DELETE')
                         <button type="submit"

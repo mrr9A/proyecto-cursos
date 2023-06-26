@@ -35,16 +35,21 @@
                                     <a href="{{ route('usuarios.edit', $usuario->id_usuario) }}">
                                         <img src="/svg/edit.svg" />
                                     </a>
-                                    <button data-modal-target="puesto-{{ $usuario->id_usuario }}"
-                                        data-modal-toggle="puesto-{{ $usuario->id_usuario }}">
+                                    <button data-modal-target="usuario-{{ $usuario->id_usuario }}"
+                                        data-modal-toggle="usuario-{{ $usuario->id_usuario }}">
                                         <img src="/svg/delete.svg" />
                                     </button>
-                                    <x-modals.alert-modal id="puesto-{{ $usuario->id_usuario }}" :puesto="$usuario->id_usuario" />
+                                    <x-modals.alert-modal id="usuario-{{ $usuario->id_usuario }}" route="usuarios.destroy"  :parametroDeRoute="$usuario->id_usuario" title="Esta seguro de eliminar al usuario" message="El usuario {{ $usuario->nombre }}
+                                        {{ $usuario->segundo_nombre }} {{ $usuario->apellido_paterno }}
+                                        {{ $usuario->apellido_materno }} sera eliminado"/>
                                 </td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
+                <div>
+                    {{$usuarios->links()}}
+                </div>
             </div>
         </div>
     </div>
