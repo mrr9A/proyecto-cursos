@@ -1,30 +1,4 @@
-<x-app title="Crear Usuario">
-    {{-- <div class="progreso grid grid-cols-4 mx-5">
-        <div class="flex flex-col items-center w-full relative">
-            <div class="num">
-                <span class="">1</span>
-            </div>
-            <p class="text-1xl font-bold tracking-tight text-dark-900 sm:text-1xl">Información Personal</p>
-        </div>
-        <div class=" flex flex-col items-center w-full relative">
-            <div class="num">
-                <span class="">2</span>
-            </div>
-            <p class="text-1xl font-bold tracking-tight text-dark-900 sm:text-1xl">Datos de Ingreso</p>
-        </div>
-        <div class=" flex flex-col items-center w-full relative">
-            <div class="num">
-                <span class="">3</span>
-            </div>
-            <p class="text-1xl font-bold tracking-tight text-dark-900 sm:text-1xl">Información Empresarial</p>
-        </div>
-        <div class=" flex flex-col items-center w-full relative">
-            <div class="num no-line">
-                <span class="">4</span>
-            </div>
-            <p class="text-1xl font-bold tracking-tight text-dark-900 sm:text-1xl">Conmfirmar Datos</p>
-        </div>
-    </div> --}}
+<x-app title="{{ is_null($usuario ?? null) ? 'Crear Usuario' : 'Actualizar Usuario' }}">
     <div class="container w-full ">
         <form id="multi-step-form" method="POST" action="{{ route('usuarios.store') }}"
             class="min-w-[100%]  mt-6 grid grid-cols-2 gap-8">
@@ -34,15 +8,15 @@
                 <h3
                     class="text-3xl font-bold tracking-tight text-gray-900 text-section-subtitle text-center bg-gray-100">
                     Datos Personales</h3>
-                <div class=" grid grid-cols-2 gap-6 border border-gray-200 shadow-sm rounded-md px-3 py-2">
+                <div class=" grid grid-cols-2 gap-6 border border-gray-200 shadow-sm rounded-md px-3 py-2 pb-6">
                     <x-input-text type="text" nombre="nombre" text="Nombre" placeholder="nombre" required
-                        classLabel="text-base" />
+                        classLabel="text-base" :value="$usuario->nombre ?? ''" />
                     <x-input-text type="text" nombre="segundo_nombre" text="Segundo Nombre"
-                        placeholder="segundo nombre" classLabel="text-base" />
+                        placeholder="segundo nombre" classLabel="text-base" :value="$usuario->segundo_nombre ?? ''" />
                     <x-input-text type="text" nombre="apellido_paterno" text="Apellido paterno"
-                        placeholder="apellido paterno" required classLabel="text-base" />
+                        placeholder="apellido paterno" required classLabel="text-base" :value="$usuario->apellido_paterno ?? ''" />
                     <x-input-text type="text" nombre="apellido_materno" text="Apellido materno"
-                        placeholder="apellido materno" classLabel="text-base" />
+                        placeholder="apellido materno" classLabel="text-base" :value="$usuario->apellido_materno ?? ''" />
                 </div>
             </div>
 
@@ -50,9 +24,9 @@
                 <h3 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl text-center bg-gray-100">Datos de
                     Autenticación
                 </h3>
-                <div class="grid grid-cols-1 gap-6 border border-gray-200 shadow-sm rounded-md px-3 py-2">
+                <div class="grid grid-cols-1 gap-6 border border-gray-200 shadow-sm rounded-md px-3 py-2 pb-6">
                     <x-input-text type="email" nombre="email" text="Correo electronico"
-                        placeholder="user@grupobonn.com" required classLabel="text-base" />
+                        placeholder="user@grupobonn.com" required classLabel="text-base" :value="$usuario->email ?? ''" />
                     <x-input-text type="password" nombre="password" text="contraseña" placeholder="123456" required
                         classLabel="text-base" />
                 </div>
@@ -64,160 +38,52 @@
                 </h3>
                 <div class="grid grid-cols-4 gap-6 border border-gray-200 shadow-sm rounded-md px-3 py-2">
                     <x-input-text type="number" nombre="id_sgp" text="ID SGP" placeholder="1351" required
-                        classLabel="text-base" />
+                        classLabel="text-base" :value="$usuario->id_sgp ?? ''" />
                     <x-input-text type="number" nombre="id_sumtotal" text="ID SUMTOTAL" placeholder="1351" required
-                        classLabel="text-base" />
+                        classLabel="text-base" :value="$usuario->id_sumtotal ?? ''" />
                     <x-input-text type="date" nombre="fecha_alta_planta" text="Fecha de alta en planta" required
-                        classLabel="text-base" />
+                        classLabel="text-base" value="{{ date('Y-m-d', strtotime($usuario->fecha_alta_planta ?? '')) }}" />
                     <x-input-text type="date" nombre="fecha_ingreso_puesto" text="Fecha de ingreso al puesto"
-                        required classLabel="text-base" />
+                        required classLabel="text-base" value="{{ date('Y-m-d', strtotime($usuario->fecha_ingreso_puesto ?? '')) }}" />
+                    {{-- SELECTS --}}
+                    <?php
+                    $estado = [(object) ['value' => 0, 'text' => 'inactivo'], (object) ['value' => 1, 'text' => 'activo']];
+                    $permisos = [(object) ['value' => 0, 'text' => 'administrado'], (object) ['value' => 1, 'text' => 'empleado']];
+                    ?>
+                    <x-selects.input-select-default textLabel="estado del usuario" name="estado"
+                        textOptionDefault="estado del usuario" :opciones="$estado" required />
+                    <x-selects.input-select-default textLabel="permisos" name="rol"
+                        textOptionDefault="permiso del usuario" :opciones="$permisos" required />
+                    <x-selects.input-select textLabel="Sucursales" name="sucursal_id"
+                        textOptionDefault="selecciona una sucursal" :sucursales="$sucursal" required :value="$usuario->sucursales[0]" />
+                    <x-selects.input-select textLabel="Puestos" name="puesto_id"
+                        textOptionDefault="selecciona un puesto" :puestos="$puestos" required :value="$usuario->puestos" />
 
-                    <div class="form-group">
-                        <label for="estado">Estatus del Usuario <span class="text-danger">*</span></label><br />
-                        <label class="radio-inline"><input type="radio" name="estado" value="1">
-                            Activo</label>
-                        <label class="radio-inline"><input type="radio" name="estado" value="0">
-                            Inactivo</label>
-                        @error('estado')
-                            <span class="error">{{ $message }}</span>
-                        @enderror
-                    </div>
-
-                    <div class="form-group">
-                        <label for="rol_id">Permiso a Asignar al Usuario <span class="">*</span></label><br />
-                        <select class="" value="rol" id="rol"name="rol" required>
-                            <option selected>Selecciona el Permiso a Otorgar</option>
-                            <option value="0">Administrador</option>
-                            <option value="1">Empleado</option>
-                        </select>
-                        @error('rol')
-                            <span class="error">{{ $message }}</span>
-                        @enderror
-                    </div>
-
-                    <div class="form-group">
-                        <label for="sucursal_id">Sucursal en la que labora <span
-                                class="text-danger">*</span></label><br />
-                        <select class="form-select form-select" id="sucursal_id" name="sucursal_id" required>
-                            <option selected>Selecciona la Sucursal donde Labora</option>
-                            @foreach ($sucursal as $sucursa)
-                                <option value="{{ $sucursa->id_sucursal }}">{{ $sucursa->nombre }}</option>
-                            @endforeach
-                        </select>
-                        @error('sucursal_id')
-                            <span class="error">{{ $message }}</span>
-                        @enderror
-                    </div>
-
-                    <div class="form-group">
-                        <label for="puesto_id">Puesto Laboral <span class="text-danger">*</span></label><br />
-                        <select class="form-select form-select" name="puesto_id" id="puesto_id" required>
-                            <option selected id="select_puesto">Selecciona su Puesto de trabajo</option>
-                            @foreach ($puestos as $puesto)
-                                <option value="{{ $puesto->id_puesto }}">{{ $puesto->puesto }}</option>
-                            @endforeach
-                        </select>
-                        @error('puesto_id')
-                            <span class="error">{{ $message }}</span>
-                        @enderror
-                    </div>
-
-                    <div id="trabajos" class="col-span-4">
-
-                    </div>
-
+                    <div id="trabajos" class="col-span-4"></div>
                 </div>
             </div>
             <div class="col-span-2">
-            {{-- <div class="col-span-2 grid grid-cols-3"> --}}
-                {{-- <div class="col-start-2 col-span-1 flex justify-center"> --}}
-                  <x-input-submit text="Enviar" class="w-full" />
-                {{-- </div> --}}
-              </div>
-            {{-- <input value="Enviar" class=""/> --}}
-    </div>
-
-
-
-    </form>
+                <x-input-submit text="Enviar" class="w-full" />
+            </div>
+        </form>
     </div>
 
     <script>
-        // Obtén los elementos del formulario y los botones de navegación
-        const form = document.getElementById('multi-step-form');
-        const steps = Array.from(form.getElementsByClassName('step'));
-        const nextButtons = Array.from(form.getElementsByClassName('next-button'));
-        const previousButtons = Array.from(form.getElementsByClassName('previous-button'));
-        const num = $$('.num')
-
-        // Agrega eventos de clic a los botones de navegación
-        nextButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                navigateToNextStep(button);
-            });
-        });
-
-        previousButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                navigateToPreviousStep(button);
-            });
-        });
-
-        // Función para mostrar el siguiente paso
-        function navigateToNextStep(button) {
-            const currentStep = button.closest('.step');
-            const nextStep = currentStep.nextElementSibling;
-            // Verificar la validez de los campos de entrada dentro del contenedor actual
-            const inputs = currentStep.querySelectorAll('input, select, textarea');
-            let isValid = true;
-            inputs.forEach(input => {
-                if (!input.checkValidity()) {
-                    isValid = false;
-                    // Agrega lógica para manejar el error en el campo de entrada si es necesario
-                }
-            });
-
-            if (isValid) {
-                currentStep.classList.remove('active');
-                nextStep.classList.add('active');
-
-                if (currentStep.getAttribute('data-step') == 1) {
-                    num[0].classList.add('checked')
-                }
-                if (currentStep.getAttribute('data-step') == 2) {
-                    num[1].classList.add('checked')
-                }
-                if (currentStep.getAttribute('data-step') == 3) {
-                    num[2].classList.add('checked')
-                }
-            }
-        }
-
-        // Función para mostrar el paso anterior
-        function navigateToPreviousStep(button) {
-            const currentStep = button.closest('.step');
-            const previousStep = currentStep.previousElementSibling;
-            currentStep.classList.remove('active');
-            previousStep.classList.add('active');
-            // Eliminando el color verde de que ya completo ese paso
-            if (previousStep.getAttribute('data-step') == 1) {
-                num[0].classList.remove('checked')
-            }
-            if (previousStep.getAttribute('data-step') == 2) {
-                num[1].classList.remove('checked')
-            }
-            if (previousStep.getAttribute('data-step') == 3) {
-                num[2].classList.remove('checked')
-            }
-
-
-        }
-
         // Llamando los trabos de los puestos y renderizarlos
         const puestoSelecter = document.getElementById('puesto_id');
         const trabajosSelector = document.getElementById("trabajos")
         let puesto = "";
 
+        // Ejecutar función inicial al cargar la página
+        document.addEventListener('DOMContentLoaded', function() {
+            // Obtener el valor seleccionado del select
+            let selectedValue = puestoSelecter.value;
+            puesto = puestoSelecter.options[selectedValue].text
+            // Verificar si el valor seleccionado no es el valor por defecto
+            if (selectedValue !== 'default') {
+                getJobsByPosition(selectedValue);
+            }
+        });
 
         puestoSelecter.addEventListener('change', (e) => {
             let id = e.target.value
@@ -265,5 +131,78 @@
                     console.log(err)
                 })
         }
+
+
+
+        //FUNCIONES PARA EL FORMULARIO POR PASOS 
+        // Obtén los elementos del formulario y los botones de navegación
+        //         const form = document.getElementById('multi-step-form');
+        // const steps = Array.from(form.getElementsByClassName('step'));
+        // const nextButtons = Array.from(form.getElementsByClassName('next-button'));
+        // const previousButtons = Array.from(form.getElementsByClassName('previous-button'));
+        // const num = $$('.num')
+
+        // // Agrega eventos de clic a los botones de navegación
+        // nextButtons.forEach(button => {
+        //     button.addEventListener('click', () => {
+        //         navigateToNextStep(button);
+        //     });
+        // });
+
+        // previousButtons.forEach(button => {
+        //     button.addEventListener('click', () => {
+        //         navigateToPreviousStep(button);
+        //     });
+        // });
+
+        // // Función para mostrar el siguiente paso
+        // function navigateToNextStep(button) {
+        //     const currentStep = button.closest('.step');
+        //     const nextStep = currentStep.nextElementSibling;
+        //     // Verificar la validez de los campos de entrada dentro del contenedor actual
+        //     const inputs = currentStep.querySelectorAll('input, select, textarea');
+        //     let isValid = true;
+        //     inputs.forEach(input => {
+        //         if (!input.checkValidity()) {
+        //             isValid = false;
+        //             // Agrega lógica para manejar el error en el campo de entrada si es necesario
+        //         }
+        //     });
+
+        //     if (isValid) {
+        //         currentStep.classList.remove('active');
+        //         nextStep.classList.add('active');
+
+        //         if (currentStep.getAttribute('data-step') == 1) {
+        //             num[0].classList.add('checked')
+        //         }
+        //         if (currentStep.getAttribute('data-step') == 2) {
+        //             num[1].classList.add('checked')
+        //         }
+        //         if (currentStep.getAttribute('data-step') == 3) {
+        //             num[2].classList.add('checked')
+        //         }
+        //     }
+        // }
+
+        // // Función para mostrar el paso anterior
+        // function navigateToPreviousStep(button) {
+        //     const currentStep = button.closest('.step');
+        //     const previousStep = currentStep.previousElementSibling;
+        //     currentStep.classList.remove('active');
+        //     previousStep.classList.add('active');
+        //     // Eliminando el color verde de que ya completo ese paso
+        //     if (previousStep.getAttribute('data-step') == 1) {
+        //         num[0].classList.remove('checked')
+        //     }
+        //     if (previousStep.getAttribute('data-step') == 2) {
+        //         num[1].classList.remove('checked')
+        //     }
+        //     if (previousStep.getAttribute('data-step') == 3) {
+        //         num[2].classList.remove('checked')
+        //     }
+
+
+        // }
     </script>
 </x-app>

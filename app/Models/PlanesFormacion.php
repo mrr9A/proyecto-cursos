@@ -11,6 +11,8 @@ class PlanesFormacion extends Model
     use HasFactory;
     protected $primaryKey = "id_plan_formacion";
     protected $table = "planes_formacion";
+    protected $fillable = ['tema', 'area', 'estado'];
+    public $timestamps = false;
 
 
     public function puestos()
@@ -26,7 +28,7 @@ class PlanesFormacion extends Model
                 $query->whereIn("puesto", ["tecnico mecanico", 'master technician']);
             })
             ->select(
-                DB::raw("CONCAT(nombre, ' ', IFNULL(segundo_nombre, ''), ' ', apellido_paterno, ' ', apellido_materno) AS empleado"),
+                DB::raw("CONCAT(nombre, ' ', IFNULL(segundo_nombre, ''), ' ', apellido_paterno, ' ', IFNULL(apellido_materno, '')) AS empleado"),
                 'usuarios.*'
             )
             ->distinct()
@@ -120,7 +122,7 @@ class PlanesFormacion extends Model
                 $query->whereIn('id_puesto', $puestos);
             })
             ->select(
-                DB::raw("CONCAT(nombre, ' ', IFNULL(segundo_nombre, ''), ' ', apellido_paterno, ' ', apellido_materno) AS empleado"),
+                DB::raw("CONCAT(nombre, ' ', IFNULL(segundo_nombre, ''), ' ', apellido_paterno, ' ', IFNULL(apellido_materno, '')) AS empleado"),
                 'usuarios.*'
             )
             ->distinct()

@@ -62,17 +62,17 @@ i {
     border-radius: 10px;
     color: #c4dbff;
     opacity: 1;
-    @apply bg-primary;
+    @apply bg-nav-hover;
 }
 
 /* .nav-item > a:hover, .nav-item > button:hover{
   border-radius: 8px;
-  @apply bg-primary
+  @apply bg-nav-hover
 } */
 .nav-item > a:hover,
 .nav-item > button:hover {
     border-radius: 8px;
-    @apply bg-primary;
+    @apply bg-nav-hover;
 }
 
 ::placeholder {
@@ -99,8 +99,8 @@ i {
 
 .sidebar .nav-links li .sub-menu {
     padding: 10px 14px 10px 20px;
-    background: #4b68ff;
     display: none;
+    @apply bg-nav;
 }
 
 .sidebar .nav-links li .sub-menu a {
