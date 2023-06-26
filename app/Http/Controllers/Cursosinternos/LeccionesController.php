@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Cursosinternos;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SaveLeccionRequest;
 use App\Models\Leccion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -44,7 +45,7 @@ class LeccionesController extends Controller
 
     }
 
-    public function store(Request $request)
+    public function store(SaveLeccionRequest $request)
     {
         $leccione = new Leccion();
         $leccione->nombre = $request->post('nombre');

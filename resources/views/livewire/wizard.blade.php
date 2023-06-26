@@ -76,16 +76,16 @@
             <div class="col-md-12">
                 <br>
                 <h3 class="text-7xl font-bold tracking-tight text-gray-900 sm:text-4xl">Información General del Curso</h3><br>
-                <div class="grid col-11 gap-x-8 gap-y-8 text-blue-600/100">
-                    <label for="title">Codígo del Curso <span class="text-red-500">*</span></label>
-                    <input type="text" wire:model="codigo" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" id="nombre" require>
-                    @error('codigo') <span class="error">{{ $message }}</span> @enderror
-                </div>
-                <br>
                 <div class="grid col-11 gap-x-8 gap-y-6 text-blue-600/100">
                     <label for="apellidoPaterno">Nombre del Curso <span class="text-red-500">*</span></label>
                     <input type="text" rows="3" wire:model="nombre" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" id="decription" require>
-                    @error('nombre') <span class="error">{{ $message }}</span> @enderror
+                    @error('nombre') <span class="error text-red-600">{{ $message }}</span> @enderror
+                </div>
+                <br>
+                <div class="grid col-11 gap-x-8 gap-y-8 text-blue-600/100">
+                    <label for="title">Codígo del Curso <span class="text-red-500">*</span></label>
+                    <input type="text" wire:model="codigo" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" id="nombre" require>
+                    @error('codigo') <span class="error text-red-600">{{ $message }}</span> @enderror
                 </div>
                 <br>
                 <div class="col-11 text-blue-600/100">
@@ -112,12 +112,9 @@
                                 <label for="file-upload" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light">
                                     <span class="text-bold">Seleccionar una Imagen</span>
                                     <input id="file-upload" wire:model="imagen" type="file" class="sr-only" accept="image/*" require>
-                                    @error('imagen') <span class="error">{{ $message }}</span> @enderror
-                                    @if ($imagen)
-                                    <img src="{{ $imagen->temporaryUrl() }}" width="100" height="100">
-                                    @endif
                                 </label>
                             </div><br>
+                            @error('imagen') <span class="error text-red-600">{{ $message }}</span> @enderror
                             <p class="text-xs leading-5 text-gray-600">Formatos Admitidos: PNG, JPG</p>
                         </div>
                     </div>
@@ -144,13 +141,13 @@
                 <div class="grid col-10 gap-x-8 gap-y-6">
                     <label for="fecha_inicio">Fecha de Inicio del Curso <span class="text-danger">*</span></label>
                     <input type="date" rows="3" wire:model="fecha_inicio" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" id="fecha_inicio" require>
-                    @error('nombre') <span class="error">{{ $message }}</span> @enderror
+                    @error('fecha_inicio') <span class="error text-red-600">{{ $message }}</span> @enderror
                 </div>
                 <br>
                 <div class="grid col-10 gap-x-8 gap-y-6">
                     <label for="fecha_termino">Fecha de Termino del Curso <span class="text-danger">*</span></label>
                     <input type="date" rows="3" wire:model="fecha_termino" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" id="fecha_termino" require>
-                    @error('nombre') <span class="error">{{ $message }}</span> @enderror
+                    @error('fecha_termino') <span class="error text-red-600">{{ $message }}</span> @enderror
                 </div>
                 <br>
                 <button class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700" type="button" wire:click="back(1)">
@@ -170,21 +167,36 @@
                 <h3 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Modalidad de Cursos</h3>
                 <br>
                 <div class="form-group ">
-                    <label for="description">Clasificación de Cursos</label><br />
-                    @foreach ($modalidad as $modi)
-                    <label class="radio-inline"><input type="radio" wire:model="modalidad_id" value="{{$modi->id_modalidad}}">{{$modi->modalidad}}</label>
-                    <!-- <label class="radio-inline"><input type="radio" wire:model="modalidad_id" value="0">Curso Interno</label> -->
-                    @error('modalidad_id') <span class="error">{{ $message }}</span> @enderror
-                    @endforeach
+                    <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Seleccione la Modalidad del Curso <span class="text-red-600">*</span></label>
+                    <select id="countries" wire:model="modalidad_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option selected>Seleccione la Modalidad</option>
+                        @foreach ($modalidad as $modi)
+                        <option value="{{$modi->id_modalidad}}">{{$modi->modalidad}}</option>
+                        @endforeach
+                        @error('modalidad_id') <span class="error text-red-600">{{ $message }}</span> @enderror
+                    </select>
                 </div>
-
+                <br>
                 <div class="form-group">
-                    <label for="description">Clasificación de Cursos</label><br />
-                    @foreach ($tipo as $tip)
-                    <label class="radio-inline"><input type="radio" wire:model="tipo_curso_id" value="{{$tip->id_tipo_curso}}">{{$tip->nombre}}</label>
-                    <!-- <label class="radio-inline"><input type="radio" wire:model="modalidad_id" value="0">Curso Interno</label> -->
-                    @error('tipo_curso_id') <span class="error">{{ $message }}</span> @enderror
-                    @endforeach
+                <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Seleccione el Tipo del Curso <span class="text-red-600">*</span></label>
+                    <select id="countries" wire:model="tipo_curso_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option selected>Seleccione el Tipo</option>
+                        @foreach ($tipo as $tip)
+                        <option value="{{$tip->id_tipo_curso}}">{{$tip->nombre}}</option>
+                        @endforeach
+                        @error('tipo_curso_id') <span class="error text-red-600">{{ $message }}</span> @enderror
+                    </select>
+                </div>
+                <br>
+                <div class="form-group">
+                <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Seleccione la Categoria del Curso <span class="text-red-600">*</span></label>
+                    <select id="countries" wire:model="categoria_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option selected>Seleccione la Categoria</option>
+                        @foreach ($categoria as $category)
+                        <option value="{{$category->id_categoria}}">{{$category->nombre}}</option>
+                        @endforeach
+                        @error('categoria_id') <span class="error text-red-600">{{ $message }}</span> @enderror
+                    </select>
                 </div>
                 <br>
                 <button class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700" type="button" wire:click="back(2)">
@@ -203,7 +215,7 @@
                 <br>
                 <h3 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Confirar Datos</h3>
                 <br>
-                <table  class="w-full text-gray-500 dark:text-gray-400">
+                <table class="w-full text-gray-500 dark:text-gray-400">
                     <tr>
                         <td class=" font-bold">Codigo del Curso</td>
                         <td class=" font-bold"><strong>{{$codigo}}</strong></td>
@@ -237,6 +249,14 @@
                         @endforeach
                     </tr>
                     <tr>
+                        <td class=" font-bold">Categoria del Curso</td>
+                        @foreach ($categoria as $category)
+                        @if($category->id_categoria == $categoria_id)
+                        <td class=" font-bold"><strong>{{$category->nombre}}</strong></td>
+                        @endif
+                        @endforeach
+                    </tr>
+                    <tr>
                         <td class=" font-bold">Estatus del Curso:</td>
                         <td class=" font-bold"><strong>{{$estado ? 'Activo' : 'Inactivo'}}</strong></td>
                     </tr>
@@ -245,7 +265,7 @@
                         <!-- <td><img src="{{$imagen}}" alt="avatar" width="100" height="100"></td> -->
                         <td>
                             @if ($imagen)
-                            <img src="{{ $imagen->temporaryUrl() }}" alt="avatar" width="125" height="125">
+                            <img src="{{ $imagen}}" alt="avatar" width="125" height="125">
                             @endif
                         </td>
                     </tr>

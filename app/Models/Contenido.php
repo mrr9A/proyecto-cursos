@@ -28,6 +28,6 @@ class Contenido extends Model
 
     public function examen()
     {
-        return $this->hasMany(Examen::class, 'leccion_id');
+        return $this->hasMany(Examen::class, 'contenido_id');
     }
 }

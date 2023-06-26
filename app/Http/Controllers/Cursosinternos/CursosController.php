@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Cursosinternos;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SaveCursoInternoRequest;
 use App\Models\Curso;
 use App\Models\Examen;
 use App\Models\ModalidadCurso;
 use App\Models\TipoCurso;
 use App\Models\User;
 use App\Models\Usuario_curso;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -24,6 +26,19 @@ class CursosController extends Controller
     public function show($id)
     {
         $curso = Curso::find($id);
+        // $fechaInicio = date('y-m-d', $curso->fecha_inicio );
+        // $fechaTermino =  date('y-m-d',$curso->fecha_termino);
+
+    //    $fechaInicio = $curso->fecha_inicio; // Obtén la fecha completa del campo de fecha de la base de datos
+    //    $fecha = Carbon::parse($fechaInicio)->format('Y-m-d'); // Obtén solo la fecha en el formato deseado
+
+    //    $fechaTermino = $curso->fecha_termino; // Obtén la fecha completa del campo de fecha de la base de datos
+    //    $fecha = Carbon::parse($fechaTermino)->format('Y-m-d'); // Obtén solo la fecha en el formato deseado
+
+    //    $curso->fecha_inicio = $fechaInicio;
+    //    $curso->fecha_termino = $fechaTermino;
+
+
         $modalidad = ModalidadCurso::all();
         $tipo = TipoCurso::all();
         $usuarios = User::all();

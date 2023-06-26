@@ -13,6 +13,10 @@ class Curso extends Model
     protected $primaryKey = "id_curso";
     public $timestamps = false;
 
+    public function categorias()
+    {
+        return $this->hasMany(Categoria::class, 'categoria_id');
+    }
 
     public function modalidad()
     {

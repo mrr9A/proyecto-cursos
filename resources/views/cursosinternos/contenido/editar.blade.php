@@ -4,10 +4,10 @@
             <div class="col-lg-12 mb-6 mb-lg-0 position-relative">
                 <div class="card p-5  text-center">
                     <div class="card-header">
-                        <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">BIENVENIDO ES MOMENTO DE AGREGAR CONTENIDO AL CURSO</h2><br>
-                        <h3 class="text-1xl font-bold tracking-tight text-dark-500 sm:text-2xl">En este apartado se agregará el contenido</h3><br>
-                        <h5 class="text-1xl font-bold tracking-tight text-gray-600 sm:text-2"><span>Siga los Pasos para crear corectamente el contenido</span></h5>
-                        <h5 class="text-1xl font-bold tracking-tight text-gray-600 sm:text-2"><span>Comencemos</span> ...</h5>
+                        <h2 class="text-subtitle font-bold tracking-tight text-gray-900">BIENVENIDO ES MOMENTO DE EDITAR EL CONTENIDO DEL CURSO</h2><br>
+                        <h3 class="text-subtitle font-bold tracking-tight text-dark-500">En este apartado se agregará el contenido</h3><br>
+                        <h5 class="text-section-subtitle font-bold tracking-tight text-gray-600"><span>Siga los Pasos para crear corectamente el contenido</span></h5>
+                        <h5 class="text-section-subtitle font-bold tracking-tight text-gray-600"><span>Comencemos</span> ...</h5>
                     </div>
                 </div>
                 <br>
@@ -28,7 +28,7 @@
                             <br>
                             <div class="grid col-11">
                                 <label for="descripcion" class="font-bold">Descripcion del Contenido <span class="text-red-500">*</span></label>
-                                <textarea type="text" rows="3" name="descripcion" class="bg-gray-50 border border-gray-300 text-gray-900  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="fecha_inicio" required>{{$contenido->descripcion}}</textarea>
+                                <textarea type="text" rows="10" name="descripcion" class="bg-gray-50 border border-gray-300 text-gray-900  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="fecha_inicio" required>{{$contenido->descripcion}}</textarea>
                                 @error('descripcion') <span class="error">{{ $message }}</span> @enderror
                             </div>
                             <br>
@@ -40,15 +40,15 @@
                                         <div class="mt-4 flex text-sm items-center text-center leading-6 text-gray-600" enctype="multipart/form-data">
                                             <label for="file-upload" class="bg-gray-50 border items-center border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                 <span>Seleccionar un Archivo </span><span class="text-danger">*</span>
-                                                <input id="file-upload" name="url" type="file" class="sr-only" accept="/*" required>
-                                                @error('url_imagen') <span class="error">{{ $message }}</span> @enderror
+                                                <input id="file-upload" name="url" value="{{$contenido->media[0]->url}}" type="file" class="sr-only" accept="/*">
+                                                @error('url') <span class="error">{{ $message }}</span> @enderror
                                             </label>
                                         </div>
                                         <p class="text-xs leading-5 text-gray-600">Formatos Admitidos: PNG, JPG, MP4, ETC...</p>
                                     </div>
-                                </div>
+                                </div><br>
                                 <div class="text-center">
-                                    <img src="{{$contenido->media[0]->url}}" width="100" height="100" class="inline-block" alt="">
+                                    <img src="{{$contenido->media[0]->url}}" width="100" height="100" class="inline-block" alt="Contenido">
                                 </div>
                             </div>
                             <br>

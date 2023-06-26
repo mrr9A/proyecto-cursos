@@ -7,9 +7,7 @@ use App\Models\Contenido;
 use App\Models\Curso;
 use App\Models\Examen;
 use App\Models\Leccion;
-use App\Models\Opcion;
 use App\Models\Pregunta;
-use App\Models\Respuesta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -20,7 +18,7 @@ class ExamenController extends Controller
         $dataExamen = [
             "nombre" => $request->nombre,
             "duracion" => $request->duracion,
-            "leccion_id" => $request->contenido_id,
+            "contenido_id" => $request->contenido_id,
         ];
 
         $examen = Examen::create($dataExamen);

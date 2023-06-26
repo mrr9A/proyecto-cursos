@@ -18,16 +18,16 @@
                             <br>
                             <h3>Información General de la Lección</h3>
                             <br>
-                            <input hidden type="text" rows="3" name="curso_id" value="{{$leccion->curso_id}}" require>
+                            <input hidden type="text" rows="3" name="curso_id" value="{{$leccion->curso_id}}" required>
                             <div class="grid col-4">
                                 <label for="nombre">Nombre de la Lección <span class="text-danger">*</span></label>
-                                <input type="text" rows="3" name="nombre" value="{{$leccion->nombre}}" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="fecha_inicio" require>
+                                <input type="text" rows="3" name="nombre" value="{{$leccion->nombre}}" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="fecha_inicio" required>
                                 @error('nombre') <span class="error">{{ $message }}</span> @enderror
                             </div>
                             <br>
                             <div class="grid col-6 ">
                                 <label for="descripcion">Descripcion de la Lección <span class="text-red-500">*</span></label>
-                                <textarea type="text" rows="8" name="descripcion" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" require>{{$leccion->descripcion}}</textarea>
+                                <textarea type="text" rows="8" name="descripcion" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>{{$leccion->descripcion}}</textarea>
                                 @error('descripcion') <span class="error">{{ $message }}</span> @enderror
                             </div>
                             <br>
@@ -39,7 +39,7 @@
                                         <div class="mt-4 flex text-sm items-center text-center leading-6 text-gray-600">
                                             <label for="url_imagen" class="bg-gray-50 border items-center border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                 <span class="">Seleccionar una Imagen</span>
-                                                <input id="url_imagen" name="url_imagen" type="file" class="sr-only" accept="image/*" require>
+                                                <input id="url_imagen" name="url_imagen" type="file" class="sr-only" accept="image/*" required>
                                                 @error('url_imagen') <span class="error">{{ $message }}</span> @enderror
                                             </label>
                                         </div>

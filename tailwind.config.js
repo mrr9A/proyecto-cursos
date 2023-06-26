@@ -53,6 +53,7 @@ export default {
       'secondary' : '',
       'light': '', 
       'input' : '#4B68FF',
+      'nav' : '#020083',
       'success': '#B2FFBE',
       'information' : '#FFDC25',
       'completed': '#00E809',

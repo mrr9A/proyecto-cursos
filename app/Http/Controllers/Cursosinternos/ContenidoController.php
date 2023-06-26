@@ -3,17 +3,19 @@
 namespace App\Http\Controllers\Cursosinternos;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SaveContenidoRequest;
 use App\Models\Contenido;
+use App\Models\Leccion;
 use App\Models\Media_contenido;
-use App\Models\Media_contenidos;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class ContenidoController extends Controller
 {
-    
-    public function store(Request $request)
+
+    public function store(SaveContenidoRequest $request)
     {
+
         //Este apartado es para crear un contenido
         $contenido = new Contenido();
         $contenido->nombre = $request->post('nombre');
@@ -29,21 +31,26 @@ class ContenidoController extends Controller
         $media->url = $url;
         $media->contenido_id = $id_cont;
         $media->saveOrFail();
-        return redirect()->back()->with('agregado', 'Agregado Correctamente');
+        $leccion = Leccion::find($request->leccion_id);
+        $curso = $leccion->curso_id;
+
+        return to_route("curs.show", $curso)->with('agregado', 'Contenido Agregado Correctamente');
     }
 
     public function show(string $id)
     {
-        return view('Cursosinternos.contenido.contenido',compact('id'));
+        return view('Cursosinternos.contenido.contenido', compact('id'));
     }
 
     public function ver(string $id)
     {
         $contenido = Contenido::find($id);
-        return view('Cursosinternos.vistaPrevia.index',compact('contenido'));
+        // $archivos = Storage::files('public/archivos');
+        // return view('vista', compact('archivos'));
+        return view('Cursosinternos.vistaPrevia.index', compact('contenido'));
     }
 
-    public function update (Request $request, string $id)
+    public function update(Request $request, string $id)
     {
         $contenido = Contenido::find($id);
         $contenido->nombre = $request->post('nombre');
@@ -62,13 +69,17 @@ class ContenidoController extends Controller
         }
         $media->contenido_id = $id_cont;
         $media->saveOrFail();
-        return redirect()->back()->with('actualizado', 'Actualizado Correctamente');
+        $leccion = Leccion::find($request->leccion_id);
+        $curso = $leccion->curso_id;
+
+        return to_route("curs.show", $curso)->with('agregado', 'Contenido Agregado Correctamente');
+        // return redirect()->back()->with('actualizado', 'Actualizado Correctamente');
     }
 
-    public function edi ($id)
+    public function edi($id)
     {
         $contenido = Contenido::find($id);
-        return view('Cursosinternos.contenido.editar',compact('contenido'));
+        return view('Cursosinternos.contenido.editar', compact('contenido'));
     }
 
     public function destroy(string $id)
@@ -80,5 +91,4 @@ class ContenidoController extends Controller
         $contenido->delete();
         return redirect()->back()->with('eliminado', 'Eliminado Correctamente');
     }
-
 }

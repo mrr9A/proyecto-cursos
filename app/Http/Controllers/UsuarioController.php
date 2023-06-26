@@ -16,7 +16,7 @@ class UsuarioController extends Controller
    public function index()
    {
       //  $empleados = User::getMatrizVentas();
-      $usuarios = User::orderBy('id_usuario', 'asc')->paginate('3');
+      $usuarios = User::all();
       $sucursal = Sucursal::all();
       $puesto = Puesto::all();
       return view('usuarios.index', compact('usuarios', 'sucursal', 'puesto'));

@@ -1,4 +1,4 @@
-<nav class="sidebar close bg-input max-w-[260px] h-[100vh] relative">
+<nav class="sidebar close bg-nav max-w-[260px] h-[100vh] relative">
     <ul class="nav-links">
         <li class="nav-item">
             <button class="" id="menu-button">
