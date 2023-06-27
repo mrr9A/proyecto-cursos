@@ -18,11 +18,11 @@
                 </thead>
                 <tbody class="uppercase">
                     @foreach ($sucursales as $sucursal)
-                        <tr>
-                            <td class="whitespace-nowrap px-6 py-2 flex items-center gap-2"> <i
+                        <tr class="border-b border-gray-200 hover:bg-gray-100">
+                            <td class="py-3 px-6 text-left flex items-center gap-2"> <i
                                     class='bx bx-buildings'></i>{{ $sucursal->nombre }}</td>
-                            <td class="whitespace-nowrap px-6 py-2 ">{{ $sucursal->ciudad }}</td>
-                            <td class="whitespace-nowrap px-6 py-2 ">
+                            <td class="py-3 px-6 text-left ">{{ $sucursal->ciudad }}</td>
+                            <td class="py-3 px-6 text-left ">
                                 @if ($sucursal->estado == 1)
                                     <span class="inline-block w-4 h-4 bg-green-400 rounded-full"></span>
                                 @elseif ($sucursal->estado == 0)
@@ -30,7 +30,7 @@
                                 @endif
                             </td>
 
-                            <td class="whitespace-nowrap px-2 py-2 ">
+                            <td class="py-3 px-6 text-left">
                                 <div class="flex items-center gap-4 justify-center">
                                     <x-modal icon="bx bx-edit" title="Editar sucursal"
                                         id="editar_sucursal{{ $sucursal->id_sucursal }}" :sucursale="$sucursal"

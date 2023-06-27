@@ -22,19 +22,27 @@ class PlanesFormacion extends Model
 
     public static function getMatrizVentas()
     {
+        $puestos = DB::table('planes_formacion as pf')
+            ->join('puestos as p', "p.plan_formacion_id", "=", "pf.id_plan_formacion")
+            ->where("area", "like", "tecnica")
+            ->pluck('id_puesto');
+        $puestos->toArray();
+
         $usuarios = User::with(['trabajos.cursos.tipo', 'calificaciones'])
             ->leftJoin('calificaciones', 'calificaciones.usuario_id', '=', 'usuarios.id_usuario')
-            ->whereDoesntHave("puestos", function ($query) {
-                $query->whereIn("puesto", ["tecnico mecanico", 'master technician']);
+            ->whereDoesntHave("puestos", function ($query) use ($puestos) {
+                $query->whereIn("puesto_id", $puestos);
             })
             ->select(
                 DB::raw("CONCAT(nombre, ' ', IFNULL(segundo_nombre, ''), ' ', apellido_paterno, ' ', IFNULL(apellido_materno, '')) AS empleado"),
                 'usuarios.*'
             )
-            ->distinct()
-            ->get();
+            ->distinct();
 
-        $result = $usuarios->map(function ($usuario) {
+        $usuariosPaginados = $usuarios->paginate(10);
+        $usuariosPaginados->appends(request()->query());
+
+        $result = $usuariosPaginados->map(function ($usuario) {
             $trabajos = $usuario->trabajos->map(function ($trabajo) use ($usuario) {
                 $cursos = $trabajo->cursos->map(function ($curso) use ($usuario) {
                     $calificacion = $usuario->calificaciones
@@ -63,42 +71,10 @@ class PlanesFormacion extends Model
             return $usuario;
         });
 
-        return $result;
-
-
-
-        // $cursos = $usuario->puestos()->get()->flatMap(function ($puesto) use ($usuario) {
-        //     return $puesto->cursos->map(function ($curso) use ($usuario) {
-        //         $calificacion = $usuario->calificaciones
-        //             ->firstWhere('curso_id', $curso->id_curso);
-
-        //         $cali = $calificacion ? $calificacion->valor : null;
-
-        //         return (object) [
-        //             'id_curso' => $curso->id_curso,
-        //             'nombre_curso' => $curso->nombre,
-        //             'tipo' => $curso->tipo->nombre,
-        //             'id_tipo' => $curso->tipo->id_tipo_curso,
-        //             'calificacion' => $cali
-        //         ];
-        //     });
-        // });
-        // dd($cursos);
-        // $grupos = $cursos->groupBy('tipo');
-        // $usuario->cursos = $grupos->map(function ($grupo) {
-        //     return $grupo->sortBy('id_tipo')->values();
-        // })->toArray();
-
-        // dd($usuario);
-
-        // $usuario->cursos = $cursos->groupBy('tipo')->toArray();
-        // $usuario->puesto = $usuario->puestos->puesto;
-
-        // $usuario->cursos = $grupos->sortBy('id_tipo')->toArray();
-        // $usuario->cursos = $cursos->groupBy('tipo')->toArray();
-        // $usuario->puesto = $usuario->puestos->puesto;
-        // Se utiliza unset($usuario->puestos) para eliminar la relación puestos 
-        // del resultado final. Esto evita que los datos innecesarios se incluyan en el resultado.
+        return [
+            'usuarios' => $result,
+            'links' => $usuariosPaginados->links()
+        ];
     }
 
 
@@ -125,13 +101,14 @@ class PlanesFormacion extends Model
                 DB::raw("CONCAT(nombre, ' ', IFNULL(segundo_nombre, ''), ' ', apellido_paterno, ' ', IFNULL(apellido_materno, '')) AS empleado"),
                 'usuarios.*'
             )
-            ->distinct()
-            ->get();
+            ->distinct();
 
         // dd($usuarios);
+        $usuariosPaginados = $usuarios->paginate(10);
+        $usuariosPaginados->appends(request()->query());
 
         //obtiene los cursos por puesto por que varios trabjos tiene el mismo curso
-        $result = $usuarios->map(function ($usuario) {
+        $result = $usuariosPaginados->map(function ($usuario) {
             // obtiene los cursos de cada trabajo
             $trabajos = $usuario->trabajos->map(function ($trabajo) use ($usuario) {
                 $cursos = $trabajo->cursos->map(function ($curso) use ($usuario) {
@@ -162,57 +139,9 @@ class PlanesFormacion extends Model
             unset($usuario->puestos);
             return $usuario;
         });
-
-        // dd($result);
-
-
-
-        // $usuarios = User::with([
-        //     'puestos',
-        //     'trabajos.cursos.tipo',
-        //     'calificaciones'
-        // ])
-        //     ->whereHas('puestos', function ($query) use ($puestos) {
-        //         $query->whereIn('id_puesto', $puestos);
-        //     })
-        //     ->select(
-        //         DB::raw("CONCAT(nombre, ' ', IFNULL(segundo_nombre, ''), ' ', apellido_paterno, ' ', apellido_materno) AS empleado"),
-        //         'usuarios.*'
-        //     )
-        //     ->get();
-
-
-        // $result = $usuarios->map(function ($usuario) {
-        //     $trabajos = $usuario->trabajos->map(function ($trabajo) use ($usuario) {
-        //         $cursos = $trabajo->cursos->map(function ($curso) use ($usuario) {
-        //             $calificacion = $usuario->calificaciones
-        //                 ->firstWhere('curso_id', $curso->id_curso);
-
-        //             $cali = $calificacion ? $calificacion->valor : null;
-
-        //             return (object) [
-        //                 'id_curso' => $curso->id_curso,
-        //                 'nombre_curso' => $curso->nombre,
-        //                 'tipo' => $curso->tipo->nombre,
-        //                 'calificacion' => $cali
-        //             ];
-        //         });
-
-        //         $cursosAgrupados = $cursos->groupBy('tipo');
-        //         return [
-        //             'trabajo' => $trabajo->nombre,
-        //             'cursos' => $cursosAgrupados
-        //         ];
-        //     });
-
-        //     return (object) [
-        //         'id_usuario' => $usuario->id_usuario,
-        //         'empleado' => $usuario->empleado,
-        //         'puesto' => $usuario->puestos->puesto,
-        //         'id_puesto' => $usuario->puestos->id_puesto,
-        //         'trabajos' => $trabajos,
-        //     ];
-        // });
-        return $result;
+        return [
+            'usuarios' => $result,
+            'links' => $usuariosPaginados->links()
+        ];
     }
 }

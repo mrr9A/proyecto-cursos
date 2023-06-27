@@ -5,16 +5,16 @@
 
     @foreach ($keys as $tipo)
         <table id="{{ $tipo }}" class="w-auto overflow-x-auto">
-            <thead class="bg-blue-800 border-[1px] border-black text-white">
+            <thead class="bg-primary-light border-[1px] border-gray-200 text-white">
                 <tr>
                     <th class="w-full">{{ $tipo }}</th>
                 </tr>
             </thead>
-            <tbody class="bg-white border-[1px] border-black">
+            <tbody class="bg-white border-[1px] border-gray-200">
                 <tr class="w-full grid  overflow-auto grid-cols-[repeat(auto-fit,minmax(120px,1fr))] ">
                     @foreach ($cursos['cursos'][$tipo] as $curso)
                         <td
-                            class="w-full h-full border-[1px]  text-black @if ($curso->calificacion == 'aprovado') bg-green-400 @endif ">
+                            class="w-full h-full border-[1px]  text-black @if ($curso->calificacion == 'aprovado') bg-success @endif ">
                             <label class="w-full h-full cursor-pointer block overflow-hidden">
                                 <input class="hidden peer" type="checkbox" name="cursos[]"
                                     value="usuario_id:{{ $id }}-curso_id:{{ $curso->id_curso }}"

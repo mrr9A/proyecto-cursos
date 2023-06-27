@@ -19,7 +19,7 @@
                 </div>
                 <div class="lg:ml-40 ml-10 space-x-8">
                     <a href="{{ route('usuarios.create') }}"
-                        class="bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">Agregar
+                        class="bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer hover:bg-primary">Agregar
                         usuario</a>
                 </div>
             </div>
@@ -30,7 +30,7 @@
             <table class="min-w-full leading-normal my-2">
                 <thead class="border-b  dark:border-neutral-500 uppercase">
                     <tr
-                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                        class="px-5 py-3 border-b-2 border-gray-200 bg-blue-200 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                         <th scope="col" class="px-6 py-2 w-1/12">ID SGP</th>
                         <th scope="col" class="px-6 py-2">ID SUMTOTAL</th>
                         <th scope="col" class="px-6 py-2">nombre</th>
@@ -41,19 +41,19 @@
                 </thead>
                 <tbody class="capitalize">
                     @foreach ($usuarios as $usuario)
-                        <tr class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-left">
+                        <tr class="border-b border-gray-200 hover:bg-gray-100">
                             <td class="whitespace-nowrap px-6 py-2 w-1/12 ">{{ $usuario->id_sgp }}</td>
-                            <td class="px-5 py-2 border-b border-gray-200 bg-white text-sm">{{ $usuario->id_sumtotal }}</td>
-                            <td class="px-5 py-2 border-b border-gray-200 bg-white text-sm">{{ $usuario->nombre }}
+                            <td class="py-3 px-6 text-left">{{ $usuario->id_sumtotal }}</td>
+                            <td class="py-3 px-6 text-left">{{ $usuario->nombre }}
                                 {{ $usuario->segundo_nombre }} {{ $usuario->apellido_paterno }}
                                 {{ $usuario->apellido_materno }}</td>
-                            <td class="px-5 py-2 border-b border-gray-200 bg-white text-sm">{{ $usuario->puestos->puesto }}</td>
-                            <td class="px-5 py-2 border-b border-gray-200 bg-white text-sm">
+                            <td class="py-3 px-6 text-left">{{ $usuario->puestos->puesto }}</td>
+                            <td class="py-3 px-6 text-left">
                                 <div
                                     class="w-4 h-4 rounded-full @if ($usuario->estado == 1) bg-success @else bg-gray-400 @endif">
                                 </div>
                             </td>
-                            <td class="px-5 py-2 border-b border-gray-200 bg-white text-sm flex gap-2 justify-center">
+                            <td class="py-3 px-6 text-left flex gap-2 justify-center">
                                 <a href="{{ route('usuarios.edit', $usuario->id_usuario) }}">
                                     <img src="/svg/edit.svg" />
                                 </a>
@@ -71,9 +71,41 @@
                     @endforeach
                 </tbody>
             </table>
-            <div>
-                {{ $usuarios->links() }}
+            {{-- PAGINACION --}}
+            <div class="mb-4">
+                <ul class="flex items-center justify-center space-x-2">
+                    <!-- Enlace a la página anterior -->
+                    @if ($usuarios->onFirstPage())
+                        <li class="disabled" aria-disabled="true" aria-label="@lang('pagination.previous')">
+                            <span class="px-2 py-1 rounded bg-gray-300 text-gray-600 cursor-not-allowed" aria-hidden="true">&laquo;</span>
+                        </li>
+                    @else
+                        <li>
+                            <a href="{{ $usuarios->previousPageUrl() }}" rel="prev" class="px-2 py-1 rounded bg-blue-500 text-white hover:bg-blue-600" aria-label="@lang('pagination.previous')">&laquo;</a>
+                        </li>
+                    @endif
+                
+                    <!-- Enlaces a las páginas individuales -->
+                    @foreach ($usuarios->getUrlRange(1, $usuarios->lastPage()) as $page => $url)
+                        <li>
+                            <a href="{{ $url }}" class="{{ $usuarios->currentPage() === $page ? 'px-2 py-1 rounded bg-blue-500 text-white hover:bg-blue-600' : 'px-2 py-1 rounded text-gray-600 hover:text-blue-500' }}">{{ $page }}</a>
+                        </li>
+                    @endforeach
+                
+                    <!-- Enlace a la siguiente página -->
+                    @if ($usuarios->hasMorePages())
+                        <li>
+                            <a href="{{ $usuarios->nextPageUrl() }}" rel="next" class="px-2 py-1 rounded bg-blue-500 text-white hover:bg-blue-600" aria-label="@lang('pagination.next')">&raquo;</a>
+                        </li>
+                    @else
+                        <li class="disabled" aria-disabled="true" aria-label="@lang('pagination.next')">
+                            <span class="px-2 py-1 rounded bg-gray-300 text-gray-600 cursor-not-allowed" aria-hidden="true">&raquo;</span>
+                        </li>
+                    @endif
+                </ul>
+                
             </div>
+            {{-- FIN DE LA PAGINACION --}}
         </div>
     </div>
     </div>

@@ -38,7 +38,7 @@
                             classLabel="text-base" />
                     @else
                         <x-input-text type="password" nombre="password" text="contraseña" placeholder="********"
-                            classLabel="text-base" required/>
+                            classLabel="text-base" required />
                     @endif
                 </div>
             </div>
@@ -90,20 +90,24 @@
         const trabajosSelector = document.getElementById("trabajos")
         let puesto = "";
 
-        // Ejecutar función inicial al cargar la página
+        //Ejecutar función inicial al cargar la página
         document.addEventListener('DOMContentLoaded', function() {
             // Obtener el valor seleccionado del select
             let selectedValue = puestoSelecter.value;
+
             puesto = puestoSelecter.options[selectedValue].text
             // Verificar si el valor seleccionado no es el valor por defecto
+            // esto carga el puesto y trabajos del puesto del usuario
             if (selectedValue !== 'default') {
                 getJobsByPosition(selectedValue);
             }
         });
 
         puestoSelecter.addEventListener('change', (e) => {
-            let id = e.target.value
-            puesto = puestoSelecter.options[id].text
+            let id = e.target.value;
+            // filtramos la opcion que tenga el value igual al valor seleccionado en ese momento para poder obtener el texto que seria el puesto
+            let selectedOption = Array.from(puestoSelecter.options).find(option => option.value === id);
+            puesto = selectedOption.text;
             document.getElementById("select_puesto").setAttribute("disabled", true);
             getJobsByPosition(id)
         })

@@ -99,25 +99,13 @@ class User extends Authenticatable
     // FUNCIONES
     public static function getCountEmployesByPuesto()
     {
-        $empleados = DB::table('usuarios AS u')
-            ->selectRaw('Count(u.id_usuario) as num_empleados, (Count(u.id_usuario) * 100 / (Select Count(id_usuario) From usuarios)) as promedio, p.puesto')
-            ->leftJoin('puestos AS p', 'u.puesto_id', '=', 'p.id_puesto')
+        $empleados = DB::table('puestos AS p')
+            ->leftJoin('usuarios AS u', 'u.puesto_id', '=', 'p.id_puesto')
+            ->selectRaw('Count(u.id_usuario) as num_empleados, (Count(u.id_usuario) * 100 / (Select Count(id_usuario) From usuarios)) as promedio, p.puesto, p.id_puesto')
             ->groupBy('p.puesto')
             ->orderBy("puesto")
-            ->get();
-
-
-        $datos = array_reduce($empleados->toArray(), function ($acc, $currentValue) {
-            // dd($currentValue);
-            $promedio = $currentValue->num_empleados;
-            $puesto = $currentValue->puesto;
-
-            $acc->datos[] = $promedio;
-            $acc->etiquetas[] = $puesto;
-
-            return $acc;
-        }, (object)[]);
-        return $datos;
+            ->get()->toArray();
+        return $empleados;
     }
 
     public static function getProgressByUser($user)
@@ -130,7 +118,7 @@ class User extends Authenticatable
             ->where("id_usuario", "=", $user)
             ->select(
                 'usuarios.id_usuario',
-                DB::raw("CONCAT(nombre, ' ', IFNULL(segundo_nombre, ''), ' ', apellido_paterno, ' ', apellido_materno) AS empleado"),
+                DB::raw("CONCAT(nombre, ' ', IFNULL(segundo_nombre, ''), ' ', apellido_paterno, ' ', IFNULL(apellido_materno, '')) AS empleado"),
                 'usuarios.*'
             )
             ->get();
@@ -179,5 +167,84 @@ class User extends Authenticatable
         });
         // dd($result);
         return $result;
+    }
+
+
+    public static function progresoEmpleados($buscar = "")
+    {
+        // puestos que son tecnicos
+        DB::statement("SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));");
+        $resultado = User::with(['trabajos.cursos.tipo'])
+            ->select(
+                'usuarios.id_usuario',
+                'usuarios.id_sgp',
+                'usuarios.id_sumtotal',
+                DB::raw('COUNT(DISTINCT c.nombre) AS total_cursos'),
+                DB::raw('COUNT(calificaciones.valor) AS cursos_pasados'),
+                DB::raw('CONCAT(usuarios.nombre, " ", IFNULL(usuarios.segundo_nombre, ""), " ", usuarios.apellido_paterno, " ", IFNULL(usuarios.apellido_materno, "")) AS empleados'),
+                'puestos.puesto',
+                'tipo_cursos.nombre AS tipo'
+            )
+            ->join('puestos', 'usuarios.puesto_id', '=', 'puestos.id_puesto')
+            ->join('usuarios_trabajos as ut', 'usuarios.id_usuario', '=', 'ut.usuario_id')
+            ->join('trabajos_sumtotal as ts', "ts.id_trabajo", "=", "ut.trabajo_id")
+            ->join('trabajos_cursos as tc', "tc.trabajo_id", "=", "ut.trabajo_id")
+            ->join('cursos as c', 'tc.curso_id', '=', 'c.id_curso')
+            ->join('tipo_cursos', 'c.tipo_curso_id', '=', 'tipo_cursos.id_tipo_curso')
+            ->leftJoin('calificaciones', function ($join) {
+                $join->on('c.id_curso', '=', 'calificaciones.curso_id')
+                    ->on('usuarios.id_usuario', '=', 'calificaciones.usuario_id');
+            })
+            ->groupBy('id_usuario', 'puestos.puesto', 'tipo_cursos.nombre')
+            ->where("tipo_cursos.nombre", "!=", "complementarios")
+            ->where(function ($q) use ($buscar) {
+                $q->where('usuarios.nombre', 'like', $buscar . "%")
+                    ->orWhere(DB::raw('CONCAT(usuarios.nombre, " ", IFNULL(usuarios.segundo_nombre, ""), " ", usuarios.apellido_paterno, " ", IFNULL(usuarios.apellido_materno, ""))'), 'like', $buscar . "%")
+                    ->orWhere('usuarios.segundo_nombre', 'like', $buscar . "%")
+                    ->orWhere('usuarios.apellido_paterno', 'like', $buscar . "%")
+                    ->orWhere('usuarios.apellido_materno', 'like', $buscar . "%")
+                    ->orWhere('puestos.puesto', 'like', $buscar . "%")
+                    ->orWhere('usuarios.id_sgp', 'like', $buscar . "%")
+                    ->orWhere('usuarios.id_sumtotal', 'like', $buscar . "%");
+            })
+            ->orderBy('puestos.puesto')
+            ->orderBy('empleados')
+            ->get();
+        $resultado = $resultado->toArray();
+        // dd($resultado);
+        $totalCursos = 0;
+        $totalCursosPasados = 0;
+        $map = array_reduce($resultado, function ($acc, $cur) use ($totalCursos, $totalCursosPasados) {
+            $usuario_id = $cur['id_usuario'];
+            if (!array_key_exists($usuario_id, $acc)) {
+                $acc[$usuario_id] = (object)[
+                    "id_usuario" => $usuario_id,
+                    "id_sgp" => $cur['id_sgp'],
+                    "id_sumtotal" => $cur['id_sumtotal'],
+                    "empleado" => $cur['empleados'],
+                    "puesto" => $cur['puesto'],
+                    "total" => $totalCursos,
+                    "totalCursosPasados" => $totalCursosPasados,
+                    "cursos" => []
+                ];
+            }
+            $totalCursos = $cur['total_cursos'] + $acc[$usuario_id]->total;
+            $totalCursosPasados = $cur['cursos_pasados'] + $acc[$usuario_id]->totalCursosPasados;
+
+            $acc[$usuario_id]->total = $totalCursos;
+            $acc[$usuario_id]->totalCursosPasados = $totalCursosPasados;
+            $acc[$usuario_id]->promedioTotal = bcdiv($totalCursosPasados / $totalCursos * 100, '1', 2);
+
+            $obj = [
+                "tipo" => $cur["tipo"],
+                "objetivo" => $cur["total_cursos"],
+                "real" => $cur["cursos_pasados"],
+                "progeso" => bcdiv(($cur["total_cursos"] != 0) ? ($cur["cursos_pasados"] / $cur["total_cursos"]) * 100 : 0, '1', 2),
+            ];
+
+            array_push($acc[$usuario_id]->cursos, $obj);
+            return $acc;
+        }, []);
+        return $map;
     }
 }

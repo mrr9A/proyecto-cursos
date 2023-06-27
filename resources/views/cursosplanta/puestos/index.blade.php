@@ -4,14 +4,9 @@
         @csrf
 
         <div class="flex gap-6 items-center">
-            <x-input-text placeholder="Ej. jefe de taller" nombre="puesto" text="Puesto" class="w-1/4"/>
+            <x-input-text placeholder="Ej. jefe de taller" nombre="puesto" text="Puesto" class="w-1/4" classLabel="text-base"/>
 
-            <div class="relative flex flex-col font-poppins gap-21 text-text-input">
-                @error('plan_id')
-                    <!-- variable mensaje disponible por laravel -->
-                    <small
-                        class="absolute top-5 left-2 text-sm text-red-500 font-semibold italic">{{ $message }}</small>
-                @enderror
+            <div class="relative flex flex-col font-poppins gap-21 text-base">
                 <label class="mb-2 font-semi-bold">Seleccionar plan de informacion</label>
                 <select name="plan_id"
                     class="py-1.5 px-2 leading-tight text-gray-700 border-2 rounded-lg border-input cursor-pointer uppercase">
@@ -22,6 +17,11 @@
                         </option>
                     @endforeach
                 </select>
+                @error('plan_id')
+                    <!-- variable mensaje disponible por laravel -->
+                    <small
+                        class="absolute -bottom-4 text-sm text-red-500 font-semibold italic">{{ $message }}</small>
+                @enderror
             </div>
         </div>
 
@@ -79,7 +79,7 @@
             </thead>
             <tbody class="uppercase">
                 @foreach ($puestos as $puesto)
-                    <tr class="mb-4">
+                    <tr class="mb-4 border-b border-gray-200 hover:bg-gray-100">
                         <td class="whitespace-nowrap px-6 py-1 ">
                             <span>{{ $puesto->id_puesto }}</span>
                         </td>

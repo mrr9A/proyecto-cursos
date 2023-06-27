@@ -21,9 +21,21 @@
                     {{ $sucursal->nombre }}</option>
             @endforeach
         @endif
+        @if ($modalidades ?? '')
+            @foreach ($modalidades as $modalidad)
+                <option value="{{ $modalidad->id_modalidad }}">
+                    {{ $modalidad->modalidad }}</option>
+            @endforeach
+        @endif
+        @if ($tipos ?? '')
+            @foreach ($tipos as $tipo)
+                <option value="{{ $tipo->id_tipo_curso }}">
+                    {{ $tipo->nombre }}</option>
+            @endforeach
+        @endif
 
     </select>
-    @error($name)
+    @error($mensaje ?? $name)
         <small class="absolute -bottom-4 text-sm text-red-500 font-semibold italic">{{ $message }}</small>
     @enderror
 </div>

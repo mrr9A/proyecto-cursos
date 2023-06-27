@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Puesto;
+use App\Models\Sucursal;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -12,11 +14,14 @@ class HomeController extends Controller
     {
         $data = [];
         if (!is_null($request->buscador)) {
-            $data = Puesto::progresoEmpleados($request->buscador);
+            $data = User::progresoEmpleados($request->buscador);
         }else{
-            $data = Puesto::progresoEmpleados();
+            $data = User::progresoEmpleados();
         }
+        $allPuestos = Puesto::count();
+        $allEmpleados = User::where("estado","=",1 )->count();
+        $allSucursales = Sucursal::where("estado","=",1 )->count();
 
-        return view('cursosplanta.home', compact('data'));
+        return view('cursosplanta.home', compact('data', 'allPuestos', 'allEmpleados', 'allSucursales'));
     }
 }

@@ -56,8 +56,8 @@ Route::get('cursosplanta/puesto/{id}', function ($id) {
     return response()->json($puesto);
 });
 Route::get('getProgressByUser', function () {
-    $puesto = User::getProgressByUser();
-    return response()->json($puesto);
+    // $puesto = User::getProgressByUser();
+    // return response()->json($puesto);
 });
 
 // editar la informacion de puesto

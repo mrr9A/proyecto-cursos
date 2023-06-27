@@ -10,11 +10,12 @@ class MatrizController extends Controller
 {
     //
     public function index(Request $request){
-        $empleados = PlanesFormacion::getMatrizVentas();
+        $data = PlanesFormacion::getMatrizVentas();
         if($request->q === "tecnico"){
-            $empleados = PlanesFormacion::getMatrizTecnica();
+            $data = PlanesFormacion::getMatrizTecnica();
         }
-        return view('cursosplanta.matrices.index', compact('empleados'));
+        $puestos = Puesto::all();
+        return view('cursosplanta.matrices.index', compact('data', 'puestos'));
     }
 
     public function show(){
