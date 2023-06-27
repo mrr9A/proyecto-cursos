@@ -1,4 +1,7 @@
 <x-app title="matrices">
+    {{-- Indea para califica
+        colocar colores con el porcentaje y cuando se seleccione un checkbox se ponga de ese color y al enviarse se mande el color y el porcentaje
+        para insertarlos en la base de datos --}}
   {{-- @dump(request()->q)
   @dump(request()->puestos) --}}
     <h2 class="">Filtros</h2>

@@ -25,6 +25,6 @@ class PDFController extends Controller
         $pdf->loadHTML('<style>' . $css . '</style>' . view('pdfs.prueba', ['data' => $data])->render());
 
         // Devuelve una respuesta PDF en lugar de descargarlo
-        return $pdf->stream('prueba.pdf');
+        return $pdf->stream($data->nombre.".pdf");
     }
 }

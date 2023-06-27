@@ -2,6 +2,10 @@
     @csrf
     <div class="flex justify-between items-center">
         <p>Para cambiar la calificacion del usuario solo seleccione los cursos a calificar como aprovado y a enviar<br>Si desea calificar los cursos del usuario por porgreso tiene que ir al detalle</p>
+
+        <div>
+            
+        </div>
         <x-input-submit text="Calificar" />
     </div>
 

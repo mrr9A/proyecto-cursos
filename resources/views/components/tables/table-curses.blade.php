@@ -10,7 +10,7 @@
                     <th class="w-full">{{ $tipo }}</th>
                 </tr>
             </thead>
-            <tbody class="bg-white border-[1px] border-gray-200">
+            <tbody class="border-[1px] border-gray-200">
                 <tr class="w-full grid  overflow-auto grid-cols-[repeat(auto-fit,minmax(120px,1fr))] ">
                     @foreach ($cursos['cursos'][$tipo] as $curso)
                         <td

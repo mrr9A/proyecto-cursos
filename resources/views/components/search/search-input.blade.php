@@ -68,7 +68,7 @@
             .then(data => {
                 console.log(data)
                 let list = ""
-                let arr = Object.values(data)
+                let arr = Object.values(data["data"])
                 arr.forEach(element => {
                     list += `
                     <li class="list">${element.empleado || element.nombre}</li>

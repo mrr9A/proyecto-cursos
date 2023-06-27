@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -101,10 +103,13 @@ class User extends Authenticatable
     {
         $empleados = DB::table('puestos AS p')
             ->leftJoin('usuarios AS u', 'u.puesto_id', '=', 'p.id_puesto')
-            ->selectRaw('Count(u.id_usuario) as num_empleados, (Count(u.id_usuario) * 100 / (Select Count(id_usuario) From usuarios)) as promedio, p.puesto, p.id_puesto')
-            ->groupBy('p.puesto')
+            ->selectRaw('Count(u.id_usuario) as num_empleados, p.puesto, p.id_puesto')
+            // ->selectRaw('Count(u.id_usuario) as num_empleados, (Count(u.id_usuario) * 100 / (Select Count(id_usuario) From usuarios)) as promedio, p.puesto, p.id_puesto')
+            ->where("u.estado", 1)
+            ->groupBy('p.id_puesto')
             ->orderBy("puesto")
             ->get()->toArray();
+
         return $empleados;
     }
 
@@ -174,6 +179,42 @@ class User extends Authenticatable
     {
         // puestos que son tecnicos
         DB::statement("SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));");
+        // $resultado = User::with(['trabajos.cursos.tipo'])
+        //     ->select(
+        //         'usuarios.id_usuario',
+        //         'usuarios.id_sgp',
+        //         'usuarios.id_sumtotal',
+        //         DB::raw('COUNT(DISTINCT c.nombre) AS total_cursos'),
+        //         DB::raw('COUNT(calificaciones.valor) AS cursos_pasados'),
+        //         DB::raw('CONCAT(usuarios.nombre, " ", IFNULL(usuarios.segundo_nombre, ""), " ", usuarios.apellido_paterno, " ", IFNULL(usuarios.apellido_materno, "")) AS empleados'),
+        //         'puestos.puesto',
+        //         'tipo_cursos.nombre AS tipo'
+        //     )
+        //     ->join('puestos', 'usuarios.puesto_id', '=', 'puestos.id_puesto')
+        //     ->join('usuarios_trabajos as ut', 'usuarios.id_usuario', '=', 'ut.usuario_id')
+        //     ->join('trabajos_sumtotal as ts', "ts.id_trabajo", "=", "ut.trabajo_id")
+        //     ->join('trabajos_cursos as tc', "tc.trabajo_id", "=", "ut.trabajo_id")
+        //     ->join('cursos as c', 'tc.curso_id', '=', 'c.id_curso')
+        //     ->join('tipo_cursos', 'c.tipo_curso_id', '=', 'tipo_cursos.id_tipo_curso')
+        //     ->leftJoin('calificaciones', function ($join) {
+        //         $join->on('c.id_curso', '=', 'calificaciones.curso_id')
+        //             ->on('usuarios.id_usuario', '=', 'calificaciones.usuario_id');
+        //     })
+        //     ->groupBy('id_usuario', 'puestos.puesto', 'tipo_cursos.nombre')
+        //     ->where("tipo_cursos.nombre", "!=", "complementarios")
+        //     ->where(function ($q) use ($buscar) {
+        //         $q->where('usuarios.nombre', 'like', $buscar . "%")
+        //             ->orWhere(DB::raw('CONCAT(usuarios.nombre, " ", IFNULL(usuarios.segundo_nombre, ""), " ", usuarios.apellido_paterno, " ", IFNULL(usuarios.apellido_materno, ""))'), 'like', $buscar . "%")
+        //             ->orWhere('usuarios.segundo_nombre', 'like', $buscar . "%")
+        //             ->orWhere('usuarios.apellido_paterno', 'like', $buscar . "%")
+        //             ->orWhere('usuarios.apellido_materno', 'like', $buscar . "%")
+        //             ->orWhere('puestos.puesto', 'like', $buscar . "%")
+        //             ->orWhere('usuarios.id_sgp', 'like', $buscar . "%")
+        //             ->orWhere('usuarios.id_sumtotal', 'like', $buscar . "%");
+        //     })
+        //     ->orderBy('puestos.puesto')
+        //     ->orderBy('empleados')
+        //     ->get();
         $resultado = User::with(['trabajos.cursos.tipo'])
             ->select(
                 'usuarios.id_usuario',
@@ -188,15 +229,17 @@ class User extends Authenticatable
             ->join('puestos', 'usuarios.puesto_id', '=', 'puestos.id_puesto')
             ->join('usuarios_trabajos as ut', 'usuarios.id_usuario', '=', 'ut.usuario_id')
             ->join('trabajos_sumtotal as ts', "ts.id_trabajo", "=", "ut.trabajo_id")
-            ->join('trabajos_cursos as tc', "tc.trabajo_id", "=", "ut.trabajo_id")
-            ->join('cursos as c', 'tc.curso_id', '=', 'c.id_curso')
-            ->join('tipo_cursos', 'c.tipo_curso_id', '=', 'tipo_cursos.id_tipo_curso')
+            ->leftJoin('trabajos_cursos as tc', "tc.trabajo_id", "=", "ut.trabajo_id")
+            ->leftJoin('cursos as c', function ($join) {
+                $join->on('tc.curso_id', '=', 'c.id_curso')
+                    ->on('c.tipo_curso_id', '!=', DB::raw("'complementarios'"));
+            })
+            ->leftJoin('tipo_cursos', 'c.tipo_curso_id', '=', 'tipo_cursos.id_tipo_curso')
             ->leftJoin('calificaciones', function ($join) {
                 $join->on('c.id_curso', '=', 'calificaciones.curso_id')
                     ->on('usuarios.id_usuario', '=', 'calificaciones.usuario_id');
             })
             ->groupBy('id_usuario', 'puestos.puesto', 'tipo_cursos.nombre')
-            ->where("tipo_cursos.nombre", "!=", "complementarios")
             ->where(function ($q) use ($buscar) {
                 $q->where('usuarios.nombre', 'like', $buscar . "%")
                     ->orWhere(DB::raw('CONCAT(usuarios.nombre, " ", IFNULL(usuarios.segundo_nombre, ""), " ", usuarios.apellido_paterno, " ", IFNULL(usuarios.apellido_materno, ""))'), 'like', $buscar . "%")
@@ -205,16 +248,21 @@ class User extends Authenticatable
                     ->orWhere('usuarios.apellido_materno', 'like', $buscar . "%")
                     ->orWhere('puestos.puesto', 'like', $buscar . "%")
                     ->orWhere('usuarios.id_sgp', 'like', $buscar . "%")
-                    ->orWhere('usuarios.id_sumtotal', 'like', $buscar . "%");
+                    ->orWhere('usuarios.id_sumtotal', 'like', $buscar . "%")
+                    ->where("usuarios.estado", '=', 1);
             })
             ->orderBy('puestos.puesto')
             ->orderBy('empleados')
-            ->get();
+            ->paginate(10)->appends(request()->query());
+        // ->get();
+
+
         $resultado = $resultado->toArray();
-        // dd($resultado);
+        // dd($resultado['data']);
+        // $resultado = $resultado->toArray();
         $totalCursos = 0;
         $totalCursosPasados = 0;
-        $map = array_reduce($resultado, function ($acc, $cur) use ($totalCursos, $totalCursosPasados) {
+        $map = array_reduce($resultado['data'], function ($acc, $cur) use ($totalCursos, $totalCursosPasados) {
             $usuario_id = $cur['id_usuario'];
             if (!array_key_exists($usuario_id, $acc)) {
                 $acc[$usuario_id] = (object)[
@@ -233,7 +281,18 @@ class User extends Authenticatable
 
             $acc[$usuario_id]->total = $totalCursos;
             $acc[$usuario_id]->totalCursosPasados = $totalCursosPasados;
-            $acc[$usuario_id]->promedioTotal = bcdiv($totalCursosPasados / $totalCursos * 100, '1', 2);
+            // $acc[$usuario_id]->promedioTotal = (bcdiv($totalCursosPasados / $totalCursos * 100, '1', 2)) ?? 0;
+            try {
+                $promedioTotal = 0;
+                if ($totalCursos != 0) {
+                    $promedioTotal = bcdiv($totalCursosPasados / $totalCursos * 100, '1', 2);
+                }
+                $acc[$usuario_id]->promedioTotal = $promedioTotal;
+            } catch (Exception $e) {
+                $errorMessage = $e->getMessage();
+                // Aquí puedes mostrar el mensaje de error o realizar acciones adicionales de manejo de errores
+                $acc[$usuario_id]->promedioTotal = 0;
+            }
 
             $obj = [
                 "tipo" => $cur["tipo"],
@@ -245,6 +304,10 @@ class User extends Authenticatable
             array_push($acc[$usuario_id]->cursos, $obj);
             return $acc;
         }, []);
-        return $map;
+
+        return [
+            "data" => $map,
+            "links" => $resultado['links']
+        ];
     }
 }
