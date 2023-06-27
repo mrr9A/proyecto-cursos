@@ -1,5 +1,5 @@
 <x-app title="Usuarios">
-    <div class="card mb-4">
+    <div class="card mb-4 -mt-3">
 
         <div class="flex items-center justify-between ">
             <div>
@@ -72,38 +72,87 @@
                 </tbody>
             </table>
             {{-- PAGINACION --}}
-            <div class="mb-4">
-                <ul class="flex items-center justify-center space-x-2">
-                    <!-- Enlace a la página anterior -->
-                    @if ($usuarios->onFirstPage())
-                        <li class="disabled" aria-disabled="true" aria-label="@lang('pagination.previous')">
-                            <span class="px-2 py-1 rounded bg-gray-300 text-gray-600 cursor-not-allowed" aria-hidden="true">&laquo;</span>
-                        </li>
-                    @else
-                        <li>
-                            <a href="{{ $usuarios->previousPageUrl() }}" rel="prev" class="px-2 py-1 rounded bg-blue-500 text-white hover:bg-blue-600" aria-label="@lang('pagination.previous')">&laquo;</a>
-                        </li>
-                    @endif
-                
-                    <!-- Enlaces a las páginas individuales -->
-                    @foreach ($usuarios->getUrlRange(1, $usuarios->lastPage()) as $page => $url)
-                        <li>
-                            <a href="{{ $url }}" class="{{ $usuarios->currentPage() === $page ? 'px-2 py-1 rounded bg-blue-500 text-white hover:bg-blue-600' : 'px-2 py-1 rounded text-gray-600 hover:text-blue-500' }}">{{ $page }}</a>
-                        </li>
-                    @endforeach
-                
-                    <!-- Enlace a la siguiente página -->
-                    @if ($usuarios->hasMorePages())
-                        <li>
-                            <a href="{{ $usuarios->nextPageUrl() }}" rel="next" class="px-2 py-1 rounded bg-blue-500 text-white hover:bg-blue-600" aria-label="@lang('pagination.next')">&raquo;</a>
-                        </li>
-                    @else
-                        <li class="disabled" aria-disabled="true" aria-label="@lang('pagination.next')">
-                            <span class="px-2 py-1 rounded bg-gray-300 text-gray-600 cursor-not-allowed" aria-hidden="true">&raquo;</span>
-                        </li>
-                    @endif
-                </ul>
-                
+            <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
+                <div>
+                    {{-- $usuarios->currentPage(): Devuelve el número de página actual.
+                    $usuarios->perPage(): Devuelve la cantidad de resultados mostrados por página.
+                    $usuarios->total(): Devuelve el total de resultados obtenidos. --}}
+                    <p class="text-sm text-gray-700">
+                        Mostrando
+                        <span class="font-medium">{{ $usuarios->currentPage() }}</span>
+                        a
+                        <span class="font-medium">{{ $usuarios->perPage() }}</span>
+                        de
+                        <span class="font-medium">{{ $usuarios->total() }}</span>
+                        resultados
+                    </p>
+                </div>
+                <div>
+                    <nav class="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
+
+                        @if ($usuarios->onFirstPage())
+                            <a href="#" aria-label="@lang('pagination.previous')"
+                                class="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
+                                <span class="sr-only">Previous</span>
+                                <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd"
+                                        d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                            </a>
+                        @else
+                            <a href="{{ $usuarios->previousPageUrl() }}" aria-label="@lang('pagination.previous')"
+                                class="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
+                                <span class="sr-only">Previous</span>
+                                <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd"
+                                        d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                            </a>
+                        @endif
+
+                        {{-- paginas --}}
+                        @if ($usuarios->currentPage() != 1)
+                            <a href="{{ $usuarios->url(1) }}" class="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">1</a>
+                        @endif
+
+
+                        @foreach ($usuarios->getUrlRange(max(1, $usuarios->currentPage() - 2), min($usuarios->lastPage(), $usuarios->currentPage() + 2)) as $page => $url)
+                            <a href="{{ $url }}"
+                                class="{{ $usuarios->currentPage() === $page ? 'relative z-10 inline-flex items-center bg-indigo-600 px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600' : 'relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0' }}">{{ $page }}</a>
+                        @endforeach
+
+                        @if ($usuarios->currentPage() != $usuarios->lastPage())
+                            <a href="{{ $usuarios->url($usuarios->lastPage())}}" class="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">{{$usuarios->lastPage()}}</a>
+                        @endif
+
+                        <!-- Enlace a la siguiente página -->
+                        @if ($usuarios->hasMorePages())
+                            <a href="{{ $usuarios->nextPageUrl() }}" aria-label="@lang('pagination.next')"
+                                class="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
+                                <span class="sr-only">Next</span>
+                                <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd"
+                                        d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                            </a>
+                        @else
+                            <div aria-hidden="true" aria-label="@lang('pagination.next')" aria-disabled="true"
+                                aria-label="@lang('pagination.next')"
+                                class="disabled relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
+                                <span class="sr-only">Next</span>
+                                <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd"
+                                        d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                        @endif
+
+                    </nav>
+                </div>
             </div>
             {{-- FIN DE LA PAGINACION --}}
         </div>
