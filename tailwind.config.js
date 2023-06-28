@@ -8,7 +8,7 @@ export default {
   
   theme: {
     boxShadow:{
-      'all': ['1px 1px 8px -5px rgba(0, 0, 0, 0.3)','-1px -1px 8px -5px rgba(0, 0, 0, 0.3)' ]
+      'all': ['1px 1px 8px -3px rgba(0, 0, 0, 0.3)' ]
     }
     ,
     fontFamily: {

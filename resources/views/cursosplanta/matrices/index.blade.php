@@ -1,4 +1,7 @@
 <x-app title="matrices">
+    {{-- Indea para califica
+        colocar colores con el porcentaje y cuando se seleccione un checkbox se ponga de ese color y al enviarse se mande el color y el porcentaje
+        para insertarlos en la base de datos --}}
   {{-- @dump(request()->q)
   @dump(request()->puestos) --}}
     <h2 class="">Filtros</h2>
@@ -9,8 +12,9 @@
                 <option value="tecnico">tecnico</option>
             </select>
             <select name="puestos">
-                <option value="consultor de procesos">consultor de procesos</option>
-                <option value="jefe de taller">jefe de taller</option>
+                @foreach ($puestos as $puesto )
+                <option value="{{$puesto->id_puesto}}">{{$puesto->puesto}}</option>
+                @endforeach
             </select>
             <button type="submit" class="flex px-1.5 py-1 bg-blue-700 rounded-sm items-center text-white hover:bg-blue-800">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
@@ -24,6 +28,6 @@
         <x-search.search-input route="matrices.index"/>
     </div>
 
-
-    <x-tables.table :empleados="$empleados" />
+    
+    <x-tables.table :empleados="$data"/>
 </x-app>

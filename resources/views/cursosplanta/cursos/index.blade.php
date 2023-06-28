@@ -2,8 +2,10 @@
     <div class="">
         Opciones
         <div class=" flex items-center gap-2">
-            <x-modal :modalidad="$modalidad" :tipo="$tipos" title="Crear curso" textButton="Agregar curso" id="crear_curso"
-                vistaContenidoModal="cursosplanta.cursos.create" />
+            <a href="{{route('cursos.create')}}" class="flex items-center gap-2 text-gray-50 bg-blue-800 border-b-2 border-2 rounded-md  focus:outline-none  font-medium text-sm px-2 py-1.5  hover:bg-blue-900 hover:text-gray-200 hover:rounded-t-md'">
+                <i class='bx bxs-plus-circle'></i>
+                Crear Cursos
+            </a>
             <x-modal title="Crear modalidad" textButton="Agregar modalidad" id="crear_modalidad"
                 vistaContenidoModal="cursosplanta.modalidad.create" />
             <x-modal title="Crear tipo curso" textButton="Agregar tipo curso" id="crear_tipo_curso"

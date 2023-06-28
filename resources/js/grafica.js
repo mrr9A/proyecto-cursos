@@ -54,7 +54,7 @@ ctx.height = 300;
             },
             color: '#333333'
           },
-          position: 'bottom',
+          position: 'left',
           labels: {
             // generateLabels: function (chart) {
             //   const originalGenerateLabels = Chart.defaults.plugins.legend.labels.generateLabels;
@@ -101,13 +101,13 @@ ctx.height = 300;
               // if (label) {
               //   label += ':';
               // }
-              var label = "cantidad: "
+              var label = "empleados: "
               label += context.raw.toLocaleString(); // Agrega el número de empleados
               return label;
             }
           }
         },
-        customTooltips: tooltipsPlugin
+        // customTooltips: tooltipsPlugin
       }
     }
   });

@@ -10,7 +10,7 @@
         class="bg-gray-50 border-[2px] border-input text-gray-900  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-2 py-1 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
         value="{{ old($nombre, $value ?? "") }}" min="1" />
         
-    @error($nombre)
+    @error($mensaje ?? $nombre)
         <!-- variable mensaje disponible por laravel -->
         <small class="absolute -bottom-4 text-sm text-red-500 font-semibold italic">{{ $message }}</small>
     @enderror

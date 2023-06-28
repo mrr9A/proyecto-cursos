@@ -4,14 +4,9 @@
         @csrf
 
         <div class="flex gap-6 items-center">
-            <x-input-text placeholder="Ej. jefe de taller" nombre="puesto" text="Puesto" class="w-1/4"/>
+            <x-input-text placeholder="Ej. jefe de taller" nombre="puesto" text="Puesto" class="w-1/4" classLabel="text-base"/>
 
-            <div class="relative flex flex-col font-poppins gap-21 text-text-input">
-                @error('plan_id')
-                    <!-- variable mensaje disponible por laravel -->
-                    <small
-                        class="absolute top-5 left-2 text-sm text-red-500 font-semibold italic">{{ $message }}</small>
-                @enderror
+            <div class="relative flex flex-col font-poppins gap-21 text-base">
                 <label class="mb-2 font-semi-bold">Seleccionar plan de informacion</label>
                 <select name="plan_id"
                     class="py-1.5 px-2 leading-tight text-gray-700 border-2 rounded-lg border-input cursor-pointer uppercase">
@@ -22,6 +17,11 @@
                         </option>
                     @endforeach
                 </select>
+                @error('plan_id')
+                    <!-- variable mensaje disponible por laravel -->
+                    <small
+                        class="absolute -bottom-4 text-sm text-red-500 font-semibold italic">{{ $message }}</small>
+                @enderror
             </div>
         </div>
 
@@ -79,7 +79,7 @@
             </thead>
             <tbody class="uppercase">
                 @foreach ($puestos as $puesto)
-                    <tr class="mb-4">
+                    <tr class="mb-4 border-b border-gray-200 hover:bg-gray-100">
                         <td class="whitespace-nowrap px-6 py-1 ">
                             <span>{{ $puesto->id_puesto }}</span>
                         </td>
@@ -124,13 +124,54 @@
                                 data-modal-toggle="puesto-{{ $puesto->id_puesto }}">
                                 <img src="/svg/delete.svg" />
                             </button>
-                            <x-modals.alert-modal id="puesto-{{ $puesto->id_puesto }}" :puesto="$puesto->id_puesto" />
+
+                            <x-modals.alert-modal id="puesto-{{ $puesto->id_puesto }}" route="puestos.destroy"  :parametroDeRoute="$puesto->id_puesto" title="Esta seguro de eliminar el puesto" message="El puesto {{ $puesto->puesto }} sera eliminado"/>
 
                         </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
+
+        <div class="mb-4">
+            <ul class="flex items-center justify-center space-x-2">
+                <!-- Enlace a la página anterior -->
+                @if ($puestos->onFirstPage())
+                    <li class="disabled" aria-disabled="true" aria-label="@lang('pagination.previous')">
+                        <span class="px-2 py-1 rounded bg-gray-300 text-gray-600 cursor-not-allowed" aria-hidden="true">&laquo;</span>
+                    </li>
+                @else
+                    <li>
+                        <a href="{{ $puestos->previousPageUrl() }}" rel="prev" class="px-2 py-1 rounded bg-blue-500 text-white hover:bg-blue-600" aria-label="@lang('pagination.previous')">&laquo;</a>
+                    </li>
+                @endif
+        
+                <!-- Enlaces a las páginas individuales -->
+                @foreach ($puestos->links() as $link)
+                    @if ($link['url'])
+                        <li>
+                            <a href="{{ $link['url'] }}" class="{{ $link['active'] ? 'px-2 py-1 rounded bg-blue-500 text-white hover:bg-blue-600' : 'px-2 py-1 rounded text-gray-600 hover:text-blue-500' }}">{{ $link['label'] }}</a>
+                        </li>
+                    @else
+                        <li class="disabled" aria-disabled="true">
+                            <span class="px-2 py-1 rounded text-gray-600">{{ $link['label'] }}</span>
+                        </li>
+                    @endif
+                @endforeach
+        
+                <!-- Enlace a la siguiente página -->
+                @if ($puestos->hasMorePages())
+                    <li>
+                        <a href="{{ $puestos->nextPageUrl() }}" rel="next" class="px-2 py-1 rounded bg-blue-500 text-white hover:bg-blue-600" aria-label="@lang('pagination.next')">&raquo;</a>
+                    </li>
+                @else
+                    <li class="disabled" aria-disabled="true" aria-label="@lang('pagination.next')">
+                        <span class="px-2 py-1 rounded bg-gray-300 text-gray-600 cursor-not-allowed" aria-hidden="true">&raquo;</span>
+                    </li>
+                @endif
+            </ul>
+        </div>
+
     </div>
 
     <div id="loader" />

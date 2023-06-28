@@ -33,7 +33,7 @@ class PlanFormacionController extends Controller
                 array_push($data, $consulta);
             }
         }
-        DB::table("trabajos_cursos")->insert($data);
+        DB::table("trabajos_cursos")->insertOrIgnore($data);
         return redirect()->route("matrices.index")->with('status', 'cursos agregados correctamente');
     }
 }

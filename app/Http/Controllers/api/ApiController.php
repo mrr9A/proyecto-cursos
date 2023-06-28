@@ -3,10 +3,8 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Curso;
-use App\Models\Puesto;
+use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class ApiController extends Controller
 {
@@ -22,7 +20,7 @@ class ApiController extends Controller
         //       ->orWhere('c.codigo', 'like', $request->buscar."%");
         //  })->get();
 
-        $resultados = Puesto::progresoEmpleados($request->buscar);
+        $resultados = User::progresoEmpleados($request->buscar);
         // $resultados->toArray();
         return response()->json($resultados);
     }
