@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 class Curso extends Model
 {
     use HasFactory;
-    protected $fillable = ['nombre', 'fecha_inicio', 'fecha_final', 'estado', 'modalidad_id', 'tipo_curso_id', 'codigo','imagen', 'interno_planta'];
+    protected $fillable = ['nombre', 'fecha_inicio', 'fecha_termino', 'estado', 'modalidad_id', 'tipo_curso_id', 'codigo','imagen', 'interno_planta'];
     protected $primaryKey = "id_curso";
     public $timestamps = false;
 
