@@ -22,6 +22,110 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
 
+        // MODALIDADES
+        // Inserción 1
+        ModalidadCurso::create([
+            'modalidad' => 'online',
+            'estado' => 1
+        ]);
+
+        // Inserción 2
+        ModalidadCurso::create([
+            'modalidad' => 'aula virtual',
+            'estado' => 1
+        ]);
+
+        // Inserción 3
+        ModalidadCurso::create([
+            'modalidad' => 'presencial',
+            'estado' => 1
+        ]);
+
+        // FIN DE MODALIDADEs
+
+
+        // TIPO DE CURSOS
+        // Inserción 1
+        TipoCurso::create([
+            'nombre' => 'iniciales',
+            'duracion' => '0-3',
+            'estado' => 1
+        ]);
+
+        // Inserción 2
+        TipoCurso::create([
+            'nombre' => 'fundamentos',
+            'duracion' => '3-6',
+            'estado' => 1
+        ]);
+
+        // Inserción 3
+        TipoCurso::create([
+            'nombre' => 'especialidad',
+            'duracion' => '6-12',
+            'estado' => 1
+        ]);
+
+        // Inserción 4
+        TipoCurso::create([
+            'nombre' => 'complementarios',
+            'estado' => 1
+        ]);
+
+        // Inserción 5
+        TipoCurso::create([
+            'nombre' => 'basico',
+            'estado' => 1
+        ]);
+
+        // Inserción 6
+        TipoCurso::create([
+            'nombre' => 'avanzado',
+            'estado' => 1
+        ]);
+
+        // Inserción 7
+        TipoCurso::create([
+            'nombre' => 'experto',
+            'estado' => 1
+        ]);
+
+        // FIN TIPO DE CURSOS
+
+        $cursosCodigo = [
+            ['codigo' => 'w-01', 'nombre' => 'introduccion a volkswagen', 'estado' => 1, 'modalidad_id' => 1, 'tipo_curso_id' => 1],
+            ['codigo' => 'w-33', 'nombre' => 'procesos de ventas volkswagen', 'estado' => 1, 'modalidad_id' => 1, 'tipo_curso_id' => 1],
+            ['codigo' => 'w-021', 'nombre' => 'long drive', 'estado' => 1, 'modalidad_id' => 1, 'tipo_curso_id' => 1],
+            ['codigo' => '0-01', 'nombre' => 'trabajo en equipo', 'estado' => 1, 'modalidad_id' => 1, 'tipo_curso_id' => 1],
+            ['codigo' => 'w-34', 'nombre' => 'proceso de ventas digital(online booking)', 'estado' => 1, 'modalidad_id' => 1, 'tipo_curso_id' => 1],
+            ['codigo' => 'w-12', 'nombre' => 'campañas', 'estado' => 1, 'modalidad_id' => 1, 'tipo_curso_id' => 1],
+            ['codigo' => 'w-31', 'nombre' => 'salesforce ventas', 'estado' => 1, 'modalidad_id' => 1, 'tipo_curso_id' => 1],
+            ['codigo' => 'w-61', 'nombre' => 'gestión de reclamaciones post venta', 'estado' => 1, 'modalidad_id' => 1, 'tipo_curso_id' => 1],
+            ['codigo' => 'w-07', 'nombre' => 'oferta comercial post venta', 'estado' => 1, 'modalidad_id' => 1, 'tipo_curso_id' => 1],
+            ['codigo' => '0-61', 'nombre' => 'derechos y obligaciones en la prestacion de servicios', 'estado' => 1, 'modalidad_id' => 1, 'tipo_curso_id' => 1],
+            ['codigo' => 'w-89', 'nombre' => 'procesos de refacciones', 'estado' => 1, 'modalidad_id' => 1, 'tipo_curso_id' => 1],
+            ['codigo' => '0-60', 'nombre' => 'procesos de servicio', 'estado' => 1, 'modalidad_id' => 1, 'tipo_curso_id' => 1],
+        ];
+
+        $cursosNoCodigo=[
+            // 
+            // basicos 
+            ["nombre" => "bq seguridad live broadcast", "estado" => 1, "modalidad_id" => 2, "tipo_curso_id" => 5],
+            ["nombre" => "bq mantenimiento y experiencia con el cliente live broadcast", "estado" => 1, "modalidad_id" => 2, "tipo_curso_id" => 5],
+            ["nombre" => "bq intervalos de servicio live broadcast", "estado" => 1, "modalidad_id" => 2, "tipo_curso_id" => 5],
+            ["nombre" => "bq bloque 2 live broadcast", "estado" => 1, "modalidad_id" => 2, "tipo_curso_id" => 5],
+            ["nombre" => "bq bloque 3 live broadcast", "estado" => 1, "modalidad_id" => 2, "tipo_curso_id" => 5],
+            ["nombre" => "bq tecnico hvt", "estado" => 1, "modalidad_id" => 2, "tipo_curso_id" => 5],
+            ["nombre" => "aq mecanica de motor", "estado" => 1, "modalidad_id" => 2, "tipo_curso_id" => 6],
+            ["nombre" => "aq cambios manuales", "estado" => 1, "modalidad_id" => 2, "tipo_curso_id" => 6],
+            ["nombre" => "aq tren de rodaje", "estado" => 1, "modalidad_id" => 2, "tipo_curso_id" => 6],
+        ];
+
+        DB::table('cursos')->insertOrIgnore($cursosCodigo);
+        DB::table('cursos')->insertOrIgnore($cursosNoCodigo);
+
+
+
 
         DB::beginTransaction();
 
@@ -117,79 +221,6 @@ class DatabaseSeeder extends Seeder
         ]);
         // FIND DE LA CREACION DE SUCRUSALES
 
-        \App\Models\User::factory(1000)->create();
-
-
-        // MODALIDADES
-        // Inserción 1
-        ModalidadCurso::create([
-            'modalidad' => 'online',
-            'estado' => 1
-        ]);
-
-        // Inserción 2
-        ModalidadCurso::create([
-            'modalidad' => 'aula virtual',
-            'estado' => 1
-        ]);
-
-        // Inserción 3
-        ModalidadCurso::create([
-            'modalidad' => 'presencial',
-            'estado' => 1
-        ]);
-
-        // FIN DE MODALIDADEs
-
-
-        // TIPO DE CURSOS
-        // Inserción 1
-        TipoCurso::create([
-            'nombre' => 'iniciales',
-            'duracion' => '0-3',
-            'estado' => 1
-        ]);
-
-        // Inserción 2
-        TipoCurso::create([
-            'nombre' => 'fundamentos',
-            'duracion' => '3-6',
-            'estado' => 1
-        ]);
-
-        // Inserción 3
-        TipoCurso::create([
-            'nombre' => 'especialidad',
-            'duracion' => '6-12',
-            'estado' => 1
-        ]);
-
-        // Inserción 4
-        TipoCurso::create([
-            'nombre' => 'complementarios',
-            'estado' => 1
-        ]);
-
-        // Inserción 5
-        TipoCurso::create([
-            'nombre' => 'basico',
-            'estado' => 1
-        ]);
-
-        // Inserción 6
-        TipoCurso::create([
-            'nombre' => 'avanzado',
-            'estado' => 1
-        ]);
-
-        // Inserción 7
-        TipoCurso::create([
-            'nombre' => 'experto',
-            'estado' => 1
-        ]);
-
-        // FIN TIPO DE CURSOS
-
-
+        \App\Models\User::factory(400)->create();
     }
 }

@@ -15,12 +15,12 @@ class HomeController extends Controller
         $data = [];
         if (!is_null($request->buscador)) {
             $data = User::progresoEmpleados($request->buscador);
-        }else{
+        } else {
             $data = User::progresoEmpleados();
         }
         $allPuestos = Puesto::count();
-        $allEmpleados = User::where("estado","=",1 )->count();
-        $allSucursales = Sucursal::where("estado","=",1 )->count();
+        $allEmpleados = User::where("estado", "=", 1)->count();
+        $allSucursales = Sucursal::where("estado", "=", 1)->count();
 
         return view('cursosplanta.home', compact('data', 'allPuestos', 'allEmpleados', 'allSucursales'));
     }

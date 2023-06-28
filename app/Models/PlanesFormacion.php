@@ -20,7 +20,7 @@ class PlanesFormacion extends Model
         return $this->hasMany(Puesto::class, "plan_formacion_id");
     }
 
-    public static function getMatrizVentas()
+    public static function getMatrizVentas($buscar = "")
     {
         $puestos = DB::table('planes_formacion as pf')
             ->join('puestos as p', "p.plan_formacion_id", "=", "pf.id_plan_formacion")
@@ -33,16 +33,33 @@ class PlanesFormacion extends Model
             ->whereDoesntHave("puestos", function ($query) use ($puestos) {
                 $query->whereIn("puesto_id", $puestos);
             })
+            ->where(function ($q) use ($buscar) {
+                $q->where(function ($innerQuery) use ($buscar) {
+                    $innerQuery->where('usuarios.nombre', 'like', $buscar . "%")
+                        ->orWhere(DB::raw('CONCAT(usuarios.nombre, " ", IFNULL(usuarios.segundo_nombre, ""), " ", usuarios.apellido_paterno, " ", IFNULL(usuarios.apellido_materno, ""))'), 'like', $buscar . "%")
+                        ->orWhere('usuarios.segundo_nombre', 'like', $buscar . "%")
+                        ->orWhere('usuarios.apellido_paterno', 'like', $buscar . "%")
+                        ->orWhere('usuarios.apellido_materno', 'like', $buscar . "%");
+                })
+                    ->orWhereHas('trabajos', function ($innerQuery) use ($buscar) {
+                        $innerQuery->where('nombre', 'like', $buscar . "%");
+                    })
+                    ->orWhere('usuarios.id_sgp', 'like', $buscar . "%")
+                    ->orWhere('usuarios.id_sumtotal', 'like', $buscar . "%");
+            })
+            ->where("usuarios.estado", '=', 1)
+
             ->select(
                 DB::raw("CONCAT(nombre, ' ', IFNULL(segundo_nombre, ''), ' ', apellido_paterno, ' ', IFNULL(apellido_materno, '')) AS empleado"),
                 'usuarios.*'
             )
-            ->distinct();
+            ->distinct()
+            ->paginate(10)->appends(request()->query());
 
-        $usuariosPaginados = $usuarios->paginate(10);
-        $usuariosPaginados->appends(request()->query());
+        // $usuariosPaginados = $usuarios->paginate(10);
+        // $usuariosPaginados->appends(request()->query());
 
-        $result = $usuariosPaginados->map(function ($usuario) {
+        $result = $usuarios->map(function ($usuario) {
             $trabajos = $usuario->trabajos->map(function ($trabajo) use ($usuario) {
                 $cursos = $trabajo->cursos->map(function ($curso) use ($usuario) {
                     $calificacion = $usuario->calificaciones
@@ -73,12 +90,12 @@ class PlanesFormacion extends Model
 
         return [
             'usuarios' => $result,
-            'links' => $usuariosPaginados->links()
+            'links' => $usuarios->links()
         ];
     }
 
 
-    public static function getMatrizTecnica()
+    public static function getMatrizTecnica($buscar="")
     {
 
         // obtener todos los puestos de la matriz tecnica
@@ -97,6 +114,21 @@ class PlanesFormacion extends Model
             ->whereHas('puestos', function ($query) use ($puestos) {
                 $query->whereIn('id_puesto', $puestos);
             })
+            ->where(function ($q) use ($buscar) {
+                $q->where(function ($innerQuery) use ($buscar) {
+                    $innerQuery->where('usuarios.nombre', 'like', $buscar . "%")
+                        ->orWhere(DB::raw('CONCAT(usuarios.nombre, " ", IFNULL(usuarios.segundo_nombre, ""), " ", usuarios.apellido_paterno, " ", IFNULL(usuarios.apellido_materno, ""))'), 'like', $buscar . "%")
+                        ->orWhere('usuarios.segundo_nombre', 'like', $buscar . "%")
+                        ->orWhere('usuarios.apellido_paterno', 'like', $buscar . "%")
+                        ->orWhere('usuarios.apellido_materno', 'like', $buscar . "%");
+                })
+                    ->orWhereHas('trabajos', function ($innerQuery) use ($buscar) {
+                        $innerQuery->where('nombre', 'like', $buscar . "%");
+                    })
+                    ->orWhere('usuarios.id_sgp', 'like', $buscar . "%")
+                    ->orWhere('usuarios.id_sumtotal', 'like', $buscar . "%");
+            })
+            ->where("usuarios.estado", '=', 1)
             ->select(
                 DB::raw("CONCAT(nombre, ' ', IFNULL(segundo_nombre, ''), ' ', apellido_paterno, ' ', IFNULL(apellido_materno, '')) AS empleado"),
                 'usuarios.*'

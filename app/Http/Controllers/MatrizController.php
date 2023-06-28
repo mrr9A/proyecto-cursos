@@ -10,9 +10,12 @@ class MatrizController extends Controller
 {
     //
     public function index(Request $request){
-        $data = PlanesFormacion::getMatrizVentas();
+
+        $data = [];
         if($request->q === "tecnico"){
-            $data = PlanesFormacion::getMatrizTecnica();
+            $data = PlanesFormacion::getMatrizTecnica($request->buscador);
+        }else{
+            $data = PlanesFormacion::getMatrizVentas($request->buscador);
         }
         $puestos = Puesto::all();
         return view('cursosplanta.matrices.index', compact('data', 'puestos'));

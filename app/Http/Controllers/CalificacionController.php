@@ -12,7 +12,7 @@ class CalificacionController extends Controller
     public function store(Request $request)
     {
         $cursos = $request->cursos;
-        dd($cursos);
+        // dd($cursos);
         // "usuario_id:{{ $id }}-curso_id:{{ $curso->id_curso }}"
         $calificaciones = array();
         foreach ($cursos as $curso) {

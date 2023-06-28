@@ -26,40 +26,14 @@
                 <i class='bx bx-buildings'></i>
             </div>
         </div>
-        {{-- <div class="w-5/12 overflow-auto">
-            <canvas id="myChart" class=""></canvas>
-        </div> --}}
-
-        {{-- 1 => {#1535 ▼
-            +"id_usuario": 1
-            +"id_sgp": 4012579
-            +"id_sumtotal": 7145719
-            +"empleado": "Julian Addison Kihn "
-            +"puesto": "consultor de experiencia"
-            +"total": 3
-            +"totalCursosPasados": 1
-            +"cursos": array:3 [▼
-              0 => array:4 [▼
-                "tipo" => "basico"
-                "objetivo" => 1
-                "real" => 0
-                "progeso" => "0.00"
-              ]
-              1 => array:4 [▶]
-              2 => array:4 [▶]
-            ]
-            +"promedioTotal": "33.33" --}}
         <div>
             <div class="flex justify-between">
                 <h2 class="font-poppins font-medium text-subtitle">PROGESO DE LOS EMPLEADOS</h2>
                 <x-search.search-input placeholder="id, id sgp, id sumtotal, nombre, puesto..." route="home" />
             </div>
-            {{-- <div>{{!!$data["links"]!!}}</div> --}}
             @foreach ($data['links'] as $link)
                 <a href="{{ $link['url'] }}" class="{{ $link['active'] ? 'active' : '' }}">{{ $link['label'] }}</a>
             @endforeach
-
-            {{--  --}}
             <table class="min-w-full leading-normal my-2">
                 <thead class="border-b  dark:border-neutral-500 uppercase">
                     <tr
@@ -85,7 +59,10 @@
                             <td class="py-3 px-6 text-left">{{ $usuario->totalCursosPasados }}</td>
                             <td class="py-3 px-6 text-left">{{ $usuario->promedioTotal }}</td>
                             <td class="py-3 px-6 text-left">
-                                <x-popover :id="$usuario->id_usuario" text="ver mas..." :data="$usuario->cursos" :empleado="$usuario->empleado" />
+                                <div class="w-full flex justify-end mt-2">
+                                    <a target="_blank" href="{{route('descargarPDF', $usuario->id_usuario)}}" 
+                                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-xs px-3 py-1.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Ver reporte</a>
+                                </div>
                             </td>
                         </tr>
                     @endforeach
@@ -113,10 +90,6 @@
         })
 
         btnPuestos.addEventListener('click', async (e) => {
-            // if(btnPuestos.classList.contains('hidden')){
-            //     btnPuestos.classList.remove('hidden')
-            //     return; 
-            // }
             contentModal.classList.toggle('hidden')
             const data = await getData()
             contenidoTr = ""
