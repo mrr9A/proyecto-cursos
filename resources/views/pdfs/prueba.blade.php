@@ -158,7 +158,7 @@
                                         <ul>
                                             @foreach ($trabajo['cursos'][$key] as $cursos)
                                                 <li
-                                                    class="@if ($cursos->calificacion == 'aprovado') aprovado @else reprovado @endif">
+                                                    class="@if ($cursos->calificacion == '100') aprovado @else reprovado @endif">
                                                     {{ $cursos->curso }}</li>
                                             @endforeach
                                         </ul>

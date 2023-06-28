@@ -42,55 +42,55 @@
     /**En resumen, el código actualizado utiliza la función debounce para asegurarse de que la función getInfoByBuscador se ejecute solo después 
      * de un período de tiempo específico desde la última llamada, evitando así múltiples solicitudes a la base de datos en un corto período de tiempo.
      * */
-    buscador.addEventListener('keyup', (e) => {
-        debouncedGetInfo(e.target.value);
-    });
+    // buscador.addEventListener('keyup', (e) => {
+    //     debouncedGetInfo(e.target.value);
+    // });
 
     /** La función debounced tiene un temporizador que se reinicia cada vez que se llama. Solo cuando ha pasado el tiempo especificado 
      * (en este caso, 3000 milisegundos) desde la última llamada a la función debounced, se ejecuta realmente la función getInfoByBuscador
      * */
-    function debounce(func, timeout = 1000) {
-        let timer;
-        return (...args) => {
-            clearTimeout(timer);
-            timer = setTimeout(() => {
-                /** Una vez que se ha completado el tiempo de espera, se llama a la función original (func) utilizando el método apply.
-                 *  Esto garantiza que la función debounced tenga el mismo contexto (this) y reciba los mismos argumentos (args) que la función original.*/
-                func.apply(this, args);
-            }, timeout);
-        };
-    }
+    // function debounce(func, timeout = 1000) {
+    //     let timer;
+    //     return (...args) => {
+    //         clearTimeout(timer);
+    //         timer = setTimeout(() => {
+    //             /** Una vez que se ha completado el tiempo de espera, se llama a la función original (func) utilizando el método apply.
+    //              *  Esto garantiza que la función debounced tenga el mismo contexto (this) y reciba los mismos argumentos (args) que la función original.*/
+    //             func.apply(this, args);
+    //         }, timeout);
+    //     };
+    // }
 
-    function getInfoByBuscador(texto) {
-        console.log(texto)
-        fetch(`http://localhost:8000/api/buscador?buscar=${texto}`)
-            .then(res => res.json())
-            .then(data => {
-                console.log(data)
-                let list = ""
-                let arr = Object.values(data["data"])
-                arr.forEach(element => {
-                    list += `
-                    <li class="list">${element.empleado || element.nombre}</li>
-                    `
-                });
+    // function getInfoByBuscador(texto) {
+    //     console.log(texto)
+    //     fetch(`http://localhost:8000/api/buscador?buscar=${texto}`)
+    //         .then(res => res.json())
+    //         .then(data => {
+    //             console.log(data)
+    //             let list = ""
+    //             let arr = Object.values(data["data"])
+    //             arr.forEach(element => {
+    //                 list += `
+    //                 <li class="list">${element.empleado || element.nombre}</li>
+    //                 `
+    //             });
 
-                if (resultados.classList.contains('hidden')) {
-                    resultados.classList.remove('hidden');
-                    resultados.classList.add('block');
-                }
-                resultados.innerHTML = `<ul>${list}</ul>`
+    //             if (resultados.classList.contains('hidden')) {
+    //                 resultados.classList.remove('hidden');
+    //                 resultados.classList.add('block');
+    //             }
+    //             resultados.innerHTML = `<ul>${list}</ul>`
 
-                $$('.list').forEach(li => {
-                    li.addEventListener('click', (e) => {
-                        buscador.value = e.target.textContent
-                        resultados.classList.remove('block')
-                        resultados.classList.add('hidden')
-                    })
-                })
+    //             $$('.list').forEach(li => {
+    //                 li.addEventListener('click', (e) => {
+    //                     buscador.value = e.target.textContent
+    //                     resultados.classList.remove('block')
+    //                     resultados.classList.add('hidden')
+    //                 })
+    //             })
 
 
-            })
-            .catch(err => console.log(err))
-    }
+    //         })
+    //         .catch(err => console.log(err))
+    // }
 </script>

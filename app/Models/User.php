@@ -112,7 +112,7 @@ class User extends Authenticatable
 
         return $empleados;
     }
-
+    // este metodo lo utilizaba en pdf controller pero es lo mismo que el que esta en planesformacion con el nombre getMatrizByUser
     public static function getProgressByUser($user)
     {
         $usuarios = User::with([
@@ -128,6 +128,10 @@ class User extends Authenticatable
             )
             ->get();
 
+        if ($usuarios->isEmpty()) {
+            // El usuario no existe, manejar el caso de error aquí
+            return 0;
+        }
 
         $result = $usuarios->map(function ($usuario) {
             $todosCursosTotal = 0;
@@ -148,7 +152,7 @@ class User extends Authenticatable
 
                 $todosCursos = $cursos->count();
                 $todosCursosTotal += $todosCursos;
-                $cursosPasados = $cursos->where('calificacion', '=', 'aprovado')->count();
+                $cursosPasados = $cursos->where('calificacion', '=', '100')->count();
                 $cursosPasadosTotal += $cursosPasados;
 
                 return [
@@ -177,15 +181,16 @@ class User extends Authenticatable
 
     public static function progresoEmpleados($buscar = "")
     {
-        // puestos que son tecnicos
         DB::statement("SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));");
-        $resultado = DB::table('usuarios')
+        // $resultado = DB::table('usuarios')
+        $resultado = User::with('calificaciones')
             ->select(
                 'usuarios.id_usuario',
                 'usuarios.id_sgp',
                 'usuarios.id_sumtotal',
+                DB::raw('SUM(calificaciones.valor) AS total_calificaciones'),
                 DB::raw('COUNT(DISTINCT c.nombre) AS total_cursos'),
-                DB::raw('COUNT(calificaciones.valor) AS cursos_pasados'),
+                // DB::raw('COUNT(calificaciones.valor) AS cursos_pasados'),
                 DB::raw('CONCAT(usuarios.nombre, " ", IFNULL(usuarios.segundo_nombre, ""), " ", usuarios.apellido_paterno, " ", IFNULL(usuarios.apellido_materno, "")) AS empleados'),
                 'puestos.puesto',
                 'tipo_cursos.nombre AS tipo'
@@ -217,55 +222,32 @@ class User extends Authenticatable
             })
             ->orderBy('puestos.puesto')
             ->orderBy('empleados')
-            ->paginate(10)->appends(request()->query())->toArray();
+            ->paginate(10)->appends(request()->query());
+            
+            $map = $resultado->map(function ($usuario) {
+                // Cursos en progreso y cursos pasados
+                $cursosEnProgreso = $usuario->calificaciones->where('valor','<', 100)->count();
+                $cursosPasados = $usuario->calificaciones->where('valor','=', 100)->count();
 
-        $totalCursos = 0;
-        $totalCursosPasados = 0;
-        $map = array_reduce($resultado['data'], function ($acc, $cur) use ($totalCursos, $totalCursosPasados) {;
-            $usuario_id = $cur->id_usuario;
-            if (!array_key_exists($usuario_id, $acc)) {
-                $acc[$usuario_id] = (object)[
-                    "id_usuario" => $usuario_id,
-                    "id_sgp" => $cur->id_sgp,
-                    "id_sumtotal" => $cur->id_sumtotal,
-                    "empleado" => $cur->empleados,
-                    "puesto" => $cur->puesto,
-                    "total" => $totalCursos,
-                    "totalCursosPasados" => $totalCursosPasados,
-                    "cursos" => []
+                $porcentaje = 0;
+                if($usuario->total_cursos != 0)
+                $porcentaje = bcdiv(($usuario->total_calificaciones / $usuario->total_cursos * 100) / 100, '1', 2);
+                return (object) [
+                    'id_usuario' => $usuario->id_usuario,
+                    "id_sgp" => $usuario->id_sgp,
+                    "id_sumtotal" => $usuario->id_sumtotal,
+                    'empleado' => $usuario->empleados,
+                    'puesto' => $usuario->puesto,
+                    'total' => $usuario->total_cursos,
+                    'total_calificaciones' => $usuario->total_calificaciones,
+                    'totalCursosPasados' => $cursosPasados,
+                    'cursosEnProgreso' => $cursosEnProgreso,
+                    'promedioTotal' => $porcentaje,
                 ];
-            }
-            $totalCursos = $cur->total_cursos + $acc[$usuario_id]->total;
-            $totalCursosPasados = $cur->cursos_pasados + $acc[$usuario_id]->totalCursosPasados;
-
-            $acc[$usuario_id]->total = $totalCursos;
-            $acc[$usuario_id]->totalCursosPasados = $totalCursosPasados;
-            // $acc[$usuario_id]->promedioTotal = (bcdiv($totalCursosPasados / ($totalCursos * 100) ?? 1, '1', 2)) ?? 0;
-            try {
-                $promedioTotal = 0;
-                if ($totalCursos != 0) {
-                    $promedioTotal = bcdiv($totalCursosPasados / $totalCursos * 100, '1', 2);
-                }
-                $acc[$usuario_id]->promedioTotal = $promedioTotal;
-            } catch (Exception $e) {
-                $errorMessage = $e->getMessage();
-                // Aquí puedes mostrar el mensaje de error o realizar acciones adicionales de manejo de errores
-                $acc[$usuario_id]->promedioTotal = 0;
-            }
-            $obj = [
-                "tipo" => $cur->tipo,
-                "objetivo" => $cur->total_cursos,
-                "real" => $cur->cursos_pasados,
-                "progeso" => bcdiv(($cur->total_cursos != 0) ? ($cur->cursos_pasados / $cur->total_cursos) * 100 : 0, '1', 2),
-            ];
-
-            array_push($acc[$usuario_id]->cursos, $obj);
-            return $acc;
-        }, []);
-
+            });
         return [
             "data" => $map,
-            "links" => $resultado['links']
+            "links" => $resultado->links()
         ];
     }
 }

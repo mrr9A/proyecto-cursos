@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PlanesFormacion;
 use App\Models\User;
 use  PDF;
 
@@ -11,8 +12,11 @@ class PDFController extends Controller
     public function pdf($user)
     {
         // $data = Puesto::progresoEmpleados();
-        $data = User::getProgressByUser($user)[0];
-
+        $data = PlanesFormacion::getMatrizByUser($user);
+        if(!$data){
+            return redirect()->back();
+        }
+        $data=$data[0];
         $pdf = PDF::loadView('pdfs.prueba', ['data' => $data]);
         $pdf->setOptions(['defaultFont' => 'poppins']);
 

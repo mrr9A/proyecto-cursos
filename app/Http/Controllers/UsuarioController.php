@@ -13,9 +13,22 @@ class UsuarioController extends Controller
 {
    //
    //
-   public function index()
+   public function index(Request $request)
    {
-      $usuarios = User::orderBy('estado', 'desc')->orderBy('id_usuario', 'desc')->paginate(8);
+      $buscar = $request->buscador;
+      $usuarios = User::where(function ($query) use ($buscar) {
+         $query->where('id_sumtotal', 'like', $buscar . "%")
+            ->orWhere('nombre', 'like', $buscar . "%")
+            ->orWhere('segundo_nombre', 'like', $buscar . "%")
+            ->orWhere('id_sgp', 'like', $buscar . "%");
+      })
+         ->orWhereHas('puestos', function ($query) use ($buscar) {
+            $query->where('puesto', 'like', $buscar . "%");
+         })
+         ->orderBy('estado', 'desc')
+         ->orderBy('id_usuario', 'desc')
+         ->paginate(8);
+
       $sucursal = Sucursal::all();
       $puesto = Puesto::all();
       return view('usuarios.index', compact('usuarios', 'sucursal', 'puesto'));
@@ -112,7 +125,7 @@ class UsuarioController extends Controller
       $usuario->update($data);
       if (!is_null($request->sucursal_id)) {
          $sucursalExiste = DB::table('sucursales_usuarios')
-            ->where([['sucursal_id',"=", $request->sucursal_id], ['usuario_id',"=",$usuario->id_usuario]])
+            ->where([['sucursal_id', "=", $request->sucursal_id], ['usuario_id', "=", $usuario->id_usuario]])
             ->exists();
          if (!$sucursalExiste) {
             DB::table("sucursales_usuarios")
@@ -120,7 +133,6 @@ class UsuarioController extends Controller
                ->delete();
             DB::table('sucursales_usuarios')->insert(["sucursal_id" => $request->sucursal_id, "usuario_id" => $usuario->id_usuario]);
          }
-
       }
 
       if (!is_null($request->trabajos)) {

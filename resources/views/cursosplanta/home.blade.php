@@ -44,12 +44,14 @@
                         <th scope="col" class="px-6 py-2">puesto</th>
                         <th scope="col" class="px-6 py-2">total de cursos</th>
                         <th scope="col" class="px-6 py-2">cursos pasados</th>
+                        <th scope="col" class="px-6 py-2">cursos progreso</th>
                         <th scope="col" class="px-6 py-2">progreso</th>
                         <th scope="col" class="px-6 py-2">opciones</th>
                     </tr>
                 </thead>
                 <tbody class="capitalize">
                     @foreach ($data['data'] as $usuario)
+                    {{-- @dump($usuario) --}}
                         <tr class="border-b border-gray-200 hover:bg-gray-100">
                             <td class="whitespace-nowrap px-6 py-2 w-1/12 ">{{ $usuario->id_sgp }}</td>
                             <td class="whitespace-nowrap px-6 py-2 w-1/12 ">{{ $usuario->id_sumtotal }}</td>
@@ -57,6 +59,7 @@
                             <td class="py-3 px-6 text-left">{{ $usuario->puesto }}</td>
                             <td class="py-3 px-6 text-left">{{ $usuario->total }}</td>
                             <td class="py-3 px-6 text-left">{{ $usuario->totalCursosPasados }}</td>
+                            <td class="py-3 px-6 text-left">{{ $usuario->cursosEnProgreso }}</td>
                             <td class="py-3 px-6 text-left">{{ $usuario->promedioTotal }}</td>
                             <td class="py-3 px-6 text-left">
                                 <div class="w-full flex justify-end mt-2">

@@ -107,7 +107,6 @@ class PuestoController extends Controller
     {
 
         $puesto = Puesto::find($id);
-        $puesto = Puesto::find($id);
         $idsTrabajos = $puesto->trabajos->pluck('id_trabajo')->toArray();
         $usuario = User::find($puesto->id_puesto);
         $coincidencias = DB::table('trabajos_cursos')

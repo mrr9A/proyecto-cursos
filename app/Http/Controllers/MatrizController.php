@@ -9,19 +9,22 @@ use Illuminate\Http\Request;
 class MatrizController extends Controller
 {
     //
-    public function index(Request $request){
+    public function index(Request $request)
+    {
 
         $data = [];
-        if($request->q === "tecnico"){
-            $data = PlanesFormacion::getMatrizTecnica($request->buscador);
-        }else{
-            $data = PlanesFormacion::getMatrizVentas($request->buscador);
-        }
+        $data = PlanesFormacion::getMatrices($request->buscador);
         $puestos = Puesto::all();
         return view('cursosplanta.matrices.index', compact('data', 'puestos'));
     }
 
-    public function show(){
-        Puesto::prueba();
+    public function show($id)
+    {
+        $data = PlanesFormacion::getMatrizByUser($id);
+        if(!$data){
+            return redirect()->back();
+        }
+        $data=$data[0];
+        return view('cursosplanta.matrices.show', compact('data'));
     }
 }

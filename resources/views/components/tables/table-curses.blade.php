@@ -14,11 +14,11 @@
                 <tr class="w-full grid  overflow-auto grid-cols-[repeat(auto-fit,minmax(120px,1fr))] ">
                     @foreach ($cursos['cursos'][$tipo] as $curso)
                         <td
-                            class="w-full h-full border-[1px]  text-black @if ($curso->calificacion == 'aprovado') bg-success @endif ">
+                            class="w-full h-full border-[1px]  text-black @if ($curso->calificacion == '100') bg-success @endif ">
                             <label class="w-full h-full cursor-pointer block overflow-hidden">
                                 <input class="hidden peer" type="checkbox" name="cursos[]"
                                     value="usuario_id:{{ $id }}-curso_id:{{ $curso->id_curso }}"
-                                    @if ($curso->calificacion == 'aprovado') disabled @endif />
+                                    @if ($curso->calificacion == '100') disabled @endif />
                                 <div class="peer-checked:bg-indigo-600 peer-checked:text-white h-full py-2 px-2">
                                     <h2 class="uppercase text-sm">{{ $curso->nombre_curso }}</h2>
                                 </div>

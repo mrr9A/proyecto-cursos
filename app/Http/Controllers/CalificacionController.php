@@ -12,7 +12,6 @@ class CalificacionController extends Controller
     public function store(Request $request)
     {
         $cursos = $request->cursos;
-        // dd($cursos);
         // "usuario_id:{{ $id }}-curso_id:{{ $curso->id_curso }}"
         $calificaciones = array();
         foreach ($cursos as $curso) {
@@ -23,14 +22,42 @@ class CalificacionController extends Controller
                 list($clave, $valor) = explode(":", $par);
                 $resultado[$clave] = $valor;
                 $resultado["estado"] = 1;
-                $resultado["valor"] = "aprovado";
+                $resultado["valor"] = "100";
             }
 
             array_push($calificaciones, $resultado);
-            
         }
 
-        DB::table("calificaciones")->insert($calificaciones);
-        return to_route("matrices.index");
+        DB::table("calificaciones")->insertOrIgnore($calificaciones);
+        return redirect()->back();
+    }
+
+    public function update(Request $request, $id)
+    {
+        $data = [];
+        foreach ($request->cursos as $curso => $value) {
+            $consulta = [
+                "usuario_id" => $id,
+                "curso_id" => $curso,
+                "valor" => $value
+            ];
+            array_push($data, $consulta);
+        }
+
+
+        $ignoredData = [];
+        foreach ($data as $registro) {
+            $affected = DB::table('calificaciones')->insertOrIgnore($registro);
+            if ($affected === 0) {
+                $ignoredData[] = $registro;
+                DB::table('calificaciones')
+                    ->where('usuario_id', $id)
+                    ->where('curso_id', $registro['curso_id'])
+                    ->update([
+                        'valor' => $registro['valor'],
+                    ]);
+            }
+        }
+        return redirect()->back();
     }
 }

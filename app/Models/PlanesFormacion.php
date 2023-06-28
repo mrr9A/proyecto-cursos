@@ -20,7 +20,7 @@ class PlanesFormacion extends Model
         return $this->hasMany(Puesto::class, "plan_formacion_id");
     }
 
-    public static function getMatrizVentas($buscar = "")
+    public static function getMatrices($buscar = "")
     {
         $puestos = DB::table('planes_formacion as pf')
             ->join('puestos as p', "p.plan_formacion_id", "=", "pf.id_plan_formacion")
@@ -30,9 +30,9 @@ class PlanesFormacion extends Model
 
         $usuarios = User::with(['trabajos.cursos.tipo', 'calificaciones'])
             ->leftJoin('calificaciones', 'calificaciones.usuario_id', '=', 'usuarios.id_usuario')
-            ->whereDoesntHave("puestos", function ($query) use ($puestos) {
-                $query->whereIn("puesto_id", $puestos);
-            })
+            // ->whereDoesntHave("puestos", function ($query) use ($puestos) {
+            //     $query->whereIn("puesto_id", $puestos);
+            // })
             ->where(function ($q) use ($buscar) {
                 $q->where(function ($innerQuery) use ($buscar) {
                     $innerQuery->where('usuarios.nombre', 'like', $buscar . "%")
@@ -95,7 +95,7 @@ class PlanesFormacion extends Model
     }
 
 
-    public static function getMatrizTecnica($buscar="")
+    public static function getMatrizTecnica($buscar = "")
     {
 
         // obtener todos los puestos de la matriz tecnica
@@ -175,5 +175,77 @@ class PlanesFormacion extends Model
             'usuarios' => $result,
             'links' => $usuariosPaginados->links()
         ];
+    }
+
+    public static function getMatrizByUser($user)
+    {
+        $usuarios = User::with([
+            'puestos',
+            'trabajos.cursos.tipo',
+            'calificaciones'
+        ])
+            ->where("id_usuario", "=", $user)
+            ->select(
+                'usuarios.id_usuario',
+                DB::raw("CONCAT(nombre, ' ', IFNULL(segundo_nombre, ''), ' ', apellido_paterno, ' ', IFNULL(apellido_materno, '')) AS empleado"),
+                'usuarios.*'
+            )
+            ->get();
+        if ($usuarios->isEmpty()) {
+            // El usuario no existe, manejar el caso de error aquí
+            return 0;
+        }
+
+        $result = $usuarios->map(function ($usuario) {
+            $todosCursosTotal = 0;
+            $cursosPasadosTotal = 0;
+            $cursosProgreso = [];
+            // & indica que la variable esta siendo pasada por referencia
+            $trabajos = $usuario->trabajos->map(function ($trabajo) use ($usuario, &$todosCursosTotal, &$cursosPasadosTotal, &$cursosProgreso) {
+                $cursos = $trabajo->cursos->map(function ($curso) use ($usuario) {
+                    $calificacion = $usuario->calificaciones
+                        ->firstWhere('curso_id', $curso->id_curso);
+                    $cali = $calificacion ? $calificacion->valor : null;
+
+                    return (object) [
+                        'calificacion' => $cali,
+                        'curso' => $curso->nombre,
+                        'tipo' => $curso->tipo->nombre,
+                        'id_curso' => $curso->id_curso,
+                    ];
+                });
+
+                $todosCursos = $cursos->count();
+                $todosCursosTotal += $todosCursos;
+                $cursosPasados = $cursos->where('calificacion', '=', '100')->count();
+                $cursosEnProgreso = $cursos->where('calificacion', '<', '100')->where('calificacion', '>', 0)->pluck('calificacion')->toArray();
+                array_push($cursosProgreso, $cursosEnProgreso);
+                $cursosPasadosTotal += $cursosPasados;
+
+                return [
+                    'trabajo' => $trabajo->nombre,
+                    'cursos' => $cursos->groupBy('tipo'),
+                ];
+            });
+            echo "<script>console.log(" . json_encode($cursosProgreso) . ")</script>";
+            $cursosProgreso = array_reduce($cursosProgreso, function ($carry, $item) {
+                return $carry + array_sum($item);
+            }, 0);
+            $porcentaje = bcdiv(($todosCursosTotal != 0) ? (((($cursosPasadosTotal * 100) + $cursosProgreso) * 100) / ($todosCursosTotal * 100)) : 0, '1', 2);
+
+            return (object) [
+                'id_usuario' => $usuario->id_usuario,
+                'nombre' => $usuario->empleado,
+                'puesto' => $usuario->puestos->puesto,
+                'id_puesto' => $usuario->puestos->id_puesto,
+                'totalCursos' => $todosCursosTotal,
+                'cursosPasados' => $cursosPasadosTotal,
+                'cursosPro' => $cursosProgreso,
+                'progreso' => $porcentaje,
+                'trabajos' => $trabajos,
+            ];
+        });
+        // dd($result);
+        return $result;
     }
 }
