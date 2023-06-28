@@ -3,17 +3,21 @@
 namespace App\Http\Controllers\Cursosinternos;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SaveContenidoRequest;
 use App\Models\Contenido;
+use App\Models\Leccion;
 use App\Models\Media_contenido;
-use App\Models\Media_contenidos;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class ContenidoController extends Controller
 {
-    
-    public function store(Request $request)
+
+    public function store(SaveContenidoRequest $request)
     {
+
         //Este apartado es para crear un contenido
         $contenido = new Contenido();
         $contenido->nombre = $request->post('nombre');
@@ -29,21 +33,27 @@ class ContenidoController extends Controller
         $media->url = $url;
         $media->contenido_id = $id_cont;
         $media->saveOrFail();
-        return redirect()->back()->with('agregado', 'Agregado Correctamente');
+        $leccion = Leccion::find($request->leccion_id);
+        $curso = $leccion->curso_id;
+
+        return to_route("curs.show", $curso)->with('agregado', 'Contenido Agregado Correctamente');
     }
 
     public function show(string $id)
     {
-        return view('Cursosinternos.contenido.contenido',compact('id'));
+        return view('Cursosinternos.contenido.contenido', compact('id'));
     }
 
     public function ver(string $id)
     {
         $contenido = Contenido::find($id);
-        return view('Cursosinternos.vistaPrevia.index',compact('contenido'));
+        $archivo = public_path($contenido->media[0]->url); // Ruta al archivo que deseas obtener la extensión
+        $extension = File::extension($archivo);
+        $leccion = Leccion::find($contenido->leccion_id);
+        return view('Cursosinternos.vistaPrevia.index', compact('contenido', 'leccion', 'extension'));
     }
 
-    public function update (Request $request, string $id)
+    public function update(Request $request, string $id)
     {
         $contenido = Contenido::find($id);
         $contenido->nombre = $request->post('nombre');
@@ -62,23 +72,38 @@ class ContenidoController extends Controller
         }
         $media->contenido_id = $id_cont;
         $media->saveOrFail();
-        return redirect()->back()->with('actualizado', 'Actualizado Correctamente');
+        $leccion = Leccion::find($request->leccion_id);
+        $curso = $leccion->curso_id;
+
+        return to_route("curs.show", $curso)->with('actualizado', 'Contenido Actualizada Correctamente');
+        // return redirect()->back()->with('actualizado', 'Actualizado Correctamente');
     }
 
-    public function edi ($id)
+    public function edi($id)
     {
         $contenido = Contenido::find($id);
-        return view('Cursosinternos.contenido.editar',compact('contenido'));
+        $archivo = public_path($contenido->media[0]->url); // Ruta al archivo que deseas obtener la extensión
+        $extension = File::extension($archivo);
+        return view('Cursosinternos.contenido.editar', compact('contenido', 'extension'));
     }
 
     public function destroy(string $id)
     {
         $contenido = Contenido::find($id);
-        $id_media = $contenido->media[0]->id_media;
-        $media = Media_contenido::find($id_media);
-        $media->delete();
-        $contenido->delete();
-        return redirect()->back()->with('eliminado', 'Eliminado Correctamente');
+        // dd( $contenido->examen->pluck('id_examen')->toArray());
+        $id_exam = $contenido->examen->pluck('id_examen')->toArray();
+        $coincidencias = DB::table('examen')
+            ->whereIn('id_examen', $id_exam)
+            ->exists();
+        // dd($coincidencias);
+        if (!$coincidencias) {
+            // $contenido->delete();
+            $id_media = $contenido->media[0]->id_media;
+            $media = Media_contenido::find($id_media);
+            $media->delete();
+            $contenido->delete();
+            return redirect()->back()->with('eliminado', 'Eliminado Correctamente');
+        }
+        return redirect()->back()->with('error', 'No se puede eliminar el registro contenido porque está asociado a otro campo.');
     }
-
 }

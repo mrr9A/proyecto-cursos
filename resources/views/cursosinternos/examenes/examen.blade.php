@@ -6,14 +6,14 @@
                 <br>
                 <h3 class="font-semi-bold">Información General del Contenido</h3>
                 <br>
-                <input hidden type="text" rows="3" name="contenido_id" value="{{$id}}" require>
+                <input hidden type="text" rows="3" name="contenido_id" value="{{$id}}" required>
                 <div class="grid col-4">
                     <label for="titulo" class="block mb-2 font-bold text-gray-900 dark:text-white">Título del examen: <span class="text-red-500">*</span></label>
-                    <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="nombre" id="titulo" required>
+                    <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="nombre" id="titulo" required>
                 </div><br>
                 <div class="grid col-4">
                     <label for="duracion" class="block mb-2 font-bold text-gray-900 dark:text-white">Duración del examen: <span class="text-red-500">*</span></label>
-                    <input type="number" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="duracion" id="duracion" required>
+                    <input type="number" min="0" max="60" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="duracion" id="duracion" required>
                 </div>
                 <br>
                 <h3 for="preguntas" class="font-semi-bold">Preguntas:</h3><br>
@@ -97,7 +97,7 @@
         nuevaPregunta.classList.add('pregunta');
         nuevaPregunta.innerHTML = `
             <label class=" block mb-2  font-bold text-gray-900 dark:text-white" for="pregunta${contadorPreguntas}">Pregunta ${contadorPreguntas}: <span class="text-red-500">*</span></label>
-            <input class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="text" name="arreglo[pregunta${contadorPreguntas}][]" id="pregunta${contadorPreguntas}" required>
+            <input class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="text" name="arreglo[pregunta${contadorPreguntas}][]" id="pregunta${contadorPreguntas}" required>
             <br>
             <label class="block mb-2  font-bold text-gray-900 dark:text-white" for="opciones${contadorPreguntas}">Opciones: <span class="text-red-500">*</span></label>
             <div class="grid gap-6 mb-6 md:grid-cols-2">

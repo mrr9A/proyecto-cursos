@@ -4,10 +4,10 @@
             <div class="col-lg-12 mb-6 mb-lg-0 position-relative">
                 <div class="card p-5  text-center">
                     <div class="card-header">
-                        <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">BIENVENIDO ES MOMENTO DE AGREGAR CONTENIDO AL CURSO</h2><br>
-                        <h3 class="text-1xl font-bold tracking-tight text-dark-500 sm:text-2xl">En este apartado se agregará el contenido</h3><br>
-                        <h5 class="text-1xl font-bold tracking-tight text-gray-600 sm:text-2"><span>Siga los Pasos para crear corectamente el contenido</span></h5>
-                        <h5 class="text-1xl font-bold tracking-tight text-gray-600 sm:text-2"><span>Comencemos</span> ...</h5>
+                        <h2 class="text-subtitle font-bold tracking-tight text-gray-900">BIENVENIDO ES MOMENTO DE EDITAR EL CONTENIDO DEL CURSO</h2><br>
+                        <h3 class="text-subtitle font-bold tracking-tight text-dark-500">En este apartado se agregará el contenido</h3><br>
+                        <h5 class="text-section-subtitle font-bold tracking-tight text-gray-600"><span>Siga los Pasos para crear corectamente el contenido</span></h5>
+                        <h5 class="text-section-subtitle font-bold tracking-tight text-gray-600"><span>Comencemos</span> ...</h5>
                     </div>
                 </div>
                 <br>
@@ -19,16 +19,16 @@
                             <br>
                             <h3 class="font-bold">Información General del Contenido</h3>
                             <br>
-                            <input hidden type="text" rows="3" name="leccion_id" value="{{$contenido->leccion_id}}" required>
+                            <input hidden type="text" rows="3" name="leccion_id" value="{{$contenido->leccion_id}}">
                             <div class="grid col-4">
                                 <label for="nombre" class="font-bold">Nombre del Contenido <span class="text-red-500">*</span></label>
-                                <input type="text" rows="3" name="nombre" value="{{$contenido->nombre}}" class="bg-gray-50 border border-gray-300 text-gray-900  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="fecha_inicio" required>
-                                @error('nombre') <span class="error">{{ $message }}</span> @enderror
+                                <input type="text" rows="3" name="nombre" value="{{$contenido->nombre}}" class="bg-gray-50 border border-gray-300 text-gray-900  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="fecha_inicio">
+                                @error('nombre') <span class="error text-incompleted">{{ $message }}</span> @enderror
                             </div>
                             <br>
                             <div class="grid col-11">
                                 <label for="descripcion" class="font-bold">Descripcion del Contenido <span class="text-red-500">*</span></label>
-                                <textarea type="text" rows="3" name="descripcion" class="bg-gray-50 border border-gray-300 text-gray-900  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="fecha_inicio" required>{{$contenido->descripcion}}</textarea>
+                                <textarea type="text" rows="10" name="descripcion" class="bg-gray-50 border border-gray-300 text-gray-900  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="fecha_inicio">{{$contenido->descripcion}}</textarea>
                                 @error('descripcion') <span class="error">{{ $message }}</span> @enderror
                             </div>
                             <br>
@@ -40,15 +40,21 @@
                                         <div class="mt-4 flex text-sm items-center text-center leading-6 text-gray-600" enctype="multipart/form-data">
                                             <label for="file-upload" class="bg-gray-50 border items-center border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                 <span>Seleccionar un Archivo </span><span class="text-danger">*</span>
-                                                <input id="file-upload" name="url" type="file" class="sr-only" accept="/*" required>
-                                                @error('url_imagen') <span class="error">{{ $message }}</span> @enderror
+                                                <input id="file-upload" name="url" value="{{$contenido->media[0]->url}}" type="file" class="sr-only" accept="/*">
+                                                @error('url') <span class="error">{{ $message }}</span> @enderror
                                             </label>
                                         </div>
-                                        <p class="text-xs leading-5 text-gray-600">Formatos Admitidos: PNG, JPG, MP4, ETC...</p>
+                                        <p class="text-xs leading-5 text-gray-600">Formatos Admitidos: PNG, JPG, MP4, PDF, GIF.</p>
                                     </div>
-                                </div>
+                                </div><br>
                                 <div class="text-center">
-                                    <img src="{{$contenido->media[0]->url}}" width="100" height="100" class="inline-block" alt="">
+                                    @if(in_array($extension, ['mp4', 'webm']))
+                                    <video src="{{$contenido->media[0]->url}}" controls class="w-full h-96 inline-block object-cover" width="800" height="500"></video>
+                                    @elseif(in_array($extension, ['pdf', 'ogg']))
+                                    <object data="{{$contenido->media[0]->url}}" type="application/pdf" class="w-full h-full inline-block object-cover" style="width: 100%; height: 800px;"></object>
+                                    @else
+                                    <object data="{{$contenido->media[0]->url}}" class="w-96 h-96 inline-block object-cover"></object>
+                                    @endif
                                 </div>
                             </div>
                             <br>

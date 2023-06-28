@@ -18,7 +18,7 @@ class Contenido extends Model
 
     public function leccion()
     {
-        return $this->belongsTo(Leccion::class, 'id_leccion');
+        return $this->belongsTo(Leccion::class, 'leccion_id');
     }
 
     public function media()
@@ -28,6 +28,6 @@ class Contenido extends Model
 
     public function examen()
     {
-        return $this->hasMany(Examen::class, 'leccion_id');
+        return $this->hasMany(Examen::class, 'contenido_id');
     }
 }

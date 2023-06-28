@@ -28,7 +28,6 @@ class UsuarioController extends Controller
          ->orderBy('estado', 'desc')
          ->orderBy('id_usuario', 'desc')
          ->paginate(8);
-
       $sucursal = Sucursal::all();
       $puesto = Puesto::all();
       return view('usuarios.index', compact('usuarios', 'sucursal', 'puesto'));

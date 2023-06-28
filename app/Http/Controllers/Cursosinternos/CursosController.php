@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\Cursosinternos;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SaveCursoInternoRequest;
+use App\Models\Categoria;
 use App\Models\Curso;
 use App\Models\Examen;
 use App\Models\ModalidadCurso;
 use App\Models\TipoCurso;
 use App\Models\User;
 use App\Models\Usuario_curso;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -24,10 +27,11 @@ class CursosController extends Controller
     public function show($id)
     {
         $curso = Curso::find($id);
+        $categoria = Categoria::all();
         $modalidad = ModalidadCurso::all();
         $tipo = TipoCurso::all();
         $usuarios = User::all();
-        return view('Cursosinternos.cursos.configurarCursos', compact('curso', 'modalidad', 'tipo', 'usuarios'));
+        return view('Cursosinternos.cursos.configurarCursos', compact('curso', 'modalidad', 'tipo', 'usuarios', 'categoria'));
     }
 
 
@@ -46,12 +50,15 @@ class CursosController extends Controller
         $curso->estado = $request->post('estado');
         $curso->modalidad_id = $request->post('modalidad_id');
         $curso->tipo_curso_id = $request->post('tipo_curso_id');
+        $categorias = $curso->categoria()->detach($curso->categoria->pluck('id_categoria'));
+        $categorias = $curso->categoria()->attach($request->post('categoria_id'));
         $curso->saveOrFail();
         return redirect()->back()->with('actualizado', 'Actualizado Correctamente');
     }
 
     public function store(Request $request)
     {
+        $request->validate(['usuarios' => 'array|required']);
         $dataUsuarios = [];
         foreach ($request->usuarios as $usuario) {
 
@@ -65,11 +72,16 @@ class CursosController extends Controller
         return redirect()->back()->with('agregado', 'Usuario agregado a curso');
     }
 
-    public function destroy(string $id)
+    public function destroy(Request $request , string $id)
     {
-        $cursos = Curso::find($id);
-        $cursos->delete();
-        return redirect('cursos')->with('eliminado', 'Eliminado Correctamente');
+        $request->validate(['usuarios' => 'array|required']);
+        
+        foreach($request->usuarios as $usuario){
+            $useri = User::find($usuario);
+            $curso = $useri->cursos[0]->id_curso;
+            $useri->cursos()->detach($curso);
+        }
+        return redirect()->back()->with('eliminado', 'Eliminado Correctamente');
     }
 
     public function destroyUser(string $id)

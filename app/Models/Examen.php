@@ -14,7 +14,7 @@ class Examen extends Model
     protected $table = "examen";
     public $timestamps = false;
 
-    protected $fillable = ['nombre','duracion','leccion_id'];
+    protected $fillable = ['nombre','duracion','contenido_id'];
 
     public function preguntas()
     {
