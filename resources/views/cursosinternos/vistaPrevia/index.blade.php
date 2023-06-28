@@ -1,21 +1,56 @@
-<x-app>
-    <!-- <h6></h6> -->
-    <div class="container">
-        <div class="row mb-8">
-            <div class="col-lg-8 mb-6 mb-lg-0 position-relative">
-                <div class="card d-block  border p-2">
-                    <h2 class="font-size-xl mb-6">
-                        {{$contenido->nombre}}
-                    </h2>
-                    <!-- img -->
-                    <img src="{{$contenido->media[0]->url}}" alt="url">
-                    <a href="" class="d-block sk-thumbnail rounded mb-8" data-fancybox="">
-                        <div class="h-90p w-90p rounded-circle bg-white size-30-all d-inline-flex align-items-center justify-content-center position-absolute center z-index-1">
-                            <!-- Icon -->
-                            <svg width="14" height="16" viewBox="0 0 14 16" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12.8704 6.15374L3.42038 0.328572C2.73669 -0.0923355 1.9101 -0.109836 1.20919 0.281759C0.508282 0.673291 0.0898438 1.38645 0.0898438 2.18929V13.7866C0.0898438 15.0005 1.06797 15.9934 2.27016 16C2.27344 16 2.27672 16 2.27994 16C2.65563 16 3.04713 15.8822 3.41279 15.6591C3.70694 15.4796 3.79991 15.0957 3.62044 14.8016C3.44098 14.5074 3.05697 14.4144 2.76291 14.5939C2.59188 14.6982 2.42485 14.7522 2.27688 14.7522C1.82328 14.7497 1.33763 14.3611 1.33763 13.7866V2.18933C1.33763 1.84492 1.51713 1.53907 1.81775 1.3711C2.11841 1.20314 2.47294 1.21064 2.76585 1.39098L12.2159 7.21615C12.4999 7.39102 12.6625 7.68262 12.6618 8.01618C12.6611 8.34971 12.4974 8.64065 12.2118 8.81493L5.37935 12.9983C5.08548 13.1783 4.9931 13.5623 5.17304 13.8562C5.35295 14.1501 5.73704 14.2424 6.03092 14.0625L12.8625 9.87962C13.5166 9.48059 13.9081 8.78496 13.9096 8.01868C13.9112 7.25249 13.5226 6.55524 12.8704 6.15374Z" fill="currentColor"></path>
+<x-app title="Cursos:">
+    <nav class="mx-4">
+        <a href="{{url('curs',[$contenido->leccion->curso_id])}}" class="text-base text-nav-hover font-bold">{{$leccion->course->nombre}} > </a>
+        <a href="{{url('curs',[$contenido->leccion->curso_id])}}" class="text-base text-nav-hover font-bold"> {{$contenido->leccion->nombre}} ></a>
+        <a href="{{route('ver',[$contenido])}}" class="text-base text-nav-hover font-bold">{{$contenido->nombre}}</a>
+    </nav><br>
+    <div class="flex">
+        <div class="w-full p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
+            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white mx-12 text-title">{{$contenido->nombre}}:</h5>
+            <div class="p-2 bg-white border border-gray-200 rounded-lg shadow mx-12 text-center">
+                @if(in_array($extension, ['mp4', 'webm']))
+                <video src="{{$contenido->media[0]->url}}" controls class="w-full h-96 inline-block object-cover" width="800" height="500"></video>
+                @elseif(in_array($extension, ['pdf', 'ogg']))
+                <object data="{{$contenido->media[0]->url}}" type="application/pdf" class="w-full h-full inline-block object-cover" style="width: 100%; height: 800px;"></object>
+                @else
+                <object data="{{$contenido->media[0]->url}}" class="w-96 h-96 inline-block object-cover" width="800" height="500"></object>
+                @endif
+            </div>
+            <div class="p-2  border border-gray-200 rounded-lg shadow mx-12 text-justify">
+                <h3 class="text-center font-bold">DESCRIPCIÓN DEL CURSO:</h3><br>
+                <p>{{$contenido->descripcion}}</p>
+            </div><br>
+            @if(count($contenido->examen) > 0 )
+            <div class="items-center text-center">
+                <a href="{{route('verExamen',$contenido)}}" class="button bg-blue-100 text-dark text-center capitalize py-2 px-2 rounded-lg tracking-widest font-bold  hover:bg-blue-200 w-96 cursor-pointer">
+                    Realizar Examén
+                </a>
+            </div>
+            @endif
+        </div>
+        <div class="w-full max-w-md p-4 border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+            <div class="block p-6 border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                <div class="text-center justify-between px-4 items-center overflow-auto gap-3 mb-5 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+                    <span class="text-center text-subtitle text-orange-300">
+                        LECCIÓN: <span class="text-nav-hover">{{$contenido->leccion->nombre}}</span>
+                    </span>
+                </div>
+                <h2 class="text-center text-nav-hover">CONTENIDOS DE LA LECCIÓN</h2>
+                @foreach($leccion->contenido as $leccCont)
+                <div class="pt-5 pb-4 px-5 px-lg-3 px-xl-5">
+                    <a href="{{route('ver',[$leccCont])}}" class="{{ $leccCont->id_contenido == $contenido->id_contenido ? 'bg-blue-100' : ''  }}   flex items-center justify-between w-full p-5 font-medium text-left text-gray-500 border border-gray-400 rounded-2xl focus:ring-8 focus:ring-blue-200 dark:focus:ring-blue-800 dark:text-gray-400  dark:hover:bg-gray-800">
+                        {{$leccCont->nombre}}
+                        <span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 512 512">
+                                <g transform="rotate(90 256 256)">
+                                    <path fill="#001d47" d="M256 48C141.12 48 48 141.12 48 256s93.12 208 208 208s208-93.12 208-208S370.88 48 256 48Zm-82.33 114.34l105 71a32.5 32.5 0 0 1-37.25 53.26a33.21 33.21 0 0 1-8-8l-71-105a8.13 8.13 0 0 1 11.32-11.32ZM256 432c-97 0-176-78.95-176-176a174.55 174.55 0 0 1 53.87-126.72a14.15 14.15 0 1 1 19.64 20.37A146.53 146.53 0 0 0 108.3 256c0 81.44 66.26 147.7 147.7 147.7S403.7 337.44 403.7 256c0-76.67-58.72-139.88-133.55-147v55a14.15 14.15 0 1 1-28.3 0V94.15A14.15 14.15 0 0 1 256 80c97.05 0 176 79 176 176s-78.95 176-176 176Z" />
+                                </g>
                             </svg>
-                        </div>
+                        </span>
                     </a>
-
+                </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
 </x-app>

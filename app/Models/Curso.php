@@ -9,13 +9,13 @@ use Illuminate\Support\Facades\DB;
 class Curso extends Model
 {
     use HasFactory;
-    protected $fillable = ['nombre', 'fecha_inicio', 'fecha_final', 'estado', 'modalidad_id', 'tipo_curso_id', 'codigo','imagen', 'interno_planta'];
+    protected $fillable = ['nombre', 'fecha_inicio', 'fecha_termino', 'estado', 'modalidad_id', 'tipo_curso_id', 'codigo','imagen', 'interno_planta'];
     protected $primaryKey = "id_curso";
     public $timestamps = false;
 
-    public function categorias()
+    public function categoria()
     {
-        return $this->hasMany(Categoria::class, 'categoria_id');
+        return $this->belongsToMany(Categoria::class, 'categorias_cursos' ,'curso_id','categoria_id');
     }
 
     public function modalidad()

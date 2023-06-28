@@ -26,9 +26,9 @@ class SaveContenidoRequest extends FormRequest
         }
         return [
             //
-            'nombre' => 'required|string|min:5|max:255',
+            'nombre' => 'required|string|min:5|max:45',
             'descripcion' => 'required|string|min:5',
-            'url' => 'required|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx,txt,jpg,jpeg,png,gif'
+            'url' => 'required|mimes:pdf,txt,jpg,jpeg,png,gif,mp4'
         ];
     }
 
@@ -46,7 +46,7 @@ class SaveContenidoRequest extends FormRequest
             'descripcion.min' => 'El campo descripcion debe ser minimo 5 caracteres.',
             // VALIDACION DE IMAGEN
             'url.required' => 'El campo ARCHIVO es obligatorio.',
-            'url.mimes' => 'El campo ARCHIVO debe ser formato pdf,doc,docx,xls,xlsx,ppt,pptx,txt,jpg,jpeg,png,gif.',
+            'url.mimes' => 'El campo ARCHIVO debe ser formato pdf,txt,jpg,jpeg,png,gif.',
 
         ];
     }

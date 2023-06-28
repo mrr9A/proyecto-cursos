@@ -8,7 +8,9 @@ use App\Models\Contenido;
 use App\Models\Leccion;
 use App\Models\Media_contenido;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class ContenidoController extends Controller
 {
@@ -45,9 +47,10 @@ class ContenidoController extends Controller
     public function ver(string $id)
     {
         $contenido = Contenido::find($id);
-        // $archivos = Storage::files('public/archivos');
-        // return view('vista', compact('archivos'));
-        return view('Cursosinternos.vistaPrevia.index', compact('contenido'));
+        $archivo = public_path($contenido->media[0]->url); // Ruta al archivo que deseas obtener la extensión
+        $extension = File::extension($archivo);
+        $leccion = Leccion::find($contenido->leccion_id);
+        return view('Cursosinternos.vistaPrevia.index', compact('contenido', 'leccion', 'extension'));
     }
 
     public function update(Request $request, string $id)
@@ -72,23 +75,35 @@ class ContenidoController extends Controller
         $leccion = Leccion::find($request->leccion_id);
         $curso = $leccion->curso_id;
 
-        return to_route("curs.show", $curso)->with('agregado', 'Contenido Agregado Correctamente');
+        return to_route("curs.show", $curso)->with('actualizado', 'Contenido Actualizada Correctamente');
         // return redirect()->back()->with('actualizado', 'Actualizado Correctamente');
     }
 
     public function edi($id)
     {
         $contenido = Contenido::find($id);
-        return view('Cursosinternos.contenido.editar', compact('contenido'));
+        $archivo = public_path($contenido->media[0]->url); // Ruta al archivo que deseas obtener la extensión
+        $extension = File::extension($archivo);
+        return view('Cursosinternos.contenido.editar', compact('contenido', 'extension'));
     }
 
     public function destroy(string $id)
     {
         $contenido = Contenido::find($id);
-        $id_media = $contenido->media[0]->id_media;
-        $media = Media_contenido::find($id_media);
-        $media->delete();
-        $contenido->delete();
-        return redirect()->back()->with('eliminado', 'Eliminado Correctamente');
+        // dd( $contenido->examen->pluck('id_examen')->toArray());
+        $id_exam = $contenido->examen->pluck('id_examen')->toArray();
+        $coincidencias = DB::table('examen')
+            ->whereIn('id_examen', $id_exam)
+            ->exists();
+        // dd($coincidencias);
+        if (!$coincidencias) {
+            // $contenido->delete();
+            $id_media = $contenido->media[0]->id_media;
+            $media = Media_contenido::find($id_media);
+            $media->delete();
+            $contenido->delete();
+            return redirect()->back()->with('eliminado', 'Eliminado Correctamente');
+        }
+        return redirect()->back()->with('error', 'No se puede eliminar el registro contenido porque está asociado a otro campo.');
     }
 }

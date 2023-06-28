@@ -12,13 +12,11 @@
                     </div>
                     <div>
                         <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha de Inicio: </label>
-                        <h3 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> {{$curso->fecha_inicio}}</h3>
-                        <input type="date" name="fecha_inicio" value="{{$curso->fecha_inicio}}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required>
+                        <input type="date" name="fecha_inicio" value="{{$curso->fecha_inicio ?? '' ?  date('Y-m-d', strtotime($curso->fecha_inicio ?? '')) : '' }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required>
                     </div>
                     <div>
                         <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha de Termino: </label>
-                        <h3 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{$curso->fecha_termino}}</h3>
-                        <input type="date" name="fecha_termino" value="{{$curso->fecha_termino}}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required>
+                        <input type="date" name="fecha_termino" value="{{$curso->fecha_termino ?? '' ?  date('Y-m-d', strtotime($curso->fecha_termino ?? '')) : '' }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required>
                     </div>
                     <div>
                         <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Estatus del Curso: </label>
@@ -46,6 +44,15 @@
                         <select id="countries" name="tipo_curso_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             @foreach ($tipo as $tip)
                             <option value="{{$tip->id_tipo_curso}}" {{{ $curso->tipo_curso_id == $tip->id_tipo_curso ? "selected" : "" }}}>{{$tip->nombre}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div>
+                        <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Modalidad del Curso:</label>
+                        <select id="countries" name="categoria_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            
+                        @foreach ($categoria as $categori)
+                            <option value="{{$categori->id_categoria}}" {{{ $curso->categoria[0]->id_categoria == $categori->id_categoria ? "selected" : "" }}}>{{$categori->nombre}}</option>
                             @endforeach
                         </select>
                     </div>

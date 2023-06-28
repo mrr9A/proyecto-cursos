@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Cursosinternos;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SaveCursoInternoRequest;
+use App\Models\Categoria;
 use App\Models\Curso;
 use App\Models\Examen;
 use App\Models\ModalidadCurso;
@@ -26,23 +27,11 @@ class CursosController extends Controller
     public function show($id)
     {
         $curso = Curso::find($id);
-        // $fechaInicio = date('y-m-d', $curso->fecha_inicio );
-        // $fechaTermino =  date('y-m-d',$curso->fecha_termino);
-
-    //    $fechaInicio = $curso->fecha_inicio; // Obtén la fecha completa del campo de fecha de la base de datos
-    //    $fecha = Carbon::parse($fechaInicio)->format('Y-m-d'); // Obtén solo la fecha en el formato deseado
-
-    //    $fechaTermino = $curso->fecha_termino; // Obtén la fecha completa del campo de fecha de la base de datos
-    //    $fecha = Carbon::parse($fechaTermino)->format('Y-m-d'); // Obtén solo la fecha en el formato deseado
-
-    //    $curso->fecha_inicio = $fechaInicio;
-    //    $curso->fecha_termino = $fechaTermino;
-
-
+        $categoria = Categoria::all();
         $modalidad = ModalidadCurso::all();
         $tipo = TipoCurso::all();
         $usuarios = User::all();
-        return view('Cursosinternos.cursos.configurarCursos', compact('curso', 'modalidad', 'tipo', 'usuarios'));
+        return view('Cursosinternos.cursos.configurarCursos', compact('curso', 'modalidad', 'tipo', 'usuarios', 'categoria'));
     }
 
 
@@ -61,12 +50,15 @@ class CursosController extends Controller
         $curso->estado = $request->post('estado');
         $curso->modalidad_id = $request->post('modalidad_id');
         $curso->tipo_curso_id = $request->post('tipo_curso_id');
+        $categorias = $curso->categoria()->detach($curso->categoria->pluck('id_categoria'));
+        $categorias = $curso->categoria()->attach($request->post('categoria_id'));
         $curso->saveOrFail();
         return redirect()->back()->with('actualizado', 'Actualizado Correctamente');
     }
 
     public function store(Request $request)
     {
+        $request->validate(['usuarios' => 'array|required']);
         $dataUsuarios = [];
         foreach ($request->usuarios as $usuario) {
 
@@ -80,11 +72,16 @@ class CursosController extends Controller
         return redirect()->back()->with('agregado', 'Usuario agregado a curso');
     }
 
-    public function destroy(string $id)
+    public function destroy(Request $request , string $id)
     {
-        $cursos = Curso::find($id);
-        $cursos->delete();
-        return redirect('cursos')->with('eliminado', 'Eliminado Correctamente');
+        $request->validate(['usuarios' => 'array|required']);
+        
+        foreach($request->usuarios as $usuario){
+            $useri = User::find($usuario);
+            $curso = $useri->cursos[0]->id_curso;
+            $useri->cursos()->detach($curso);
+        }
+        return redirect()->back()->with('eliminado', 'Eliminado Correctamente');
     }
 
     public function destroyUser(string $id)

@@ -18,6 +18,6 @@ class Categoria extends Model
 
     public function cursos()
     {
-        return $this->belongsTo(Curso::class, 'id_curso');
+        return $this->belongsToMany(Curso::class, 'curso_id');
     }
 }

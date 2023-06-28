@@ -18,7 +18,7 @@ class Leccion extends Model
 
     public function course()
     {
-        return $this->belongsTo(Curso::class, 'id_curso');
+        return $this->belongsTo(Curso::class, 'curso_id');
     }
     public function contenido()
     {

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Cursosinternos\ContenidoController;
 use App\Http\Controllers\Cursosinternos\CursosController;
+use App\Http\Controllers\Cursosinternos\ExamenController;
 use App\Http\Controllers\Cursosinternos\LeccionesController;
 use Illuminate\Support\Facades\Route;
 
@@ -48,8 +49,15 @@ Route::resource('examenes',\App\Http\Controllers\Cursosinternos\ExamenController
 
 Route::get('ver/{id}',[ContenidoController::class,'ver'])->name('ver');
 
+Route::get('verExam/{id}',[ExamenController::class,'verExM'])->name('verExamen');
+
+Route::get('editExam/{id}',[ExamenController::class,'verExMedit'])->name('editExamen');
+
+Route::post('Exam/{id}', [ExamenController::class,'validarExam'])->name('validarExamen');
+
 Route::get('editar/{id}',[LeccionesController::class,'edit'])->name('editLec');
 
 Route::get('edi/{id}',[ContenidoController::class,'edi'])->name('ediConte');
 
 Route::delete('/eliminarpuesto/{id}', [CursosController::class,'destroyUser'])->name('destroyuser');
+

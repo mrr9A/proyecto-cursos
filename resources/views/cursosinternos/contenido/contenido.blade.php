@@ -42,7 +42,7 @@
                                             <input id="file-upload" name="url" type="file" class="sr-only" accept="/*" >
                                         </label>
                                     </div>
-                                    <p class="text-xs leading-5 text-gray-600">Formatos Admitidos: PNG, JPG, MP4 ...</p>
+                                    <p class="text-base leading-5 text-gray-600">Formatos Admitidos: PNG, JPG, MP4, PDF, GIF.</p>
                                     @error('url') <span class="error text-incompleted">{{ $message }}</span> @enderror
                                 </div>
                             </div>
