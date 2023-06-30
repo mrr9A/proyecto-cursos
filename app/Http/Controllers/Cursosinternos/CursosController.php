@@ -18,13 +18,25 @@ use Illuminate\Support\Facades\Storage;
 
 class CursosController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $cursos = Curso::where('interno_planta', '=', '1')->orderBy('id_curso', 'desc')->paginate('10');
+        // $cursos = Curso::where('interno_planta', '=', '1')->orderBy('id_curso', 'desc')->paginate('10');
+        $buscar = $request->buscador;
+        $cursos = Curso::where(function ($query) use ($buscar) {
+            $query->where('nombre', 'like', $buscar . "%")
+                ->orWhere('codigo', 'like', $buscar . "%")
+                ->orWhere('fecha_inicio', 'like', $buscar . "%");
+        })
+            ->orWhereHas('categoria', function ($query) use ($buscar) {
+                $query->where('nombre', 'like', $buscar . "%");
+            })
+            ->orderBy('id_curso', 'desc')
+            ->paginate(8);
         $autores = User::all();
-        return view('Cursosinternos.cursos.catalago', compact('cursos', 'autores'));
+        $categrias = Categoria::all();
+        return view('Cursosinternos.cursos.catalago', compact('cursos', 'autores', 'categrias'));
     }
-    public function show($id)
+    public function show(Request $request, string $id)
     {
         $curso = Curso::find($id);
         $categoria = Categoria::all();
@@ -33,6 +45,7 @@ class CursosController extends Controller
         $usuarios = User::all();
         return view('Cursosinternos.cursos.configurarCursos', compact('curso', 'modalidad', 'tipo', 'usuarios', 'categoria'));
     }
+
 
 
     public function update(Request $request, string $id)
@@ -72,11 +85,11 @@ class CursosController extends Controller
         return redirect()->back()->with('agregado', 'Usuario agregado a curso');
     }
 
-    public function destroy(Request $request , string $id)
+    public function destroy(Request $request, string $id)
     {
         $request->validate(['usuarios' => 'array|required']);
-        
-        foreach($request->usuarios as $usuario){
+
+        foreach ($request->usuarios as $usuario) {
             $useri = User::find($usuario);
             $curso = $useri->cursos[0]->id_curso;
             $useri->cursos()->detach($curso);

@@ -14,7 +14,7 @@ class Contenido extends Model
     protected $table = "contenidos";
     public $timestamps = false;
 
-    protected $fillable = ['nombre','descripcion','leccion_id'];
+    protected $fillable = ['nombre','descripcion','leccion_id','estado'];
 
     public function leccion()
     {

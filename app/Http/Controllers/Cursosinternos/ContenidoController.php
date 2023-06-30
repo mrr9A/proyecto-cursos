@@ -23,6 +23,7 @@ class ContenidoController extends Controller
         $contenido->nombre = $request->post('nombre');
         $contenido->descripcion = $request->post('descripcion');
         $contenido->leccion_id = $request->post('leccion_id');
+        $contenido->estado = 0;
         $contenido->saveOrFail();
         //Esta parte es para obtener el id del contenido
         $id_cont = $contenido->id_contenido;
