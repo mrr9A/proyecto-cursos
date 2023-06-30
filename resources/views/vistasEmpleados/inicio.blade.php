@@ -57,7 +57,6 @@
 
                         <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
 
-                            @dump(Auth::user()->cursos)
 
                             @foreach(Auth::user()->cursos as $curso)
                             <tr>
