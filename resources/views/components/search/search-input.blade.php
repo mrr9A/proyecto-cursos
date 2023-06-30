@@ -1,7 +1,5 @@
 
-<form autocomplete="on" class="flex flex-col w-[400px] mx-12" action={{ route($route,$id ?? null) }}>
-
-<form autocomplete="off" class="flex flex-col w-[400px] mx-12" action={{ route($route) }} id="form-search">
+<form autocomplete="on" class="flex flex-col w-[400px] mx-12" action={{ route($route,$id ?? null) }} id="form-search">
     <label for="simple-search" class="sr-only">Search</label>
     <div class="flex items-center w-[400px] relative">
         <div class="relative flex items-center mt-4 md:mt-0">

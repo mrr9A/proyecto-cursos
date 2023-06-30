@@ -223,6 +223,8 @@ class User extends Authenticatable
             ->orderBy('puestos.puesto')
             ->orderBy('empleados')
             ->paginate(10)->appends(request()->query());
+
+            // dd($resultado);
             
             $map = $resultado->map(function ($usuario) {
                 // Cursos en progreso y cursos pasados
@@ -232,6 +234,7 @@ class User extends Authenticatable
                 $porcentaje = 0;
                 if($usuario->total_cursos != 0)
                 $porcentaje = bcdiv(($usuario->total_calificaciones / $usuario->total_cursos * 100) / 100, '1', 2);
+
                 return (object) [
                     'id_usuario' => $usuario->id_usuario,
                     "id_sgp" => $usuario->id_sgp,
