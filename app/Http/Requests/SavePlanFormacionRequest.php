@@ -26,7 +26,7 @@ class SavePlanFormacionRequest extends FormRequest
         }
         return [
             //
-            'trabajos' => 'required | array',
+            'trabajo_id' => 'required | numeric',
             'cursos' => 'required | array',
         ];
     }

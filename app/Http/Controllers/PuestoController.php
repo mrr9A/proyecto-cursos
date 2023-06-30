@@ -122,11 +122,11 @@ class PuestoController extends Controller
     }
 
 
-    public function asignarCursos()
+    public function asignarCursos(Request $request)
     {
         $planesFormacion = PlanesFormacion::all();
         $puestos = PlanesFormacion::with('puestos')->get();
-        $cursos = Curso::getAllCursos();
+        $cursos = Curso::getAllCursos($request->buscar);
         $puestos = Puesto::all();
         return view('cursosplanta.puestosCursos.index', compact("planesFormacion", "puestos", "cursos"));
     }

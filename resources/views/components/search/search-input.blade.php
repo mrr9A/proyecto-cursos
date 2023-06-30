@@ -1,4 +1,4 @@
-<form autocomplete="off" class="flex flex-col w-[400px] mx-12" action={{ route($route) }}>
+<form autocomplete="off" class="flex flex-col w-[400px] mx-12" action={{ route($route) }} id="form-search">
     <label for="simple-search" class="sr-only">Search</label>
     <div class="flex items-center w-[400px] relative">
         <div class="relative w-full">
@@ -29,10 +29,10 @@
 </form>
 
 <script>
-    const buscador = $('#buscador')
-    const resultados = $('#resultados')
+    // const buscador = $('#buscador')
+    // const resultados = $('#resultados')
 
-    const debouncedGetInfo = debounce(getInfoByBuscador, 1000);
+    // const debouncedGetInfo = debounce(getInfoByBuscador, 1000);
 
     /**Cuando el evento keyup se dispara, se invoca la función debouncedGetInfo en lugar de llamar directamente a getInfoByBuscador.
      *  Debido a la naturaleza de la función debounced, si se producen múltiples eventos keyup rápidamente, el temporizador se reinicia cada vez,

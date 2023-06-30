@@ -22,18 +22,18 @@ class PlanFormacionController extends Controller
 
     public function store(SavePlanFormacionRequest $request)
     {
+        $trabajo_id = $request->trabajo_id;
         $data = array();
-        foreach ($request->trabajos as $trabajo) {
-            $trabajo_id = $trabajo;
-            foreach ($request->cursos as $curso) {
-                $consulta = [
-                    "curso_id" => $curso,
-                    "trabajo_id" => $trabajo_id
-                ];
-                array_push($data, $consulta);
-            }
+        foreach ($request->cursos as $curso) {
+            $consulta = [
+                "curso_id" => $curso,
+                "trabajo_id" => $trabajo_id
+            ];
+            array_push($data, $consulta);
         }
+
+        DB::table('trabajos_cursos')->where('trabajo_id', '=', $trabajo_id)->delete();
         DB::table("trabajos_cursos")->insertOrIgnore($data);
-        return redirect()->route("matrices.index")->with('status', 'cursos agregados correctamente');
+        return redirect()->back()->with('status', 'cursos agregados correctamente');
     }
 }
