@@ -7,6 +7,7 @@ use App\Http\Controllers\MatrizController;
 use App\Http\Controllers\ModalidadController;
 use App\Http\Controllers\PlanFormacionController;
 use App\Http\Controllers\PuestoController;
+use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\SucursalesController;
 use App\Http\Controllers\TipoController;
 use App\Http\Controllers\TrabajoController;
@@ -59,6 +60,11 @@ Route::middleware(['auth', RoleAdminMiddleware::class])->group(function () {
     Route::resource("cursosplanta/planes", PlanFormacionController::class, ["names" => "planes"]);
     Route::resource("cursosplanta/calificaciones", CalificacionController::class, ["names" => "calificaciones"]);
 });
+
+Route::resource("cursosplanta/cursos", CursoController::class, ["names" => "cursos"]);
+Route::resource("cursosplanta/planes", PlanFormacionController::class, ["names" => "planes"]);
+Route::resource("cursosplanta/calificaciones", CalificacionController::class, ["names" => "calificaciones"]);
+Route::resource("cursosplanta/reportes", ReporteController::class, ["names" => "reportes"]);
 
 require __DIR__ . '/resource.php';
 

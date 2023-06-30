@@ -45,9 +45,10 @@
                         <th scope="col" class="px-6 py-2">opciones</th>
                     </tr>
                 </thead>
-                <tbody class="capitalize">
+                <tbody class="">
                     @foreach ($data['data'] as $usuario)
                     {{-- @dump($usuario) --}}
+
                     <tr class="border-b border-gray-200 hover:bg-gray-100">
                         <td class="whitespace-nowrap px-6 py-2 w-1/12 ">{{ $usuario->id_sgp }}</td>
                         <td class="whitespace-nowrap px-6 py-2 w-1/12 ">{{ $usuario->id_sumtotal }}</td>
@@ -63,6 +64,24 @@
                             </div>
                         </td>
                     </tr>
+
+                        <tr class="border-b border-gray-200 hover:bg-gray-100">
+                            <td class="whitespace-nowrap px-6 py-2 w-1/12 ">{{ $usuario->id_sgp }}</td>
+                            <td class="whitespace-nowrap px-6 py-2 w-1/12 ">{{ $usuario->id_sumtotal }}</td>
+                            <td class="py-3 px-6 text-left capitalize">{{ $usuario->empleado }}</td>
+                            <td class="py-3 px-6 text-left">{{ $usuario->puesto }}</td>
+                            <td class="py-3 px-6 text-left">{{ $usuario->total }}</td>
+                            <td class="py-3 px-6 text-left">{{ $usuario->totalCursosPasados }}</td>
+                            <td class="py-3 px-6 text-left">{{ $usuario->cursosEnProgreso }}</td>
+                            <td class="py-3 px-6 text-left">{{ $usuario->promedioTotal }}</td>
+                            <td class="py-3 px-6 text-left">
+                                <div class="w-full flex justify-end mt-2">
+                                    <a target="_blank" href="{{route('descargarPDF', $usuario->id_usuario)}}" 
+                                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-xs px-3 py-1.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Ver reporte</a>
+                                </div>
+                            </td>
+                        </tr>
+
                     @endforeach
                 </tbody>
             </table>

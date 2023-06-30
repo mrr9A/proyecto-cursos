@@ -40,7 +40,7 @@
                                             </p>
                                             <input type="number" class="w-[80px]" name="cursos[{{$cursos->id_curso}}]"
                                                 {{-- value="{{ is_null($cursos->calificacion) ? 0 : $cursos->calificacion }}" --}}
-                                                value="{{$cursos->calificacion ?? ''}}"
+                                                value="{{($cursos->calificacion ?? "") != '' ? $cursos->calificacion : 0}}"
                                                 min="0" max="100" />
                                         @endforeach
                                     </div>

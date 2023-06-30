@@ -11,6 +11,13 @@
     padding: 0;
     box-sizing: border-box;
 }
+*::first-letter{
+    text-transform: uppercase;
+}
+/* .let p::first-letter {
+    text-transform: uppercase;
+} */
+
 
 body {
     margin: 0;

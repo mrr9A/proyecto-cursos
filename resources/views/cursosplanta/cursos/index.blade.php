@@ -44,7 +44,7 @@
                     <x-filtros.filtros route="cursos.index" />
                     <x-search.search-input placeholder="nombre, codigo, tipo ..." route="cursos.index" />
                 </div>
-                <div class="bg-primary flex flex-wrap rounded-md p-5 gap-2 ">
+                <div class="bg-primary grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] p-2 gap-2 rounded-md ">
 
                     @if (!is_null($cursos))
                         @foreach ($cursos as $curso)
