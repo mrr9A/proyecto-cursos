@@ -1,6 +1,7 @@
 <x-app title="Catalago de Cursos:">
     <div>
-        <x-search.search-input route="curs.index"></x-search.search-input>
+        <x-search.search-input route="curs.index" placeholder="Buscar por Categoria, Nombre, Codigo"></x-search.search-input>
+
         <div class="p-12">
             <a type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700" href="{{route('crearCurso')}}">
                 <img src="./img/agregar-usuario.png" alt=""><span>Agregar Curso</span>
@@ -25,6 +26,9 @@
                                         Codígo del Curso
                                     </th>
                                     <th scope="col" class="px-6 py-3">
+                                        Categoria del curso
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
                                         Fecha de Inicio
                                     </th>
                                     <th scope="col" class="px-6 py-3">
@@ -37,7 +41,7 @@
                             </thead>
                             <tbody>
                                 @foreach ($cursos as $curso)
-                                @if($curso->interno_planta == 1)
+                                @if($curso->interno_planta == 1 and $curso->estado == 1)
                                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-800 text-center">
                                     <td class="inline-block ">
                                         <img src="{{$curso->imagen}}" width="50" height="50">
@@ -49,10 +53,15 @@
                                         {{$curso->codigo}}
                                     </td>
                                     <td class=" font-bold">
-                                        {{$curso->fecha_inicio}}
+                                        {{$curso->categoria[0]->nombre}}
                                     </td>
                                     <td class=" font-bold">
-                                        {{$curso->fecha_termino}}
+                                        <!-- {{$curso->fecha_inicio}} -->
+                                        {{$curso->fecha_inicio ?? '' ?  date('Y-m-d', strtotime($curso->fecha_inicio ?? '')) : '' }}
+                                    </td>
+                                    <td class=" font-bold">
+                                        <!-- {{$curso->fecha_termino}} -->
+                                        {{$curso->fecha_termino ?? '' ?  date('Y-m-d', strtotime($curso->fecha_termino ?? '')) : '' }}
                                     </td>
                                     <td class=" text-center ">
                                         <a href="{{url('curs',[$curso])}}" type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg   dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
@@ -65,7 +74,77 @@
                                 @endif
                                 @endforeach
                             </tbody>
-                        </table>
+                        </table><br>
+                        {{-- PAGINACION --}}
+                        <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
+                            <div>
+                                {{-- $cursos->currentPage(): Devuelve el número de página actual.
+                    $cursos->perPage(): Devuelve la cantidad de resultados mostrados por página.
+                    $cursos->total(): Devuelve el total de resultados obtenidos. --}}
+                                <p class="text-sm text-gray-700">
+                                    Mostrando
+                                    <span class="font-medium">{{ $cursos->currentPage() }}</span>
+                                    a
+                                    <span class="font-medium">{{ $cursos->perPage() }}</span>
+                                    de
+                                    <span class="font-medium">{{ $cursos->total() }}</span>
+                                    resultados
+                                </p>
+                            </div>
+                            <div>
+                                <nav class="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
+
+                                    @if ($cursos->onFirstPage())
+                                    <a href="#" aria-label="@lang('pagination.previous')" class="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
+                                        <span class="sr-only">Previous</span>
+                                        <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                            <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
+                                        </svg>
+                                    </a>
+                                    @else
+                                    <a href="{{ $cursos->previousPageUrl() }}" aria-label="@lang('pagination.previous')" class="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
+                                        <span class="sr-only">Previous</span>
+                                        <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                            <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
+                                        </svg>
+                                    </a>
+                                    @endif
+
+                                    {{-- paginas --}}
+                                    <!-- @if ($cursos->currentPage() != 1)
+                                    <a href="{{ $cursos->url(1) }}" class="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">1</a>
+                                    @endif -->
+
+
+                                    @foreach ($cursos->getUrlRange(max(1, $cursos->currentPage() - 2), min($cursos->lastPage(), $cursos->currentPage() + 2)) as $page => $url)
+                                    <a href="{{ $url }}" class="{{ $cursos->currentPage() === $page ? 'relative z-10 inline-flex items-center bg-indigo-600 px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600' : 'relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0' }}">{{ $page }}</a>
+                                    @endforeach
+
+                                    <!-- @if ($cursos->currentPage() != $cursos->lastPage())
+                                    <a href="{{ $cursos->url($cursos->lastPage())}}" class="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">{{$cursos->lastPage()}}</a>
+                                    @endif -->
+
+                                    <!-- Enlace a la siguiente página -->
+                                    @if ($cursos->hasMorePages())
+                                    <a href="{{ $cursos->nextPageUrl() }}" aria-label="@lang('pagination.next')" class="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
+                                        <span class="sr-only">Next</span>
+                                        <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                            <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                                        </svg>
+                                    </a>
+                                    @else
+                                    <div aria-hidden="true" aria-label="@lang('pagination.next')" aria-disabled="true" aria-label="@lang('pagination.next')" class="disabled relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
+                                        <span class="sr-only">Next</span>
+                                        <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                            <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                    @endif
+
+                                </nav>
+                            </div>
+                        </div>
+                        {{-- FIN DE LA PAGINACION --}}
                     </div>
 
                 </div>
