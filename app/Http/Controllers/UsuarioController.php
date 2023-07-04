@@ -15,6 +15,9 @@ class UsuarioController extends Controller
    //
    public function index(Request $request)
    {
+      $request->validate([
+         'buscador' => 'regex:/^[\pL\s\-\0-9]+$/u | nullable'
+      ]);
       $buscar = $request->buscador;
       $usuarios = User::where(function ($query) use ($buscar) {
          $query->where('id_sumtotal', 'like', $buscar . "%")

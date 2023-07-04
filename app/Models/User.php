@@ -224,33 +224,61 @@ class User extends Authenticatable
             ->orderBy('empleados')
             ->paginate(10)->appends(request()->query());
 
-            // dd($resultado);
-            
-            $map = $resultado->map(function ($usuario) {
-                // Cursos en progreso y cursos pasados
-                $cursosEnProgreso = $usuario->calificaciones->where('valor','<', 100)->count();
-                $cursosPasados = $usuario->calificaciones->where('valor','=', 100)->count();
 
-                $porcentaje = 0;
-                if($usuario->total_cursos != 0)
+        $map = $resultado->map(function ($usuario) {
+            // Cursos en progreso y cursos pasados
+            $cursosEnProgreso = $usuario->calificaciones->where('valor', '<', 100)->count();
+            $cursosPasados = $usuario->calificaciones->where('valor', '=', 100)->count();
+
+            $porcentaje = 0;
+            if ($usuario->total_cursos != 0)
                 $porcentaje = bcdiv(($usuario->total_calificaciones / $usuario->total_cursos * 100) / 100, '1', 2);
 
-                return (object) [
-                    'id_usuario' => $usuario->id_usuario,
-                    "id_sgp" => $usuario->id_sgp,
-                    "id_sumtotal" => $usuario->id_sumtotal,
-                    'empleado' => $usuario->empleados,
-                    'puesto' => $usuario->puesto,
-                    'total' => $usuario->total_cursos,
-                    'total_calificaciones' => $usuario->total_calificaciones,
-                    'totalCursosPasados' => $cursosPasados,
-                    'cursosEnProgreso' => $cursosEnProgreso,
-                    'promedioTotal' => $porcentaje,
-                ];
-            });
+            return (object) [
+                'id_usuario' => $usuario->id_usuario,
+                "id_sgp" => $usuario->id_sgp,
+                "id_sumtotal" => $usuario->id_sumtotal,
+                'empleado' => $usuario->empleados,
+                'puesto' => $usuario->puesto,
+                'total' => $usuario->total_cursos,
+                'total_calificaciones' => $usuario->total_calificaciones,
+                'totalCursosPasados' => $cursosPasados,
+                'cursosEnProgreso' => $cursosEnProgreso,
+                'promedioTotal' => $porcentaje,
+            ];
+        });
         return [
             "data" => $map,
             "links" => $resultado->links()
         ];
+    }
+
+    public static function getUsuariosWithCurses()
+    {
+        $usuarios = DB::table('usuarios')
+            ->select(
+                'usuarios.id_usuario',
+                'sucursales.nombre as sucursal',
+                DB::raw("CONCAT(usuarios.nombre, ' ', IFNULL(segundo_nombre, ''), ' ', apellido_paterno, ' ', IFNULL(apellido_materno, '')) AS empleado"),
+                'usuarios.id_sgp',
+                'usuarios.id_sumtotal',
+                'puestos.puesto',
+                'trabajos_sumtotal.nombre as trabajo',
+                'cursos.nombre as curso', 
+                'calificaciones.valor'
+            )
+            ->join('sucursales_usuarios', 'sucursales_usuarios.usuario_id', '=', 'usuarios.id_usuario')
+            ->join('sucursales', 'sucursales.id_sucursal', '=', 'sucursales_usuarios.sucursal_id')
+            ->join('puestos', 'puestos.id_puesto', '=', 'usuarios.puesto_id')
+            ->join('usuarios_trabajos', 'usuarios_trabajos.usuario_id', '=', 'usuarios.id_usuario')
+            ->join('trabajos_sumtotal', 'trabajos_sumtotal.id_trabajo', '=', 'usuarios_trabajos.trabajo_id')
+            ->join('trabajos_cursos', 'trabajos_cursos.trabajo_id', '=', 'trabajos_sumtotal.id_trabajo')
+            ->join('cursos', 'cursos.id_curso', '=', 'trabajos_cursos.curso_id')
+            ->leftJoin('calificaciones', 'calificaciones.usuario_id', '=', 'usuarios.id_usuario')
+            ->orderBy('id_usuario', 'asc')
+            ->get();
+
+        // dd($usuarios);
+        return $usuarios;
     }
 }

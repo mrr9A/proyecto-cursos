@@ -13,8 +13,10 @@
 
 
         @foreach ($opciones as $opcion)
-            <option value="{{ $opcion->value }}" @if (($value ?? '') == $opcion->value) selected @endif>{{ $opcion->text }}
+            <option value="{{ $opcion->value }}" {{old ($name) == $opcion->value ? 'selected' : ''}}  @if (($value ?? '') == $opcion->value) selected @endif>{{ $opcion->text }}
             </option>
+            {{-- @if (($value->id_sucursal ?? '') == $sucursal->id_sucursal) selected @endif --}}
+            {{-- value="{{$value}}" {{old ('type') == $value ? 'selected' : ''}} --}}
         @endforeach
     </select>
     @error($name)

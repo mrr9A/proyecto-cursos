@@ -1,3 +1,3 @@
-<x-app title="GENerar reportes">
+<x-app title="generar reportes">
 
 </x-app>

@@ -12,7 +12,7 @@
 
             <div class="step active rounded-md" data-step="1">
                 <h3
-                    class="text-3xl font-bold tracking-tight text-gray-900 text-section-subtitle text-center bg-gray-100">
+                    class="text-3xl font-bold tracking-tight text-gray-900 text-section-subtitle text-center bg-gray-200">
                     Datos Personales</h3>
                 <div class=" grid grid-cols-2 gap-6 border border-gray-200 shadow-sm rounded-md px-3 py-2 pb-6">
                     <x-input-text type="text" nombre="nombre" text="Nombre" placeholder="nombre" required
@@ -27,7 +27,7 @@
             </div>
 
             <div class="step" data-step="2">
-                <h3 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl text-center bg-gray-100">Datos de
+                <h3 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl text-center bg-gray-200">Datos de
                     Autenticación
                 </h3>
                 <div class="grid grid-cols-1 gap-6 border border-gray-200 shadow-sm rounded-md px-3 py-2 pb-6">
@@ -44,7 +44,7 @@
             </div>
 
             <div class="step col-span-2" data-step="3">
-                <h3 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl text-center bg-gray-100 px-3">
+                <h3 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl text-center bg-gray-200 px-3">
                     Información Empresarial
                 </h3>
                 <div class="grid grid-cols-4 gap-6 border border-gray-200 shadow-sm rounded-md px-3 py-2">
@@ -153,10 +153,39 @@
         }
 
 
+        // VALIDAR LOS INPUTS
 
-        //FUNCIONES PARA EL FORMULARIO POR PASOS 
+        const inputsTexts = $$("input[type='text']")
+        inputsTexts.forEach(element => {
+            element.addEventListener('keypress', (e) => {
+
+                const charCode = e.which || e.keyCode;
+                const char = String.fromCharCode(charCode);
+                const pattern = /[a-zA-Z]/;
+
+                if (!pattern.test(char)) {
+                    e.preventDefault();
+                }
+            })
+        });
+        const inputsNumber = $$("input[type='number']")
+        inputsNumber.forEach(element => {
+            element.addEventListener('keypress', (e) => {
+
+                const charCode = e.which || e.keyCode;
+                const char = String.fromCharCode(charCode);
+                const pattern = /[0-9]/;
+
+                if (!pattern.test(char)) {
+                    e.preventDefault();
+                }
+            })
+        });
+
+
+        //FUNCIONES PARA EL FORMULARIO POR PASOS
         // Obtén los elementos del formulario y los botones de navegación
-        //         const form = document.getElementById('multi-step-form');
+        // const form = document.getElementById('multi-step-form');
         // const steps = Array.from(form.getElementsByClassName('step'));
         // const nextButtons = Array.from(form.getElementsByClassName('next-button'));
         // const previousButtons = Array.from(form.getElementsByClassName('previous-button'));
@@ -164,63 +193,63 @@
 
         // // Agrega eventos de clic a los botones de navegación
         // nextButtons.forEach(button => {
-        //     button.addEventListener('click', () => {
-        //         navigateToNextStep(button);
-        //     });
+        // button.addEventListener('click', () => {
+        // navigateToNextStep(button);
+        // });
         // });
 
         // previousButtons.forEach(button => {
-        //     button.addEventListener('click', () => {
-        //         navigateToPreviousStep(button);
-        //     });
+        // button.addEventListener('click', () => {
+        // navigateToPreviousStep(button);
+        // });
         // });
 
         // // Función para mostrar el siguiente paso
         // function navigateToNextStep(button) {
-        //     const currentStep = button.closest('.step');
-        //     const nextStep = currentStep.nextElementSibling;
-        //     // Verificar la validez de los campos de entrada dentro del contenedor actual
-        //     const inputs = currentStep.querySelectorAll('input, select, textarea');
-        //     let isValid = true;
-        //     inputs.forEach(input => {
-        //         if (!input.checkValidity()) {
-        //             isValid = false;
-        //             // Agrega lógica para manejar el error en el campo de entrada si es necesario
-        //         }
-        //     });
+        // const currentStep = button.closest('.step');
+        // const nextStep = currentStep.nextElementSibling;
+        // // Verificar la validez de los campos de entrada dentro del contenedor actual
+        // const inputs = currentStep.querySelectorAll('input, select, textarea');
+        // let isValid = true;
+        // inputs.forEach(input => {
+        // if (!input.checkValidity()) {
+        // isValid = false;
+        // // Agrega lógica para manejar el error en el campo de entrada si es necesario
+        // }
+        // });
 
-        //     if (isValid) {
-        //         currentStep.classList.remove('active');
-        //         nextStep.classList.add('active');
+        // if (isValid) {
+        // currentStep.classList.remove('active');
+        // nextStep.classList.add('active');
 
-        //         if (currentStep.getAttribute('data-step') == 1) {
-        //             num[0].classList.add('checked')
-        //         }
-        //         if (currentStep.getAttribute('data-step') == 2) {
-        //             num[1].classList.add('checked')
-        //         }
-        //         if (currentStep.getAttribute('data-step') == 3) {
-        //             num[2].classList.add('checked')
-        //         }
-        //     }
+        // if (currentStep.getAttribute('data-step') == 1) {
+        // num[0].classList.add('checked')
+        // }
+        // if (currentStep.getAttribute('data-step') == 2) {
+        // num[1].classList.add('checked')
+        // }
+        // if (currentStep.getAttribute('data-step') == 3) {
+        // num[2].classList.add('checked')
+        // }
+        // }
         // }
 
         // // Función para mostrar el paso anterior
         // function navigateToPreviousStep(button) {
-        //     const currentStep = button.closest('.step');
-        //     const previousStep = currentStep.previousElementSibling;
-        //     currentStep.classList.remove('active');
-        //     previousStep.classList.add('active');
-        //     // Eliminando el color verde de que ya completo ese paso
-        //     if (previousStep.getAttribute('data-step') == 1) {
-        //         num[0].classList.remove('checked')
-        //     }
-        //     if (previousStep.getAttribute('data-step') == 2) {
-        //         num[1].classList.remove('checked')
-        //     }
-        //     if (previousStep.getAttribute('data-step') == 3) {
-        //         num[2].classList.remove('checked')
-        //     }
+        // const currentStep = button.closest('.step');
+        // const previousStep = currentStep.previousElementSibling;
+        // currentStep.classList.remove('active');
+        // previousStep.classList.add('active');
+        // // Eliminando el color verde de que ya completo ese paso
+        // if (previousStep.getAttribute('data-step') == 1) {
+        // num[0].classList.remove('checked')
+        // }
+        // if (previousStep.getAttribute('data-step') == 2) {
+        // num[1].classList.remove('checked')
+        // }
+        // if (previousStep.getAttribute('data-step') == 3) {
+        // num[2].classList.remove('checked')
+        // }
 
 
         // }

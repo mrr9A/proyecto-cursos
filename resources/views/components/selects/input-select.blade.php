@@ -10,14 +10,14 @@
         <option value="" id="select_puesto" class="text-gray-400">{{ $textOptionDefault }}</option>
         @if ($puestos ?? '')
             @foreach ($puestos as $puesto)
-                <option value="{{ $puesto->id_puesto }}" @if (($value->id_puesto ?? '') == $puesto->id_puesto) selected @endif>
+                <option value="{{ $puesto->id_puesto }}" {{old ($name) == $puesto->id_puesto ? 'selected' : ''}} @if (($value->id_puesto ?? '') == $puesto->id_puesto) selected @endif>
                     {{ $puesto->puesto }}
                 </option>
             @endforeach
         @endif
         @if ($sucursales ?? '')
             @foreach ($sucursales as $sucursal)
-                <option value="{{ $sucursal->id_sucursal }}" @if (($value->id_sucursal ?? '') == $sucursal->id_sucursal) selected @endif>
+                <option value="{{ $sucursal->id_sucursal }}" {{old ($name) == $sucursal->id_sucursal ? 'selected' : ''}} @if (($value->id_sucursal ?? '') == $sucursal->id_sucursal) selected @endif>
                     {{ $sucursal->nombre }}</option>
             @endforeach
         @endif

@@ -26,12 +26,13 @@ class SaveUserRequest extends FormRequest
             // retornamos diferentes validaciones
             // .$usuario->id_usuario
 
+            // regex:/^[\pL\s\-]+$/u => verifica que la cadena solo tenga letras y espacios
             return [
                 //gt:0 indicaq que solo numero positivos
-                'nombre' => 'required|string|min:3',
-                'segundo_nombre' => 'nullable|string|min:3',
-                'apellido_paterno' => 'required|string|min:3',
-                'apellido_materno' => 'nullable|string|min:3',
+                'nombre' => 'required|string|min:3|regex:/^[\pL\s\-]+$/u',
+                'segundo_nombre' => 'nullable|string|min:3|regex:/^[\pL\s\-]+$/u',
+                'apellido_paterno' => 'required|string|min:3|regex:/^[\pL\s\-]+$/u',
+                'apellido_materno' => 'nullable|string|min:3|regex:/^[\pL\s\-]+$/u',
                 'id_sgp' => 'required|numeric|gt:0|unique:usuarios,id_sgp,'.$userId.',id_usuario',
                 'id_sumtotal' => 'required|numeric|gt:0|unique:usuarios,id_sumtotal,'.$userId.',id_usuario',
                 'rol' => 'required|numeric',
@@ -47,11 +48,11 @@ class SaveUserRequest extends FormRequest
         }
         return [
             //gt:0 indicaq que solo numero positivos
-            'nombre' => 'required|string|min:3',
-            'segundo_nombre' => 'nullable|string|min:3',
-            'apellido_paterno' => 'required|string|min:3',
-            'apellido_materno' => 'nullable|string|min:3',
-            'id_sgp' => 'required|numeric|gt:0|unique:usuarios',
+            'nombre' => 'required|string|min:3|regex:/^[\pL\s\-]+$/u',
+            'segundo_nombre' => 'nullable|string|min:3|regex:/^[\pL\s\-]+$/u',
+            'apellido_paterno' => 'required|string|min:3|regex:/^[\pL\s\-]+$/u',
+            'apellido_materno' => 'nullable|string|min:3|regex:/^[\pL\s\-]+$/u',
+            'id_sgp' => 'required|numeric|gt:0|unique:usuarios|regex:/^[0-9]+$/u',
             'id_sumtotal' => 'required|numeric|gt:0|unique:usuarios',
             'rol' => 'required|numeric',
             'sucursal_id' => 'required|numeric',
