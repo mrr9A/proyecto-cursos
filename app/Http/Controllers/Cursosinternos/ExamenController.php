@@ -118,11 +118,12 @@ class ExamenController extends Controller
 
             foreach ($preguntaData['opciones'] as $opcionId => $opcionData) {
 
-                // dd($opcionId);
+                // dd($opcionCorrect);
                 if ($opcionCorrect == $opcionId) {
 
                     $opcion = Opcion::find($opcionId);
                     $nombreOpcion = $opcionData['titulo'];
+                    // dd($nombreOpcion);
                     $opcion->opcion = $nombreOpcion;
                     $opcion->correcta = true;
                     $opcion->saveOrFail();
@@ -134,6 +135,38 @@ class ExamenController extends Controller
                 $opcion->correcta = false;
                 $opcion->saveOrFail();
             }
+        }
+        // ESTA PARTE ES OARA GUARADAR LAS NUEVAS PREGUNTAS
+        foreach ($request->arreglo as $preguntas) {
+
+            $dataPregunta = [
+                "pregunta" => $preguntas[0],
+                "examen_id" => $examen->id_examen
+            ];
+
+            $pregunta = Pregunta::create($dataPregunta);
+            $dataOpciones = [];
+            $opcionCorrecta = $preguntas['respuesta'];
+            for ($i = 0; $i < count($preguntas['opciones']); $i++) {
+                if ($opcionCorrecta == $i) {
+                    $consulta = [
+                        'opcion' => $preguntas['opciones'][$i],
+                        "pregunta_id" => $pregunta->id_pregunta,
+                        "correcta" => true,
+                    ];
+                    array_push($dataOpciones, $consulta);
+                    continue;
+                }
+
+                $consulta = [
+                    'opcion' => $preguntas['opciones'][$i],
+                    "pregunta_id" => $pregunta->id_pregunta,
+                    "correcta" => false,
+                ];
+
+                array_push($dataOpciones, $consulta);
+            }
+            DB::table("opciones")->insert($dataOpciones);
         }
 
         // return "holis";
@@ -180,20 +213,27 @@ class ExamenController extends Controller
     {
         $examen = Examen::find($id);
         $id_exam = $examen->id_examen;
-        // dd( $id_exam);
+        // dd($examen->usuarios()->where('examen_id', $id_exam)->exists());
         $idPregun = $examen->preguntas->pluck('id_pregunta')->toArray();
         // dd($examen->preguntas->pluck('id_pregunta')->toArray());
         $pregunt = Pregunta::find($idPregun);
         // dd($pregunt);
-        foreach ($pregunt as $pregunta) {
+        if ($examen->usuarios()->where('examen_id', $id_exam)->exists()) {
+            return redirect()->back()->with('error', 'No se puede eliminar el registro porque está asociado a otro campo1');
+        } else {
+            foreach ($pregunt as $pregunta) {
 
-            $idOpcion = $pregunta->opciones->pluck('id_opciones')->toArray();
-            $opciondelete = DB::table('opciones')
-                ->whereIn('id_opciones', $idOpcion)
-                ->delete();
-            $pregunta->delete();
+                $idOpcion = $pregunta->opciones->pluck('id_opciones')->toArray();
+                $opciondelete = DB::table('opciones')
+                    ->whereIn('id_opciones', $idOpcion)
+                    ->delete();
+                $pregunta->delete();
+            }
+            $examen->delete();
+            return redirect()->back()->with('eliminado', 'Eliminado Correctamente');
         }
-        $examen->delete();
-        return redirect()->back()->with('eliminado', 'Eliminado Correctamente');
+
+        // $examen->delete();
+        // return redirect()->back()->with('eliminado', 'Eliminado Correctamente');
     }
 }

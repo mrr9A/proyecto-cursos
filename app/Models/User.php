@@ -98,6 +98,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Curso::class, "usuarios_cursos", 'usuario_id', 'curso_id');
     }
 
+    public function examen()
+    {
+        return $this->belongsToMany(Examen::class, 'intentos','usuario_id','examen_id')->withPivot('limite_intentos','numero_intento','calificacion');
+    }
+
     // FUNCIONES
     public static function getCountEmployesByPuesto()
     {

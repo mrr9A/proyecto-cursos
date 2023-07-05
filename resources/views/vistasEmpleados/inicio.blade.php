@@ -4,15 +4,13 @@
         <div>
             <div class="flex items-center gap-x-3">
                 <h2 class="text-lg font-medium text-subtitle text-gray-800 dark:text-white">Cursos: </h2>
-
-                <span class="px-3 py-1 text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400">TOTAL DE CURSOS</span>
+                <span class="px-3 py-1 text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400">{{Auth::user()->cursos->count()}}</span>
             </div>
 
             <p class="mt-1 text-sm text-gray-500 dark:text-gray-300">Lista de los cursos inscritos</p>
         </div>
 
     </div>
-
     <div class="mt-6 md:flex md:items-center md:justify-between">
         <div class="inline-flex overflow-hidden bg-white border divide-x rounded-lg dark:bg-gray-900 rtl:flex-row-reverse dark:border-gray-700 dark:divide-gray-700">
             <button class="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 bg-gray-100 sm:text-sm dark:bg-gray-800 dark:text-gray-300">
@@ -51,14 +49,11 @@
 
                                 <th scope="col" class="py-3.5 text-sm font-normal text-center rtl:text-right text-gray-500 dark:text-gray-400">Progreso del curso</th>
 
-                                <th scope="col" class="py-3.5 text-sm font-normal text-center rtl:text-right text-gray-500 dark:text-gray-400">Opciones</th>
+                                <th scope="col" class="py-3.5 text-sm font-normal text-center items-center rtl:text-right text-gray-500 dark:text-gray-400">Opciones</th>
                             </tr>
                         </thead>
 
                         <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-
-                            @dump(Auth::user()->cursos)
-
                             @foreach(Auth::user()->cursos as $curso)
                             <tr>
                                 <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
@@ -74,21 +69,20 @@
                                     </span>
                                 </td>
                                 <td class="px-4 py-4 text-center text-sm whitespace-nowrap">
-                                    96
                                 </td>
-
                                 <td class="text-sm items-center text-center whitespace-nowrap">
-                                    <div class="w-48 h-1.5 items-center text-center bg-blue-200 rounded-full">
-                                        <div class="bg-blue-500 items-center text-center w-2/3 h-1.5"></div>
+                                    <div class="w-48 h-5 items-center text-center bg-blue-600 rounded-lg">
+                                        <div class="progress-bar" style="width: 10%"></div>
                                     </div>
                                 </td>
-
                                 <td class="px-4 py-4 text-sm whitespace-nowrap items-center text-center">
-                                    <button class="px-1 py-1 text-gray-500 text-center items-center transition-colors duration-200 rounded-lg dark:text-gray-300 hover:bg-gray-100">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 16 16">
-                                            <path fill="#012254" d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0a6.5 6.5 0 0 0-13 0Zm4.879-2.773l4.264 2.559a.25.25 0 0 1 0 .428l-4.264 2.559A.25.25 0 0 1 6 10.559V5.442a.25.25 0 0 1 .379-.215Z" />
-                                        </svg>
-                                    </button>
+                                    <a href="{{url('cursosEmpleados',[$curso])}}" type="button" class=" btn text-gray-500 text-center transition-colors duration-200 rounded-lg dark:text-gray-300 hover:bg-gray-100">
+                                        <span class="text-center items-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 16 16">
+                                                <path fill="#012254" d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0a6.5 6.5 0 0 0-13 0Zm4.879-2.773l4.264 2.559a.25.25 0 0 1 0 .428l-4.264 2.559A.25.25 0 0 1 6 10.559V5.442a.25.25 0 0 1 .379-.215Z" />
+                                            </svg>
+                                        </span>
+                                    </a>
                                 </td>
                             </tr>
                             @endforeach
@@ -99,7 +93,7 @@
         </div>
     </div>
 
-    <div class="mt-6 sm:flex sm:items-center sm:justify-between ">
+    <!-- <div class="mt-6 sm:flex sm:items-center sm:justify-between ">
         <div class="text-sm text-gray-500 dark:text-gray-400">
             Page <span class="font-medium text-gray-700 dark:text-gray-100">1 of 10</span>
         </div>
@@ -125,6 +119,6 @@
                 </svg>
             </a>
         </div>
-    </div>
+    </div> -->
     @endauth
 </x-appEmpleado>

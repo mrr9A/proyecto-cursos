@@ -88,20 +88,45 @@ class CursosController extends Controller
     public function destroy(Request $request, string $id)
     {
         $request->validate(['usuarios' => 'array|required']);
-
         foreach ($request->usuarios as $usuario) {
             $useri = User::find($usuario);
-            $curso = $useri->cursos[0]->id_curso;
-            $useri->cursos()->detach($curso);
+            $id_useri = $useri->id_usuario;
+            if ($useri->examen()->where('usuario_id', $id_useri)->exists()) {
+                return redirect()->back()->with('error', 'No se puede eliminar el registro porque está asociado a otro campo11');
+            } else {
+                $curso = $useri->cursos[0]->id_curso;
+                $useri->cursos()->detach($curso);
+                return redirect()->back()->with('eliminado', 'Eliminado Correctamente');
+            }
         }
-        return redirect()->back()->with('eliminado', 'Eliminado Correctamente');
+        // $request->validate(['usuarios' => 'array|required']);
+        // // dd($request);
+        // foreach ($request->usuarios as $usuario) {
+        //     $useri = User::find($usuario);
+        //     $curso = $useri->cursos[0]->id_curso;
+        //     $useri->cursos()->detach($curso);
+        // }
+        // return redirect()->back()->with('eliminado', 'Eliminado Correctamente');
     }
 
     public function destroyUser(string $id)
     {
+
+        // $user = User::find($id);
+        // $Curso = $user->cursos[0]->id_curso;
+        // $user->cursos()->detach($Curso);
+        // return redirect()->back()->with('eliminado', 'Eliminado Correctamente');
+
         $user = User::find($id);
-        $Curso = $user->cursos[0]->id_curso;
-        $user->cursos()->detach($Curso);
-        return redirect()->back()->with('eliminado', 'Eliminado Correctamente');
+        $id_user = $user->id_usuario;
+        // dd($user->examen()->where('usuario_id', $id_user)->exists());
+        if ($user->examen()->where('usuario_id', $id_user)->exists()) {
+            return redirect()->back()->with('error', 'No se puede eliminar el registro porque está asociado a otro campo11');
+        } else {
+            // dd($user->cursos[0]->id_curso);
+            $Curso = $user->cursos[0]->id_curso;
+            $user->cursos()->detach($Curso);
+            return redirect()->back()->with('eliminado', 'Eliminado Correctamente');
+        }
     }
 }
