@@ -30,12 +30,12 @@
                         <th scope="col" class="px-6 py-2">opciones</th>
                     </tr>
                 </thead>
-                <tbody class="capitalize">
+                <tbody class="">
                     @foreach ($usuarios as $usuario)
                         <tr class="border-b border-gray-200 hover:bg-gray-100">
                             <td class="whitespace-nowrap px-6 py-2 w-1/12 ">{{ $usuario->id_sgp }}</td>
                             <td class="py-3 px-6 text-left">{{ $usuario->id_sumtotal }}</td>
-                            <td class="py-3 px-6 text-left">{{ $usuario->nombre }}
+                            <td class="py-3 px-6 text-left capitalize">{{ $usuario->nombre }}
                                 {{ $usuario->segundo_nombre }} {{ $usuario->apellido_paterno }}
                                 {{ $usuario->apellido_materno }}</td>
                             <td class="py-3 px-6 text-left">{{ $usuario->puestos->puesto }}</td>

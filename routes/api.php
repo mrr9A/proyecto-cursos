@@ -24,8 +24,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 // http://localhost:8000/api/cursosxplanes/1
-Route::get('cursosxplanes/{id}', function ($id) {
-    $data = Curso::getCursesByPuesto($id);
+Route::get('cursosplanta/trabajo/{id}/cursos', function (Request $request, $id) {
+    $buscar = $request->buscador;
+    $data = Curso::getCursesByJob($buscar,$id);
     return response()->json($data);
 });
 // get numero de empleados por puesto
@@ -55,10 +56,7 @@ Route::get('cursosplanta/puesto/{id}', function ($id) {
     $puesto->planes_formacion;
     return response()->json($puesto);
 });
-Route::get('getProgressByUser', function () {
-    // $puesto = User::getProgressByUser();
-    // return response()->json($puesto);
-});
+Route::get('cursosplanta/cursos', [ApiController::class, 'searchCursos']);
 
 // editar la informacion de puesto
 Route::put('cursosplanta/puesto/edit/{id}', [PuestoController::class, 'update']);

@@ -15,13 +15,13 @@ class CursoController extends Controller
     //
     public function index(Request $request)
     {
-        $puesto = $request->buscar;
+        $buscar = $request->buscador;
         // dd($puesto);
-        $cursos = Curso::getAllCursos();
+        $cursos = Curso::getAllCursos($buscar);
         $puestos = Puesto::all();
         $modalidad = ModalidadCurso::all();
         $tipos = TipoCurso::all();
-        return view("cursosplanta.cursos.index", compact("cursos", "puestos", "puesto", "modalidad", "tipos"));
+        return view("cursosplanta.cursos.index", compact("cursos", "puestos", "modalidad", "tipos"));
     }
 
     public function store(Request $request)
