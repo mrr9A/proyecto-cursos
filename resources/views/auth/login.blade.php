@@ -25,7 +25,7 @@
                     <h1 class="font-bold text-3xl text-title text-gray-900">Iniciar Sesion</h1><br>
                     <p>Porfavor Ingresa tus credenciales para iniciar sesión</p>
                 </div>
-                <x-messages.messages />
+                <x-messages.login-messages />
                 <form action="{{ route('login') }}" method="POST">
                     @csrf
                     <div>

@@ -108,7 +108,7 @@ class PuestoController extends Controller
 
         $puesto = Puesto::find($id);
         $idsTrabajos = $puesto->trabajos->pluck('id_trabajo')->toArray();
-        $usuario = User::find($puesto->id_puesto);
+        $usuario = User::where('puesto_id','=',$puesto->id_puesto)->first();
         $coincidencias = DB::table('trabajos_cursos')
             ->whereIn('trabajo_id', $idsTrabajos)
             ->exists();
@@ -116,9 +116,9 @@ class PuestoController extends Controller
         if (is_null($usuario) && !$coincidencias) {
             Trabajo::where('puesto_id', '=', $puesto->id_puesto)->delete();
             $puesto->delete();
-            return to_route("puestos.index")->with("status", "Puesto eliminado correctamente");
+            return to_route("puestos.index")->with("success", "Puesto eliminado correctamente");
         }
-        return to_route("puestos.index")->with("status", "el puesto esta relacionado con usuarios o con cursos, no se puede eliminar");
+        return to_route("puestos.index")->with("error", "el puesto esta relacionado con usuarios o con cursos, no se puede eliminar");
     }
 
 

@@ -6,18 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title class="">{{ $title ?? '' }}</title>
-    <!-- ?? para poner un valor por default -->
-    <!-- title es una variable que puede ser
-recivida como atributo o encerrado en una etiqueta
-slot con nombre
-<x-slot name="title">Hola</x-slot>\
--->
+
     <meta name="description" content="{{ $metaDescription ?? 'default meta description' }}" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
     <!-- cargando css desde la carpeta public -->
     <!-- <link href="/css/app.css" rel="stylesheet"/> -->
     <!-- cargando css y js con vite, renderiza en tiempo real -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script src="{{ asset('js/constants.js') }}"></script>
+    <script src="{{ asset('js/config/api.js') }}"></script>
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     @livewireStyles
 
@@ -45,12 +42,7 @@ slot con nombre
                 </div>
 
 
-                @if (session('status'))
-                <!-- verifica si existe un mensaje de sesion con la clave status -->
-                <div class="status">
-                    {{ session('status') }}
-                </div>
-                @endif
+                <x-messages.status-messages />
                 {{ $slot }}
             </main>
         </div>

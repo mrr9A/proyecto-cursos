@@ -22,7 +22,7 @@ class SucursalesController extends Controller
             "estado" => 1
         ];
         Sucursal::create($data);
-        return redirect()->route('sucursales.index')->with('agregado','Agregado Correctamente');
+        return redirect()->route('sucursales.index')->with('success',' Sucursal creada Correctamente');
     }
 
     public function show(string $id)
@@ -41,14 +41,19 @@ class SucursalesController extends Controller
         $sucursale = Sucursal::find($id);
         $sucursale->fill($request->input());
         $sucursale->saveOrFail();
-        return redirect()->route('sucursales.index')->with('actualizado','Actualizado Correctamente');
+        return redirect()->route('sucursales.index')->with('success','Sucursal actualizada Correctamente');
     }
 
     public function destroy(string $id)
     {
+
         $sucursale = Sucursal::find($id);
-        $sucursale->estado = 0;
-        $sucursale->save();
-        return redirect()->route('sucursales.index')->with('eliminado','Eliminado Correctamente');
+        if(count($sucursale->usuarios) < 1){
+            $sucursale->delete();
+        }else{
+            $sucursale->estado = 0;
+            $sucursale->save();
+        }
+        return redirect()->route('sucursales.index')->with('success','Sucursal eliminado Correctamente');
     }
 }

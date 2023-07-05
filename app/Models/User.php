@@ -227,7 +227,7 @@ class User extends Authenticatable
 
         $map = $resultado->map(function ($usuario) {
             // Cursos en progreso y cursos pasados
-            $cursosEnProgreso = $usuario->calificaciones->where('valor', '<', 100)->count();
+            $cursosEnProgreso = $usuario->calificaciones->where('valor', '<', 100)->where('valor', '>', 0)->count();
             $cursosPasados = $usuario->calificaciones->where('valor', '=', 100)->count();
 
             $porcentaje = 0;

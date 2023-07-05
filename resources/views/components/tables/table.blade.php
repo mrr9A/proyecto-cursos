@@ -128,7 +128,7 @@
                             <input class="hidden peer" type="checkbox" name="empleado"
                                 value="{{ $empleado->id_usuario }}" />
                             <div
-                                class="flex items-center peer-checked:bg-input peer-checked:text-white h-full py-2 px-2 ">
+                                class="flex items-center peer-checked:bg-input peer-checked:text-white h-full py-2 px-1 ">
                                 <h2 class="uppercase text-sm">{{ $empleado->empleado }}</h2>
                             </div>
                         </label>
@@ -142,12 +142,12 @@
                             ?>
                             @foreach ($keys as $trabajo)
                                 <p
-                                    class="uppercase text-sm flex-1 border-b-[1px] border-gray-200 border-collapse py-2 px-2.5 @if ($trabajo == $empleado->puesto && count($empleado->trabajos) > 1) hidden @endif">
+                                    class="uppercase text-sm flex-1 border-b-[1px] border-gray-200 border-collapse py-1 px-2.5 @if ($trabajo == $empleado->puesto && count($empleado->trabajos) > 1) hidden @endif">
                                     {{ $trabajo ?? 'sin trabajos' }}</p>
                             @endforeach
                         </div>
                     </td>
-                    <td class="w-full h-full  grid grid-cols-[repeat(auto-fit,minmax(120px,1fr))] m-0 p-0">
+                    <td class="w-full h-full grid grid-cols-[repeat(auto-fit,minmax(120px,1fr))] m-0 p-0">
                             <x-tables.table-curses-tecnica :empleado="$empleado" :id="$empleado->id_usuario" :keys="$keys" />
                     </td>
                     <td>

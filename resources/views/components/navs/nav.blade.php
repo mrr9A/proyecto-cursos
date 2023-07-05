@@ -109,7 +109,7 @@
 </nav>
 
 <script>
-    let arrow = document.querySelectorAll(".arrow");
+    let arrow = $$(".arrow");
 
     arrow.forEach(element => {
         element.addEventListener('click', (e) => {
@@ -118,9 +118,7 @@
         })
     })
 
-    const $ = selector => document.querySelector(selector);
-    const $$ = selector => document.querySelectorAll(selector);
-
+    
     const menuButton = $('#menu-button')
     const allSpanItems = $$("span.hidden")
     const contentMenu = $("ul")

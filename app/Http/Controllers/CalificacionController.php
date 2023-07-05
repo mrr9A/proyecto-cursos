@@ -11,6 +11,7 @@ class CalificacionController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate(['cursos' => 'array|required']);
         $cursos = $request->cursos;
         // "usuario_id:{{ $id }}-curso_id:{{ $curso->id_curso }}"
         $calificaciones = array();
@@ -29,7 +30,7 @@ class CalificacionController extends Controller
         }
 
         DB::table("calificaciones")->insertOrIgnore($calificaciones);
-        return redirect()->back();
+        return redirect()->back()->with('success', 'usuarios calificados correctamente');
     }
 
     public function update(Request $request, $id)

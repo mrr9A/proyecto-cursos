@@ -70,7 +70,7 @@ class UsuarioController extends Controller
       }
       $usuario = User::create($data);
 
-      return redirect()->route("usuarios.index");
+      return redirect()->route("usuarios.index")->with('success', 'usuario creado correctamente');
    }
 
    public function create()
@@ -159,7 +159,7 @@ class UsuarioController extends Controller
             DB::table("usuarios_trabajos")->insert($data);
          }
 
-         return redirect()->route("usuarios.index");
+         return redirect()->route("usuarios.index")->with('success', 'usuario actualizado correctamente!');
       }
       $usuario = User::create($data);
    }
@@ -169,6 +169,6 @@ class UsuarioController extends Controller
       $usuario = User::find($id);
       $usuario->estado = 0;
       $usuario->save();
-      return redirect()->route("usuarios.index")->with('status', 'usuario eliminado correctamente');
+      return redirect()->route("usuarios.index")->with('success', 'usuario eliminado correctamente');
    }
 }

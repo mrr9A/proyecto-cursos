@@ -1,9 +1,4 @@
-import './bootstrap';
-import 'flowbite'
-// import {validarInputs} from './utils/validarInput'
-
-// validarInputs()
-function validarInputs() {
+ function validarInputs() {
   const inputsTexts = $$("input[type='text']")
   inputsTexts.forEach(element => {
     element.addEventListener('keypress', (e) => {

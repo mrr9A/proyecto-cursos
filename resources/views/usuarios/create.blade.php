@@ -123,7 +123,7 @@
           <span class="sr-only">Loading...</span>
       </div>
       `
-            fetch(`http://localhost:8000/api/cursosplanta/puesto/${id}/trabajos`)
+            fetch(`${API_URL}/cursosplanta/puesto/${id}/trabajos`)
                 .then(res => res.json())
                 .then(data => {
                     let trabajos = ""
@@ -167,6 +167,14 @@
                     e.preventDefault();
                 }
             })
+
+            element.addEventListener('input', function() {
+                const maxLength = 20; // Define la longitud máxima permitida
+                console.log('holas')
+                if (element.value.length > maxLength) {
+                    element.value = element.value.slice(0, maxLength); // Limita la longitud del valor
+                }
+            });
         });
         const inputsNumber = $$("input[type='number']")
         inputsNumber.forEach(element => {

@@ -6,6 +6,7 @@ use App\Http\Controllers\CursoController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MatrizController;
 use App\Http\Controllers\ModalidadController;
+use App\Http\Controllers\PDFController;
 use App\Http\Controllers\PlanFormacionController;
 use App\Http\Controllers\PuestoController;
 use App\Http\Controllers\ReportController;
@@ -38,10 +39,7 @@ Route::middleware('auth.admin')->group(function () {
     // Rutas protegidas para el rol de administrador
 
     Route::resource('sucursales', SucursalesController::class, ['names' => 'sucursales']);
-    Route::get('/pdf/{user}', [
-        App\Http\Controllers\PDFController::class,
-        'pdf'
-    ])->name('descargarPDF');
+    Route::get('/pdf/{user}', [PDFController::class,'pdf'])->name('descargarPDF');
 
     Route::get('home', [HomeController::class, 'index'])->name('home')->middleware('preventBackHistory');
     Route::get('/cursosplanta/cursos-puestos/asignar-cursos', [PuestoController::class, 'asignarCursos'])->name('cursos.puestos');

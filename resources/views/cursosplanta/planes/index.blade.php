@@ -49,7 +49,7 @@
       })
 
       function getJobsByPosition(id) {
-          fetch(`http://localhost:8000/api/cursosplanta/puesto/${id}/trabajos`)
+          fetch(`${API_URL}/cursosplanta/puesto/${id}/trabajos`)
               .then(res => res.json())
               .then(data => {
                   let trabajos = '<option value="" class="text-gray-400">Selecciona un trabajo</option>'
@@ -68,7 +68,7 @@
       }
 
       function getCursos(id) {
-          return fetch(`http://localhost:8000/api/cursosxplanes/${id}`)
+          return fetch(`${API_URL}/api/cursosxplanes/${id}`)
               .then(res => res.json())
               .then(data => {
                   console.log(data);

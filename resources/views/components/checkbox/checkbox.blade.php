@@ -1,6 +1,6 @@
   @foreach ($cursos as $curso)
       <label
-          class="cursor-pointer block  h-auto rounded-lg  border-fuchsia-400 mb-4 overflow-hidden bg-gray-50">
+          class="cursor-pointer block  h-auto rounded-sm  border-fuchsia-400 mb-4 overflow-hidden bg-gray-50">
           <input class="hidden peer" type="checkbox" name="cursos[]" value="{{ $curso->id_curso }}" />
 
           <div class="relative peer-checked:bg-orange-200 h-full p-2">

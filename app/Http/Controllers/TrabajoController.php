@@ -12,11 +12,18 @@ class TrabajoController extends Controller
     public function destroy($id){
 
         // primero eliminamos todas las relaciondes de trabajos tanto con cursos como con usuarios y despues eliminamos el trabajo
-        $deleted = DB::table('trabajos_cursos')->where('trabajo_id', '=', $id)->delete();
-        $deleted = DB::table('usuarios_trabajos')->where('trabajo_id', '=', $id)->delete();
-        $trabajo = Trabajo::destroy($id);
+        $trabajosCursos = DB::table('trabajos_cursos')->where('trabajo_id', '=', $id)->exists();
+        $trabajosUsuarios = DB::table('usuarios_trabajos')->where('trabajo_id', '=', $id)->exists();
 
+        if($trabajosUsuarios){
+            return to_route('puestos.index')->with("error", "El trabajo ha sido asigando a un usuario. No se puede eliminar");
+        }
+        if($trabajosCursos){
+            return to_route('puestos.index')->with("error", "El trabajo ya tiene cursos. No se puede eliminar");
+        }
+
+        $trabajo = Trabajo::destroy($id);
         // return "hola";
-        return to_route('puestos.index')->with("status", "Trabajo eliminado correctamente");
+        return to_route('puestos.index')->with("success", "Trabajo eliminado correctamente");
     }
 }

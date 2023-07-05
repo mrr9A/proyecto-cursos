@@ -14,6 +14,6 @@ class Sucursal extends Model
     public $timestamps = false;
 
     public function usuarios(){
-        return $this->belongsToMany(User::class,"sucursales_usuarios", "usuario_id","sucursal_id");
+        return $this->belongsToMany(User::class,"sucursales_usuarios", "sucursal_id","usuario_id");
     }
 }

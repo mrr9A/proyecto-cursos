@@ -13,6 +13,7 @@ class PDFController extends Controller
     {
         // $data = Puesto::progresoEmpleados();
         $data = PlanesFormacion::getMatrizByUser($user);
+        // return view('pdfs.prueba', compact('data'));
         if(!$data){
             return redirect()->back();
         }

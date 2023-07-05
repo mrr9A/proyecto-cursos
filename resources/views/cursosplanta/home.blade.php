@@ -215,7 +215,7 @@
 
         async function getData() {
             // Llamar a nuestra API. Puedes usar cualquier librería para la llamada, yo uso fetch, que viene nativamente en JS
-            const respuestaRaw = await fetch("http://localhost:8000/api/cursosplanta/trabajadores/datos");
+            const respuestaRaw = await fetch(`${API_URL}/cursosplanta/trabajadores/datos`);
             // Decodificar como JSON
             const respuesta = await respuestaRaw.json();
             // Ahora ya tenemos las etiquetas y datos dentro de "respuesta"

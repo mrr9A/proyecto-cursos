@@ -15,10 +15,10 @@
                 </thead>
                 <tbody class=" border-[1px] ">
                     <tr
-                        class="bg-white w-full h-full min-h-[150px] grid overflow-auto grid-cols-[repeat(auto-fit,minmax(120px,1fr))]">
+                        class="bg-white w-full h-full min-h-[100px] grid  grid-cols-[repeat(auto-fit,minmax(120px,1fr))]">
                         @foreach ($empleado->trabajos[$empleado->puesto][0]['cursos'][$tipo] as $curso)
                             <td
-                                class="w-full h-full border-[1px]  text-black @if ($curso->calificacion == '100') bg-green-400 @endif ">
+                                class="w-full h-full border-[1px]  text-black @if ($curso->calificacion == '100') bg-green-400 @endif @if($curso->calificacion > '0' && $curso->calificacion < '100') bg-purple-600 @endif @if($curso->calificacion <= '0') bg-red-500 @endif">
                                 <label class="w-full h-full cursor-pointer block overflow-hidden">
                                     <input class="hidden peer" type="checkbox" name="cursos[]"
                                         value="usuario_id:{{ $id }}-curso_id:{{ $curso->id_curso }}"
@@ -30,7 +30,6 @@
                                 </label>
                             </td>
                         @endforeach
-
                     </tr>
                 </tbody>
             </table>
@@ -41,14 +40,12 @@
 
 
     {{-- ==================== CURSOS AVANZADOS O EXPERTOR POR TRABAJOS ============================= --}}
-    {{-- @dump(count($empleado->trabajos)) --}}
     @if (count($empleado->trabajos) >= 2)
         <div class="flex flex-col">
             @foreach ($empleado->trabajos as $indice => $trabajos)
                 @if ($indice == $empleado->puesto)
                     @continue
                 @endif
-                {{-- @dump($keysCursos) --}}
 
                 @foreach ($trabajos as $trabajo)
                     <?php
@@ -69,7 +66,7 @@
                                     class="bg-white w-full h-full grid overflow-auto grid-cols-[repeat(auto-fit,minmax(120px,1fr))]">
                                     @foreach ($trabajo['cursos'][$tipo] as $curso)
                                         <td
-                                            class="w-full h-full border-[1px]  text-black @if ($curso->calificacion == '100') bg-green-400 @endif ">
+                                            class="w-full h-full border-[1px]  text-black @if ($curso->calificacion == '100') bg-green-400 @endif @if($curso->calificacion > '0' && $curso->calificacion < '100') bg-purple-600 @endif @if($curso->calificacion <= '0') bg-red-500 @endif ">
                                             <label class="w-full h-full cursor-pointer block overflow-hidden">
                                                 <input class="hidden peer" type="checkbox" name="cursos[]"
                                                     value="usuario_id:{{ $id }}-curso_id:{{ $curso->id_curso }}"
