@@ -178,7 +178,8 @@ return [
     "you_have_x_teams_remaining"=>"Actualmente tiene :teamCount equipos restantes.",
 
     // Cambiar el nombre del input
-    // "attributes" => [
-    //   'nombre' => ""
-    // ]
+    "attributes" => [
+      'email' => "correo",
+      'password' => "contraseña"
+    ]
 ];

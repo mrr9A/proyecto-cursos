@@ -1,13 +1,10 @@
 <?php
 
-use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Cursosinternos\ContenidoController;
 use App\Http\Controllers\Cursosinternos\CursosController;
 use App\Http\Controllers\Cursosinternos\ExamenController;
 use App\Http\Controllers\Cursosinternos\LeccionesController;
 use App\Http\Controllers\empleados\empleadoController;
-use App\Http\Middleware\RoleAdminMiddleware;
-use App\Http\Middleware\RoleEmpleadoMiddleware;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,17 +17,13 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-// RUTAS DEL LOGIN
 
-Route::post('/login', [LoginController::class, 'login'])->name('login');
-Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
-Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 
 //---------------------------------------------------- RUTAS DE LAS VISTAS ADMINISTRADOR -----------------------------------------------------------------
 
 
-Route::middleware(['auth', RoleAdminMiddleware::class])->group(function () {
+Route::middleware('auth.admin')->group(function () {
     // Rutas protegidas para el rol de administrador
 
 
@@ -66,7 +59,7 @@ Route::middleware(['auth', RoleAdminMiddleware::class])->group(function () {
 
 //---------------------------------------------------- RUTAS PARA LAS VIDAS DE USUARIOS EMPLEADOS -----------------------------------------------------------------
 
-Route::middleware(['auth',RoleEmpleadoMiddleware::class])->group(function () {
+Route::middleware('auth')->group(function () {
     // Rutas protegidas para el rol de empleado
     Route::get('inicioEmpleado', [empleadoController::class, 'index'])->name('inicioEmpleado');
 

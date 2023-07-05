@@ -47,7 +47,8 @@ export default {
       // #7D7D7D
       // #737373
       'white': '#FEFEFE',
-      'black': '#050203',
+      // 'black': '#050203',
+      'black': '#151213',
       'primary': '#01245A',
       'primary-light': '#3D52D5',
       'secondary': '',

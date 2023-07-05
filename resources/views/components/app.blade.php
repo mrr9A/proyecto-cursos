@@ -24,7 +24,7 @@ slot con nombre
 </head>
 
 
-<body class="bg-[#fcfbfb]">
+<body class="bg-[#fafafa]">
     <div class="flex h-full fixed w-[100vw]">
         <div>
             <header>

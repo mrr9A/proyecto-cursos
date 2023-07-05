@@ -18,10 +18,11 @@ class HomeController extends Controller
         } else {
             $data = User::progresoEmpleados();
         }
+         // Obtener los enlaces de paginación manualmente
         $allPuestos = Puesto::count();
         $allEmpleados = User::where("estado", "=", 1)->count();
         $allSucursales = Sucursal::where("estado", "=", 1)->count();
 
-        return view('cursosplanta.home', compact('data', 'allPuestos', 'allEmpleados', 'allSucursales'));
+        return view('cursosplanta.home', compact('data','allPuestos', 'allEmpleados', 'allSucursales'));
     }
 }

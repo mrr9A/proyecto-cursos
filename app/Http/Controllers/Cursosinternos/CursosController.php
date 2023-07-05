@@ -27,6 +27,7 @@ class CursosController extends Controller
                 ->orWhere('codigo', 'like', $buscar . "%")
                 ->orWhere('fecha_inicio', 'like', $buscar . "%");
         })
+            ->where('interno_planta', '=', 1)
             ->orWhereHas('categoria', function ($query) use ($buscar) {
                 $query->where('nombre', 'like', $buscar . "%");
             })

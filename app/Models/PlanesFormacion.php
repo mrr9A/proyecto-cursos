@@ -53,6 +53,7 @@ class PlanesFormacion extends Model
                 DB::raw("CONCAT(nombre, ' ', IFNULL(segundo_nombre, ''), ' ', apellido_paterno, ' ', IFNULL(apellido_materno, '')) AS empleado"),
                 'usuarios.*'
             )
+            ->orderBy('puesto_id', 'asc')
             ->distinct()
             ->paginate(10)->appends(request()->query());
 
