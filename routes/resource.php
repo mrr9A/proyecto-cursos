@@ -62,4 +62,12 @@ Route::middleware('auth.admin')->group(function () {
 Route::middleware('auth')->group(function () {
     // Rutas protegidas para el rol de empleado
     Route::get('inicioEmpleado', [empleadoController::class, 'index'])->name('inicioEmpleado');
+
+    Route::get('verContenido/{id}', [empleadoController::class, 'ver'])->name('verContenido');
+
+    Route::resource('cursosEmpleados', \App\Http\Controllers\empleados\empleadoController::class);
+
+    Route::get('verExamenempleado/{id}', [empleadoController::class, 'verExM'])->name('verExamenempleado');
+
+    Route::post('validarExamenempleado/{id}', [empleadoController::class, 'validarExam'])->name('validarExamenempleado');
 });

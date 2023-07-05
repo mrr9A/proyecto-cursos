@@ -473,6 +473,24 @@
     )
 </script>
 @endif
+@if (session('error') == 'No se puede eliminar el registro porque está asociado a otro campo11')
+<script>
+    Swal.fire(
+        'LO SIENTO!',
+        'No puedes eliminar a este usuario porque el usuario ya esta realizando el curso',
+        'warning'
+    )
+</script>
+@endif
+@if (session('error') == 'No se puede eliminar el registro porque está asociado a otro campo1')
+<script>
+    Swal.fire(
+        'LO SIENTO!',
+        'No puedes eliminar este examén porque un usuario ya lo realizo',
+        'warning'
+    )
+</script>
+@endif
 @if (session('error') == 'No se puede eliminar el registro porque está asociado a otro campo.')
 <script>
     Swal.fire(
