@@ -29,8 +29,8 @@
 
 
         <div class="mt-4">
-            <div class="flex items-center justify-between  relative my-2 self-end">
-                <div>
+            <div class="flex items-center justify-end  relative my-2 self-end">
+                {{-- <div>
                     <div class="flex items-center">
                         <figure class="w-6 h-6 rounded-full bg-gray-400"></figure>
                         <span>desabilitado</span>
@@ -39,7 +39,7 @@
                         <figure class="w-6 h-6 rounded-full bg-gray-400"></figure>
                         <span>asignados</span>
                     </div>
-                </div>
+                </div> --}}
                 <div class="flex">
                     <div class="relative w-full">
                         <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">

@@ -17,7 +17,7 @@
                     <x-input-text text="Nombre" nombre="curso_1[nombre]" placeholder="nombre" required
                         classLabel="text-base" mensaje="nombre" />
                     <x-input-text text="codigo" nombre="curso_1[codigo]" placeholder="codigo " classLabel="text-base"
-                        mensaje="codigo" />
+                        mensaje="codigo" id="codigo" />
                     <x-input-text type="date" text="Fecha inicio" nombre="curso_1[fecha_inicio]"
                         placeholder="fecha_inicio " classLabel="text-base" mensaje="fecha_inicio" />
                     <x-input-text type="date" text="Fecha Termino" nombre="curso_1[fecha_termino]"
@@ -68,7 +68,7 @@
                 <button class="btnEliminarCurso text-red-500" data-curso-id="${cursoId}"><i class="bx bx-x-circle"></i></button>
             </div>
             <x-input-text text="Nombre" nombre="${cursoId}[nombre]" placeholder="nombre" required classLabel="text-base" mensaje="nombre"/>
-            <x-input-text text="codigo" nombre="${cursoId}[codigo]" placeholder="codigo " classLabel="text-base" mensaje="codigo"/>
+            <x-input-text text="codigo" nombre="${cursoId}[codigo]" placeholder="codigo " classLabel="text-base" mensaje="codigo" id="codigo"/>
             <x-input-text type="date" text="Fecha inicio" nombre="${cursoId}[fecha_inicio]" placeholder="fecha_inicio " classLabel="text-base" mensaje="fecha_inicio" />
             <x-input-text type="date" text="Fecha Termino" nombre="${cursoId}[fecha_termino]" placeholder="fecha_termino" classLabel="text-base" mensaje="fecha_termino" />
 

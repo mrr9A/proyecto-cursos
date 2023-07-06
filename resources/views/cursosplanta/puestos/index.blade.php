@@ -1,5 +1,10 @@
 <x-app title="puestos">
 
+    <a href="{{ route('puestos.cursos') }}"
+                class="absolute right-4 top-16 border-b-2 border-2 rounded-md  focus:outline-none  font-medium text-sm px-5 py-1.5 text-center bg-blue-600 text-white hover:bg-blue-900 hover:text-gray-200 hover:rounded-t-md">
+                Asignar cursos
+    </a>
+
     <form method="POST" id="crear_puesto" action="{{ route('puestos.store') }}" class="flex flex-wrap flex-col gap-4 mt-4">
         @csrf
 
@@ -63,7 +68,7 @@
         <div id="trabajos" class="flex flex-wrap gap-3 items-center">
         </div>
 
-        <x-input-submit text="aceptar" class="w-32" />
+        <x-input-submit text="Aceptar" class="w-32" />
     </form>
 
     {{-- Lista de los puestos --}}

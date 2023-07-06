@@ -1,25 +1,11 @@
 <x-app title="Cursos">
-    <div class="-mt-2 mb-2">
-        <p>Opciones</p>
-        <div class=" flex items-center gap-2">
-            <a href="{{ route('cursos.create') }}"
-                class="border-b-2 border-2 rounded-md  focus:outline-none  font-medium text-sm px-2 py-1.5  hover:bg-blue-900 hover:text-gray-200 hover:rounded-t-md'">
-                Crear cursos
-            </a>
-            <a href="{{ route('cursos.puestos') }}"
-                class="border-b-2 border-2 rounded-md  focus:outline-none  font-medium text-sm px-5 py-1.5 text-center hover:bg-blue-900 hover:text-gray-200 hover:rounded-t-md">
-                Asignar cursos
-            </a>
-        </div>
-    </div>
     <div>
         <div class="contain-modalidad-tipo-curso flex flex-wrap gap-6 justify-between">
             <div>
                 <div class="flex gap-2 items-center">
                     <p class="font-bold">modalidades</p>
                     <x-modal title="Crear modalidad" textButton="" id="crear_modalidad"
-                        vistaContenidoModal="cursosplanta.modalidad.create"
-                        class="text-blue-800 hover:text-blue-700 " />
+                        vistaContenidoModal="cursosplanta.modalidad.create" class="text-blue-800 hover:text-blue-700 " />
                 </div>
                 <div class="flex flex-wrap gap-2">
                     @foreach ($modalidad as $modalidad)
@@ -42,7 +28,13 @@
         </div>
 
         <div class="mt-4">
-            <h2 class="text-subtitle font-semi-bold">Lista de cursos</h2>
+            <div class="flex gap-2 items-center">
+                <h2 class="text-subtitle font-semi-bold">Lista de cursos</h2>
+                <a href="{{ route('cursos.create') }}"
+                    class=" rounded-md  focus:outline-none text-base  text-blue-600 hover:rounded-t-md underline font-bold hover:text-blue-800">
+                    Crear cursos
+                </a>
+            </div>
             <div class="flex justify-between items-center mb-3 -mt-3">
                 <span class="text-gray-700 text-sm">puede buscar cursos por tipo, nombre, codigo, modalidad</span>
                 <x-search.search-input placeholder="nombre, codigo, tipo ..." route="cursos.index" />
@@ -147,7 +139,8 @@
                 const updateForm = $('#update_curso')
                 updateForm.addEventListener('submit', (e) => {
                     e.preventDefault()
-                    const formData = new FormData(updateForm); // Crea un objeto FormData con los datos del formulario
+                    const formData = new FormData(
+                    updateForm); // Crea un objeto FormData con los datos del formulario
 
                     // valores de los campos del formulario
                     const nombre = formData.get('nombre');

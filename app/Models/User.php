@@ -253,8 +253,9 @@ class User extends Authenticatable
         ];
     }
 
-    public static function getUsuariosWithCurses()
+    public static function getUsuariosWithCurses($sucursal_id, $puesto_id)
     {
+        DB::statement("SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));");
         $usuarios = DB::table('usuarios')
             ->select(
                 'usuarios.id_usuario',
@@ -264,7 +265,7 @@ class User extends Authenticatable
                 'usuarios.id_sumtotal',
                 'puestos.puesto',
                 'trabajos_sumtotal.nombre as trabajo',
-                'cursos.nombre as curso', 
+                'cursos.nombre as curso',
                 'calificaciones.valor'
             )
             ->join('sucursales_usuarios', 'sucursales_usuarios.usuario_id', '=', 'usuarios.id_usuario')
@@ -275,10 +276,17 @@ class User extends Authenticatable
             ->join('trabajos_cursos', 'trabajos_cursos.trabajo_id', '=', 'trabajos_sumtotal.id_trabajo')
             ->join('cursos', 'cursos.id_curso', '=', 'trabajos_cursos.curso_id')
             ->leftJoin('calificaciones', 'calificaciones.usuario_id', '=', 'usuarios.id_usuario')
+            ->when($sucursal_id, function ($query, $sucursal_id) {
+                return $query->where('id_sucursal', $sucursal_id);
+            })
+            ->when($puesto_id, function ($query, $puesto_id) {
+                return $query->where('id_puesto', $puesto_id);
+            })
+            ->groupBy('curso', 'empleado')
+            ->orderBy('id_puesto', 'asc')
             ->orderBy('id_usuario', 'asc')
             ->get();
 
-        // dd($usuarios);
         return $usuarios;
     }
 }
