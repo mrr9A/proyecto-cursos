@@ -100,7 +100,7 @@ class User extends Authenticatable
 
     public function examen()
     {
-        return $this->belongsToMany(Examen::class, 'intentos','usuario_id','examen_id')->withPivot('limite_intentos','numero_intento','calificacion');
+        return $this->belongsToMany(Examen::class, 'intentos', 'usuario_id', 'examen_id')->withPivot('limite_intentos', 'numero_intento', 'calificacion');
     }
 
     // FUNCIONES
@@ -186,75 +186,91 @@ class User extends Authenticatable
 
     public static function progresoEmpleados($buscar = "")
     {
-        DB::statement("SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));");
-        // $resultado = DB::table('usuarios')
-        $resultado = User::with('calificaciones')
-            ->select(
-                'usuarios.id_usuario',
-                'usuarios.id_sgp',
-                'usuarios.id_sumtotal',
-                DB::raw('SUM(calificaciones.valor) AS total_calificaciones'),
-                DB::raw('COUNT(DISTINCT c.nombre) AS total_cursos'),
-                // DB::raw('COUNT(calificaciones.valor) AS cursos_pasados'),
-                DB::raw('CONCAT(usuarios.nombre, " ", IFNULL(usuarios.segundo_nombre, ""), " ", usuarios.apellido_paterno, " ", IFNULL(usuarios.apellido_materno, "")) AS empleados'),
-                'puestos.puesto',
-                'tipo_cursos.nombre AS tipo'
-            )
-            ->join('puestos', 'usuarios.puesto_id', '=', 'puestos.id_puesto')
-            ->join('usuarios_trabajos as ut', 'usuarios.id_usuario', '=', 'ut.usuario_id')
-            ->join('trabajos_sumtotal as ts', "ts.id_trabajo", "=", "ut.trabajo_id")
-            ->leftJoin('trabajos_cursos as tc', "tc.trabajo_id", "=", "ut.trabajo_id")
-            ->leftJoin('cursos as c', function ($join) {
-                $join->on('tc.curso_id', '=', 'c.id_curso')
-                    ->on('c.tipo_curso_id', '!=', DB::raw("'complementarios'"));
-            })
-            ->leftJoin('tipo_cursos', 'c.tipo_curso_id', '=', 'tipo_cursos.id_tipo_curso')
-            ->leftJoin('calificaciones', function ($join) {
-                $join->on('c.id_curso', '=', 'calificaciones.curso_id')
-                    ->on('usuarios.id_usuario', '=', 'calificaciones.usuario_id');
-            })
-            ->groupBy('id_usuario', 'puestos.puesto')
+        $usuarios = User::with([
+            'puestos',
+            'trabajos.cursos.tipo',
+            'calificaciones'
+        ])
+            ->leftJoin('puestos', 'usuarios.puesto_id', '=', 'puestos.id_puesto')
             ->where(function ($q) use ($buscar) {
                 $q->where('usuarios.nombre', 'like', $buscar . "%")
                     ->orWhere(DB::raw('CONCAT(usuarios.nombre, " ", IFNULL(usuarios.segundo_nombre, ""), " ", usuarios.apellido_paterno, " ", IFNULL(usuarios.apellido_materno, ""))'), 'like', $buscar . "%")
                     ->orWhere('usuarios.segundo_nombre', 'like', $buscar . "%")
                     ->orWhere('usuarios.apellido_paterno', 'like', $buscar . "%")
                     ->orWhere('usuarios.apellido_materno', 'like', $buscar . "%")
-                    ->orWhere('puestos.puesto', 'like', $buscar . "%")
                     ->orWhere('usuarios.id_sgp', 'like', $buscar . "%")
                     ->orWhere('usuarios.id_sumtotal', 'like', $buscar . "%")
+                    ->orWhere('puestos.puesto', 'like', $buscar . "%")
                     ->where("usuarios.estado", '=', 1);
             })
-            ->orderBy('puestos.puesto')
-            ->orderBy('empleados')
+            ->select(
+                'usuarios.id_usuario',
+                DB::raw("CONCAT(nombre, ' ', IFNULL(segundo_nombre, ''), ' ', apellido_paterno, ' ', IFNULL(apellido_materno, '')) AS empleado"),
+                'usuarios.*'
+            )
+            ->orderBy('puestos.puesto', 'asc')
             ->paginate(10)->appends(request()->query());
 
+        // dd($usuarios);
 
-        $map = $resultado->map(function ($usuario) {
-            // Cursos en progreso y cursos pasados
-            $cursosEnProgreso = $usuario->calificaciones->where('valor', '<', 100)->where('valor', '>', 0)->count();
-            $cursosPasados = $usuario->calificaciones->where('valor', '=', 100)->count();
+        // if ($usuarios->isEmpty()) {
+        //     // El usuario no existe, manejar el caso de error aquí
+        //     return 0;
+        // }
 
-            $porcentaje = 0;
-            if ($usuario->total_cursos != 0)
-                $porcentaje = bcdiv(($usuario->total_calificaciones / $usuario->total_cursos * 100) / 100, '1', 2);
+        $result = $usuarios->map(function ($usuario) {
+            $todosCursosTotal = 0;
+            $cursosPasadosTotal = 0;
+            $cursosProgreso = [];
+            // & indica que la variable esta siendo pasada por referencia
+            $trabajos = $usuario->trabajos->map(function ($trabajo) use ($usuario, &$todosCursosTotal, &$cursosPasadosTotal, &$cursosProgreso) {
+                $cursos = $trabajo->cursos->map(function ($curso) use ($usuario) {
+                    $calificacion = $usuario->calificaciones
+                        ->firstWhere('curso_id', $curso->id_curso);
+                    $cali = $calificacion ? $calificacion->valor : null;
+
+                    return (object) [
+                        'calificacion' => $cali,
+                        'curso' => $curso->nombre,
+                        'tipo' => $curso->tipo->nombre,
+                        'id_curso' => $curso->id_curso,
+                    ];
+                });
+
+                $todosCursos = $cursos->count();
+                $todosCursosTotal += $todosCursos;
+                $cursosPasados = $cursos->where('calificacion', '=', '100')->count();
+                $cursosEnProgreso = $cursos->where('calificacion', '<', '100')->where('calificacion', '>', 0)->pluck('calificacion')->toArray();
+                array_push($cursosProgreso, $cursosEnProgreso);
+                $cursosPasadosTotal += $cursosPasados;
+
+                return [
+                    'trabajo' => $trabajo->nombre,
+                    'cursos' => $cursos->groupBy('tipo'),
+                ];
+            });
+            // echo "<script>console.log(" . json_encode($cursosProgreso) . ")</script>";
+            $calCursosProgreso = array_reduce($cursosProgreso, function ($carry, $item) {
+                return $carry + array_sum($item);
+            }, 0);
+            $porcentaje = bcdiv(($todosCursosTotal != 0) ? (((($cursosPasadosTotal * 100) + $calCursosProgreso) * 100) / ($todosCursosTotal * 100)) : 0, '1', 2);
 
             return (object) [
                 'id_usuario' => $usuario->id_usuario,
                 "id_sgp" => $usuario->id_sgp,
                 "id_sumtotal" => $usuario->id_sumtotal,
-                'empleado' => $usuario->empleados,
-                'puesto' => $usuario->puesto,
-                'total' => $usuario->total_cursos,
-                'total_calificaciones' => $usuario->total_calificaciones,
-                'totalCursosPasados' => $cursosPasados,
-                'cursosEnProgreso' => $cursosEnProgreso,
+                'empleado' => $usuario->empleado,
+                'puesto' => $usuario->puestos->puesto,
+                'total' => $todosCursosTotal,
+                'totalCursosPasados' => $cursosPasadosTotal,
+                'cursosEnProgreso' => count($cursosProgreso[0]),
                 'promedioTotal' => $porcentaje,
             ];
         });
+
         return [
-            "data" => $map,
-            "links" => $resultado->links()
+            "data" => $result,
+            "links" => $usuarios->links()
         ];
     }
 

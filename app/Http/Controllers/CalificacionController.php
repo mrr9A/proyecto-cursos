@@ -29,7 +29,23 @@ class CalificacionController extends Controller
             array_push($calificaciones, $resultado);
         }
 
-        DB::table("calificaciones")->insertOrIgnore($calificaciones);
+
+        $ignoredData = [];
+        foreach ($calificaciones as $registro) {
+            $affected = DB::table('calificaciones')->insertOrIgnore($registro);
+            echo "<script>console.log(" . $affected . ")</script>";
+            if ($affected === 0) {
+                $ignoredData[] = $registro;
+                DB::table('calificaciones')
+                    ->where('usuario_id', $registro['usuario_id'])
+                    ->where('curso_id', $registro['curso_id'])
+                    ->update([
+                        'valor' => $registro['valor'],
+                    ]);
+            }
+        }
+
+        // DB::table("calificaciones")->insertOrIgnore($calificaciones);
         return redirect()->back()->with('success', 'usuarios calificados correctamente');
     }
 
@@ -49,6 +65,7 @@ class CalificacionController extends Controller
         $ignoredData = [];
         foreach ($data as $registro) {
             $affected = DB::table('calificaciones')->insertOrIgnore($registro);
+            echo "<script>console.log(" . $affected . ")</script>";
             if ($affected === 0) {
                 $ignoredData[] = $registro;
                 DB::table('calificaciones')
