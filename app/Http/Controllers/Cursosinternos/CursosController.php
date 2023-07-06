@@ -37,6 +37,7 @@ class CursosController extends Controller
         $categrias = Categoria::all();
         return view('Cursosinternos.cursos.catalago', compact('cursos', 'autores', 'categrias'));
     }
+    
     public function show(Request $request, string $id)
     {
         $curso = Curso::find($id);

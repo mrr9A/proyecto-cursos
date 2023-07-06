@@ -25,71 +25,71 @@ class empleadoController extends Controller
     public $intentoHecho = 1;
 
 
-    public function index()
+    public function index(Request $request)
     {
         $calificacionesCursos = [];
-
+        $buscar = $request->buscador1;
+        $estadoSeleccionado = $request->estado ?? "Todos";
+        $cursosFiltrados = [];
         foreach (Auth::user()->cursos as $curso) {
-            $calificacionTotal = 0;
-            $calificacionMaxima = 0;
-            $progresoTotal = 0;
-            $progresoMaximo = 0;
+            if (stripos($curso->nombre, $buscar) !== false) {
+                $calificacionTotal = 0;
+                $calificacionMaxima = 0;
+                $progresoTotal = 0;
 
-            foreach ($curso->lecciones as $leccion) {
-                $progresoLeccion = 0;
-                $calificacionLeccion = 0;
-                $totalContenido = $leccion->contenido->count();
+                foreach ($curso->lecciones as $leccion) {
+                    $progresoLeccion = 0;
+                    $progre = 0;
+                    $calificacionLeccion = 0;
+                    $totalContenido = $leccion->contenido->count();
 
-                foreach ($leccion->contenido as $contenido) {
-                    $examen = $contenido->examen()->first(); // Retrieve the first exam
-                    foreach ($examen->usuarios as $calificacionnn) {
-                        if ($calificacionnn->pivot->usuario_id == Auth::user()->id_usuario) {
-                            $calificacion = $calificacionnn->pivot->calificacion ?? 0; // Get the "calificacion" property
-                            $calificacionLeccion += $calificacion;
+                    foreach ($leccion->contenido as $contenido) {
+                        $examen = $contenido->examen()->first(); // Retrieve the first exam
+                        foreach ($examen->usuarios as $calificacionnn) {
+                            if ($calificacionnn->pivot->usuario_id == Auth::user()->id_usuario) {
+                                $calificacion = $calificacionnn->pivot->calificacion ?? 0; // Get the "calificacion" property
+                                $calificacionLeccion += $calificacion;
+                            }
+                            if ($examen->usuarios()->where('examen_id', $contenido->examen()->first()->id_examen)->exists() and $examen->usuarios()->where('usuario_id', Auth::user()->id_usuario)->exists()) {
+                                if($calificacionnn->pivot->usuario_id == Auth::user()->id_usuario){
+                                    $progresoLeccion++;
+                                }
+                            }
                         }
                     }
-                    // $progresoLeccion++;
-                    // dd($examen->usuarios);
-                    // if ($examen) {
-                    //     $calificacion = $examen->calificacion ?? 0; // Get the "calificacion" property
-                    //     $calificacionLeccion += $calificacion;
-                    // }
 
-                    // $progresoLeccion++;
+                    $calificacionTotal += $calificacionLeccion;
+                    $calificacionMaxima += $totalContenido;
+                    $progresoTotal += $progresoLeccion;
                 }
 
-                $calificacionTotal += $calificacionLeccion;
-                $calificacionMaxima += $totalContenido;
-                // $progresoTotal += $progresoLeccion;
-                // $progresoMaximo += $totalContenido;
+                $promedioCalificacion = $calificacionMaxima > 0 ? ($calificacionTotal * 100) / ($calificacionMaxima * 100) : 0;
+                $promedioProgreso = $calificacionMaxima > 0 ? ($progresoTotal / $calificacionMaxima) * 100 : 0;
+                $numeroFormateado = number_format($promedioCalificacion, 2);
+
+                // Agreg0 ar la condición para determinar el estado del curso
+                $estado = "";
+                if ($promedioCalificacion >= 80 and $promedioProgreso == 100) {
+                    $estado = "Aprobado";
+                } elseif ($promedioProgreso < 100) {
+                    $estado = "Pendiente";
+                } elseif ($promedioCalificacion < 80) {
+                    $estado = "Reprobado";
+                }
+
+
+                $calificacionesCursos[] = [
+                    'curso' => $curso,
+                    'calificacion' => $numeroFormateado,
+                    'progreso' => $promedioProgreso,
+                    'estado' => $estado,
+                ];
+                
             }
-
-            $promedioCalificacion = $calificacionMaxima > 0 ? ($calificacionTotal *100) / ($calificacionMaxima * 100) : 0;
-            // $promedioProgreso = $progresoMaximo > 0 ? ($progresoTotal / $progresoMaximo) * 100 : 0;
-            // dd($progresoLeccion);
-
-            $calificacionesCursos[] = [
-                // 'curso' => $curso,
-                'calificacion' => $promedioCalificacion,
-                // 'progreso' => $promedioProgreso,
-            ];
-        } 
-        // dd($calificacionesCursos);       
-        // return view('vistasEmpleados.inicio', compact('calificacionesCursos'));
-
-        // // Access the course ratings and progress
-        // foreach ($calificacionesCursos as $calificacionesCurso) {
-        //     $curso = $calificacionesCurso['curso'];
-        //     $calificacion = $calificacionesCurso['calificacion'];
-        //     // $progreso = $calificacionesCurso['progreso'];
-            
-        //     // Do something with the rating and progress of each course
-        //     echo "Curso: " . $curso->nombre . "<br>";
-        //     echo "Calificación: " . $calificacion . "<br>";
-        //     // echo "Progreso: " . $progreso . "%<br><br>";
-        // }
-        return view('vistasEmpleados.inicio', compact('calificacionesCursos'));
+        }
+        return view('vistasEmpleados.inicio', compact('calificacionesCursos', 'estadoSeleccionado'));
     }
+
 
     public function show(string $id)
     {

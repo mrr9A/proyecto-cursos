@@ -227,15 +227,3 @@ i {
     border: 2px solid white;
 }
 /* ================FIN DE LAS CLASES PAPRA EL FORMULARIO */
-
-.progress-bar {
-    height: 20px;
-    background-color: #ccc;
-}
-
-.progress-bar::before {
-    content: "";
-    display: block;
-    height: 100%;
-    background-color: #012966; /* Color de la barra de progreso */
-}
