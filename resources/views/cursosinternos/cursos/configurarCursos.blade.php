@@ -27,7 +27,7 @@
                     <h5 class="text-section-subtitle font-bold tracking-tight text-gray-600">Modalidad del Curso:
                         @foreach($modalidad as $modi)
                         @if($modi->id_modalidad == $curso->modalidad_id)
-                         <span class="text-nav-hover">{{$modi->modalidad}}</span>
+                        <span class="text-nav-hover">{{$modi->modalidad}}</span>
                         @endif
                         @endforeach
                     </h5><br>
@@ -38,8 +38,8 @@
                         @endif
                         @endforeach
                     </h5><br>
-                    <h5 class="text-section-subtitle font-bold tracking-tight text-gray-600">Categoria del Curso: 
-                         <span class="text-nav-hover">{{$curso->categoria[0]->nombre}}</span>
+                    <h5 class="text-section-subtitle font-bold tracking-tight text-gray-600">Categoria del Curso:
+                        <span class="text-nav-hover">{{$curso->categoria[0]->nombre}}</span>
                     </h5>
                 </div>
             </div>
@@ -128,7 +128,7 @@
                                         </button>
                                     </form>
                                     <a href="{{route('ediConte',[$conteni])}}" class="text-secondary">
-                                        <span >
+                                        <span>
                                             <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="25" height="25" viewBox="0 0 50 50">
                                                 <path d="M40.561,11.987c0.586,0.586,0.586,1.536,0,2.121L15.488,39.181l-5.292,1.77c-0.709,0.237-1.384-0.438-1.147-1.147	l1.77-5.292L35.892,9.439c0.586-0.586,1.536-0.586,2.121,0L40.561,11.987z M33.274,13.294L11.583,34.985l-1.058,3.164l1.325,1.325	l3.165-1.058l21.691-21.691L33.274,13.294z"></path>
                                             </svg>
@@ -210,17 +210,17 @@
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item d-flex align-items-center py-3">
                             <div class="text-secondary items-center flex icon-uxs">
-                                <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M14.3164 4.20996C13.985 4.37028 13.8464 4.76904 14.0067 5.10026C14.4447 6.00505 14.6667 6.98031 14.6667 8C14.6667 11.6759 11.6759 14.6667 8 14.6667C4.32406 14.6667 1.33333 11.6759 1.33333 8C1.33333 4.32406 4.32406 1.33333 8 1.33333C9.52328 1.33333 10.9543 1.83073 12.1387 2.77165C12.4259 3.00098 12.846 2.95296 13.0754 2.66471C13.3047 2.37663 13.2567 1.95703 12.9683 1.72803C11.5661 0.613607 9.8016 0 8 0C3.58903 0 0 3.58903 0 8C0 12.411 3.58903 16 8 16C12.411 16 16 12.411 16 8C16 6.77767 15.7331 5.60628 15.2067 4.51969C15.0467 4.18766 14.6466 4.04932 14.3164 4.20996Z" fill="currentColor"></path>
-                                    <path d="M7.99967 2.66663C7.63167 2.66663 7.33301 2.96529 7.33301 3.33329V7.99996C7.33301 8.36796 7.63167 8.66663 7.99967 8.66663H11.333C11.701 8.66663 11.9997 8.36796 11.9997 7.99996C11.9997 7.63196 11.701 7.33329 11.333 7.33329H8.66634V3.33329C8.66634 2.96529 8.36768 2.66663 7.99967 2.66663Z" fill="currentColor"></path>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 48 48">
+                                    <g fill="currentColor">
+                                        <path d="M15 32a1 1 0 1 0 0 2h18a1 1 0 1 0 0-2H15Zm-1 5a1 1 0 0 1 1-1h12a1 1 0 1 1 0 2H15a1 1 0 0 1-1-1Z" />
+                                        <path fill-rule="evenodd" d="M20.923 15.615a1 1 0 0 0-1.846 0l-3.742 8.98a1.036 1.036 0 0 0-.017.042l-1.241 2.978a1 1 0 0 0 1.846.77L16.917 26h6.166l.994 2.385a1 1 0 0 0 1.846-.77l-1.241-2.978a1.036 1.036 0 0 0-.017-.042l-3.742-8.98ZM20 18.6l2.25 5.4h-4.5L20 18.6Z" clip-rule="evenodd" />
+                                        <path d="M30 21a1 1 0 0 1 1 1v2h2a1 1 0 1 1 0 2h-2v2a1 1 0 1 1-2 0v-2h-2a1 1 0 1 1 0-2h2v-2a1 1 0 0 1 1-1Z" />
+                                        <path fill-rule="evenodd" d="M38 15L28 4H14a4 4 0 0 0-4 4v32a4 4 0 0 0 4 4h20a4 4 0 0 0 4-4V15Zm-11 0a1 1 0 0 0 1 1h8v24a2 2 0 0 1-2 2H14a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h13v9Zm7.388-1L29 8.073V14h5.388Z" clip-rule="evenodd" />
+                                    </g>
                                 </svg>
-                                <h6 class="mb-0 ml-3 mr-2 font-bold tracking-tight text-gray-900">Duración: </h6>
+                                <h6 class="mb-0 ml-3 mr-2 font-bold tracking-tight text-gray-900">Calificación minima: </h6>
                                 <span>
-                                    @foreach($tipo as $tip)
-                                    @if($tip->id_tipo_curso == $curso->tipo_curso_id)
-                                    {{$tip->duracion}}
-                                    @endif
-                                    @endforeach
+                                    80%
                                 </span>
                             </div>
                         </li>
@@ -231,7 +231,7 @@
                                     <path d="M15.7262 1.94825C13.4059 0.396725 10.401 0.315126 8.00002 1.73839C5.59897 0.315126 2.59406 0.396725 0.273859 1.94825C0.102729 2.06241 -3.54271e-05 2.25456 6.30651e-07 2.46027V14.6553C-0.000323889 14.8826 0.124616 15.0914 0.324917 15.1987C0.525109 15.3058 0.768066 15.294 0.9569 15.168C2.98471 13.8111 5.63063 13.8111 7.65844 15.168C7.66645 15.1735 7.67568 15.1747 7.68368 15.1796C7.69169 15.1846 7.7003 15.1932 7.70953 15.1987C7.73102 15.2079 7.75302 15.2159 7.77538 15.2227C7.79773 15.2329 7.82077 15.2415 7.84428 15.2486C7.87828 15.2564 7.91286 15.2616 7.94766 15.264C7.96551 15.264 7.98213 15.2714 7.99998 15.2714C8.00492 15.2714 8.00982 15.2714 8.01538 15.2714C8.03604 15.2699 8.05655 15.2672 8.07693 15.2634C8.10808 15.2602 8.13895 15.2547 8.16923 15.2467C8.19018 15.2399 8.21074 15.2319 8.23078 15.2227C8.24986 15.2147 8.27016 15.2104 8.28862 15.2006C8.29724 15.1956 8.30402 15.1883 8.31264 15.1827C8.32125 15.1772 8.3311 15.1753 8.33971 15.1698C10.3675 13.8129 13.0134 13.8129 15.0413 15.1698C15.3233 15.3595 15.7057 15.2846 15.8953 15.0026C15.9643 14.9 16.0008 14.779 16 14.6554V2.46027C16 2.25456 15.8973 2.06241 15.7262 1.94825ZM7.38462 13.6036C5.43516 12.6896 3.18022 12.6896 1.23076 13.6036V2.79993C3.12732 1.67313 5.48806 1.67313 7.38462 2.79993V13.6036ZM14.7692 13.6036C12.8198 12.6896 10.5648 12.6896 8.61538 13.6036V2.79993C10.5119 1.67313 12.8727 1.67313 14.7692 2.79993V13.6036Z" fill="currentColor"></path>
                                 </svg>
                                 <h6 class="mb-0 ml-3 mr-2 font-bold tracking-tight text-gray-900">Lecciones: </h6>
-                                <span> 32 Lecciones</span>
+                                <span> {{$curso->lecciones->count()}}</span>
                             </div>
                         </li>
                         <li class="list-group-item d-flex align-items-center py-3">
