@@ -121,7 +121,6 @@ class PuestoController extends Controller
         return to_route("puestos.index")->with("error", "el puesto esta relacionado con usuarios o con cursos, no se puede eliminar");
     }
 
-
     public function asignarCursos(Request $request)
     {
         $planesFormacion = PlanesFormacion::all();

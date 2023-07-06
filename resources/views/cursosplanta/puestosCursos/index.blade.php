@@ -167,6 +167,7 @@
                     return res.json()
                 })
                 .then(data => {
+                    console.log(data)
                     let cursos = ''
                     data.forEach(curso => {
                         cursos += `<label class="cursor-pointer block  h-auto rounded-lg  border-fuchsia-400 mb-4 overflow-hidden bg-gray-50">
