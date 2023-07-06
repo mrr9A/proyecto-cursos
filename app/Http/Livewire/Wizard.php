@@ -17,7 +17,9 @@ class Wizard extends Component
     use WithFileUploads;
 
     public $currentStep = 1;
-    public $codigo, $nombre, $fecha_inicio, $fecha_termino, $cursO_id, $estado = 1, $categoria_id, $modalidad_id, $tipo_curso_id, $interno_planta = 1, $imagen;
+    public $codigo, $nombre, $fecha_inicio, $fecha_termino, $cursO_id,
+        $estado = 1, $categoria_id, $modalidad_id, $tipo_curso_id,
+        $interno_planta = 1, $imagen;
     public $successMessage = '';
 
     public function render()
@@ -150,5 +152,4 @@ class Wizard extends Component
         // $this->interno_planta = '';
         $this->estado = '';
     }
-
 }

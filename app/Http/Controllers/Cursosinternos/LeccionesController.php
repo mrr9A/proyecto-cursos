@@ -30,6 +30,7 @@ class LeccionesController extends Controller
     {
         return view('Cursosinternos.lecciones.agregar', compact('id'));
     }
+    
     public function edit(string $id)
     {
         $leccion = Leccion::find($id);

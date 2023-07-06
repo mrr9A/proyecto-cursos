@@ -18,7 +18,7 @@
             style="max-width:1000px">
             <div class="md:flex w-1/2">
                 <img class="object-contain rounded-2xl"
-                    src="https://i.pinimg.com/originals/0d/22/f9/0d22f9825f75a63666d1979e6824e44a.png" />
+                    src="./img/loginimage-min.png" />
             </div>
             <div class="h-full w-1/2 py-10 px-5  bg-gray-100 md:px-10">
                 <div class="text-center mb-10">
