@@ -12,6 +12,10 @@ class LoginController extends Controller
 {
     public function showLoginForm()
     {
+        /**
+         * retorna ala vista del login para
+         * que el usuario se autentique
+         */
         return view('auth.login');
     }
 
@@ -44,7 +48,6 @@ class LoginController extends Controller
                 'email' => 'El usuario no está activo.',
             ]);
         }
-
 
         if (auth()->user()->role == 0) {
             // retornar a vista administrador

@@ -70,4 +70,10 @@ Route::middleware('auth')->group(function () {
     Route::get('verExamenempleado/{id}', [empleadoController::class, 'verExM'])->name('verExamenempleado');
 
     Route::post('validarExamenempleado/{id}', [empleadoController::class, 'validarExam'])->name('validarExamenempleado');
+
+    Route::get('pdfcerti/{usuario}', [
+        App\Http\Controllers\empleados\PDFCertificadoController::class,
+        'pdfcertificado'
+    ])->name('descargarCertificado');
+
 });
