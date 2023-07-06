@@ -7,6 +7,7 @@ use App\Models\Curso;
 use App\Models\PlanesFormacion;
 use App\Models\Puesto;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class PlanFormacionController extends Controller
@@ -23,18 +24,10 @@ class PlanFormacionController extends Controller
 
     public function store(SavePlanFormacionRequest $request)
     {
-
         $trabajo_id = $request->trabajo_id;
-        $cursosYaCalificados = DB::table('calificaciones')->whereIn('usuario_id', function ($query) use ($trabajo_id) {
-            $query->select('usuarios.id_usuario')
-                ->from('usuarios')
-                ->join('usuarios_trabajos', 'usuarios_trabajos.usuario_id', '=', 'usuarios.id_usuario')
-                ->where('usuarios_trabajos.trabajo_id', $trabajo_id);
-        })->pluck('curso_id');
 
 
         $cursos = $request->cursos;
-        // $resultArray = array_diff($cursos, $cursosYaCalificados);
 
         $data = array();
         foreach ($cursos as $curso) {
@@ -44,12 +37,33 @@ class PlanFormacionController extends Controller
             ];
             array_push($data, $consulta);
         }
-
-        
-
-        DB::table('trabajos_cursos')->where('trabajo_id', $trabajo_id)->whereIn('curso_id', $cursosYaCalificados)->delete();
-
         DB::table("trabajos_cursos")->insertOrIgnore($data);
         return redirect()->back()->with('success', 'cursos agregados correctamente');
+    }
+
+
+
+    public function destroy(Request $request, $id)
+    {
+        $request->validate(['cursos' => 'required']);
+        $cursos = $request->cursos; // esto es un arreglo de ids de cursos
+
+        // Verificar si existen calificaciones para los cursos seleccionados
+        $calificacionesExistentes = DB::table('calificaciones')
+            ->whereIn('curso_id', $cursos)
+            ->exists();
+
+        if ($calificacionesExistentes) {
+            // Hay coincidencias en la tabla calificaciones, no se pueden eliminar los cursos
+            return redirect()->back()->with('error', 'No se pueden eliminar los cursos con calificaciones asociadas');
+        }
+
+        // No hay coincidencias en la tabla calificaciones, se pueden eliminar los cursos
+        DB::table('trabajos_cursos')
+            ->where('trabajo_id', $id)
+            ->whereIn('curso_id', $cursos)
+            ->delete();
+
+        return redirect()->back()->with('success', 'cursos eliminados correctamente');
     }
 }

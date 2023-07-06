@@ -1,6 +1,7 @@
 <x-app title="puestos">
 
-    <a href="{{ route('puestos.cursos') }}"
+    {{-- <a href="{{ route('puestos.cursos') }}" --}}
+    <a href="{{ route('planes.index') }}"
                 class="absolute right-4 text-base top-16 border-b-2 border-2 rounded-md  focus:outline-none font-medium px-5 py-1.5 text-center bg-blue-600 text-white hover:bg-blue-900 hover:text-gray-200 hover:rounded-t-md">
                 Asignar cursos
     </a>
