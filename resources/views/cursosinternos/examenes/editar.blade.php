@@ -19,7 +19,7 @@
                 </div>
                 <br>
                 <h3 for="preguntas" class="font-semi-bold">Preguntas:</h3><br>
-                <div class="grid col-11 " id="preguntas" name="preguntas">
+                <div class="grid col-11 " id="preguntasS" name="preguntas">
                     @foreach($examen[0]->preguntas as $pregunta)
                     <div class="pregunta">
                         <label for="pregunta1" class="block mb-2  font-bold text-red-600 dark:text-white">Pregunta: <span class="text-red-500">*</span></label>
@@ -36,13 +36,9 @@
                         <div class="grid col-4">
                             <label for="respuesta1" class="block mb-2 font-bold text-gray-900 dark:text-white">Respuesta correcta: <span class="text-red-500">*</span></label>
                             <select name="preguntas[{{ $pregunta->id_pregunta }}][respuesta]" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                <!-- @foreach($pregunta->opciones as $opcion)
-                                <option value="{{$opcion->id_opciones}}" {{{$opcion->correcta == 1 ? "selected" : "" }}}>opcion</option>
-                                @endforeach -->
-                                <option value="{{$pregunta->opciones[0]->id_opciones}}">opcion 1</option>
-                                <option value="{{$pregunta->opciones[1]->id_opciones}}">opcion 2</option>
-                                <option value="{{$pregunta->opciones[2]->id_opciones}}">opcion 3</option>
-                                <option value="{{$pregunta->opciones[3]->id_opciones}}">opcion 4</option>
+                                @foreach($pregunta->opciones as $opcion)
+                                <option value="{{$opcion->id_opciones}}" {{{$opcion->correcta == 1 ? "selected" : "" }}}>{{$opcion->opcion}}</option>
+                                @endforeach
                             </select>
                         </div>
                         <br>
@@ -52,7 +48,7 @@
             </div>
         </div>
         <div class="items-start mx-5">
-            <!-- <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" id="agregarPregunta">
+            <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" id="agregarPregunta">
                 <span>
                     <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 48 48">
                         <mask id="ipSAddOne0">
@@ -65,7 +61,7 @@
                     </svg>
                 </span>
                 <span>Agregar Pregunta</span>
-            </button> -->
+            </button>
             <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
                 <span>
                     <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 48 48">
@@ -85,3 +81,41 @@
     </form>
 
 </x-app>
+
+
+<script>
+    // JavaScript para agregar preguntas dinámicamente
+    let contadorPreguntas = 2; // Inicializar contador
+
+    document.getElementById('agregarPregunta').addEventListener('click', function() {
+        let preguntasDiv = document.getElementById('preguntasS');
+
+        let nuevaPregunta = document.createElement('div');
+        nuevaPregunta.classList.add('pregunta');
+        nuevaPregunta.innerHTML = `
+            <label class=" block mb-2  font-bold text-gray-900 dark:text-white" for="pregunta${contadorPreguntas}">Pregunta ${contadorPreguntas}: <span class="text-red-500">*</span></label>
+            <input class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="text" name="arreglo[pregunta${contadorPreguntas}][]" id="pregunta${contadorPreguntas}" required>
+            <br>
+            <label class="block mb-2  font-bold text-gray-900 dark:text-white" for="opciones${contadorPreguntas}">Opciones: <span class="text-red-500">*</span></label>
+            <div class="grid gap-6 mb-6 md:grid-cols-2">
+            <input class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="text" name="arreglo[pregunta${contadorPreguntas}][opciones][]" placeholder="Opción 1 *" required>
+            <input class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="text" name="arreglo[pregunta${contadorPreguntas}][opciones][]" placeholder="Opción 2 *" required>
+            <input class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="text" name="arreglo[pregunta${contadorPreguntas}][opciones][]" placeholder="Opción 3 *" required>
+            <input class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="text" name="arreglo[pregunta${contadorPreguntas}][opciones][]" placeholder="Opción 4 *" required>
+            </div>
+            <div class="grid col-4">
+            <label class="block mb-2 font-bold text-gray-900 dark:text-white" for="respuesta">Respuesta correcta: <span class="text-red-500">*</span></label>
+            <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="arreglo[pregunta${contadorPreguntas}][respuesta]" required>
+                <option value="0">Opción 1</option>
+                <option value="1">Opción 2</option>
+                <option value="2">Opción 3</option>
+                <option value="3">Opción 4</option>
+            </select>
+            </div>
+            <br/>
+        `;
+
+        preguntasDiv.appendChild(nuevaPregunta);
+        contadorPreguntas++;
+    });
+</script>

@@ -1,30 +1,33 @@
 <x-app>
-    <div class="items-center">
-        <div class="max-w-xs bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-            <a href="#">
-                <img class="rounded-t-lg w-96" src="https://agustinosleon.com/wp-content/uploads/2021/12/000-publicacion-calificaciones-primera-evaluacion.jpg" alt="" />
-            </a>
-            <div class="p-5">
-                <a href="#">
-                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">TU CALIFICACIÓN OBTENIDA ES DE: </h5>
-                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{$promedio}} %</h5>
-                </a>
-                @if($promedio >= 80 & $promedio < 89)
-                <p class="mb-3 font-bold text-nav-hover">Felicidades Aprobo el Examen con un buen promedio</p>
-                @elseif($promedio == 90 & $promedio < 100)
-                <p class="mb-3 font-bold text-completed dark:text-gray-400">Felicidades Aprobo el Examen tuvo una Calificación destacado</p>
-                @elseif($promedio == 100)
-                <p class="mb-3 font-bold text-nav-hover dark:text-gray-400">Muchas Felicidades Aprobo el Examen su Calificación es exelente</p>
-                @elseif($promedio < 79)
-                <p class="mb-3 font-bold text-red-700 dark:text-gray-400">Lo siento no Aprobo el Examen la Calificacion Minima es de 80</p>
-                @endif
-                <a href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                    Volver a Intentarlo
-                    <svg aria-hidden="true" class="w-4 h-4 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-                    </svg>
-                </a>
+    <div class="min-w-screen h-full min-h-screen   px-5 py-5 flex justify-center shadow-all">
+        <!-- <div class=" text-gray-500 rounded-2xl shadow-xl w-full h-5/6 overflow-hidden flex items-center m-auto  " style="max-width:1000px">
+            <div class="md:flex w-1/2">
+                <img class="object-contain rounded-2xl" src="https://www.imacinglestotal.com/wp-content/uploads/certificaciones.png" />
+            </div> -->
+            <div class="h-4/5 w-1/2 py-10 px-5  bg-gray-100 md:px-10">
+                <div class="text-center mb-10">
+                    <h1 class="font-bold text-3xl text-title text-gray-900">TU CALIFICACIÓN OBTENIDA ES DE: </h1><br>
+                    <p class="mb-2 text-title font-bold tracking-tight text-gray-900 dark:text-white">{{$promedio}} %</p>
+                </div><br>
+                <div>
+                    <div class="flex -mx-3">
+                        <div class="w-full px-3 mb-5">
+                            <!-- <label for="" class="text-xs font-bold px-1">Correo Electronico:</label> -->
+                            @if($promedio >= 80 & $promedio < 89) <p class="mb-3 font-bold  text-subtitle text-nav-hover">Felicidades Aprobo el Examen con un buen promedio</p>
+                            @elseif($promedio == 90 & $promedio < 100) <p class="mb-3  text-subtitle font-bold text-completed dark:text-gray-400">Felicidades Aprobo el Examen tuvo una Calificación destacado</p>
+                            @elseif($promedio == 100)
+                            <p class="mb-3 font-bold text-nav-hover dark:text-gray-400">Muchas Felicidades Aprobo el Examen su Calificación es exelente</p>
+                            @elseif($promedio < 79) <p class="mb-3 mx-2 font-bold text-subtitle text-red-700 dark:text-gray-400">Lo siento no Aprobo el Examen la Calificacion Minima es de 80</p>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="flex mx-3">
+                        <div class="w-full px-3 mb-5">
+                            <button  class="block w-full max-w-xs mx-auto bg-input hover:bg-input-buscador focus:bg-input-buscador text-white rounded-lg px-3 py-3 font-bold">Volver a intentarlo</button>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
+        <!-- </div> -->
     </div>
 </x-app>

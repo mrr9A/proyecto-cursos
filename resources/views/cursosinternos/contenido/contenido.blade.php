@@ -21,13 +21,13 @@
                         <input hidden type="text" rows="3" name="leccion_id" value="{{$id}}" >
                         <div class="grid col-4">
                             <label for="nombre" class="font-bold">Nombre del Contenido <span class="text-red-500">*</span></label>
-                            <input type="text" rows="3" name="nombre" class="bg-gray-50 border border-gray-300 text-gray-900  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="fecha_inicio" >
+                            <input type="text" value="{{ old('nombre') }}" rows="3" name="nombre" class="bg-gray-50 border border-gray-300 text-gray-900  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="nombre" >
                             @error('nombre') <span class="error text-incompleted">{{ $message }}</span> @enderror
                         </div>
                         <br>
                         <div class="grid col-11">
                             <label for="descripcion" class="font-bold">Descripcion del Contenido <span class="text-red-500">*</span></label>
-                            <textarea type="text" rows="8" name="descripcion" class="bg-gray-50 border border-gray-300 text-gray-900  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="fecha_inicio" ></textarea>
+                            <textarea type="text" rows="8" name="descripcion" class="bg-gray-50 border border-gray-300 text-gray-900  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="descripcion" >{{ old('descripcion') }}</textarea>
                             @error('descripcion') <span class="error text-incompleted">{{ $message }}</span> @enderror
                         </div>
                         <br>

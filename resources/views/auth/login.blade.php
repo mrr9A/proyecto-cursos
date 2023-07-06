@@ -22,7 +22,8 @@
             </div>
             <div class="h-full w-1/2 py-10 px-5  bg-gray-100 md:px-10">
                 <div class="text-center mb-10">
-                    <h1 class="font-bold text-3xl text-title text-gray-900">Iniciar Sesion</h1><br>
+                    <h1 class="font-bold text-3xl text-title text-gray-900">Iniciar Sesion</h1>
+                    <h1 class="font-bold text-3xl text-section-subtitle text-gray-600">LMS BOON</h1><br>
                     <p>Porfavor Ingresa tus credenciales para iniciar sesión</p>
                 </div>
                 <x-messages.login-messages />

@@ -23,6 +23,13 @@ class Examen extends Model
 
     public function contenido()
     {
-        return $this->belongsTo(Contenido::class, 'id_contenido');
+        return $this->belongsTo(Contenido::class, 'contenido_id');
     }
+
+    public function usuarios()
+    {
+        return $this->belongsToMany(User::class, 'intentos','examen_id','usuario_id')->withPivot('limite_intentos','numero_intento','calificacion');
+    }
+
+
 }
