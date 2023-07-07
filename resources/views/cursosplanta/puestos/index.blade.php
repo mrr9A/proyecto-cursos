@@ -265,7 +265,7 @@
 
                 let id = formCrearPuesto.elements.puesto.name
 
-                fetch(`${API_URL}cursosplanta/puesto/edit/${id}`, {
+                fetch(`${API_URL}/cursosplanta/puesto/edit/${id}`, {
                         method: "post",
                         body: formData
                     })
@@ -280,7 +280,7 @@
         // OBTIENE LA INFORMACION DEL PUESTO A EDITAR Y LOS MUESTRA EN EL FORMULARIO
         function getPuestoInfo(id) {
             loader.innerHTML = `<x-loader.loader />`
-            return fetch(`${API_URL}cursosplanta/puesto/${id}`)
+            return fetch(`${API_URL}/cursosplanta/puesto/${id}`)
                 .then(res => res.json())
                 .then(data => {
                     $('#submit_button').value = "editar";

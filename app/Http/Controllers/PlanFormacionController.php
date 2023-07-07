@@ -48,10 +48,19 @@ class PlanFormacionController extends Controller
         $request->validate(['cursos' => 'required']);
         $cursos = $request->cursos; // esto es un arreglo de ids de cursos
 
-        // Verificar si existen calificaciones para los cursos seleccionados
+        // Obtener los ids de los usuario que tiene el trabajo recivido
+        $idsUsers = DB::table('usuarios')->join('usuarios_trabajos', 'usuarios.id_usuario', '=', 'usuarios_trabajos.usuario_id')
+            ->where('trabajo_id', $id)->pluck('id_usuario');
+
+        // dd($idsUsers);
+
+
+        // Verificar si existen calificaciones para los cursos seleccionados y que son de los usuario con el trabajo correspondiente
         $calificacionesExistentes = DB::table('calificaciones')
             ->whereIn('curso_id', $cursos)
+            ->whereIn('usuario_id', $idsUsers)
             ->exists();
+
 
         if ($calificacionesExistentes) {
             // Hay coincidencias en la tabla calificaciones, no se pueden eliminar los cursos

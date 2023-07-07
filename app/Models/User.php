@@ -274,7 +274,7 @@ class User extends Authenticatable
         ];
     }
 
-    public static function getUsuariosWithCurses($sucursal_id, $puesto_id)
+    public static function getUsuariosWithCurses($sucursal_id, $puesto_id, $trabajo_id, $curso_id)
     {
         DB::statement("SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));");
         $usuarios = DB::table('usuarios')
@@ -302,6 +302,12 @@ class User extends Authenticatable
             })
             ->when($puesto_id, function ($query, $puesto_id) {
                 return $query->where('id_puesto', $puesto_id);
+            })
+            ->when($trabajo_id, function ($query, $trabajo_id) {
+                return $query->where('id_trabajo', $trabajo_id);
+            })
+            ->when($curso_id, function ($query, $curso_id) {
+                return $query->where('id_curso', $curso_id);
             })
             ->groupBy('curso', 'empleado')
             ->orderBy('id_puesto', 'asc')

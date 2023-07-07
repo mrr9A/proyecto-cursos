@@ -1,5 +1,5 @@
 <x-app title="{{ is_null($usuario ?? null) ? 'Crear Usuario' : 'Actualizar Usuario' }}">
-    <div class="container w-full ">
+    <div class="container w-full uppercase ">
         <form id="multi-step-form" method="POST"
             action="{{ !is_null($usuario ?? null) ? route('usuarios.update', $usuario->id_usuario) : route('usuarios.store') }}"
             class="min-w-[100%]  mt-6 grid grid-cols-2 gap-8">
@@ -94,11 +94,10 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Obtener el valor seleccionado del select
             let selectedValue = puestoSelecter.value;
-
-            puesto = puestoSelecter.options[selectedValue].text
+            puesto = puestoSelecter.options[puestoSelecter.selectedIndex].text
             // Verificar si el valor seleccionado no es el valor por defecto
             // esto carga el puesto y trabajos del puesto del usuario
-            if (selectedValue !== 'default') {
+            if (selectedValue !== '') {
                 getJobsByPosition(selectedValue);
             }
         });
@@ -109,7 +108,10 @@
             let selectedOption = Array.from(puestoSelecter.options).find(option => option.value === id);
             puesto = selectedOption.text;
             document.getElementById("select_puesto").setAttribute("disabled", true);
-            getJobsByPosition(id)
+            trabajosSelector.innerHTML = ""
+            if (id !== '') {
+                getJobsByPosition(id)
+            }
         })
 
         function getJobsByPosition(id) {
@@ -133,7 +135,6 @@
                         trabajosSelector.innerHTML = trabajos
                         return;
                     }
-                    console.log(data)
                     data.forEach(trabajo => {
                         trabajos +=
                             `<label

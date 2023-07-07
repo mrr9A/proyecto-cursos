@@ -48,8 +48,6 @@ class CursoController extends Controller
                 $curso = [
                     'nombre' => $cursoDatos['nombre'],
                     'codigo' => $cursoDatos['codigo'],
-                    'fecha_inicio' => $cursoDatos['fecha_inicio'],
-                    'fecha_termino' => $cursoDatos['fecha_termino'],
                     'modalidad_id' => $cursoDatos['modalidad_id'],
                     'tipo_curso_id' => $cursoDatos['tipo_id'],
                     'estado' => 1,

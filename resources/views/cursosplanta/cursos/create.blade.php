@@ -18,10 +18,10 @@
                         classLabel="text-base" mensaje="nombre" />
                     <x-input-text text="codigo" nombre="curso_1[codigo]" placeholder="codigo " classLabel="text-base"
                         mensaje="codigo" id="codigo" />
-                    <x-input-text type="date" text="Fecha inicio" nombre="curso_1[fecha_inicio]"
+                    {{-- <x-input-text type="date" text="Fecha inicio" nombre="curso_1[fecha_inicio]"
                         placeholder="fecha_inicio " classLabel="text-base" mensaje="fecha_inicio" />
                     <x-input-text type="date" text="Fecha Termino" nombre="curso_1[fecha_termino]"
-                        placeholder="fecha_termino" classLabel="text-base" mensaje="fecha_termino" />
+                        placeholder="fecha_termino" classLabel="text-base" mensaje="fecha_termino" /> --}}
                     {{-- SELECTS --}}
                     <x-selects.input-select textLabel="Modalidades" name="curso_1[modalidad_id]"
                         textOptionDefault="selecciona la modalidad" :modalidades="$modalidades" required mensaje="modalidad_id" />
@@ -69,9 +69,6 @@
             </div>
             <x-input-text text="Nombre" nombre="${cursoId}[nombre]" placeholder="nombre" required classLabel="text-base" mensaje="nombre"/>
             <x-input-text text="codigo" nombre="${cursoId}[codigo]" placeholder="codigo " classLabel="text-base" mensaje="codigo" id="codigo"/>
-            <x-input-text type="date" text="Fecha inicio" nombre="${cursoId}[fecha_inicio]" placeholder="fecha_inicio " classLabel="text-base" mensaje="fecha_inicio" />
-            <x-input-text type="date" text="Fecha Termino" nombre="${cursoId}[fecha_termino]" placeholder="fecha_termino" classLabel="text-base" mensaje="fecha_termino" />
-
             <x-selects.input-select textLabel="Modalidades" name="${cursoId}[modalidad_id]"
                         textOptionDefault="selecciona la modalidad" :modalidades="$modalidades" required mensaje="modalidad_id" />
                     <x-selects.input-select textLabel="tipo Curso" name="${cursoId}[tipo_id]"

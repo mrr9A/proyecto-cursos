@@ -22,12 +22,16 @@ class ReporteController extends Controller
         $trabajos = Trabajo::all();
         $cursos = Curso::getAllCursos();
     
-        $sucursal_id = $request->sucursal_id;
-        $puesto_id = $request->puesto_id;
-    
+        
+        // $cursos0 = $request->filtros['curso_id'];
+        $sucursal_id = $request->filtros['sucursal_id'];
+        $puesto_id = $request->filtros['puesto_id'];
+        $trabajo_id = $request->filtros['trabajo_id'];
+        $curso_id = $request->filtros['curso_id'];
+        
         $data = [];
         if($sucursal_id || $puesto_id){
-            $data = User::getUsuariosWithCurses($sucursal_id, $puesto_id);
+            $data = User::getUsuariosWithCurses($sucursal_id, $puesto_id,$trabajo_id, $curso_id);
         }
     
         if ($request->has('export')) {
