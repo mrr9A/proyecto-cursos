@@ -23,11 +23,10 @@ class ReporteController extends Controller
         $cursos = Curso::getAllCursos();
     
         
-        // $cursos0 = $request->filtros['curso_id'];
-        $sucursal_id = $request->filtros['sucursal_id'];
-        $puesto_id = $request->filtros['puesto_id'];
-        $trabajo_id = $request->filtros['trabajo_id'];
-        $curso_id = $request->filtros['curso_id'];
+        $sucursal_id = $request->filtros['sucursal_id'] ?? 0;
+        $puesto_id = $request->filtros['puesto_id'] ?? 0;
+        $trabajo_id = $request->filtros['trabajo_id'] ?? 0;
+        $curso_id = $request->filtros['curso_id'] ?? 0;
         
         $data = [];
         if($sucursal_id || $puesto_id){

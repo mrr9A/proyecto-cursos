@@ -77,7 +77,7 @@
             </table>
         </div>
     @else
-        Sin resultados
+        <p class="text-title font-bold mt-6">Sin resultados...</p>
     @endif
     <div id="loader" />
 
