@@ -121,45 +121,47 @@
                 </div>
             @endif
             {{-- fin pagination --}}
-            <table class="min-w-full leading-normal my-2">
-                <thead class="border-b  dark:border-neutral-500 uppercase">
-                    <tr
-                        class="px-5 border-b-2 border-gray-200 bg-blue-200 text-left text-base font-semibold text-gray-600 uppercase tracking-wider">
-                        <th scope="col" class="px-6 py-2 w-1/12">ID SGP</th>
-                        <th scope="col" class="px-6 py-2">ID SUMTOTAL</th>
-                        <th scope="col" class="px-6 py-2">empleado</th>
-                        <th scope="col" class="px-6 py-2">puesto</th>
-                        <th scope="col" class="px-6 py-2">total de cursos</th>
-                        <th scope="col" class="px-6 py-2">cursos pasados</th>
-                        <th scope="col" class="px-6 py-2">cursos progreso</th>
-                        <th scope="col" class="px-6 py-2">progreso</th>
-                        <th scope="col" class="px-6 py-2">opciones</th>
-                    </tr>
-                </thead>
-                <tbody class="">
-                    @foreach ($data['data'] as $usuario)
-                        {{-- @dump($usuario) --}}
-
-                        <tr class="border-b border-gray-200 hover:bg-gray-100">
-                            <td class="whitespace-nowrap px-6 py-2 w-1/12 ">{{ $usuario->id_sgp }}</td>
-                            <td class="whitespace-nowrap px-6 py-2 w-1/12 ">{{ $usuario->id_sumtotal }}</td>
-                            <td class="py-3 px-6 text-left">{{ $usuario->empleado }}</td>
-                            <td class="py-3 px-6 text-left">{{ $usuario->puesto }}</td>
-                            <td class="py-3 px-6 text-left">{{ $usuario->total }}</td>
-                            <td class="py-3 px-6 text-left">{{ $usuario->totalCursosPasados }}</td>
-                            <td class="py-3 px-6 text-left">{{ $usuario->cursosEnProgreso }}</td>
-                            <td class="py-3 px-6 text-left">{{ $usuario->promedioTotal }}</td>
-                            <td class="py-3 px-6 text-left">
-                                <div class="w-full flex justify-end mt-2">
-                                    <a target="_blank" href="{{ route('descargarPDF', $usuario->id_usuario) }}"
-                                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-xs px-3 py-1.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Ver
-                                        reporte</a>
-                                </div>
-                            </td>
+            <div class="card-body">
+                <table class="min-w-full leading-normal my-2">
+                    <thead class="border-b  dark:border-neutral-500 uppercase">
+                        <tr
+                            class="px-5 border-b-2 border-gray-200 bg-blue-200 text-left text-base font-semibold text-gray-600 uppercase tracking-wider">
+                            <th scope="col" class="px-6 py-2 w-1/12">ID SGP</th>
+                            <th scope="col" class="px-6 py-2">ID SUMTOTAL</th>
+                            <th scope="col" class="px-6 py-2">empleado</th>
+                            <th scope="col" class="px-6 py-2">puesto</th>
+                            <th scope="col" class="px-6 py-2">total de cursos</th>
+                            <th scope="col" class="px-6 py-2">cursos pasados</th>
+                            <th scope="col" class="px-6 py-2">cursos progreso</th>
+                            <th scope="col" class="px-6 py-2">progreso</th>
+                            <th scope="col" class="px-6 py-2">opciones</th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody class="">
+                        @foreach ($data['data'] as $usuario)
+                            {{-- @dump($usuario) --}}
+
+                            <tr class="border-b border-gray-200 hover:bg-gray-100">
+                                <td class="whitespace-nowrap px-6 py-2 w-1/12 ">{{ $usuario->id_sgp }}</td>
+                                <td class="whitespace-nowrap px-6 py-2 w-1/12 ">{{ $usuario->id_sumtotal }}</td>
+                                <td class="py-3 px-6 text-left">{{ $usuario->empleado }}</td>
+                                <td class="py-3 px-6 text-left">{{ $usuario->puesto }}</td>
+                                <td class="py-3 px-6 text-left">{{ $usuario->total }}</td>
+                                <td class="py-3 px-6 text-left">{{ $usuario->totalCursosPasados }}</td>
+                                <td class="py-3 px-6 text-left">{{ $usuario->cursosEnProgreso }}</td>
+                                <td class="py-3 px-6 text-left">{{ $usuario->promedioTotal }}</td>
+                                <td class="py-3 px-6 text-left">
+                                    <div class="w-full flex justify-end mt-2">
+                                        <a target="_blank" href="{{ route('descargarPDF', $usuario->id_usuario) }}"
+                                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-xs px-3 py-1.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Ver
+                                            reporte</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
