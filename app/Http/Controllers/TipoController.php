@@ -17,6 +17,6 @@ class TipoController extends Controller
             "duracion" => $request->duracion,
         ]);
 
-        return redirect()->route("cursos.index")->with("status", "tipo de curso creado correctamente");
+        return redirect()->route("cursos.index")->with("success", "tipo de curso creado correctamente");
     }
 }

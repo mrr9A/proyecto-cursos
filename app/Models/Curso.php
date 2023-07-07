@@ -46,6 +46,16 @@ class Curso extends Model
         return $this->hasMany(Calificacion::class, "curso_id");
     }
 
+    public function lecciones()
+    {
+        return $this->hasMany(Leccion::class, 'curso_id');
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'usuarios_cursos', 'usuario_id', 'curso_id');
+    }
+
 
     public static function getAllCursos($buscar = "")
     {
@@ -75,7 +85,7 @@ class Curso extends Model
     }
 
 
-    public static function getCursesByJob($buscar,$puesto)
+    public static function getCursesByJob($buscar, $puesto)
     {
         // retorna los cursos del dependiendo el trabajo
         $cursosAsignados = DB::table("trabajos_cursos")->select(
@@ -125,18 +135,64 @@ class Curso extends Model
             ->where("c.estado", '=', 1)
             ->get();
 
-         $cursos =  array_merge($cursosAsignados->toArray(), $cursosDisponibles->toArray());
+        $cursos =  array_merge($cursosAsignados->toArray(), $cursosDisponibles->toArray());
 
         return $cursos;
     }
 
-    public function lecciones()
+    public static function getCursesAsigned($trabajo)
     {
-        return $this->hasMany(Leccion::class, 'curso_id');
-    }
+        // retorna los cursos del dependiendo el trabajo
+        $cursosAsignados = DB::table("trabajos_cursos")->select(
+            "trabajo_id",
+            "id_curso",
+            DB::raw('CONCAT(true) AS asignado'),
+            "codigo",
+            "c.nombre as nombre",
+            "tc.nombre as tipo",
+            "modalidad",
+        )
+            ->leftJoin("cursos as c", "c.id_curso", "=", "trabajos_cursos.curso_id")
+            ->join("modalidad_cursos as mc", "c.modalidad_id", "=", "mc.id_modalidad")
+            ->join("tipo_cursos as tc", "c.tipo_curso_id", "=", "tc.id_tipo_curso")
+            ->where("trabajos_cursos.trabajo_id", '=', $trabajo)
+            // ->Where(function ($q) use ($buscar) {
+            //     $q->Where('c.interno_planta', '=', 0)
+            //         ->Where('tc.nombre', 'like', $buscar . "%")
+            //         ->orWhere('mc.modalidad', 'like', $buscar . "%")
+            //         ->orWhere('c.codigo', 'like', $buscar . "%")
+            //         ->orWhere('c.nombre', 'like', $buscar . "%");
+            // })
+            ->where("c.estado", '=', 1)
+            ->orderBy("trabajo_id", "asc")
+            ->get();
 
-    public function users()
-    {
-        return $this->belongsToMany(User::class, 'usuarios_cursos', 'usuario_id', 'curso_id');
+        $idsCursosAsignado = $cursosAsignados->pluck('id_curso');
+
+        $cursosDisponibles = DB::table("cursos as c")->select(
+            "id_curso",
+            "codigo",
+            DB::raw('CONCAT(false) AS asignado'),
+            "c.nombre as nombre",
+            "tc.nombre as tipo",
+            "modalidad",
+        )
+            ->join("modalidad_cursos as mc", "c.modalidad_id", "=", "mc.id_modalidad")
+            ->join("tipo_cursos as tc", "c.tipo_curso_id", "=", "tc.id_tipo_curso")
+            ->whereNotIn("id_curso", $idsCursosAsignado)
+            // ->Where(function ($q) use ($buscar) {
+            //     $q->Where('c.interno_planta', '=', 0)
+            //         ->Where('tc.nombre', 'like', $buscar . "%")
+            //         ->orWhere('mc.modalidad', 'like', $buscar . "%")
+            //         ->orWhere('c.codigo', 'like', $buscar . "%")
+            //         ->orWhere('c.nombre', 'like', $buscar . "%");
+            // })
+            ->where("c.estado", '=', 1)
+            ->get();
+
+            return [
+                "cursosPorTrabajo" => $cursosAsignados,
+                "cursosDisponibles" => $cursosDisponibles,
+            ];
     }
 }

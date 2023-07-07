@@ -19,7 +19,7 @@
     }
 
     body {
-        margin: 20mm 20mm;
+        margin: 15mm 20mm;
     }
 
     .styled-table {
@@ -44,6 +44,7 @@
         position: relative;
         padding-top: 0px;
         height: 50px;
+        vertical-align: top;
     }
 
     .styled-table tbody tr td ul {
@@ -72,6 +73,9 @@
     .aprovado {
         color: green;
     }
+    .progreso {
+        color: purple;
+    }
 
     .title-section {
         margin: 5px 0px;
@@ -89,6 +93,9 @@
 
     .check-completado {
         background-color: green
+    }
+    .check-progreso {
+        background-color: purple
     }
     .container-check > span{
         margin-right: 10px;
@@ -135,11 +142,16 @@
                     <span class="check check-completado"></span>
                     <small>Completado</small>
                 </span>
+                <span>
+                    <span class="check check-progreso"></span>
+                    <small>En progreso</small>
+                </span>
 
             </div>
             <div>
                 @foreach ($data->trabajos as $trabajo)
                     <?php
+                    // iniciales, especialidad,..etc
                     $keys = array_keys($trabajo['cursos']->toArray());
                     ?>
                     <table class="styled-table">
@@ -158,7 +170,7 @@
                                         <ul>
                                             @foreach ($trabajo['cursos'][$key] as $cursos)
                                                 <li
-                                                    class="@if ($cursos->calificacion == '100') aprovado @else reprovado @endif">
+                                                    class="@if ($cursos->calificacion == '100') aprovado @endif @if($cursos->calificacion > '0' && $cursos->calificacion < '100') progreso @endif @if($cursos->calificacion <= '0') reprovado @endif">
                                                     {{ $cursos->curso }}</li>
                                             @endforeach
                                         </ul>

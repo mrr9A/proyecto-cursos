@@ -1,10 +1,17 @@
 <x-app title="puestos">
 
+    {{-- <a href="{{ route('puestos.cursos') }}" --}}
+    <a href="{{ route('planes.index') }}"
+                class="absolute right-4 text-base top-16 border-b-2 border-2 rounded-md  focus:outline-none font-medium px-5 py-1.5 text-center bg-blue-600 text-white hover:bg-blue-900 hover:text-gray-200 hover:rounded-t-md">
+                Asignar cursos
+    </a>
+
     <form method="POST" id="crear_puesto" action="{{ route('puestos.store') }}" class="flex flex-wrap flex-col gap-4 mt-4">
         @csrf
 
         <div class="flex gap-6 items-center">
-            <x-input-text placeholder="Ej. jefe de taller" nombre="puesto" text="Puesto" class="w-1/4" classLabel="text-base"/>
+            <x-input-text placeholder="Ej. jefe de taller" nombre="puesto" text="Puesto" class="w-1/4"
+                classLabel="text-base" />
 
             <div class="relative flex flex-col font-poppins gap-21 text-base">
                 <label class="mb-2 font-semi-bold">Seleccionar plan de informacion</label>
@@ -19,8 +26,7 @@
                 </select>
                 @error('plan_id')
                     <!-- variable mensaje disponible por laravel -->
-                    <small
-                        class="absolute -bottom-4 text-sm text-red-500 font-semibold italic">{{ $message }}</small>
+                    <small class="absolute -bottom-4 text-sm text-red-500 font-semibold italic">{{ $message }}</small>
                 @enderror
             </div>
         </div>
@@ -63,7 +69,7 @@
         <div id="trabajos" class="flex flex-wrap gap-3 items-center">
         </div>
 
-        <x-input-submit text="aceptar" class="w-32" />
+        <x-input-submit text="Aceptar" class="w-32" />
     </form>
 
     {{-- Lista de los puestos --}}
@@ -71,7 +77,6 @@
         <h2 class="text-subtitle">Lista de puestos</h2>
         <table class="min-w-full">
             <thead class="uppercase bg-blue-200 text-left">
-                <th class="px-6 py-2">id</th>
                 <th class="px-6 py-2">Plan de formacion</th>
                 <th class="px-6 py-2">puesto</th>
                 <th class="px-6 py-2">trabajos</th>
@@ -80,9 +85,6 @@
             <tbody class="uppercase">
                 @foreach ($puestos as $puesto)
                     <tr class="mb-4 border-b border-gray-200 hover:bg-gray-100">
-                        <td class="whitespace-nowrap px-6 py-1 ">
-                            <span>{{ $puesto->id_puesto }}</span>
-                        </td>
                         <td class="whitespace-nowrap px-6 py-1 ">
                             {{ $puesto->planes_formacion->tema }} {{ $puesto->planes_formacion->area }}
                         </td>
@@ -125,7 +127,9 @@
                                 <img src="/svg/delete.svg" />
                             </button>
 
-                            <x-modals.alert-modal id="puesto-{{ $puesto->id_puesto }}" route="puestos.destroy"  :parametroDeRoute="$puesto->id_puesto" title="Esta seguro de eliminar el puesto" message="El puesto {{ $puesto->puesto }} sera eliminado"/>
+                            <x-modals.alert-modal id="puesto-{{ $puesto->id_puesto }}" route="puestos.destroy"
+                                :parametroDeRoute="$puesto->id_puesto" title="Esta seguro de eliminar el puesto"
+                                message="El puesto {{ $puesto->puesto }} sera eliminado" />
 
                         </td>
                     </tr>
@@ -138,19 +142,23 @@
                 <!-- Enlace a la página anterior -->
                 @if ($puestos->onFirstPage())
                     <li class="disabled" aria-disabled="true" aria-label="@lang('pagination.previous')">
-                        <span class="px-2 py-1 rounded bg-gray-300 text-gray-600 cursor-not-allowed" aria-hidden="true">&laquo;</span>
+                        <span class="px-2 py-1 rounded bg-gray-300 text-gray-600 cursor-not-allowed"
+                            aria-hidden="true">&laquo;</span>
                     </li>
                 @else
                     <li>
-                        <a href="{{ $puestos->previousPageUrl() }}" rel="prev" class="px-2 py-1 rounded bg-blue-500 text-white hover:bg-blue-600" aria-label="@lang('pagination.previous')">&laquo;</a>
+                        <a href="{{ $puestos->previousPageUrl() }}" rel="prev"
+                            class="px-2 py-1 rounded bg-blue-500 text-white hover:bg-blue-600"
+                            aria-label="@lang('pagination.previous')">&laquo;</a>
                     </li>
                 @endif
-        
+
                 <!-- Enlaces a las páginas individuales -->
                 @foreach ($puestos->links() as $link)
                     @if ($link['url'])
                         <li>
-                            <a href="{{ $link['url'] }}" class="{{ $link['active'] ? 'px-2 py-1 rounded bg-blue-500 text-white hover:bg-blue-600' : 'px-2 py-1 rounded text-gray-600 hover:text-blue-500' }}">{{ $link['label'] }}</a>
+                            <a href="{{ $link['url'] }}"
+                                class="{{ $link['active'] ? 'px-2 py-1 rounded bg-blue-500 text-white hover:bg-blue-600' : 'px-2 py-1 rounded text-gray-600 hover:text-blue-500' }}">{{ $link['label'] }}</a>
                         </li>
                     @else
                         <li class="disabled" aria-disabled="true">
@@ -158,15 +166,18 @@
                         </li>
                     @endif
                 @endforeach
-        
+
                 <!-- Enlace a la siguiente página -->
                 @if ($puestos->hasMorePages())
                     <li>
-                        <a href="{{ $puestos->nextPageUrl() }}" rel="next" class="px-2 py-1 rounded bg-blue-500 text-white hover:bg-blue-600" aria-label="@lang('pagination.next')">&raquo;</a>
+                        <a href="{{ $puestos->nextPageUrl() }}" rel="next"
+                            class="px-2 py-1 rounded bg-blue-500 text-white hover:bg-blue-600"
+                            aria-label="@lang('pagination.next')">&raquo;</a>
                     </li>
                 @else
                     <li class="disabled" aria-disabled="true" aria-label="@lang('pagination.next')">
-                        <span class="px-2 py-1 rounded bg-gray-300 text-gray-600 cursor-not-allowed" aria-hidden="true">&raquo;</span>
+                        <span class="px-2 py-1 rounded bg-gray-300 text-gray-600 cursor-not-allowed"
+                            aria-hidden="true">&raquo;</span>
                     </li>
                 @endif
             </ul>
@@ -175,9 +186,9 @@
     </div>
 
     <div id="loader" />
+    <script src="{{ asset('js/utils/validarInputs.js') }}"></script>
     <script>
-        const API_URL = "http://localhost:8000/api/"
-
+        var id = 1
         const buttonAddTrabajo = $('#add_trabajo');
         const containerTrabajos = $('#trabajos')
         const loader = $('#loader')
@@ -185,9 +196,13 @@
         const formCrearPuesto = $('#crear_puesto'); //-> formulario
         const editButtons = $$('.edit_button')
 
-        const inputTrabajo = `
-        <x-input-text placeholder="Ej. jefe de taller" nombre="trabajo[]" text="Trabajo" />
-      `
+        const inputTrabajo = (id) => (`
+        <div class="relative">
+            <button class="btnEliminarCurso absolute right-0 top-0 z-50 text-red-500" data-curso-id="${id}"><i class="bx bx-x-circle"></i></button>
+            <x-input-text placeholder="Ej. jefe de taller" nombre="trabajo[]" text="Trabajo" />
+        </div>
+      `)
+        validarInputs()
 
         // AGREGANDO A CADA ELEMENTO DE EDITAR EL EVENTO CLICK
         editButtons.forEach(element => {
@@ -202,15 +217,28 @@
                 });
             })
         });
-
-
-
         // CREANDO EL CAMPO PARA AGREGAR UN TRABAJO
         buttonAddTrabajo.addEventListener('click', (e) => {
             e.preventDefault()
             let div = document.createElement('div')
-            div.innerHTML = inputTrabajo
+            div.setAttribute('id', id);
+            div.innerHTML = inputTrabajo(id)
             containerTrabajos.appendChild(div)
+            id++
+
+            validarInputs()
+
+            let btnEliminarCurso = div.querySelector('.btnEliminarCurso');
+            btnEliminarCurso.addEventListener('click', (event) => {
+                event.preventDefault()
+                let cursoId = event.target.parentElement.dataset.cursoId;
+                console.log(cursoId)
+                console.log(cursoId)
+                let cursoElement = document.getElementById(cursoId);
+                if (cursoElement) {
+                    cursoElement.remove();
+                }
+            });
         })
 
 
@@ -249,9 +277,6 @@
                     .catch(err => console.log(err))
             }
         })
-
-
-
         // OBTIENE LA INFORMACION DEL PUESTO A EDITAR Y LOS MUESTRA EN EL FORMULARIO
         function getPuestoInfo(id) {
             loader.innerHTML = `<x-loader.loader />`
@@ -281,7 +306,10 @@
                     $('#puesto').name = data.id_puesto
 
                     loader.innerHTML = ""
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
                 })
         }
     </script>

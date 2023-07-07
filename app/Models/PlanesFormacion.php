@@ -55,7 +55,7 @@ class PlanesFormacion extends Model
             )
             ->orderBy('puesto_id', 'asc')
             ->distinct()
-            ->paginate(10)->appends(request()->query());
+            ->paginate(6)->appends(request()->query());
 
         // $usuariosPaginados = $usuarios->paginate(10);
         // $usuariosPaginados->appends(request()->query());

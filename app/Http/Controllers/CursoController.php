@@ -65,13 +65,13 @@ class CursoController extends Controller
             // Realizar otras acciones después de guardar los cursos, si es necesario
 
             // Redirigir a una página de éxito o mostrar un mensaje de éxito, si es necesario
-            return redirect()->route("cursos.index")->with('status', 'Los cursos se han guardado correctamente.');
+            return redirect()->route("cursos.index")->with('success', 'Los cursos se han guardado correctamente.');
         } catch (\Exception $e) {
             // Revertir la transacción en caso de error
             DB::rollback();
 
             // Manejar el error de alguna manera (mostrar un mensaje de error, registrar el error, etc.)
-            return redirect()->back()->with('status', 'Ha ocurrido un error al guardar los cursos: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Ha ocurrido un error al guardar los cursos: ' . $e->getMessage());
         }
     }
     public function create()
@@ -79,5 +79,20 @@ class CursoController extends Controller
         $modalidades = ModalidadCurso::all();
         $tipos = TipoCurso::all();
         return view('cursosplanta.cursos.create', compact('modalidades', 'tipos'));
+    }
+
+    public function update(Request $request, $id){
+
+    }
+    public function destroy($id){
+
+        $coincidencia = DB::table('trabajos_cursos')->where('curso_id', '=',$id)->exists();
+
+        if($coincidencia){
+            return redirect()->back()->with('error', 'El curso ya esta enlazado a un trabajos. No se puede eliminar');
+        }
+
+        $curso = Curso::find($id)->delete();
+        return redirect()->back()->with('success', 'curso eliminado correctamente');
     }
 }

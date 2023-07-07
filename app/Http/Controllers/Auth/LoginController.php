@@ -68,9 +68,9 @@ class LoginController extends Controller
         $request->session()->regenerateToken();
 
         // // Evitar que el usuario retroceda en el historial
-        // $request->headers->set('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
-        // $request->headers->set('Pragma', 'no-cache');
-        // $request->headers->set('Expires', 'Sat, 01 Jan 2000 00:00:00 GMT');
+        $request->headers->set('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
+        $request->headers->set('Pragma', 'no-cache');
+        $request->headers->set('Expires', 'Sat, 01 Jan 2000 00:00:00 GMT');
 
         return to_route('home')
             ->with('status', 'Cerrando sesion');

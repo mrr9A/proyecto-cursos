@@ -15,6 +15,6 @@ class ModalidadController extends Controller
             "estado" => 1,
         ]);
 
-        return redirect()->route("cursos.index")->with("status", "modalidad de curso creado correctamente");
+        return redirect()->route("cursos.index")->with("success", "modalidad de curso creado correctamente");
     }
 }

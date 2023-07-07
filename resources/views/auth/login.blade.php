@@ -26,7 +26,7 @@
                     <h1 class="font-bold text-3xl text-section-subtitle text-gray-600">LMS BOON</h1><br>
                     <p>Porfavor Ingresa tus credenciales para iniciar sesión</p>
                 </div>
-                <x-messages.messages />
+                <x-messages.login-messages />
                 <form action="{{ route('login') }}" method="POST">
                     @csrf
                     <div>

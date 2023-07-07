@@ -20,7 +20,7 @@
 <div id="dropdownInformation" class="z-10 hidden text-white bg-primary divide-y divide-gray-100 rounded-lg shadow-lg w-52 dark:bg-gray-700 dark:divide-gray-600">
     <div class="mr-2 px-4 py-3 text-sm  dark:text-white">
         <h2>{{Auth()->user()->nombre}} {{Auth()->user()->segundo_nombre}} {{Auth()->user()->apellido_paterno}} {{Auth()->user()->apellido_materno}}</h2>
-        <p class="font-medium truncate">{{Auth()->user()->email}}</p>
+        <p style="" class="first-letter font-medium truncate">{{Auth()->user()->email}}</p>
     </div>
     <div class="py-2 w-full">
         <form action="{{ route('logout') }}" method="POST" class="min-w-full">

@@ -109,7 +109,7 @@ class ReportExport implements FromArray, WithHeadings, WithDefaultStyles, WithBa
     $columnCells = $sheet->getColumnIterator('A');
 
     foreach ($columnCells as $cell) {
-      $cellValue = $cell->getCalculatedValue(); // Obtiene el valor de la celda
+      // $cellValue = $cell->getCalculatedValue(); // Obtiene el valor de la celda
 
       // Aplica tu condición y formato condicional aquí
       // if ($cellValue > 10) {

@@ -16,12 +16,12 @@
                     <h2 class="col-span-2 py-1 px-2 bg-blue-200">Curso 1</h2>
                     <x-input-text text="Nombre" nombre="curso_1[nombre]" placeholder="nombre" required
                         classLabel="text-base" mensaje="nombre" />
-                    <x-input-text text="codigo" nombre="curso_1[codigo]" placeholder="codigo "
-                        classLabel="text-base" mensaje="codigo"/>
+                    <x-input-text text="codigo" nombre="curso_1[codigo]" placeholder="codigo " classLabel="text-base"
+                        mensaje="codigo" id="codigo" />
                     <x-input-text type="date" text="Fecha inicio" nombre="curso_1[fecha_inicio]"
-                        placeholder="fecha_inicio " classLabel="text-base" mensaje="fecha_inicio"/>
+                        placeholder="fecha_inicio " classLabel="text-base" mensaje="fecha_inicio" />
                     <x-input-text type="date" text="Fecha Termino" nombre="curso_1[fecha_termino]"
-                        placeholder="fecha_termino" classLabel="text-base" mensaje="fecha_termino"/>
+                        placeholder="fecha_termino" classLabel="text-base" mensaje="fecha_termino" />
                     {{-- SELECTS --}}
                     <x-selects.input-select textLabel="Modalidades" name="curso_1[modalidad_id]"
                         textOptionDefault="selecciona la modalidad" :modalidades="$modalidades" required mensaje="modalidad_id" />
@@ -36,10 +36,14 @@
             </div>
         </form>
     </div>
+    <script src="{{ asset('js/utils/validarInputs.js') }}"></script>
     <script>
+        validarInputs();
+        // validarInputs
         const containerCursos = $('#container_cursos')
         const btnAddCurso = $("#add_curso")
         const formCursos = $("#form_cursos")
+
 
         let cursoCounter = 1; // Inicializamos el contador en 1
 
@@ -64,7 +68,7 @@
                 <button class="btnEliminarCurso text-red-500" data-curso-id="${cursoId}"><i class="bx bx-x-circle"></i></button>
             </div>
             <x-input-text text="Nombre" nombre="${cursoId}[nombre]" placeholder="nombre" required classLabel="text-base" mensaje="nombre"/>
-            <x-input-text text="codigo" nombre="${cursoId}[codigo]" placeholder="codigo " classLabel="text-base" mensaje="codigo"/>
+            <x-input-text text="codigo" nombre="${cursoId}[codigo]" placeholder="codigo " classLabel="text-base" mensaje="codigo" id="codigo"/>
             <x-input-text type="date" text="Fecha inicio" nombre="${cursoId}[fecha_inicio]" placeholder="fecha_inicio " classLabel="text-base" mensaje="fecha_inicio" />
             <x-input-text type="date" text="Fecha Termino" nombre="${cursoId}[fecha_termino]" placeholder="fecha_termino" classLabel="text-base" mensaje="fecha_termino" />
 
@@ -76,6 +80,7 @@
 
             // Agregar el div al documento
             containerCursos.appendChild(divCurso);
+            validarInputs();
 
 
             let btnEliminarCurso = divCurso.querySelector('.btnEliminarCurso');
@@ -88,4 +93,5 @@
             });
         });
     </script>
+
 </x-app>
