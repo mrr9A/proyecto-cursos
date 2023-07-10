@@ -13,7 +13,7 @@
 
     @error($mensaje ?? $nombre)
         <!-- variable mensaje disponible por laravel -->
-        <small class="absolute -bottom-4 text-sm text-red-500 font-semibold italic">{{ $message }}</small>
+        <small class="absolute -bottom-8 text-sm text-red-500 font-semibold italic">{{ $message }}</small>
     @enderror
 </div>
 

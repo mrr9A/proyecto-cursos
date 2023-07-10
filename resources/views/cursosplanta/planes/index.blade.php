@@ -122,11 +122,13 @@
 
 
         puestoSelect.addEventListener('change', (event) => {
+            puestoSelect.options[0].setAttribute("disabled", true)
             let puesto_id = event.target.value
             getJobsByPosition(puesto_id);
         })
 
         trabajosSelector.addEventListener('change', (event) => {
+            trabajosSelector.options[0].setAttribute("disabled", true)
             trabajo_id = event.target.value
             let actionUrl = deleteForm.getAttribute("action").replace(":id", trabajo_id);
             deleteForm.setAttribute("action", actionUrl);
@@ -235,6 +237,15 @@
                 })
                 .then(data => {
                     console.log(data)
+                    if (data.length < 1){
+                        console.log('dasdasdasdasds')
+                        cursos.innerHTML = '<p class="text-white font-title font-semi-bold">no se encontraron coincidencias</p>'
+                        loader.innerHTML = ""
+                        return;
+                    }
+
+                    console.log('error')
+
                     let cursosCheck = ''
                     data.forEach(curso => {
                         cursosCheck += `<label class="cursor-pointer block  h-auto rounded-lg  border-fuchsia-400 mb-4 overflow-hidden bg-gray-50">
@@ -249,11 +260,6 @@
                                  </label>`
                     })
                     cursos.innerHTML = cursosCheck
-
-
-                    if (data.length < 1)
-                        cursos = '<p class="text-white font-title font-semi-bold">no se encontraron coincidencias</p>'
-
                     loader.innerHTML = ""
                 })
                 .catch(err => console.error(err))

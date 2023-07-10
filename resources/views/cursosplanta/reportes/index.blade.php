@@ -5,11 +5,11 @@
         <div class=" flex gap-4 flex-wrap items-end">
             <div>
                 <x-selects.input-select textLabel="sucursales" name="filtros[sucursal_id]"
-                    textOptionDefault="selecciona una sucursal" :sucursales="$sucursales" />
+                    textOptionDefault="sucursales" :sucursales="$sucursales" />
             </div>
             <div>
                 <x-selects.input-select textLabel="puestos" name="filtros[puesto_id]"
-                    textOptionDefault="selecciona un puesto" :puestos="$puestos" id="puesto_id" />
+                    textOptionDefault="selecciona un puesto" :puestos="$puestos" id="puesto_id" disabled />
             </div>
 
             <div>
@@ -85,6 +85,18 @@
         const puestoSelect = $("#puesto_id")
         const trabajoSelect = $("#trabajo_id")
         const cursoSelect = $("#curso_id")
+        
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Obtener el valor seleccionado del select
+            let selectedValue = puestoSelect.value;
+            console.log(puestoSelect.value)
+            // Verificar si el valor seleccionado no es el valor por defecto
+            // esto carga el puesto y trabajos del puesto del usuario
+            if (selectedValue !== '') {
+                getJobsByPosition(selectedValue);
+            }
+        });
 
         puestoSelect.addEventListener('change', (e) => {
             let id = e.target.value;
@@ -94,6 +106,7 @@
         trabajoSelect.addEventListener('change', (e) => {
             let id = e.target.value;
             getCursos(id)
+            trabajoSelect.options[0].setAttribute('disabled', true)
         })
 
         function getJobsByPosition(id) {
@@ -130,6 +143,7 @@
 
                     cursoSelect.innerHTML = cursos;
                     loader.innerHTML = ""
+                    cursoSelect.options[0].setAttribute('disabled', true)
                 })
                 .catch(err => console.log(err));
         }

@@ -10,5 +10,7 @@ class ModalidadCurso extends Model
     use HasFactory;
     protected $table = "modalidad_cursos";
     protected $fillable = ["modalidad", "estado"];
+    protected $primaryKey = "id_modalidad";
     public $timestamps = false;
+    
 }

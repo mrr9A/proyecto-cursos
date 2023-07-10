@@ -13,13 +13,15 @@ class PDFController extends Controller
     {
         // $data = Puesto::progresoEmpleados();
         $data = PlanesFormacion::getMatrizByUser($user);
-        // return view('pdfs.prueba', compact('data'));
-        if(!$data){
+        if (!$data) {
             return redirect()->back();
         }
-        $data=$data[0];
+        $data = $data[0];
+        // return view('pdfs.prueba', compact('data'));
+        
         $pdf = PDF::loadView('pdfs.prueba', ['data' => $data]);
         $pdf->setOptions(['defaultFont' => 'poppins']);
+        $pdf->setPaper('A4', 'landscape');// cambiar la horientacion de la hoja
 
         // Carga la hoja de estilos CSS para la fuente Poppins
         $css = '@font-face {
@@ -30,6 +32,6 @@ class PDFController extends Controller
         $pdf->loadHTML('<style>' . $css . '</style>' . view('pdfs.prueba', ['data' => $data])->render());
 
         // Devuelve una respuesta PDF en lugar de descargarlo
-        return $pdf->stream($data->nombre.".pdf");
+        return $pdf->stream($data->nombre . ".pdf");
     }
 }

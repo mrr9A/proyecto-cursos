@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CalificacionController;
+use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\CursoController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MatrizController;
@@ -14,6 +15,7 @@ use App\Http\Controllers\SucursalesController;
 use App\Http\Controllers\TipoController;
 use App\Http\Controllers\TrabajoController;
 use App\Http\Controllers\UsuarioController;
+use App\Models\Categoria;
 use App\Models\ModalidadCurso;
 use App\Models\TipoCurso;
 use Illuminate\Support\Facades\Route;
@@ -47,7 +49,8 @@ Route::middleware('auth.admin')->group(function () {
     Route::get('/cursos', function (){
         $modalidad = ModalidadCurso::all();
         $tipos = TipoCurso::all();
-        return view('cursos.index', compact('modalidad', 'tipos'));
+        $categorias = Categoria::all();
+        return view('cursos.index', compact('modalidad', 'tipos', 'categorias'));
     })->name('cursos.home');
     Route::delete('/cursosplanta/cursos/puestos/trabajos/{id}', [TrabajoController::class, 'destroy'])->name("trabajos.destroy");
     
@@ -58,12 +61,12 @@ Route::middleware('auth.admin')->group(function () {
     Route::resource("cursosplanta/cursos/modalidad", ModalidadController::class, ["names" => "modalidad"]);
     Route::resource("cursosplanta/cursos/tipos", TipoController::class, ["names" => "tipos"]);
     Route::resource("cursosplanta/cursos", CursoController::class, ["names" => "cursos"]);
-    Route::resource("cursosplanta/planes", PlanFormacionController::class, ["names" => "planes"]);
     Route::resource("cursosplanta/calificaciones", CalificacionController::class, ["names" => "calificaciones"]);
     Route::resource("cursosplanta/cursos", CursoController::class, ["names" => "cursos"]);
     Route::resource("cursosplanta/planes", PlanFormacionController::class, ["names" => "planes"]);
     Route::resource("cursosplanta/calificaciones", CalificacionController::class, ["names" => "calificaciones"]);
     Route::resource("cursosplanta/reportes", ReporteController::class, ["names" => "reportes"]);
+    Route::resource('categorias', CategoriaController::class, ["names" => "categorias"]);
 
     
     Route::fallback(function () {
