@@ -91,7 +91,7 @@
     }
 
     .check-progreso {
-        background-color: purple
+        background-color: orange
     }
 
     .container-check>span {

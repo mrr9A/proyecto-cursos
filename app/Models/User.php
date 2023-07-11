@@ -235,6 +235,7 @@ class User extends Authenticatable
 
                     return (object) [
                         'calificacion' => $cali,
+                        'estado' => $calificacion->estado ?? 2,
                         'curso' => $curso->nombre,
                         'tipo' => $curso->tipo->nombre,
                         'id_curso' => $curso->id_curso,
@@ -243,7 +244,7 @@ class User extends Authenticatable
 
                 $todosCursos = $cursos->count();
                 $todosCursosTotal += $todosCursos;
-                $cursosPasados = $cursos->where('calificacion', '=', '100')->count();
+                $cursosPasados = $cursos->where('calificacion', '=', '100')->where('estado', '=', 1)->count();
                 $cursosEnProgreso = $cursos->where('calificacion', '<', '100')->where('calificacion', '>', 0)->pluck('calificacion')->toArray();
                 array_push($cursosProgreso, $cursosEnProgreso);
                 $cursosPasadosTotal += $cursosPasados;
