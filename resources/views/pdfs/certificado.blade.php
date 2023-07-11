@@ -59,7 +59,7 @@
             <img src="">
             <h1 class="title">CERTIFICADO</h1>
         </div>
-
+        <p class="text-center"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Volkswagen_logo_2019.svg/320px-Volkswagen_logo_2019.svg.png" width="200px" height="200px"></p>
         <div class="content">
             <p>La empresa Automotriz Bonn S.A DE C.V certifica que:</p>
             @foreach($calificacionesCursos as $calificacionesCurso)
