@@ -17,7 +17,6 @@ class ContenidoController extends Controller
 
     public function store(SaveContenidoRequest $request)
     {
-
         //Este apartado es para crear un contenido
         $contenido = new Contenido();
         $contenido->nombre = $request->post('nombre');

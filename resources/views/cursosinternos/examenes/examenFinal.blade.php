@@ -1,4 +1,4 @@
-<x-app>
+<x-app title="Examen Final">
     <form action="{{route('examenFinal')}}" method="POST" class="card col-11 mx-6">
         @csrf
         <div class="col-11">

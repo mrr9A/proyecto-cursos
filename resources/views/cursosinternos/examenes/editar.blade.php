@@ -1,11 +1,11 @@
-<x-app>
+<x-app title="Editar Examen">
     <form action="{{url('examenes',[$examen])}}" method="POST" class="card col-11 mx-6">
         @csrf
         @method("PUT")
         <div class="col-11">
             <div class="col-11 mx-6">
                 <br>
-                <h3 class="font-semi-bold">Información General del Contenido</h3>
+                <h3 class="font-semi-bold">Información General del Examen</h3>
                 <br>
                 <input hidden type="text" rows="3" name="contenido_id" value="{{$id}}" required>
                 <input hidden type="text" rows="3" name="id_examen" value="{{$examen[0]->id_examen}}" required>

@@ -1,4 +1,4 @@
-<x-app>
+<x-app title="Editar Examen">
     <form action="{{route('examenactualizado',$examen[0]->id_examen)}}" method="POST" class="card col-11 mx-6">
         @csrf
         @method("PUT")

@@ -1,4 +1,4 @@
-<x-app>
+<x-app title="Examen">
     <div class="flex">
         <div class="w-full p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
             <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white mx-12 text-title">Nombre del Examén: <span class="text-input-buscador">{{$examen[0]->nombre}}</span></h5>

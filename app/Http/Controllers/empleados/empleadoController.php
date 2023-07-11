@@ -58,7 +58,6 @@ class empleadoController extends Controller
                                 }
                             }
                         }
-
                         foreach ($examCurso->usuarios as $caliCu) {
                             if ($caliCu->pivot->usuario_id == Auth::user()->id_usuario) {
                                 $calificacion2 = $caliCu->pivot->calificacion ?? 0; // Get the "calificacion" property
