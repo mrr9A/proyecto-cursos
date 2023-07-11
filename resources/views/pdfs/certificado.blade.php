@@ -53,7 +53,7 @@
     </style>
 </head>
 
-<body>
+<body class="bg-primary-light">
     <div class="container">
         <div class="header">
             <img src="">

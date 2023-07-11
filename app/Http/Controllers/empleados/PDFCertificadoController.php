@@ -61,7 +61,7 @@ class PDFCertificadoController extends Controller
             $progresoTotal += $progresoLeccion;
 
             $progresototalexamen = $progresoLeccion2;
-            $examenCalifinal += $calificacionLeccion2;
+            $examenCalifinal = $calificacionLeccion2;
         }
         
         $promedioCalificacion = $calificacionMaxima > 0 ? ($calificacionTotal * 100) / ($calificacionMaxima * 100) : 0;
