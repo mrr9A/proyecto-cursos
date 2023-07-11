@@ -101,27 +101,13 @@
             <a href="{{ route('cursos.index') }}"
                 class="flex flex-col justify-center w-[400px] p-4  mt-4 bg-primary rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700 hover:bg-primary-light">
                 <h5 class="mb-4 text-title font-medium text-white dark:text-gray-400">Cursos planta</h5>
-                <div class="text-gray-200 ">
-                    <h6 class="text-3xl font-semibold">description</h6>
-                    <p class="text-sm italic font-normal text-gray-300 dark:text-gray-400">
-                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eaque itaque molestiae voluptate
-                        consectetur amet veritatis quia facilis repellat, repudiandae omnis quod numquam ipsum modi
-                        sequi necessitatibus facere, quidem voluptatibus ea?
-                    </p>
-                </div>
+                
             </a>
 
             <a href="{{ route('curs.index') }}"
                 class="flex flex-col justify-center w-[400px] p-4  mt-4 bg-primary rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700 hover:bg-primary-light">
                 <h5 class="mb-4 text-title font-medium text-white dark:text-gray-400">Cursos internos</h5>
-                <div class="text-gray-200 ">
-                    <h6 class="text-3xl font-semibold">description</h6>
-                    <p class="text-sm italic font-normal text-gray-300 dark:text-gray-400">
-                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eaque itaque molestiae voluptate
-                        consectetur amet veritatis quia facilis repellat, repudiandae omnis quod numquam ipsum modi
-                        sequi necessitatibus facere, quidem voluptatibus ea?
-                    </p>
-                </div>
+                
             </a>
         </div>
     </div>

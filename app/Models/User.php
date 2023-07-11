@@ -280,14 +280,15 @@ class User extends Authenticatable
         $usuarios = DB::table('usuarios')
             ->select(
                 'usuarios.id_usuario',
-                'sucursales.nombre as sucursal',
-                DB::raw("CONCAT(usuarios.nombre, ' ', IFNULL(segundo_nombre, ''), ' ', apellido_paterno, ' ', IFNULL(apellido_materno, '')) AS empleado"),
                 'usuarios.id_sgp',
                 'usuarios.id_sumtotal',
+                'sucursales.nombre as sucursal',
+                DB::raw("CONCAT(usuarios.nombre, ' ', IFNULL(segundo_nombre, ''), ' ', apellido_paterno, ' ', IFNULL(apellido_materno, '')) AS empleado"),
                 'puestos.puesto',
                 'trabajos_sumtotal.nombre as trabajo',
                 'cursos.nombre as curso',
-                'calificaciones.valor'
+                'calificaciones.valor',
+                'calificaciones.estado'
             )
             ->join('sucursales_usuarios', 'sucursales_usuarios.usuario_id', '=', 'usuarios.id_usuario')
             ->join('sucursales', 'sucursales.id_sucursal', '=', 'sucursales_usuarios.sucursal_id')
@@ -296,7 +297,11 @@ class User extends Authenticatable
             ->join('trabajos_sumtotal', 'trabajos_sumtotal.id_trabajo', '=', 'usuarios_trabajos.trabajo_id')
             ->join('trabajos_cursos', 'trabajos_cursos.trabajo_id', '=', 'trabajos_sumtotal.id_trabajo')
             ->join('cursos', 'cursos.id_curso', '=', 'trabajos_cursos.curso_id')
-            ->leftJoin('calificaciones', 'calificaciones.usuario_id', '=', 'usuarios.id_usuario')
+            // ->leftJoin('calificaciones', 'calificaciones.usuario_id', '=', 'usuarios.id_usuario')
+            ->leftJoin('calificaciones', function ($join) {
+                $join->on('calificaciones.usuario_id', '=', 'usuarios.id_usuario')
+                    ->on('calificaciones.curso_id' ,'=','cursos.id_curso');
+            })
             ->when($sucursal_id, function ($query, $sucursal_id) {
                 return $query->where('id_sucursal', $sucursal_id);
             })

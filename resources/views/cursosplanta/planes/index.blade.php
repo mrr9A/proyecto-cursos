@@ -4,7 +4,7 @@
             class="border-2 border-blue-200 rounded-md bg-blue-100 mt-2 p-2 w-1/2">
             @csrf
             <div class="flex  gap-3 mb-2 ">
-                <div class="flex flex-col justify-start">
+                <div class="flex flex-col justify-start relative">
                     <label>Puesto</label>
                     <select name="puesto_id" id="puestos"
                         class="py-2 text-sm leading-tight uppercase rounded-md border-input border-2  ">
@@ -22,7 +22,7 @@
                     @enderror
                 </div>
 
-                <div class="flex flex-col justify-start">
+                <div class="flex flex-col justify-start relative">
                     <label>Trabajos</label>
                     <select name="trabajo_id" id="trabajos"
                         class="py-2 text-sm leading-tight uppercase rounded-md border-input border-2 ">
@@ -91,9 +91,10 @@
                     <h2 class="font-bold text-subtitle">Cursos asignados</h2>
                     <x-input-submit text="Eliminar" />
                 </div>
-                <p>cursos asignados. seleccione los cursos a eliminar en del trabajo</p>
+                <p class="text-sm">para eliminar los cursos del trabajo seleccione los cursos y click en eliminar</p>
                 <div id="cursos-por-puesto"
                     class="bg-primary grid grid-cols-[repeat(auto-fit,minmax(180px,1fr))] p-2 gap-y-0 gap-x-2  rounded-md">
+                    <p class="text-white text-subtitle font-semi-bold">Aun no ha seleccionado un trabajo<span class="block text-base">para ver los cursos asignados seleccione un trabajo</span></p>
                 </div>
             </form>
         </div>
@@ -113,6 +114,7 @@
         let trabajo_id = 0 // variable para saber si ya se seleccion un trabajo
 
         document.addEventListener('DOMContentLoaded', function() {
+            puestoSelect.options[0].setAttribute("disabled", true)
             // Obtener el valor seleccionado del select
             let selectedValue = puestoSelect.value;
             if (selectedValue !== '') {

@@ -155,8 +155,8 @@
                     </td>
                     <td class="bg-primary text-white text-center hover:bg-blue-800 font-semi-bold">
                         <a href="{{ route('matrices.show', $empleado->id_usuario) }}"
-                            class="inline-block  detail">
-                            <i class='bx bx-show-alt @if (count($empleado->trabajos[$empleado->puesto][0]['cursos']) > 0) w-full detail @endif bx-rotate-90'></i>
+                            class="inline-block  detail @if (count($empleado->trabajos[$empleado->puesto][0]['cursos']) > 0) h-auto @endif ">
+                            <i class='bx bx-show-alt @if (count($empleado->trabajos[$empleado->puesto][0]['cursos']) > 0) detail @endif bx-rotate-90'></i>
                             @if (count($empleado->trabajos[$empleado->puesto][0]['cursos']) > 0)
                                 detalle
                             @endif

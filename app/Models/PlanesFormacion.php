@@ -72,7 +72,8 @@ class PlanesFormacion extends Model
                         'id_curso' => $curso->id_curso,
                         'nombre_curso' => $curso->nombre,
                         'tipo' => $curso->tipo->nombre,
-                        'calificacion' => $cali
+                        'calificacion' => $cali,
+                        'estado' => $calificacion->estado ?? 2
                     ];
                 });
 
@@ -210,6 +211,7 @@ class PlanesFormacion extends Model
 
                     return (object) [
                         'calificacion' => $cali,
+                        'estado' => $calificacion->estado ?? 2,
                         'curso' => $curso->nombre,
                         'tipo' => $curso->tipo->nombre,
                         'id_curso' => $curso->id_curso,

@@ -51,12 +51,15 @@ class CalificacionController extends Controller
 
     public function update(Request $request, $id)
     {
+        $estados = $request->estado;
         $data = [];
         foreach ($request->cursos as $curso => $value) {
+
             $consulta = [
                 "usuario_id" => $id,
                 "curso_id" => $curso,
-                "valor" => $value
+                "valor" => $value,
+                "estado" => $estados[$curso]
             ];
             array_push($data, $consulta);
         }
@@ -73,6 +76,7 @@ class CalificacionController extends Controller
                     ->where('curso_id', $registro['curso_id'])
                     ->update([
                         'valor' => $registro['valor'],
+                        'estado' => $registro['estado'],
                     ]);
             }
         }

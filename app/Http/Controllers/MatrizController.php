@@ -25,6 +25,11 @@ class MatrizController extends Controller
             return redirect()->back();
         }
         $data=$data[0];
-        return view('cursosplanta.matrices.show', compact('data'));
+        $opciones = [
+            0 => 'reprovado',
+            1 => 'aprovado',
+            2 => 'progreso',
+        ];
+        return view('cursosplanta.matrices.show', compact('data', 'opciones'));
     }
 }

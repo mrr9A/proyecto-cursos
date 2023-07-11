@@ -4,11 +4,11 @@
         @method('GET')
         <div class=" flex gap-4 flex-wrap items-end">
             <div>
-                <x-selects.input-select textLabel="sucursales" name="filtros[sucursal_id]"
+                <x-selects.input-select textLabel="sucursales" name="filtros[sucursal_id]" class="text-sm"
                     textOptionDefault="sucursales" :sucursales="$sucursales" />
             </div>
             <div>
-                <x-selects.input-select textLabel="puestos" name="filtros[puesto_id]"
+                <x-selects.input-select textLabel="puestos" name="filtros[puesto_id]" class="text-sm"
                     textOptionDefault="selecciona un puesto" :puestos="$puestos" id="puesto_id" disabled />
             </div>
 
@@ -16,7 +16,7 @@
                 <label for="trabajo_id"
                     class="block mb-2 font-semi-bold font-poppins text-gray-600 dark:text-white text-base">trabajos</label>
                 <select id="trabajo_id" name="filtros[trabajo_id]"
-                    class="bg-gray-50 border-[2px] border-input text-gray-900  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-2 py-1 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
+                    class="bg-gray-50 border-[2px] border-input text-gray-900  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-2 py-1 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white text-sm">
                     <option value="">selecciona un trabajo</option>
                 </select>
             </div>
@@ -25,7 +25,7 @@
                 <label for="curso_id"
                     class="block mb-2 font-semi-bold font-poppins text-gray-600 dark:text-white text-base">Cursos</label>
                 <select id="curso_id" name="filtros[curso_id]"
-                    class="bg-gray-50 border-[2px] border-input text-gray-900  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-2 py-1 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
+                    class="bg-gray-50 border-[2px] border-input text-gray-900  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-2 py-1 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white text-sm">
                     <option value="">Selecciona un curso</option>
                 </select>
             </div>
@@ -58,6 +58,7 @@
                         <th scope="col" class="px-6 py-2">TRABAJO</th>
                         <th scope="col" class="px-6 py-2">CURSO</th>
                         <th scope="col" class="px-6 py-2">PROGRESO</th>
+                        <th scope="col" class="px-6 py-2">ESTADO</th>
                     </tr>
                 </thead>
                 <tbody class="">
@@ -70,7 +71,19 @@
                             <td class="py-3 px-6 text-left">{{ $usuario->puesto }}</td>
                             <td class="py-3 px-6 text-left">{{ $usuario->trabajo }}</td>
                             <td class="py-3 px-6 text-left">{{ $usuario->curso }}</td>
-                            <td class="py-3 px-6 text-left">{{ $usuario->valor }}</td>
+                            <td class="py-3 px-6 text-left">{{ $usuario->valor ?? 0 }}</td>
+                            <td class="py-3 px-6 text-left">
+                                @if($usuario->valor == 0 && $usuario->estado == 1) En progreso @endif
+                                @if ($usuario->estado == 2 || $usuario->estado === null)
+                                    En progreso
+                                @endif
+                                @if ($usuario->estado === 0)
+                                    Reprovado
+                                @endif
+                                @if ($usuario->estado == 1 && $usuario->valor == 100)
+                                    Aprovado
+                                @endif
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -85,7 +98,7 @@
         const puestoSelect = $("#puesto_id")
         const trabajoSelect = $("#trabajo_id")
         const cursoSelect = $("#curso_id")
-        
+
 
         document.addEventListener('DOMContentLoaded', function() {
             // Obtener el valor seleccionado del select
