@@ -97,6 +97,10 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Curso::class, "usuarios_cursos", 'usuario_id', 'curso_id');
     }
+    public function usercursos()
+    {
+        return $this->belongsToMany(Curso::class, "usuarios_cursos", 'usuario_id', 'curso_id')->withPivot('fecha_inicio','fecha_termino');
+    }
 
     public function examen()
     {
@@ -263,7 +267,7 @@ class User extends Authenticatable
                 'puesto' => $usuario->puestos->puesto,
                 'total' => $todosCursosTotal,
                 'totalCursosPasados' => $cursosPasadosTotal,
-                'cursosEnProgreso' => count($cursosProgreso[0]),
+                'cursosEnProgreso' => count($cursosProgreso),//aqui quite esto [0]
                 'promedioTotal' => $porcentaje,
             ];
         });
@@ -321,4 +325,5 @@ class User extends Authenticatable
 
         return $usuarios;
     }
+
 }

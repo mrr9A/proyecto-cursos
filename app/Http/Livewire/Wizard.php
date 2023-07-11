@@ -17,7 +17,9 @@ class Wizard extends Component
     use WithFileUploads;
 
     public $currentStep = 1;
-    public $codigo, $nombre, $fecha_inicio, $fecha_termino, $cursO_id, $estado = 1, $categoria_id, $modalidad_id, $tipo_curso_id, $interno_planta = 1, $imagen;
+    public $codigo, $nombre, $cursO_id,
+        $estado = 1, $categoria_id, $modalidad_id, $tipo_curso_id,
+        $interno_planta = 1, $imagen;
     public $successMessage = '';
 
     public function render()
@@ -32,7 +34,7 @@ class Wizard extends Component
     {
         $validatedData = $this->validate([
             'codigo' => 'required|string|min:5 |unique:cursos',
-            'nombre' => 'required|string|min:5',
+            'nombre' => 'required|string|min:5,max:45|unique:cursos',
             'imagen' => 'required|image|mimes:jpg,png',
 
         ]);
@@ -43,23 +45,14 @@ class Wizard extends Component
     public function secondStepSubmit()
     {
         $validatedData = $this->validate([
-            'fecha_inicio' => 'required|date',
-            'fecha_termino' => 'required|date',
-        ]);
-
-        $this->currentStep = 3;
-    }
-
-    public function threeStepSubmit()
-    {
-        $validatedData = $this->validate([
             'modalidad_id' => 'required',
             'tipo_curso_id' => 'required',
             'categoria_id' => 'required',
         ]);
 
-        $this->currentStep = 4;
+        $this->currentStep = 3;
     }
+
 
     public function messages()
     {
@@ -77,12 +70,6 @@ class Wizard extends Component
             'imagen.required' => 'El campo imagen es obligatorio.',
             'imagen.image' => 'El campo imagen debe ser formato png,jpg.',
             'imagen.mimes' => 'El campo imagen debe ser formato png,jpg.',
-            // VALIDACION DE FECHA INICIO
-            'fecha_inicio.required' => 'El campo fecha inicio es obligatorio.',
-            'fecha_inicio.date' => 'El campo fecha inicio debe ser una fecha válida.',
-            // VALIDACION DE FECHA TERMINO
-            'fecha_termino.required' => 'El campo fecha termino es obligatorio.',
-            'fecha_termino.date' => 'El campo fecha termino debe ser una fecha válida.',
             // VALIDACION DE MODALIDAD DEL CURSO
             'modalidad_id.required' => 'El campo Modalidad termino es obligatorio.',
             // VALIDACION DE TIPO CURSO
@@ -104,8 +91,6 @@ class Wizard extends Component
             $curso = Curso::create([
                 'codigo' => $this->codigo,
                 'nombre' => $this->nombre,
-                'fecha_inicio' => $this->fecha_inicio,
-                'fecha_termino' => $this->fecha_termino,
                 'modalidad_id' => $this->modalidad_id,
                 'tipo_curso_id' => $this->tipo_curso_id,
                 'interno_planta' => $this->interno_planta,
@@ -143,12 +128,9 @@ class Wizard extends Component
     {
         $this->codigo = '';
         $this->nombre = '';
-        $this->fecha_inicio = '';
-        $this->fecha_termino = '';
         $this->modalidad_id = '';
         $this->tipo_curso_id = '';
         // $this->interno_planta = '';
         $this->estado = '';
     }
-
 }

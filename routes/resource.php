@@ -5,6 +5,7 @@ use App\Http\Controllers\Cursosinternos\CursosController;
 use App\Http\Controllers\Cursosinternos\ExamenController;
 use App\Http\Controllers\Cursosinternos\LeccionesController;
 use App\Http\Controllers\empleados\empleadoController;
+use App\Http\Controllers\empleados\ReporteCursoInternoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -44,9 +45,19 @@ Route::middleware('auth.admin')->group(function () {
 
     Route::get('verExam/{id}', [ExamenController::class, 'verExM'])->name('verExamen');
 
+    Route::get('verExamFINAL/{id}', [ExamenController::class, 'verExamenFinal'])->name('verExamenFinal');
+
     Route::get('editExam/{id}', [ExamenController::class, 'verExMedit'])->name('editExamen');
 
+    Route::get('editExamfinal/{id}', [ExamenController::class, 'verExFinalMedit'])->name('verExFinalMedit');
+
     Route::post('Exam/{id}', [ExamenController::class, 'validarExam'])->name('validarExamen');
+
+    Route::get('newnewExamen/{id}', [ExamenController::class, 'examenfinal1'])->name('newExamen');
+
+    Route::post('createex', [ExamenController::class, 'ExamenFinal'])->name('examenFinal');
+
+    Route::put('actuaExamen/{id}', [ExamenController::class, 'actualizar'])->name('examenactualizado');
 
     Route::get('editar/{id}', [LeccionesController::class, 'edit'])->name('editLec');
 
@@ -55,6 +66,9 @@ Route::middleware('auth.admin')->group(function () {
     Route::get('buscar/{id}', [CursosController::class, 'buscarUsuario'])->name('buscarUsuario');
 
     Route::delete('/eliminarpuesto/{id}', [CursosController::class, 'destroyUser'])->name('destroyuser');
+
+    Route::resource("cursosinternos/reportes", ReporteCursoInternoController::class, ["names" => "reportesinternos"]);
+
 });
 
 //---------------------------------------------------- RUTAS PARA LAS VIDAS DE USUARIOS EMPLEADOS -----------------------------------------------------------------

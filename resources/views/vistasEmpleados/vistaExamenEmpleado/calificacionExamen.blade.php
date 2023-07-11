@@ -23,12 +23,20 @@
                     @if($examm->id_examen == $id_examen)
                     @if($examm->pivot->numero_intento < 3) 
                     @if($promedio >= 80 )
-                    <a href="{{route('verContenido',$examenID)}}" class="block text-center w-full max-w-xs mx-auto bg-input hover:bg-input-buscador focus:bg-input-buscador text-white rounded-lg px-3 py-3 font-bold">Regresar al Curso</a>
+                    @if($examenDI)
+                    <a href="{{url('cursosEmpleados',$examenDI)}}" class="block text-center w-full max-w-xs mx-auto bg-input hover:bg-input-buscador focus:bg-input-buscador text-white rounded-lg px-3 py-3 font-bold">Regresar al Curso</a>
+                    @else
+                    <a href="{{route('verContenido',$examenID)}}" class="block text-center w-full max-w-xs mx-auto bg-input hover:bg-input-buscador focus:bg-input-buscador text-white rounded-lg px-3 py-3 font-bold">Regresar al Contenido</a>
+                    @endif
                     @elseif($promedio < 79 )
                     <a href="{{route('verExamenempleado',$id_examen)}}" class="block text-center w-full max-w-xs mx-auto bg-input hover:bg-input-buscador focus:bg-input-buscador text-white rounded-lg px-3 py-3 font-bold">Volver a intentarlo</a>
                     @endif
                     @elseif($examm->pivot->numero_intento >= 3)
-                    <a href="{{route('verContenido',$examenID)}}" class="block text-center w-full max-w-xs mx-auto bg-input hover:bg-input-buscador focus:bg-input-buscador text-white rounded-lg px-3 py-3 font-bold">Regresar al Curso</a>
+                    @if($examenDI)
+                    <a href="{{url('cursosEmpleados',$examenDI)}}" class="block text-center w-full max-w-xs mx-auto bg-input hover:bg-input-buscador focus:bg-input-buscador text-white rounded-lg px-3 py-3 font-bold">Regresar al Curso</a>
+                    @else
+                    <a href="{{route('verContenido',$examenID)}}" class="block text-center w-full max-w-xs mx-auto bg-input hover:bg-input-buscador focus:bg-input-buscador text-white rounded-lg px-3 py-3 font-bold">Regresar al Contenido</a>
+                    @endif
                     @endif
                     @endif
                     @endforeach

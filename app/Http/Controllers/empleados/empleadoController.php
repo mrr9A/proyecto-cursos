@@ -7,7 +7,6 @@ use App\Models\Categoria;
 use App\Models\Contenido;
 use App\Models\Curso;
 use App\Models\Examen;
-use App\Models\Intento;
 use App\Models\Leccion;
 use App\Models\ModalidadCurso;
 use App\Models\Opcion;
@@ -31,60 +30,99 @@ class empleadoController extends Controller
         $buscar = $request->buscador1;
         $estadoSeleccionado = $request->estado ?? "Todos";
         $cursosFiltrados = [];
-        foreach (Auth::user()->cursos as $curso) {
+        foreach (Auth::user()->userCursos as $curso) {
             if (stripos($curso->nombre, $buscar) !== false) {
+                $progresoLeccion2 = 0;
                 $calificacionTotal = 0;
+                $examenCalifinal = 0;
                 $calificacionMaxima = 0;
                 $progresoTotal = 0;
-
+                $totalLeccionesfinal = $curso->lecciones->count();
                 foreach ($curso->lecciones as $leccion) {
                     $progresoLeccion = 0;
                     $progre = 0;
                     $calificacionLeccion = 0;
+                    $calificacionLeccion2 = 0;
                     $totalContenido = $leccion->contenido->count();
-
                     foreach ($leccion->contenido as $contenido) {
                         $examen = $contenido->examen()->first(); // Retrieve the first exam
+                        $examCurso = $curso->examen()->first();
                         foreach ($examen->usuarios as $calificacionnn) {
                             if ($calificacionnn->pivot->usuario_id == Auth::user()->id_usuario) {
                                 $calificacion = $calificacionnn->pivot->calificacion ?? 0; // Get the "calificacion" property
                                 $calificacionLeccion += $calificacion;
                             }
                             if ($examen->usuarios()->where('examen_id', $contenido->examen()->first()->id_examen)->exists() and $examen->usuarios()->where('usuario_id', Auth::user()->id_usuario)->exists()) {
-                                if($calificacionnn->pivot->usuario_id == Auth::user()->id_usuario){
+                                if ($calificacionnn->pivot->usuario_id == Auth::user()->id_usuario) {
                                     $progresoLeccion++;
                                 }
                             }
                         }
-                    }
 
+                        foreach ($examCurso->usuarios as $caliCu) {
+                            if ($caliCu->pivot->usuario_id == Auth::user()->id_usuario) {
+                                $calificacion2 = $caliCu->pivot->calificacion ?? 0; // Get the "calificacion" property
+                                $calificacionLeccion2 += $calificacion2;
+                            }
+                            if ($examCurso->usuarios()->where('examen_id', $curso->examen()->first()->id_examen)->exists() and $examen->usuarios()->where('usuario_id', Auth::user()->id_usuario)->exists()) {
+                                if ($caliCu->pivot->usuario_id == Auth::user()->id_usuario) {
+                                    $progresoLeccion2 = 20;
+                                }
+                            }
+                        }
+                    }
                     $calificacionTotal += $calificacionLeccion;
                     $calificacionMaxima += $totalContenido;
                     $progresoTotal += $progresoLeccion;
+                    $progresototalexamen = $progresoLeccion2;
+                    $examenCalifinal += $calificacionLeccion2;
                 }
 
                 $promedioCalificacion = $calificacionMaxima > 0 ? ($calificacionTotal * 100) / ($calificacionMaxima * 100) : 0;
+                $promedioContenidO = $promedioCalificacion > 0 ?  ($promedioCalificacion * 60) / 100 : 0;
+                $promedioExaFinal = $examenCalifinal > 0 ? ($examenCalifinal * 40) / 100 : 0;
+                $promedioFINALCURSOCOMPLETO = $promedioContenidO + $promedioExaFinal;
                 $promedioProgreso = $calificacionMaxima > 0 ? ($progresoTotal / $calificacionMaxima) * 100 : 0;
-                $numeroFormateado = number_format($promedioCalificacion, 2);
+                $promedioProgresoContenido = $promedioProgreso > 0 ? ($promedioProgreso * 80) / 100 : 0;
+                $promedioFinaldelcurso = $promedioProgresoContenido + $progresototalexamen;
+                $numero = number_format($promedioFinaldelcurso, 2);
+                $numeroFormateado = number_format($promedioFINALCURSOCOMPLETO, 2);
 
                 // Agreg0 ar la condición para determinar el estado del curso
                 $estado = "";
-                if ($promedioCalificacion >= 80 and $promedioProgreso == 100) {
+                if ($promedioFINALCURSOCOMPLETO >= 80 and $promedioFinaldelcurso == 100) {
                     $estado = "Aprobado";
-                } elseif ($promedioProgreso < 100) {
+                } elseif ($promedioFinaldelcurso < 100) {
                     $estado = "Pendiente";
-                } elseif ($promedioCalificacion < 80) {
+                } elseif ($promedioFINALCURSOCOMPLETO < 80) {
                     $estado = "Reprobado";
+                }
+
+                $fechaInicioCurso = $curso->pivot->fecha_inicio;
+                $fechaTerminoCurso = $curso->pivot->fecha_termino;
+                $fechaActual = date('Y-m-d');
+
+                if ($fechaActual >= $fechaInicioCurso && $fechaActual <= $fechaTerminoCurso) {
+                    // El curso está vigente
+                    // Pasa la variable a la vista para indicar que el curso está vigente
+                    $cursoVigente = true;
+                } else {
+                    // El curso no está vigente
+                    // Pasa la variable a la vista para indicar que el curso no está vigente
+                    $cursoVigente = false;
                 }
 
 
                 $calificacionesCursos[] = [
                     'curso' => $curso,
                     'calificacion' => $numeroFormateado,
-                    'progreso' => $promedioProgreso,
+                    'progreso' => $numero,
                     'estado' => $estado,
+                    'lecciones' => $totalLeccionesfinal,
+                    'estatus' => $cursoVigente,
+                    'fecha' => $fechaActual,
+                    'fecha_inicio' => $fechaInicioCurso
                 ];
-                
             }
         }
         return view('vistasEmpleados.inicio', compact('calificacionesCursos', 'estadoSeleccionado'));
@@ -119,6 +157,7 @@ class empleadoController extends Controller
         return view('vistasEmpleados.vistaExamenEmpleado.index', compact('examen', 'intentos', 'totalPreguntas'));
     }
 
+
     public function validarExam(Request $request, string $id)
     {
         $validatedData = $request->except('_token', 'total_pregunta');
@@ -146,7 +185,8 @@ class empleadoController extends Controller
             $user->examen()->attach($id_examen, ['numero_intento' => $this->intentoHecho, 'limite_intentos' => '3', 'calificacion' => $promedio]);
         }
         $examenID = $examenn->contenido_id;
-        return view('vistasEmpleados.vistaExamenEmpleado.calificacionExamen', compact('promedio', 'examenID', 'id_examen'));
+        $examenDI = $examenn->curso_id;
+        return view('vistasEmpleados.vistaExamenEmpleado.calificacionExamen', compact('promedio', 'examenID', 'examenDI', 'id_examen'));
     }
 
     private function isAnswerCorrect($par)

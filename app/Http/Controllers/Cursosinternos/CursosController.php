@@ -37,15 +37,46 @@ class CursosController extends Controller
         $categrias = Categoria::all();
         return view('Cursosinternos.cursos.catalago', compact('cursos', 'autores', 'categrias'));
     }
-    
+
     public function show(Request $request, string $id)
     {
+        $searchTerm = $request->input('search');
+        $buscar1 = $request->input('buscar1');
+        $cursoId1 = $request->input('curso_id2');
         $curso = Curso::find($id);
         $categoria = Categoria::all();
         $modalidad = ModalidadCurso::all();
         $tipo = TipoCurso::all();
+        if ($searchTerm) {
+            $resultados = User::where('nombre', 'LIKE', '%' . $searchTerm . '%')
+                ->orWhere('segundo_nombre', 'LIKE', '%' . $searchTerm . '%')
+                ->orWhere('apellido_paterno', 'LIKE', '%' . $searchTerm . '%')
+                ->orWhere('apellido_materno', 'LIKE', '%' . $searchTerm . '%')
+                ->orWhere('id_sgp', 'LIKE', '%' . $searchTerm . '%')
+                ->get();
+        } else {
+            $resultados = null;
+        }
+
+        if ($buscar1) {
+            $resultados2 = User::whereHas('cursos', function ($query) use ($cursoId1) {
+                $query->where('curso_id', $cursoId1);
+            })
+                ->where(function ($query) use ($buscar1) {
+                    $query->where('nombre', 'LIKE', '%' . $buscar1 . '%')
+                        ->orWhere('segundo_nombre', 'LIKE', '%' . $buscar1 . '%')
+                        ->orWhere('apellido_paterno', 'LIKE', '%' . $buscar1 . '%')
+                        ->orWhere('apellido_materno', 'LIKE', '%' . $buscar1 . '%')
+                        ->orWhere('id_sgp', 'LIKE', '%' . $buscar1 . '%');
+                })
+                ->get();
+        } else {
+            $resultados2 = null;
+        }
+
         $usuarios = User::all();
-        return view('Cursosinternos.cursos.configurarCursos', compact('curso', 'modalidad', 'tipo', 'usuarios', 'categoria'));
+
+        return view('Cursosinternos.cursos.configurarCursos', compact('curso', 'modalidad', 'tipo', 'usuarios', 'categoria', 'resultados','resultados2'));
     }
 
 
@@ -60,8 +91,8 @@ class CursosController extends Controller
         }
         $curso->codigo = $request->post('codigo');
         $curso->nombre = $request->post('nombre');
-        $curso->fecha_inicio = $request->post('fecha_inicio');
-        $curso->fecha_termino = $request->post('fecha_termino');
+        // $curso->fecha_inicio = $request->post('fecha_inicio');
+        // $curso->fecha_termino = $request->post('fecha_termino');
         $curso->estado = $request->post('estado');
         $curso->modalidad_id = $request->post('modalidad_id');
         $curso->tipo_curso_id = $request->post('tipo_curso_id');
@@ -73,59 +104,32 @@ class CursosController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request);
         $request->validate(['usuarios' => 'array|required']);
         $dataUsuarios = [];
         foreach ($request->usuarios as $usuario) {
 
             $consulta = [
                 "usuario_id" => $usuario,
-                "curso_id" => $request->curso_id
+                "curso_id" => $request->curso_id,
+                "fecha_inicio" => $request->fecha_inicio,
+                "fecha_termino" => $request->fecha_termino
             ];
             array_push($dataUsuarios, $consulta);
         }
         DB::table("usuarios_cursos")->insert($dataUsuarios);
         return redirect()->back()->with('agregado', 'Usuario agregado a curso');
-    }
 
-    public function destroy(Request $request, string $id)
-    {
-        $request->validate(['usuarios' => 'array|required']);
-        foreach ($request->usuarios as $usuario) {
-            $useri = User::find($usuario);
-            $id_useri = $useri->id_usuario;
-            if ($useri->examen()->where('usuario_id', $id_useri)->exists()) {
-                return redirect()->back()->with('error', 'No se puede eliminar el registro porque está asociado a otro campo11');
-            } else {
-                $curso = $useri->cursos[0]->id_curso;
-                $useri->cursos()->detach($curso);
-                return redirect()->back()->with('eliminado', 'Eliminado Correctamente');
-            }
-        }
-        // $request->validate(['usuarios' => 'array|required']);
-        // // dd($request);
-        // foreach ($request->usuarios as $usuario) {
-        //     $useri = User::find($usuario);
-        //     $curso = $useri->cursos[0]->id_curso;
-        //     $useri->cursos()->detach($curso);
-        // }
-        // return redirect()->back()->with('eliminado', 'Eliminado Correctamente');
+
     }
 
     public function destroyUser(string $id)
     {
-
-        // $user = User::find($id);
-        // $Curso = $user->cursos[0]->id_curso;
-        // $user->cursos()->detach($Curso);
-        // return redirect()->back()->with('eliminado', 'Eliminado Correctamente');
-
         $user = User::find($id);
         $id_user = $user->id_usuario;
-        // dd($user->examen()->where('usuario_id', $id_user)->exists());
         if ($user->examen()->where('usuario_id', $id_user)->exists()) {
-            return redirect()->back()->with('error', 'No se puede eliminar el registro porque está asociado a otro campo11');
+            return redirect()->back()->with('error', 'No se puede eliminar el registro porque está asociado a otro campo');
         } else {
-            // dd($user->cursos[0]->id_curso);
             $Curso = $user->cursos[0]->id_curso;
             $user->cursos()->detach($Curso);
             return redirect()->back()->with('eliminado', 'Eliminado Correctamente');
