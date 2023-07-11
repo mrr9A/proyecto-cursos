@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\File;
 
 class SaveContenidoRequest extends FormRequest
 {
@@ -28,10 +29,25 @@ class SaveContenidoRequest extends FormRequest
             //
             'nombre' => 'required|string|min:5|max:45',
             'descripcion' => 'required|string|min:5',
-            'url' => 'required|mimes:pdf,txt,jpg,jpeg,png,gif,mp4'
+            'url' => [
+                'required',
+                'file',
+                'mimetypes:video/mp4,application/pdf,image/jpeg,image/png,image/gif',
+                'max:51200', // 50 MB en kilobytes
+            ],
         ];
     }
 
+    // use Illuminate\Validation\Rules\File;
+
+    // Validator::validate($input, [
+    //     'attachment' => [
+    //         'required',
+    //         File::types(['mp3', 'wav'])
+    //             ->min(1024)
+    //             ->max(12 * 1024),
+    //     ],
+    // ]);
     public function messages()
     {
         return [
