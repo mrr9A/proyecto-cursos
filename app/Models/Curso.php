@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 class Curso extends Model
 {
     use HasFactory;
-    protected $fillable = ['nombre', 'fecha_inicio', 'fecha_termino', 'estado', 'modalidad_id', 'tipo_curso_id', 'codigo', 'imagen', 'interno_planta'];
+    protected $fillable = ['nombre', 'estado', 'modalidad_id', 'tipo_curso_id', 'codigo', 'imagen', 'interno_planta'];
     protected $primaryKey = "id_curso";
     public $timestamps = false;
 
@@ -32,7 +32,7 @@ class Curso extends Model
     }
     public function usuarioCurso()
     {
-        return $this->belongsToMany(User::class, "usuarios_cursos", 'curso_id', 'usuario_id');
+        return $this->belongsToMany(User::class, "usuarios_cursos", 'curso_id', 'usuario_id')->withPivot('fecha_inicio','fecha_termino');
     }
 
     public function puestos()
@@ -56,6 +56,15 @@ class Curso extends Model
         return $this->belongsToMany(User::class, 'usuarios_cursos', 'usuario_id', 'curso_id');
     }
 
+    public function usersSSS()
+    {
+        return $this->belongsToMany(User::class, 'usuarios_cursos', 'curso_id', 'usuario_id');
+    }
+
+    public function examen()
+    {
+        return $this->hasMany(Examen::class, 'curso_id');
+    }
 
     public static function getAllCursos($buscar = "")
     {
@@ -83,6 +92,7 @@ class Curso extends Model
 
         return $cursos;
     }
+
 
 
     public static function getCursesByJob($buscar, $puesto)
@@ -195,4 +205,33 @@ class Curso extends Model
                 "cursosDisponibles" => $cursosDisponibles,
             ];
     }
+
+    public static function getAllCursoSS($buscar = "")
+    {
+        $cursosSSS = DB::table('cursos as c')
+            ->select(
+                "id_curso",
+                "codigo",
+                "c.nombre",
+                "fecha_inicio",
+                "interno_planta",
+                "fecha_termino",
+                "tc.nombre as tipo",
+                "modalidad"
+            )
+            ->leftjoin("modalidad_cursos as mc", "c.modalidad_id", "=", "mc.id_modalidad")
+            ->leftjoin("tipo_cursos as tc", "c.tipo_curso_id", "=", "tc.id_tipo_curso")
+            ->Where(function ($q) use ($buscar) {
+                $q->Where('c.interno_planta', '=', 1)
+                    ->Where('tc.nombre', 'like', $buscar . "%")
+                    ->orWhere('mc.modalidad', 'like', $buscar . "%")
+                    ->orWhere('c.codigo', 'like', $buscar . "%")
+                    ->orWhere('c.nombre', 'like', $buscar . "%");
+            })
+            ->where("c.estado", '=', 1)
+            ->get();
+
+        return $cursosSSS;
+    }
+
 }

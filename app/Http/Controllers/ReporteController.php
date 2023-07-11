@@ -36,5 +36,7 @@ class ReporteController extends Controller
         }
     
         return view('cursosplanta.reportes.index', compact('sucursales', 'puestos', 'trabajos', 'cursos', 'data'));
+        
+
     }
 }

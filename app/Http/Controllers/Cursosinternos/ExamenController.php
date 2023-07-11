@@ -84,6 +84,15 @@ class ExamenController extends Controller
         return view('Cursosinternos.examenes.vistaExamen', compact('examen', 'intentos', 'totalPreguntas'));
     }
 
+    public function verExamenFinal(string $id) 
+    {
+        $intentos = 3;
+        $curso = Curso::find($id);
+        $examen = $curso->examen;
+        $totalPreguntas = $examen[0]->preguntas->count();
+        return view('Cursosinternos.examenes.vistaExamen', compact('examen', 'intentos', 'totalPreguntas'));
+    }
+
     public function verExMedit(string $id)
     {
         $contenido = Contenido::find($id);
@@ -136,38 +145,42 @@ class ExamenController extends Controller
                 $opcion->saveOrFail();
             }
         }
-        // ESTA PARTE ES OARA GUARADAR LAS NUEVAS PREGUNTAS
-        foreach ($request->arreglo as $preguntas) {
 
-            $dataPregunta = [
-                "pregunta" => $preguntas[0],
-                "examen_id" => $examen->id_examen
-            ];
-
-            $pregunta = Pregunta::create($dataPregunta);
-            $dataOpciones = [];
-            $opcionCorrecta = $preguntas['respuesta'];
-            for ($i = 0; $i < count($preguntas['opciones']); $i++) {
-                if ($opcionCorrecta == $i) {
+        if($request->arreglo){
+            // ESTA PARTE ES OARA GUARADAR LAS NUEVAS PREGUNTAS
+            foreach ($request->arreglo as $preguntas) {
+    
+                $dataPregunta = [
+                    "pregunta" => $preguntas[0],
+                    "examen_id" => $examen->id_examen
+                ];
+    
+                $pregunta = Pregunta::create($dataPregunta);
+                $dataOpciones = [];
+                $opcionCorrecta = $preguntas['respuesta'];
+                for ($i = 0; $i < count($preguntas['opciones']); $i++) {
+                    if ($opcionCorrecta == $i) {
+                        $consulta = [
+                            'opcion' => $preguntas['opciones'][$i],
+                            "pregunta_id" => $pregunta->id_pregunta,
+                            "correcta" => true,
+                        ];
+                        array_push($dataOpciones, $consulta);
+                        continue;
+                    }
+    
                     $consulta = [
                         'opcion' => $preguntas['opciones'][$i],
                         "pregunta_id" => $pregunta->id_pregunta,
-                        "correcta" => true,
+                        "correcta" => false,
                     ];
+    
                     array_push($dataOpciones, $consulta);
-                    continue;
                 }
-
-                $consulta = [
-                    'opcion' => $preguntas['opciones'][$i],
-                    "pregunta_id" => $pregunta->id_pregunta,
-                    "correcta" => false,
-                ];
-
-                array_push($dataOpciones, $consulta);
+                DB::table("opciones")->insert($dataOpciones);
             }
-            DB::table("opciones")->insert($dataOpciones);
-        }
+            }
+    
 
         // return "holis";
         $conT = Contenido::find($request->contenido_id);
@@ -235,5 +248,157 @@ class ExamenController extends Controller
 
         // $examen->delete();
         // return redirect()->back()->with('eliminado', 'Eliminado Correctamente');
+    }
+
+    public function examenfinal1(string $id)
+    {
+        return view('Cursosinternos.examenes.examenFinal', compact('id'));
+    }
+
+    public function ExamenFinal(Request $request)
+    {
+        $dataExamen = [
+            "nombre" => $request->nombre,
+            "duracion" => $request->duracion,
+            "curso_id" => $request->curso_id,
+        ];
+
+        $examen = Examen::create($dataExamen);
+
+        foreach ($request->arreglo as $preguntas) {
+
+            $dataPregunta = [
+                "pregunta" => $preguntas[0],
+                "examen_id" => $examen->id_examen
+            ];
+
+            $pregunta = Pregunta::create($dataPregunta);
+
+
+
+            $dataOpciones = [];
+            $opcionCorrecta = $preguntas['respuesta'];
+            for ($i = 0; $i < count($preguntas['opciones']); $i++) {
+                if ($opcionCorrecta == $i) {
+                    $consulta = [
+                        'opcion' => $preguntas['opciones'][$i],
+                        "pregunta_id" => $pregunta->id_pregunta,
+                        "correcta" => true,
+                    ];
+                    array_push($dataOpciones, $consulta);
+                    continue;
+                }
+
+                $consulta = [
+                    'opcion' => $preguntas['opciones'][$i],
+                    "pregunta_id" => $pregunta->id_pregunta,
+                    "correcta" => false,
+                ];
+
+                array_push($dataOpciones, $consulta);
+            }
+            DB::table("opciones")->insert($dataOpciones);
+        }
+
+        $CuRsO = Curso::find($request->curso_id);
+        // return "HOLIS SI GUARDO";
+        return to_route("curs.show", $CuRsO)->with('agregado', 'Examen Agregado Correctamente');
+    }
+
+    public function verExFinalMedit(string $id)
+    {
+        $curso = Curso::find($id);
+        $examen = $curso->examen;
+        return view('Cursosinternos.examenes.ditExamen', compact('examen', 'id'));
+    }
+
+    public function actualizar(Request $request, string $id)
+    { 
+        // dd($request);
+        $examen = Examen::find($request->id_examen);
+
+        // Validar los datos enviados desde el formulario de edición
+        $validatedData = $request->validate([
+            'nombre' => 'required',
+            'duracion' => 'required',
+            'curso_id' => 'required'
+            // Agrega las reglas de validación para los demás campos del examen
+        ]);
+
+        // Actualizar los datos del examen con los valores proporcionados en el formulario
+        $examen->update($validatedData);
+
+        foreach ($request->preguntas as $preguntaId => $preguntaData) {
+            $pregunta = Pregunta::find($preguntaId);
+            $nombrepregunta = $preguntaData['titulo'];
+            $pregunta->pregunta = $nombrepregunta;
+            $pregunta->saveOrFail();
+
+            $opcionCorrect = $preguntaData['respuesta'];
+            // dd($opcionCorrect);
+
+            foreach ($preguntaData['opciones'] as $opcionId => $opcionData) {
+
+                // dd($opcionCorrect);
+                if ($opcionCorrect == $opcionId) {
+
+                    $opcion = Opcion::find($opcionId);
+                    $nombreOpcion = $opcionData['titulo'];
+                    // dd($nombreOpcion);
+                    $opcion->opcion = $nombreOpcion;
+                    $opcion->correcta = true;
+                    $opcion->saveOrFail();
+                    continue;
+                }
+                $opcion = Opcion::find($opcionId);
+                $nombreOpcion = $opcionData['titulo'];
+                $opcion->opcion = $nombreOpcion;
+                $opcion->correcta = false;
+                $opcion->saveOrFail();
+            }
+        }
+        if($request->arreglo){
+        // ESTA PARTE ES OARA GUARADAR LAS NUEVAS PREGUNTAS
+        foreach ($request->arreglo as $preguntas) {
+
+            $dataPregunta = [
+                "pregunta" => $preguntas[0],
+                "examen_id" => $examen->id_examen
+            ];
+
+            $pregunta = Pregunta::create($dataPregunta);
+            $dataOpciones = [];
+            $opcionCorrecta = $preguntas['respuesta'];
+            for ($i = 0; $i < count($preguntas['opciones']); $i++) {
+                if ($opcionCorrecta == $i) {
+                    $consulta = [
+                        'opcion' => $preguntas['opciones'][$i],
+                        "pregunta_id" => $pregunta->id_pregunta,
+                        "correcta" => true,
+                    ];
+                    array_push($dataOpciones, $consulta);
+                    continue;
+                }
+
+                $consulta = [
+                    'opcion' => $preguntas['opciones'][$i],
+                    "pregunta_id" => $pregunta->id_pregunta,
+                    "correcta" => false,
+                ];
+
+                array_push($dataOpciones, $consulta);
+            }
+            DB::table("opciones")->insert($dataOpciones);
+        }
+        }
+
+        // return "holis";
+        // $conT = Contenido::find($request->contenido_id);
+        // $LecC = $conT->leccion_id;
+        // $LecCI = Leccion::find($LecC);
+        // $idCuS = $LecCI->curso_id;
+        $CuRsO = Curso::find($request->curso_id);
+        // return "HOLIS SI GUARDO";
+        return to_route("curs.show", $CuRsO)->with('actualizado', 'Examen actualizado Correctamente');
     }
 }

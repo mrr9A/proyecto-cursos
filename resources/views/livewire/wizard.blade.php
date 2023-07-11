@@ -20,21 +20,7 @@
                 </div>
             </div>
             <div class="stepwizard-step">
-                <a href="#step-2" type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 {{ $currentStep != 2 ? 'bg-secondary' : 'bg-dark' }}">2</a>
-                <div class="text-1xl font-bold tracking-tight text-center text-dark-900 sm:text-1xl">
-                    <span class="inline-block ">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 14 14">
-                            <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M1.5 2.5a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-9a1 1 0 0 0-1-1h-2m-7-2v4m7-4v4m-7-2h5" />
-                                <path d="M5 8h4v3H5zm.5 0V7a1.5 1.5 0 0 1 3 0v1" />
-                            </g>
-                        </svg>
-                    </span>
-                    <P>Configuración del Acceso del Curso</P>
-                </div>
-            </div>
-            <div class="stepwizard-step">
-                <a href="#step-3" type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 {{ $currentStep != 3 ? 'bg-secondary' : 'bg-dark' }}" disabled="disabled">3</a>
+                <a href="#step-2" type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 {{ $currentStep != 2 ? 'bg-secondary' : 'bg-dark' }}" disabled="disabled">2</a>
                 <div class="text-1xl font-bold tracking-tight text-center text-dark-900 sm:text-1xl">
                     <span class="inline-block ">
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 48 48">
@@ -78,7 +64,7 @@
                 <h3 class="text-7xl font-bold tracking-tight text-gray-900 sm:text-4xl">Información General del Curso</h3><br>
                 <div class="grid col-11 gap-x-8 gap-y-6 text-blue-600/100">
                     <label for="apellidoPaterno">Nombre del Curso <span class="text-red-500">*</span></label>
-                    <input type="text" rows="3" wire:model="nombre" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" id="decription" require>
+                    <input type="text" rows="3"  wire:model="nombre" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" id="decription" require>
                     @error('nombre') <span class="error text-red-600">{{ $message }}</span> @enderror
                 </div>
                 <br>
@@ -138,34 +124,6 @@
 
                 <h3 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Información General del Curso</h3>
                 <br>
-                <div class="grid col-10 gap-x-8 gap-y-6">
-                    <label for="fecha_inicio">Fecha de Inicio del Curso <span class="text-danger">*</span></label>
-                    <input type="date" rows="3" wire:model="fecha_inicio" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" id="fecha_inicio" require>
-                    @error('fecha_inicio') <span class="error text-red-600">{{ $message }}</span> @enderror
-                </div>
-                <br>
-                <div class="grid col-10 gap-x-8 gap-y-6">
-                    <label for="fecha_termino">Fecha de Termino del Curso <span class="text-danger">*</span></label>
-                    <input type="date" rows="3" wire:model="fecha_termino" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" id="fecha_termino" require>
-                    @error('fecha_termino') <span class="error text-red-600">{{ $message }}</span> @enderror
-                </div>
-                <br>
-                <button class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700" type="button" wire:click="back(1)">
-                    <img src="./img/hacia-atras.png" alt=""><span>Retroceder</span>
-                </button>
-                <button class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700" type="button" wire:click="secondStepSubmit">
-                    <img src="./img/siguiente-boton.png" alt=""><span>Continuar</span>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <div class="row setup-content {{ $currentStep != 3 ? 'displayNone' : '' }}" id="step-3">
-        <div class="col-xs-12">
-            <div class="col-md-12">
-                <br>
-                <h3 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Modalidad de Cursos</h3>
-                <br>
                 <div class="form-group ">
                     <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Seleccione la Modalidad del Curso <span class="text-red-600">*</span></label>
                     <select id="countries" wire:model="modalidad_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
@@ -199,17 +157,17 @@
                     </select>
                 </div>
                 <br>
-                <button class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700" type="button" wire:click="back(2)">
+                <button class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700" type="button" wire:click="back(1)">
                     <img src="./img/hacia-atras.png" alt=""><span>Retroceder</span>
                 </button>
-                <button class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700" type="button" wire:click="threeStepSubmit">
+                <button class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700" type="button" wire:click="secondStepSubmit">
                     <img src="./img/siguiente-boton.png" alt=""><span>Continuar</span>
                 </button>
             </div>
         </div>
     </div>
 
-    <div class="row setup-content {{ $currentStep != 4 ? 'displayNone' : '' }}" id="step-4">
+    <div class="row setup-content {{ $currentStep != 3 ? 'displayNone' : '' }}" id="step-3">
         <div class="col-xs-12">
             <div class="col-md-12">
                 <br>
@@ -223,14 +181,6 @@
                     <tr>
                         <td class=" font-bold">Nombre del Curso</td>
                         <td class=" font-bold"><strong>{{$nombre}}</strong></td>
-                    </tr>
-                    <tr>
-                        <td>Fecha de Inicio del Curso</td>
-                        <td><strong>{{$fecha_inicio}}</strong></td>
-                    </tr>
-                    <tr>
-                        <td class=" font-bold">Fecha de Termino del Curso</td>
-                        <td class=" font-bold"><strong>{{$fecha_termino}}</strong></td>
                     </tr>
                     <tr>
                         <td class=" font-bold">Modalidad del Curso</td>

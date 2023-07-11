@@ -14,7 +14,7 @@ class Examen extends Model
     protected $table = "examen";
     public $timestamps = false;
 
-    protected $fillable = ['nombre','duracion','contenido_id'];
+    protected $fillable = ['nombre','duracion','contenido_id','curso_id'];
 
     public function preguntas()
     {
@@ -24,6 +24,11 @@ class Examen extends Model
     public function contenido()
     {
         return $this->belongsTo(Contenido::class, 'contenido_id');
+    }
+
+    public function cursos()
+    {
+        return $this->belongsTo(Curso::class, 'curso_id');
     }
 
     public function usuarios()

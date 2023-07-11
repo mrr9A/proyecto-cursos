@@ -11,14 +11,6 @@
                         @error('codigo') <span class="error text-red-600">{{ $message }}</span> @enderror
                     </div>
                     <div>
-                        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha de Inicio: </label>
-                        <input type="date" name="fecha_inicio" value="{{$curso->fecha_inicio ?? '' ?  date('Y-m-d', strtotime($curso->fecha_inicio ?? '')) : '' }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required>
-                    </div>
-                    <div>
-                        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha de Termino: </label>
-                        <input type="date" name="fecha_termino" value="{{$curso->fecha_termino ?? '' ?  date('Y-m-d', strtotime($curso->fecha_termino ?? '')) : '' }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required>
-                    </div>
-                    <div>
                         <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Estatus del Curso: </label>
                         <div class="grid md:grid-cols-2 md:gap-6">
                             <div class="flex items-center pl-4 border border-gray-200 rounded dark:border-gray-700">

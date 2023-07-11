@@ -1,8 +1,14 @@
 <x-appEmpleado title="Calificación" route="home">
     <nav class="mx-4">
+        @if($examen->cursos)
+        <a href="{{url('cursosEmpleados',$examen->cursos)}}" class="text-base text-nav-hover font-bold"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 16 16">
+                <path fill="currentColor" fill-rule="evenodd" d="m2.87 7.75l1.97 1.97a.75.75 0 1 1-1.06 1.06L.53 7.53L0 7l.53-.53l3.25-3.25a.75.75 0 0 1 1.06 1.06L2.87 6.25h9.88a3.25 3.25 0 0 1 0 6.5h-2a.75.75 0 0 1 0-1.5h2a1.75 1.75 0 1 0 0-3.5H2.87Z" clip-rule="evenodd" />
+            </svg>REGRESAR AL CURSO</a>
+        @else
         <a href="{{route('verContenido',[$examen->contenido_id])}}" class="text-base text-nav-hover font-bold"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 16 16">
                 <path fill="currentColor" fill-rule="evenodd" d="m2.87 7.75l1.97 1.97a.75.75 0 1 1-1.06 1.06L.53 7.53L0 7l.53-.53l3.25-3.25a.75.75 0 0 1 1.06 1.06L2.87 6.25h9.88a3.25 3.25 0 0 1 0 6.5h-2a.75.75 0 0 1 0-1.5h2a1.75 1.75 0 1 0 0-3.5H2.87Z" clip-rule="evenodd" />
             </svg>REGRESAR AL CONTENIDO</a>
+        @endif
     </nav><br>
     <div class="flex">
         <div class="w-full p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
@@ -28,8 +34,13 @@
                 @if(Auth::user()->examen()->where('examen_id', $examen->id_examen)->exists())
                 @foreach(Auth::user()->examen as $examm)
                 @if($examm->id_examen == $examen->id_examen)
-                @if($examm->pivot->numero_intento < 3) @if($examm->pivot->calificacion >= 80)
-                    <a href="{{route('verContenido',$examen->contenido_id)}}" class="block text-center w-full max-w-xs mx-auto bg-input hover:bg-input-buscador focus:bg-input-buscador text-white rounded-lg px-3 py-3 font-bold">Regresar al Curso</a> <br>
+                @if($examm->pivot->numero_intento < 3) 
+                @if($examm->pivot->calificacion >= 80)
+                @if($examen->contenido_id)
+                <a href="{{route('verContenido',$examen->contenido_id)}}" class="block text-center w-full max-w-xs mx-auto bg-input hover:bg-input-buscador focus:bg-input-buscador text-white rounded-lg px-3 py-3 font-bold">Regresar al Curso</a> <br>
+                @else
+                <a href="{{url('cursosEmpleados',$examen->curso_id)}}" class="block text-center w-full max-w-xs mx-auto bg-input hover:bg-input-buscador focus:bg-input-buscador text-white rounded-lg px-3 py-3 font-bold">Regresar al Curso</a> <br>
+                @endif
                     <div class="min-w-screen h-full min-h-screen   px-5 py-5 flex justify-center shadow-all">
                         <div class="h-4/5 w-1/2 py-10 px-5  bg-gray-100 md:px-10">
                             <div class="text-center mb-10">
