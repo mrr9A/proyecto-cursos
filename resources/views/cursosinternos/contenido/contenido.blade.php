@@ -55,6 +55,7 @@
                                                 <span>Seleccionar un Archivo </span><span class="text-danger">*</span>
                                                 <input id="file-upload" name="url" type="file" class="sr-only"
                                                     accept="/*">
+                                                <span id="imgName"></span>
                                             </label>
                                         </div>
                                         <p class="text-base leading-5 text-gray-600">Formatos Admitidos: PNG, JPG, MP4,
@@ -112,10 +113,25 @@
             alert('El archivo seleccionado es demasiado grande. Por favor, selecciona un archivo más pequeño.');
             // Limpiar el campo de entrada de archivo
             fileInput.value = '';
+            document
+                .getElementById('imgName')
+                .innerHTML = ""
         } else {
             // El tamaño del archivo es válido, puedes continuar con el envío del formulario o realizar otras acciones
         }
     });
+
+
+    fileInput.addEventListener('change', (e) => {
+        console.log(e.target.files)
+        let files = e.target.files
+        if (files && files[0]) {
+            document
+                .getElementById('imgName')
+                .innerHTML = files[0].name
+        }
+
+    })
 </script>
 
 @if (session('agregado') == 'Agregado Correctamente')

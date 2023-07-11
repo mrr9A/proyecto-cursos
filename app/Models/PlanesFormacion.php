@@ -220,7 +220,7 @@ class PlanesFormacion extends Model
 
                 $todosCursos = $cursos->count();
                 $todosCursosTotal += $todosCursos;
-                $cursosPasados = $cursos->where('calificacion', '=', '100')->count();
+                $cursosPasados = $cursos->where('calificacion', '=', '100')->where('estado', '=' ,1)->count();
                 $cursosEnProgreso = $cursos->where('calificacion', '<', '100')->where('calificacion', '>', 0)->pluck('calificacion')->toArray();
                 array_push($cursosProgreso, $cursosEnProgreso);
                 $cursosPasadosTotal += $cursosPasados;
