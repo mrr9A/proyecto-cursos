@@ -37,6 +37,7 @@ class empleadoController extends Controller
                 $examenCalifinal = 0;
                 $calificacionMaxima = 0;
                 $progresoTotal = 0;
+                $progresototalexamen = 0;
                 $totalLeccionesfinal = $curso->lecciones->count();
                 foreach ($curso->lecciones as $leccion) {
                     $progresoLeccion = 0;
@@ -48,14 +49,17 @@ class empleadoController extends Controller
                         $examen = $contenido->examen()->first(); // Retrieve the first exam
                         $examCurso = $curso->examen()->first();
                         
-                        foreach ($examen->usuarios as $calificacionnn) {
-                            if ($calificacionnn->pivot->usuario_id == Auth::user()->id_usuario) {
-                                $calificacion = $calificacionnn->pivot->calificacion ?? 0; // Get the "calificacion" property
-                                $calificacionLeccion += $calificacion;
-                            }
-                            if ($examen->usuarios()->where('examen_id', $contenido->examen()->first()->id_examen)->exists() and $examen->usuarios()->where('usuario_id', Auth::user()->id_usuario)->exists()) {
+                        if (count($examen->usuarios  ?? []) > 0) {
+
+                            foreach ($examen->usuarios as $calificacionnn) {
                                 if ($calificacionnn->pivot->usuario_id == Auth::user()->id_usuario) {
-                                    $progresoLeccion++;
+                                    $calificacion = $calificacionnn->pivot->calificacion ?? 0; // Get the "calificacion" property
+                                    $calificacionLeccion += $calificacion;
+                                }
+                                if ($examen->usuarios()->where('examen_id', $contenido->examen()->first()->id_examen)->exists() and $examen->usuarios()->where('usuario_id', Auth::user()->id_usuario)->exists()) {
+                                    if ($calificacionnn->pivot->usuario_id == Auth::user()->id_usuario) {
+                                        $progresoLeccion++;
+                                    }
                                 }
                             }
                         }
