@@ -1,4 +1,4 @@
-<x-app>
+<x-app title="Editar Contenido">
     <div class="container mt-2 mx-3">
         <div class="row mb-12">
             <div class="col-lg-12 mb-6 mb-lg-0 position-relative">

@@ -1,9 +1,5 @@
-<x-app>
+<x-app title="Calificación">
     <div class="min-w-screen h-full min-h-screen   px-5 py-5 flex justify-center shadow-all">
-        <!-- <div class=" text-gray-500 rounded-2xl shadow-xl w-full h-5/6 overflow-hidden flex items-center m-auto  " style="max-width:1000px">
-            <div class="md:flex w-1/2">
-                <img class="object-contain rounded-2xl" src="https://www.imacinglestotal.com/wp-content/uploads/certificaciones.png" />
-            </div> -->
             <div class="h-4/5 w-1/2 py-10 px-5  bg-gray-100 md:px-10">
                 <div class="text-center mb-10">
                     <h1 class="font-bold text-3xl text-title text-gray-900">TU CALIFICACIÓN OBTENIDA ES DE: </h1><br>
@@ -12,7 +8,6 @@
                 <div>
                     <div class="flex -mx-3">
                         <div class="w-full px-3 mb-5">
-                            <!-- <label for="" class="text-xs font-bold px-1">Correo Electronico:</label> -->
                             @if($promedio >= 80 & $promedio < 89) <p class="mb-3 font-bold  text-subtitle text-nav-hover">Felicidades Aprobo el Examen con un buen promedio</p>
                             @elseif($promedio == 90 & $promedio < 100) <p class="mb-3  text-subtitle font-bold text-completed dark:text-gray-400">Felicidades Aprobo el Examen tuvo una Calificación destacado</p>
                             @elseif($promedio == 100)
@@ -28,6 +23,5 @@
                     </div>
                 </div>
             </div>
-        <!-- </div> -->
     </div>
 </x-app>

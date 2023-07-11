@@ -64,7 +64,7 @@
                 <h3 class="text-7xl font-bold tracking-tight text-gray-900 sm:text-4xl">Información General del Curso</h3><br>
                 <div class="grid col-11 gap-x-8 gap-y-6 text-blue-600/100">
                     <label for="apellidoPaterno">Nombre del Curso <span class="text-red-500">*</span></label>
-                    <input type="text" rows="3"  wire:model="nombre" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" id="decription" require>
+                    <input type="text" rows="3" wire:model="nombre" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" id="decription" require>
                     @error('nombre') <span class="error text-red-600">{{ $message }}</span> @enderror
                 </div>
                 <br>
@@ -136,7 +136,7 @@
                 </div>
                 <br>
                 <div class="form-group">
-                <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Seleccione el Tipo del Curso <span class="text-red-600">*</span></label>
+                    <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Seleccione el Tipo del Curso <span class="text-red-600">*</span></label>
                     <select id="countries" wire:model="tipo_curso_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         <option selected>Seleccione el Tipo</option>
                         @foreach ($tipo as $tip)
@@ -147,7 +147,7 @@
                 </div>
                 <br>
                 <div class="form-group">
-                <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Seleccione la Categoria del Curso <span class="text-red-600">*</span></label>
+                    <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Seleccione la Categoria del Curso <span class="text-red-600">*</span></label>
                     <select id="countries" wire:model="categoria_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         <option selected>Seleccione la Categoria</option>
                         @foreach ($categoria as $category)
@@ -231,3 +231,28 @@
         </div>
     </div>
 </div>
+
+
+<script>
+    const inputsTexts = $$("input[type='text']")
+    inputsTexts.forEach(element => {
+        element.addEventListener('keypress', (e) => {
+
+            const charCode = e.which || e.keyCode;
+            const char = String.fromCharCode(charCode);
+            const pattern = /[a-zA-Z0-9\s\-+]/
+
+            if (!pattern.test(char)) {
+                e.preventDefault();
+            }
+        })
+
+        element.addEventListener('input', function() {
+            const maxLength = 45; // Define la longitud máxima permitida
+            console.log('holas')
+            if (element.value.length > maxLength) {
+                element.value = element.value.slice(0, maxLength); // Limita la longitud del valor
+            }
+        });
+    });
+</script>
