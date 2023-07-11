@@ -47,6 +47,7 @@ class empleadoController extends Controller
                     foreach ($leccion->contenido as $contenido) {
                         $examen = $contenido->examen()->first(); // Retrieve the first exam
                         $examCurso = $curso->examen()->first();
+                        
                         foreach ($examen->usuarios as $calificacionnn) {
                             if ($calificacionnn->pivot->usuario_id == Auth::user()->id_usuario) {
                                 $calificacion = $calificacionnn->pivot->calificacion ?? 0; // Get the "calificacion" property
@@ -59,14 +60,16 @@ class empleadoController extends Controller
                             }
                         }
 
-                        foreach ($examCurso->usuarios as $caliCu) {
-                            if ($caliCu->pivot->usuario_id == Auth::user()->id_usuario) {
-                                $calificacion2 = $caliCu->pivot->calificacion ?? 0; // Get the "calificacion" property
-                                $calificacionLeccion2 += $calificacion2;
-                            }
-                            if ($examCurso->usuarios()->where('examen_id', $curso->examen()->first()->id_examen)->exists() and $examen->usuarios()->where('usuario_id', Auth::user()->id_usuario)->exists()) {
+                        if (count($examCurso->usuarios ?? []) > 0) {
+                            foreach ($examCurso->usuarios as $caliCu) {
                                 if ($caliCu->pivot->usuario_id == Auth::user()->id_usuario) {
-                                    $progresoLeccion2 = 20;
+                                    $calificacion2 = $caliCu->pivot->calificacion ?? 0; // Get the "calificacion" property
+                                    $calificacionLeccion2 += $calificacion2;
+                                }
+                                if ($examCurso->usuarios()->where('examen_id', $curso->examen()->first()->id_examen)->exists() and $examen->usuarios()->where('usuario_id', Auth::user()->id_usuario)->exists()) {
+                                    if ($caliCu->pivot->usuario_id == Auth::user()->id_usuario) {
+                                        $progresoLeccion2 = 20;
+                                    }
                                 }
                             }
                         }
