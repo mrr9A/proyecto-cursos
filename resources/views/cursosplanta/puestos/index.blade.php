@@ -15,7 +15,7 @@
 
             <div class="relative flex flex-col font-poppins gap-21 text-base">
                 <label class="mb-2 font-semi-bold">Seleccionar plan de informacion</label>
-                <select name="plan_id"
+                <select name="plan_id" required
                     class="py-1.5 px-2 leading-tight text-gray-700 border-2 rounded-lg border-input cursor-pointer uppercase">
                     <option value="" class="text-gray-400">plan de formacion</option>
                     @foreach ($planesFormacion as $plan)
@@ -265,7 +265,7 @@
 
                 let id = formCrearPuesto.elements.puesto.name
 
-                fetch(`${API_URL}cursosplanta/puesto/edit/${id}`, {
+                fetch(`${API_URL}/cursosplanta/puesto/edit/${id}`, {
                         method: "post",
                         body: formData
                     })
@@ -280,7 +280,7 @@
         // OBTIENE LA INFORMACION DEL PUESTO A EDITAR Y LOS MUESTRA EN EL FORMULARIO
         function getPuestoInfo(id) {
             loader.innerHTML = `<x-loader.loader />`
-            return fetch(`${API_URL}cursosplanta/puesto/${id}`)
+            return fetch(`${API_URL}/cursosplanta/puesto/${id}`)
                 .then(res => res.json())
                 .then(data => {
                     $('#submit_button').value = "editar";

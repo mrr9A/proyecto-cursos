@@ -1,6 +1,6 @@
 <x-app title="Sucursales">
     <div class="">
-        <div class="flex items-center justify-between mb-4 mt-6">
+        <div class="flex items-center justify-between mb-4">
 
             <p class="font-regular text-base">Lista de todas las sucursales agregadas</p>
             <x-modal title="Crear sucursal" textButton="Agregar Sucursal" id="crear_sucursal"

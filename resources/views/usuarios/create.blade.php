@@ -1,5 +1,5 @@
 <x-app title="{{ is_null($usuario ?? null) ? 'Crear Usuario' : 'Actualizar Usuario' }}">
-    <div class="container w-full ">
+    <div class="container w-full uppercase mb-3">
         <form id="multi-step-form" method="POST"
             action="{{ !is_null($usuario ?? null) ? route('usuarios.update', $usuario->id_usuario) : route('usuarios.store') }}"
             class="min-w-[100%]  mt-6 grid grid-cols-2 gap-8">
@@ -14,7 +14,7 @@
                 <h3
                     class="text-3xl font-bold tracking-tight text-gray-900 text-section-subtitle text-center bg-gray-200">
                     Datos Personales</h3>
-                <div class=" grid grid-cols-2 gap-6 border border-gray-200 shadow-sm rounded-md px-3 py-2 pb-6">
+                <div class=" grid grid-cols-2 gap-6 border border-gray-200 shadow-sm rounded-md px-3 py-3 pb-6">
                     <x-input-text type="text" nombre="nombre" text="Nombre" placeholder="nombre" required
                         classLabel="text-base" :value="$usuario->nombre ?? ''" />
                     <x-input-text type="text" nombre="segundo_nombre" text="Segundo Nombre"
@@ -30,7 +30,7 @@
                 <h3 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl text-center bg-gray-200">Datos de
                     Autenticación
                 </h3>
-                <div class="grid grid-cols-1 gap-6 border border-gray-200 shadow-sm rounded-md px-3 py-2 pb-6">
+                <div class="grid grid-cols-1 gap-6 border border-gray-200 shadow-sm rounded-md px-3 py-3 pb-6">
                     <x-input-text type="email" nombre="email" text="Correo electronico"
                         placeholder="user@grupobonn.com" required classLabel="text-base" :value="$usuario->email ?? ''" />
                     @if (!is_null($usuario ?? null))
@@ -47,7 +47,7 @@
                 <h3 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl text-center bg-gray-200 px-3">
                     Información Empresarial
                 </h3>
-                <div class="grid grid-cols-4 gap-6 border border-gray-200 shadow-sm rounded-md px-3 py-2">
+                <div class="grid grid-cols-4 gap-6 border border-gray-200 shadow-sm rounded-md px-3 py-3 uppercase">
                     <x-input-text type="number" nombre="id_sgp" text="ID SGP" placeholder="1351" required
                         classLabel="text-base" :value="$usuario->id_sgp ?? ''" />
                     <x-input-text type="number" nombre="id_sumtotal" text="ID SUMTOTAL" placeholder="1351" required
@@ -71,9 +71,9 @@
                         value="{{ $usuario->rol ?? '' }}" />
 
                     <x-selects.input-select textLabel="Sucursales" name="sucursal_id"
-                        textOptionDefault="selecciona una sucursal" :sucursales="$sucursal" required :value="$usuario->sucursales[0] ?? ''" />
+                        textOptionDefault="selecciona una sucursal" :sucursales="$sucursal" required :value="$usuario->sucursales[0] ?? ''" disabled />
                     <x-selects.input-select textLabel="Puestos" name="puesto_id"
-                        textOptionDefault="selecciona un puesto" :puestos="$puestos" required :value="$usuario->puestos ?? ''" />
+                        textOptionDefault="selecciona un puesto" :puestos="$puestos" required :value="$usuario->puestos ?? ''"  disabled/>
 
                     <div id="trabajos" class="col-span-4"></div>
                 </div>
@@ -94,11 +94,10 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Obtener el valor seleccionado del select
             let selectedValue = puestoSelecter.value;
-
-            puesto = puestoSelecter.options[selectedValue].text
+            puesto = puestoSelecter.options[puestoSelecter.selectedIndex].text
             // Verificar si el valor seleccionado no es el valor por defecto
             // esto carga el puesto y trabajos del puesto del usuario
-            if (selectedValue !== 'default') {
+            if (selectedValue !== '') {
                 getJobsByPosition(selectedValue);
             }
         });
@@ -109,7 +108,10 @@
             let selectedOption = Array.from(puestoSelecter.options).find(option => option.value === id);
             puesto = selectedOption.text;
             document.getElementById("select_puesto").setAttribute("disabled", true);
-            getJobsByPosition(id)
+            trabajosSelector.innerHTML = ""
+            if (id !== '') {
+                getJobsByPosition(id)
+            }
         })
 
         function getJobsByPosition(id) {
@@ -133,7 +135,6 @@
                         trabajosSelector.innerHTML = trabajos
                         return;
                     }
-                    console.log(data)
                     data.forEach(trabajo => {
                         trabajos +=
                             `<label

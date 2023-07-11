@@ -66,11 +66,10 @@ class UsuarioController extends Controller
             array_push($data, $consulta);
          }
          DB::table("usuarios_trabajos")->insert($data);
-         return redirect()->route("usuarios.index");
+         return redirect()->route("usuarios.index")->with('success', 'usuario creado correctamente');
       }
-      $usuario = User::create($data);
 
-      return redirect()->route("usuarios.index")->with('success', 'usuario creado correctamente');
+      return redirect()->route("usuarios.index")->with('error', 'ocurrio un problema al dar de alta al usuario. intente de nuevo');
    }
 
    public function create()

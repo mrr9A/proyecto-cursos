@@ -7,7 +7,7 @@
       const char = String.fromCharCode(charCode);
       let pattern = /[a-zA-Z\s]/;
       if(e.target.id === 'codigo'){
-        pattern = /[a-zA-Z0-9\s]/
+        pattern = /[a-zA-Z0-9\s\-]/
       }
       if (!pattern.test(char)) {
         e.preventDefault();

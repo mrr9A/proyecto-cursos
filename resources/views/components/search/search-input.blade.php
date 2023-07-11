@@ -33,13 +33,9 @@
     const buscador = $('#buscador')
 
     buscador.addEventListener('keypress', (e) => {
-        // let inputValue = e.target.value;
-        // let sanitizedValue = inputValue.replace(/['"-`]/g, '');
-        // e.target.value = sanitizedValue;
-        // console.log(e.target.value)
         const charCode = e.which || e.keyCode;
         const char = String.fromCharCode(charCode);
-        const pattern = /[a-zA-Z0-9\s]/;
+        const pattern = /[a-zA-Z0-9\s\-]/;
 
         if (!pattern.test(char)) {
             e.preventDefault();

@@ -6,19 +6,21 @@
                 <div class="flex items-center mr-4">
                     <input id="red-radio" type="checkbox" value="20" name="colored-radio" checked disabled
                         class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                    <label for="red-radio" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">No aprovado</label>
+                    <label for="red-radio" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">No
+                        aprovado</label>
                 </div>
                 <div class="flex items-center mr-4">
                     <input id="green-radio" type="checkbox" value="50" name="colored-radio" checked disabled
-                        class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                        class="w-4 h-4 text-green-300 bg-gray-100 border-gray-300 focus:ring-green-300 dark:focus:ring-green-300 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                     <label for="green-radio"
                         class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">completado</label>
                 </div>
                 <div class="flex items-center mr-4">
-                    <input checked id="purple-racheckboxdio" type="checkbox" value="60" name="colored-radio" checked disabled
-                        class="w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                    <label for="purple-radio"
-                        class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">En progreso</label>
+                    <input checked id="purple-racheckboxdio" type="checkbox" value="60" name="colored-radio" checked
+                        disabled
+                        class="w-4 h-4 text-yellow-300 bg-gray-100 border-gray-300 focus:ring-yellow-300 dark:focus:ring-yellow-300 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                    <label for="purple-radio" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">En
+                        progreso</label>
                 </div>
             </div>
         </div>
@@ -67,7 +69,8 @@
 
                 {{-- paginas --}}
                 @if ($empleados['links']['paginator']->currentPage() != 1)
-                    <a href="{{ $empleados['links']['paginator']->url(1) }}" class="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">1</a>
+                    <a href="{{ $empleados['links']['paginator']->url(1) }}"
+                        class="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">1</a>
                 @endif
 
 
@@ -77,8 +80,8 @@
                 @endforeach
 
                 @if ($empleados['links']['paginator']->currentPage() != $empleados['links']['paginator']->lastPage())
-                
-                    <a href="{{ $empleados['links']['paginator']->url($empleados['links']['paginator']->lastPage())}}" class="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">{{$empleados['links']['paginator']->lastPage()}}</a>
+                    <a href="{{ $empleados['links']['paginator']->url($empleados['links']['paginator']->lastPage()) }}"
+                        class="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">{{ $empleados['links']['paginator']->lastPage() }}</a>
                 @endif
 
                 <!-- Enlace a la siguiente página -->
@@ -148,11 +151,15 @@
                         </div>
                     </td>
                     <td class="w-full h-full grid grid-cols-[repeat(auto-fit,minmax(120px,1fr))] m-0 p-0">
-                            <x-tables.table-curses-tecnica :empleado="$empleado" :id="$empleado->id_usuario" :keys="$keys" />
+                        <x-tables.table-curses-tecnica :empleado="$empleado" :id="$empleado->id_usuario" :keys="$keys" />
                     </td>
-                    <td>
-                        <a href="{{route("matrices.show", $empleado->id_usuario)}}">
-                            <i class='bx bx-show-alt' ></i>
+                    <td class="bg-primary text-white text-center hover:bg-blue-800 font-semi-bold">
+                        <a href="{{ route('matrices.show', $empleado->id_usuario) }}"
+                            class="inline-block  detail @if (count($empleado->trabajos[$empleado->puesto][0]['cursos']) > 0) h-auto @endif ">
+                            <i class='bx bx-show-alt @if (count($empleado->trabajos[$empleado->puesto][0]['cursos']) > 0) detail @endif bx-rotate-90'></i>
+                            @if (count($empleado->trabajos[$empleado->puesto][0]['cursos']) > 0)
+                                detalle
+                            @endif
                         </a>
                     </td>
                 </tr>

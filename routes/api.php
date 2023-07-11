@@ -97,9 +97,9 @@ Route::get('buscador', [ApiController::class, 'buscar']);
 // prueba
 // http://localhost:8000/api/cursosxplanes/1
 Route::get('cursosplanta/cursosxplanes/{id}', function (Request $request, $id) {
-    // $buscar = $request->buscador;
+    $buscar = $request->buscador;
     // return $id;
-    $data = Curso::getCursesAsigned($id);
+    $data = Curso::getCursesAsigned($buscar,$id);
     return response()->json($data);
 });
 

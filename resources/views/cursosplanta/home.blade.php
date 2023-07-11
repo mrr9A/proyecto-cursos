@@ -200,7 +200,7 @@
                     <h2 class="text-section-subtitle font-bold">Puestos</h2>
                     <div>
                         <table class="min-w-full leading-normal my-2">
-                            <thead class="border-b  dark:border-neutral-500 uppercase">
+                            <thead class="border-b  dark:border-neutral-500 uppercase ">
                                 <tr class="px-5 border-b-2 border-gray-200 bg-blue-200 text-left text-base font-semibold text-gray-600 uppercase tracking-wider">
                                     <th class="px-6 py-2">Puesto</th>
                                     <th>numero de empleados</th>

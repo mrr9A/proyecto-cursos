@@ -1,31 +1,5 @@
-<x-app title="Cursos">
+<x-app title="Cursos planta">
     <div>
-        <div class="contain-modalidad-tipo-curso flex flex-wrap gap-6 justify-between">
-            <div>
-                <div class="flex gap-2 items-center">
-                    <p class="font-bold">modalidades</p>
-                    <x-modal title="Crear modalidad" textButton="" id="crear_modalidad"
-                        vistaContenidoModal="cursosplanta.modalidad.create" class="text-blue-800 hover:text-blue-700 " />
-                </div>
-                <div class="flex flex-wrap gap-2">
-                    @foreach ($modalidad as $modalidad)
-                        <span class="text-gray-600 bg-gray-100 rounded-md py-1 px-2">{{ $modalidad->modalidad }}</span>
-                    @endforeach
-                </div>
-            </div>
-            <div>
-                <div class="flex gap-2 items-center">
-                    <p class="font-bold">Tipos de curso</p>
-                    <x-modal title="Crear tipo curso" textButton="" id="crear_tipo_curso"
-                        vistaContenidoModal="cursosplanta.tipos.create" class="text-blue-800 hover:text-blue-700" />
-                </div>
-                <div class="flex flex-wrap gap-2">
-                    @foreach ($tipos as $tipo)
-                        <span class="text-gray-600 bg-gray-100 rounded-md py-1 px-2">{{ $tipo->nombre }}</span>
-                    @endforeach
-                </div>
-            </div>
-        </div>
 
         <div class="mt-4">
             <div class="flex gap-2 items-center">
@@ -57,7 +31,7 @@
 
         <x-loader.loader />
     </div>
-
+    <script src="{{ asset('js/utils/validarInputs.js') }}"></script>
     <script>
         const btnsEditar = $$(".cursos");
         const contentModal = $("#content_modal");
@@ -86,21 +60,17 @@
                 })
 
                 contenido = `
-                <div class="m-auto my-auto w-[50%] h-[80%] bg-white rounded-md py-4 px-3 overflow-auto">
-                    <form id="update_curso" method="POST"  class=" bg-white">
+                <div class="m-auto my-auto w-[40%] h-[70%] bg-white rounded-md py-4 px-3 overflow-auto flex">
+                    <form id="update_curso" method="POST"  class=" bg-white" class="flex flex-col flex-grow h-full">
                     @method('POST')
                     @csrf
-                        <div id="container_cursos" class="w-full gap-3">
+                        <div id="container_cursos" class="w-full gap-3 ">
                             <div id="curso_1" class="grid grid-cols-2 gap-3 w-full border-[1px]">
                                 <h2 class="col-span-2 py-1 px-2 bg-blue-200">Actualizar curso</h2>
                                 <x-input-text text="Nombre" nombre="nombre" placeholder="nombre" required
                                     classLabel="text-base" mensaje="nombre" value='${data.curso.nombre}' />
                                 <x-input-text text="codigo" nombre="codigo" placeholder="codigo "
                                     classLabel="text-base" mensaje="codigo" value='${data.curso.codigo}'/>
-                                <x-input-text type="date" text="Fecha inicio" nombre="fecha_inicio"
-                                    placeholder="fecha_inicio " classLabel="text-base" mensaje="fecha_inicio" value='${data.curso.fecha_inicio}'/>
-                                <x-input-text type="date" text="Fecha Termino" nombre="fecha_termino" value='${data.curso.fecha_termino}'
-                                    placeholder="fecha_termino" classLabel="text-base" mensaje="fecha_termino"/>
                                 
                                     {{-- SELECTS --}}
 
@@ -135,6 +105,7 @@
                 `
 
                 contentModal.innerHTML = contenido
+                validarInputs()
 
                 const updateForm = $('#update_curso')
                 updateForm.addEventListener('submit', (e) => {

@@ -5,6 +5,10 @@ namespace App\Exports;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\Style\Style;
 use PhpOffice\PhpSpreadsheet\Style\Color;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
+use PhpOffice\PhpSpreadsheet\Style\Border;
+use PhpOffice\PhpSpreadsheet\Style\Font;
+
 use Maatwebsite\Excel\Concerns\WithDefaultStyles;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use Maatwebsite\Excel\Concerns\WithBackgroundColor;
@@ -12,11 +16,11 @@ use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Concerns\WithColumnWidths;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 
-
+use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\FromArray;
 
-class ReportExport implements FromArray, WithHeadings, WithDefaultStyles, WithBackgroundColor, WithStyles, ShouldAutoSize
+class ReportExport implements FromArray, WithHeadings, WithDefaultStyles, WithBackgroundColor, WithStyles, ShouldAutoSize, WithMapping
 {
 
 
@@ -32,18 +36,45 @@ class ReportExport implements FromArray, WithHeadings, WithDefaultStyles, WithBa
     return $this->usuarios;
   }
 
+
+  public function map($usuarios): array
+  {
+    $estado = "en progreso";
+    if ($usuarios->estado == 1 && $usuarios->valor == 100) {
+      $estado = "aprovado";
+    }
+    if ($usuarios->estado === 0) {
+      $estado = "reprovado";
+    }
+
+    $progreso = $usuarios->valor === null ? 0 : $usuarios->valor;
+    return [
+      $usuarios->id_usuario,
+      $usuarios->id_sgp,
+      $usuarios->id_sumtotal,
+      $usuarios->sucursal,
+      $usuarios->empleado,
+      $usuarios->puesto,
+      $usuarios->trabajo,
+      $usuarios->curso,
+      $progreso,
+      $estado,
+    ];
+  }
+
   public function headings(): array
   {
     return [
       '#',
-      'SUCURSAL',
-      'EMPLEADO',
       'ID SGP',
       'ID SUMTOTAL',
+      'SUCURSAL',
+      'EMPLEADO',
       'PUESTO',
       'TRABAJO',
       'CURSO',
-      'CALIFICACION',
+      'PROGRESO',
+      'ESTADO',
     ];
   }
 
@@ -63,13 +94,6 @@ class ReportExport implements FromArray, WithHeadings, WithDefaultStyles, WithBa
 
   public function backgroundColor()
   {
-    // Return RGB color code.
-    // return '000000';
-
-    // Return a Color instance. The fill type will automatically be set to "solid"
-    // return new Color(Color::COLOR_BLUE);
-
-    // Or return the styles array
     return [
       //  'fillType'   => Fill::FILL_GRADIENT_LINEAR,
       'fillType'   => Fill::FILL_SOLID,
@@ -82,21 +106,29 @@ class ReportExport implements FromArray, WithHeadings, WithDefaultStyles, WithBa
   {
 
     $this->applyConditionalFormatting($sheet);
+    $sheet->getStyle('A1:I1')->getFont()->setBold(true)->setSize(12);
+    $sheet->getStyle('A1:I1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('0000FF');
+
+
+    // Aplicar estilo de bordes a las celdas con datos
+    $sheet->getStyle('A1:J' . ($sheet->getHighestRow()))
+      ->getBorders()->getAllBorders()->setBorderStyle(Border::BORDER_THIN);
+
     return [
-      // Style the first row as bold text.
-      1    => [
-        'font' => ['bold' => true, 'size' => 12],
+      // Estilo para la primera fila (encabezados)
+      1 => [
+        'font' => [
+          'bold' => true,
+          'size' => 12,
+          'color' => ['rgb' => 'FFFFFF'], // Color blanco
+        ],
         'fill' => [
-          'type' => Fill::FILL_SOLID,
-          'color' => ['rgb' => 'FFFF00'], // Color rojo
+          'fillType' => Fill::FILL_SOLID,
+          'startColor' => [
+            'argb' => '0000FF', // Color azul
+          ],
         ],
       ],
-
-      // Styling a specific cell by coordinate.
-      // 'B2' => ['font' => ['italic' => true]],
-
-      // // Styling an entire column.
-      // 'C'  => ['font' => ['size' => 16]],
     ];
   }
 

@@ -9,7 +9,7 @@
     <select {{ $required ?? '' ? 'required' : '' }}
         class="bg-gray-50 border-[2px] border-input text-gray-900  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-2 py-1 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
         value="rol" id="{{ $name ?? $id }}"name="{{ $name }}" required>
-        <option class="text-gray-400">{{ $textOptionDefault }}</option>
+        <option value="" class="text-gray-400" disabled>{{ $textOptionDefault }}</option>
 
 
         @foreach ($opciones as $opcion)

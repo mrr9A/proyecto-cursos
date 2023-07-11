@@ -29,8 +29,8 @@
             </header>
         </div>
         <div class="flex flex-grow overflow-x-auto">
-            <main class=" h-full m-auto px-4 relative  overflow-x-auto min-w-[100%] z-20">
-                <div class="flex items-center justify-between border-b-[1px] border-nav mb-5">
+            <main class="min-h-full h-full m-auto px-4 relative  overflow-x-auto min-w-[100%] z-20">
+                <div class="flex items-center justify-between border-b-[1px] border-nav mb-5 h-[50px]">
                     @if(is_null(($class ?? null)))
                     <h1 class="uppercase font-bold text-title ">{{ $title ?? 'INICIO' }}</h1>
                     @else

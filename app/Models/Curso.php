@@ -80,9 +80,9 @@ class Curso extends Model
             )
             ->leftjoin("modalidad_cursos as mc", "c.modalidad_id", "=", "mc.id_modalidad")
             ->leftjoin("tipo_cursos as tc", "c.tipo_curso_id", "=", "tc.id_tipo_curso")
+            ->Where('c.interno_planta', '=', 0)
             ->Where(function ($q) use ($buscar) {
-                $q->Where('c.interno_planta', '=', 0)
-                    ->Where('tc.nombre', 'like', $buscar . "%")
+                $q->Where('tc.nombre', 'like', $buscar . "%")
                     ->orWhere('mc.modalidad', 'like', $buscar . "%")
                     ->orWhere('c.codigo', 'like', $buscar . "%")
                     ->orWhere('c.nombre', 'like', $buscar . "%");
@@ -111,9 +111,9 @@ class Curso extends Model
             ->join("modalidad_cursos as mc", "c.modalidad_id", "=", "mc.id_modalidad")
             ->join("tipo_cursos as tc", "c.tipo_curso_id", "=", "tc.id_tipo_curso")
             ->where("trabajos_cursos.trabajo_id", '=', $puesto)
+            ->Where('c.interno_planta', '=', 0)
             ->Where(function ($q) use ($buscar) {
-                $q->Where('c.interno_planta', '=', 0)
-                    ->Where('tc.nombre', 'like', $buscar . "%")
+                $q->Where('tc.nombre', 'like', $buscar . "%")
                     ->orWhere('mc.modalidad', 'like', $buscar . "%")
                     ->orWhere('c.codigo', 'like', $buscar . "%")
                     ->orWhere('c.nombre', 'like', $buscar . "%");
@@ -135,9 +135,9 @@ class Curso extends Model
             ->join("modalidad_cursos as mc", "c.modalidad_id", "=", "mc.id_modalidad")
             ->join("tipo_cursos as tc", "c.tipo_curso_id", "=", "tc.id_tipo_curso")
             ->whereNotIn("id_curso", $idsCursosAsignado)
+            ->Where('c.interno_planta', '=', 0)
             ->Where(function ($q) use ($buscar) {
-                $q->Where('c.interno_planta', '=', 0)
-                    ->Where('tc.nombre', 'like', $buscar . "%")
+                $q->Where('tc.nombre', 'like', $buscar . "%")
                     ->orWhere('mc.modalidad', 'like', $buscar . "%")
                     ->orWhere('c.codigo', 'like', $buscar . "%")
                     ->orWhere('c.nombre', 'like', $buscar . "%");
@@ -150,7 +150,7 @@ class Curso extends Model
         return $cursos;
     }
 
-    public static function getCursesAsigned($trabajo)
+    public static function getCursesAsigned($buscar, $trabajo)
     {
         // retorna los cursos del dependiendo el trabajo
         $cursosAsignados = DB::table("trabajos_cursos")->select(
@@ -166,13 +166,13 @@ class Curso extends Model
             ->join("modalidad_cursos as mc", "c.modalidad_id", "=", "mc.id_modalidad")
             ->join("tipo_cursos as tc", "c.tipo_curso_id", "=", "tc.id_tipo_curso")
             ->where("trabajos_cursos.trabajo_id", '=', $trabajo)
-            // ->Where(function ($q) use ($buscar) {
-            //     $q->Where('c.interno_planta', '=', 0)
-            //         ->Where('tc.nombre', 'like', $buscar . "%")
-            //         ->orWhere('mc.modalidad', 'like', $buscar . "%")
-            //         ->orWhere('c.codigo', 'like', $buscar . "%")
-            //         ->orWhere('c.nombre', 'like', $buscar . "%");
-            // })
+            ->Where('c.interno_planta', '=', 0)
+            ->Where(function ($q) use ($buscar) {
+                $q->Where('tc.nombre', 'like', $buscar . "%")
+                    ->orWhere('mc.modalidad', 'like', $buscar . "%")
+                    ->orWhere('c.codigo', 'like', $buscar . "%")
+                    ->orWhere('c.nombre', 'like', $buscar . "%");
+            })
             ->where("c.estado", '=', 1)
             ->orderBy("trabajo_id", "asc")
             ->get();
@@ -189,21 +189,21 @@ class Curso extends Model
         )
             ->join("modalidad_cursos as mc", "c.modalidad_id", "=", "mc.id_modalidad")
             ->join("tipo_cursos as tc", "c.tipo_curso_id", "=", "tc.id_tipo_curso")
+            ->Where('c.interno_planta', '=', 0)
             ->whereNotIn("id_curso", $idsCursosAsignado)
-            // ->Where(function ($q) use ($buscar) {
-            //     $q->Where('c.interno_planta', '=', 0)
-            //         ->Where('tc.nombre', 'like', $buscar . "%")
-            //         ->orWhere('mc.modalidad', 'like', $buscar . "%")
-            //         ->orWhere('c.codigo', 'like', $buscar . "%")
-            //         ->orWhere('c.nombre', 'like', $buscar . "%");
-            // })
+            ->Where(function ($q) use ($buscar) {
+                $q->Where('tc.nombre', 'like', $buscar . "%")
+                    ->orWhere('mc.modalidad', 'like', $buscar . "%")
+                    ->orWhere('c.codigo', 'like', $buscar . "%")
+                    ->orWhere('c.nombre', 'like', $buscar . "%");
+            })
             ->where("c.estado", '=', 1)
             ->get();
 
-            return [
-                "cursosPorTrabajo" => $cursosAsignados,
-                "cursosDisponibles" => $cursosDisponibles,
-            ];
+        return [
+            "cursosPorTrabajo" => $cursosAsignados,
+            "cursosDisponibles" => $cursosDisponibles,
+        ];
     }
 
     public static function getAllCursoSS($buscar = "")

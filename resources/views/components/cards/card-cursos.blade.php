@@ -1,4 +1,4 @@
-<div class="relative bg-white text-black rounded-md  px-2.5 pt-3.5">
+<div class="relative bg-white text-black rounded-md  px-2.5 pb-3.5">
     <p class="mt-2">{{ $curso->nombre }}</p>
     <span class="text-sm ">{{ $curso->codigo }}</span>
 
