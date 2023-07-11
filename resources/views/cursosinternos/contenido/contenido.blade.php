@@ -1,4 +1,3 @@
-
 <x-app title="Contenido">
 <div class="container mt-2 mx-3">
     <div class="row mb-12">

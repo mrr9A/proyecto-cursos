@@ -79,6 +79,32 @@
 
 </x-app>
 
+<script>
+    const fileInput = document.getElementById('file-upload');
+
+    // Agregar evento change al elemento de entrada de archivo
+    fileInput.addEventListener('change', () => {
+        // Obtener el archivo seleccionado
+        const file = fileInput.files[0];
+
+        // Verificar el tamaño del archivo en bytes
+        const fileSize = file.size;
+
+        // Definir el tamaño máximo permitido en bytes (50 MB)
+        const maxSize = 50 * 1024 * 1024;
+
+        // Validar el tamaño del archivo
+        if (fileSize > maxSize) {
+            // El archivo excede el tamaño máximo permitido
+            alert('El archivo seleccionado es demasiado grande. Por favor, selecciona un archivo más pequeño.');
+            // Limpiar el campo de entrada de archivo
+            fileInput.value = '';
+        } else {
+            // El tamaño del archivo es válido, puedes continuar con el envío del formulario o realizar otras acciones
+        }
+    });
+</script>
+
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 @if (session('agregado') == 'Agregado Correctamente')
