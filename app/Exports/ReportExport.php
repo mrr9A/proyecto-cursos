@@ -41,10 +41,10 @@ class ReportExport implements FromArray, WithHeadings, WithDefaultStyles, WithBa
   {
     $estado = "en progreso";
     if ($usuarios->estado == 1 && $usuarios->valor == 100) {
-      $estado = "aprovado";
+      $estado = "aprobado";
     }
     if ($usuarios->estado === 0) {
-      $estado = "reprovado";
+      $estado = "reprobado";
     }
 
     $progreso = $usuarios->valor === null ? 0 : $usuarios->valor;
