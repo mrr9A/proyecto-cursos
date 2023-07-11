@@ -1,4 +1,4 @@
-<x-app>
+<x-app title="Editar Lección">
 
     <div class="container mt-2 mx-3">
         <div class="row mb-12">

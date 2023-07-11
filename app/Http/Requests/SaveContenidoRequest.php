@@ -63,6 +63,7 @@ class SaveContenidoRequest extends FormRequest
             // VALIDACION DE IMAGEN
             'url.required' => 'El campo ARCHIVO es obligatorio.',
             'url.mimes' => 'El campo ARCHIVO debe ser formato pdf,txt,jpg,jpeg,png,gif.',
+            'url.max' => 'El campo ARCHIVO debe ser menor a 50MB.',
 
         ];
     }

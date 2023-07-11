@@ -27,6 +27,10 @@ class ReporteCursoInternoController extends Controller
             $calificacionesCursos = [];
 
             foreach ($cursoS->usersSSS as $usuario) {
+                foreach ($usuario->sucursales as $sucursal) {
+                    $sucursalUser = $sucursal->nombre;
+                }
+
                 foreach ($usuario->cursos as $cursoUser) {
                     if ($cursoUser->id_curso == $cursoS->id_curso) {
                         $calificacionTotal = 0;
@@ -93,6 +97,7 @@ class ReporteCursoInternoController extends Controller
                         }
 
                         $calificacionesCursos[] = [
+                            'sucursal' => $sucursalUser,
                             'cursoC' => $cursoS->codigo,
                             'cursoN' => $cursoS->nombre,
                             'usuarioN' => $usuario->nombre,

@@ -1,18 +1,14 @@
-<x-app>
-    <div class="container mt-2 mx-3">
-        <div class="row mb-12">
-            <div class="col-lg-12 mb-6 mb-lg-0 position-relative">
-                <div class="card p-5  text-center">
-                    <div class="card-header">
-                        <h2 class="text-subtitle font-bold tracking-tight text-gray-900">BIENVENIDO ES MOMENTO DE AGREGAR
-                            CONTENIDO AL CURSO</h2><br>
-                        <h3 class="text-subtitle font-bold tracking-tight text-dark-500">En este apartado se agregará el
-                            contenido</h3><br>
-                        <h5 class="text-section-subtitle font-bold tracking-tight text-gray-600"><span>Siga los Pasos
-                                para crear corectamente el contenido</span></h5>
-                        <h5 class="text-section-subtitle font-bold tracking-tight text-gray-600"><span>Comencemos</span>
-                            ...</h5>
-                    </div>
+
+<x-app title="Contenido">
+<div class="container mt-2 mx-3">
+    <div class="row mb-12">
+        <div class="col-lg-12 mb-6 mb-lg-0 position-relative">
+            <div class="card p-5  text-center">
+                <div class="card-header">
+                    <h2 class="text-subtitle font-bold tracking-tight text-gray-900">BIENVENIDO ES MOMENTO DE AGREGAR CONTENIDO AL CURSO</h2><br>
+                    <h3 class="text-subtitle font-bold tracking-tight text-dark-500">En este apartado se agregará el contenido</h3><br>
+                    <h5 class="text-section-subtitle font-bold tracking-tight text-gray-600"><span>Siga los Pasos para crear corectamente el contenido</span></h5>
+                    <h5 class="text-section-subtitle font-bold tracking-tight text-gray-600"><span>Comencemos</span> ...</h5>
                 </div>
                 <br>
                 <form action="{{ url('contenidos') }}" method="POST" class="card" enctype="multipart/form-data">

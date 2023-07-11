@@ -1,11 +1,11 @@
-<x-app>
+<x-app title="Editar Examen">
     <form action="{{url('examenes',[$examen])}}" method="POST" class="card col-11 mx-6">
         @csrf
         @method("PUT")
         <div class="col-11">
             <div class="col-11 mx-6">
                 <br>
-                <h3 class="font-semi-bold">Información General del Contenido</h3>
+                <h3 class="font-semi-bold">Información General del Examen</h3>
                 <br>
                 <input hidden type="text" rows="3" name="contenido_id" value="{{$id}}" required>
                 <input hidden type="text" rows="3" name="id_examen" value="{{$examen[0]->id_examen}}" required>
@@ -117,5 +117,29 @@
 
         preguntasDiv.appendChild(nuevaPregunta);
         contadorPreguntas++;
+    });
+</script>
+
+<script>
+    const inputsTexts = $$("input[type='text']")
+    inputsTexts.forEach(element => {
+        element.addEventListener('keypress', (e) => {
+
+            const charCode = e.which || e.keyCode;
+            const char = String.fromCharCode(charCode);
+            const pattern = /[a-zA-Z0-9\s\-+]/
+
+            if (!pattern.test(char)) {
+                e.preventDefault();
+            }
+        })
+
+        element.addEventListener('input', function() {
+            const maxLength = 254; // Define la longitud máxima permitida
+            console.log('holas')
+            if (element.value.length > maxLength) {
+                element.value = element.value.slice(0, maxLength); // Limita la longitud del valor
+            }
+        });
     });
 </script>
