@@ -267,7 +267,7 @@ class User extends Authenticatable
                 'puesto' => $usuario->puestos->puesto,
                 'total' => $todosCursosTotal,
                 'totalCursosPasados' => $cursosPasadosTotal,
-                'cursosEnProgreso' => count($cursosProgreso),//aqui quite esto [0]
+                'cursosEnProgreso' => count($cursosProgreso[0]),//aqui quite esto [0]
                 'promedioTotal' => $porcentaje,
             ];
         });
