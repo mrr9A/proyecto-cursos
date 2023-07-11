@@ -40,6 +40,7 @@ class ReporteCursoInternoController extends Controller
                         $examenCalifinal = 0;
                         $progresoTotal = 0;
                         $progresoLeccion2 = 0;
+                        $progresototalexamen = 0;
                         foreach ($cursoUser->lecciones as $leccion) {
                             $progresoLeccion = 0;
                             $totalContenido = $leccion->contenido->count();
