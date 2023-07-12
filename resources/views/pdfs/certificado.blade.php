@@ -2,78 +2,133 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <title>Certificado de Termino</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
+            background-color: #fff;
+            /* background-color: #063554; */
+            font-family: "Roboto", sans-serif;
         }
 
-        .container {
+        /* The card */
+        .card {
+            position: center;
+            height: 90px;
             width: 800px;
-            margin: 0 auto;
-            padding: 40px;
+            /* margin: 200px auto; */
+            background-color: #fff;
+            -webkit-box-shadow: 10px 10px 93px 0px rgba(0, 0, 0, 0.75);
+            -moz-box-shadow: 10px 10px 93px 0px rgba(0, 0, 0, 0.75);
+            box-shadow: 10px 10px 93px 0px rgba(0, 0, 0, 0.75);
         }
 
-        .header {
+        /* Image on the left side */
+        /* .thumbnail {
+            float: left;
+            position: relative;
+            left: 30px;
+            top: -30px;
+            height: 320px;
+            width: 530px;
+            -webkit-box-shadow: 10px 10px 60px 0px rgba(0, 0, 0, 0.75);
+            -moz-box-shadow: 10px 10px 60px 0px rgba(0, 0, 0, 0.75);
+            box-shadow: 10px 10px 60px 0px rgba(0, 0, 0, 0.75);
+            overflow: hidden;
+        } */
+
+        /*object-fit: cover;*/
+        /*object-position: center;*/
+        img.left {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            height: auto;
+            width: 100%;
+            -webkit-transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+        }
+
+        h1 {
+            /* padding-top: 30px; */
+            font-size: 5rem;
+            color: #063554;
+            position: center;
             text-align: center;
-            margin-bottom: 20px;
         }
 
-        .logo {
-            max-width: 200px;
-            margin-bottom: 20px;
+        h2 {
+            font-size: 1.2rem;
+            color: #063554;
+            text-align: center;
         }
 
-        .title {
-            font-size: 24px;
+        h3 {
+            font-size: 0.9rem;
+            color: #063554;
+            text-align: center;
+        }
+
+        p {
+            text-align: center;
+            position: relative;
+            font-size: 0.95rem;
+            color: #08446c;
+            font-style: italic;
             font-weight: bold;
-            margin-bottom: 10px;
         }
 
-        .subtitle {
-            font-size: 18px;
-            margin-bottom: 30px;
+        /* DATE of release*/
+        h5 {
+            font-size: 1.9rem;
+            color: #01080d;
+            text-align: center;
+            font-family: serif;
+            font-weight: bold;
         }
 
-        .content {
-            margin-bottom: 30px;
+        h6 {
+            font-size: 0.95rem;
+            color: #01080d;
         }
 
         .footer {
             text-align: center;
-            margin-top: 50px;
+            margin-top: 120px;
+        }
+        .footer1 {
+            text-align: center;
         }
 
-        .signature {
-            margin-top: 20px;
+        .clearfix::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        span{
+            font-size: 0.9rem;
         }
     </style>
 </head>
 
-<body class="bg-primary-light">
-    <div class="container">
-        <div class="header">
-            <img src="">
-            <h1 class="title">CERTIFICADO</h1>
-        </div>
-        <p class="text-center"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Volkswagen_logo_2019.svg/320px-Volkswagen_logo_2019.svg.png" width="200px" height="200px"></p>
-        <div class="content">
-            <p>La empresa Automotriz Bonn S.A DE C.V certifica que:</p>
-            @foreach($calificacionesCursos as $calificacionesCurso)
-            <h3>{{$calificacionesCurso['usuario']}} {{$calificacionesCurso['segundoNombre']}} {{$calificacionesCurso['apellidoP']}} {{$calificacionesCurso['apellidoM']}}</</h3>
-            <p>ha completado exitosamente el curso "{{$calificacionesCurso['curso']->nombre}}",obteniendo una calificación del "{{$calificacionesCurso['calificacion']}}%".</p>
-            <p>Completando exitosamente el "{{$calificacionesCurso['progreso']}}%" del curso.</p>
-        </div>
-        @endforeach
-        <div class="footer">
-            <p>Firma de la empresa</p>
-            <img class="signature">
-            <p>Fecha de emisión: {{$calificacionesCurso['fechaImpresion']}}</p>
-        </div>
+<body>
+    <h1>CERTIFICADO</h1>
+    <h2>LA EMPRESA AUTOMOTRIZ BONN S.A DE C.V</h2>
+    <h3>OTORGA A:</h3>
+    @foreach($calificacionesCursos as $calificacionesCurso)
+    <h5>{{$calificacionesCurso['usuario']}} {{$calificacionesCurso['segundoNombre']}} {{$calificacionesCurso['apellidoP']}} {{$calificacionesCurso['apellidoM']}}</h5>
+    <p>Por haber concluido satiscatoriamente el "{{$calificacionesCurso['progreso']}}%" del curso:</p>
+    <p> "{{$calificacionesCurso['curso']->nombre}}", y haber obtenido la calificación del: "{{$calificacionesCurso['calificacion']}}%".</p>
+    <div class="footer clearfix" style=" width: 100%; overflow: auto; margin-bottom: -1cm;">
+        <span class="float-left" style="float: left; width: 50%; box-sizing: border-box;">AUTOMOTRIZ BONN S.A DE C.V</span>
+        <span class="float-left" style="float: left; width: 50%; box-sizing: border-box;">{{$calificacionesCurso['usuario']}} {{$calificacionesCurso['segundoNombre']}} {{$calificacionesCurso['apellidoP']}} {{$calificacionesCurso['apellidoM']}}</span>
     </div>
+    <div class="footer1 clearfix" style=" width: 100%; overflow: auto; margin-top: -5mm;">
+        <h6 class="float-left" style="float: left; width: 50%; box-sizing: border-box;">Nombre y Firma de la empresa</h6>
+        <h6 class="float-left" style="float: left; width: 50%; box-sizing: border-box;">Nombre y Firma del Trabajador</h6>
+    </div>
+    <!-- <p>Fecha de emisión: {{$calificacionesCurso['fechaImpresion']}}</p> -->
+    @endforeach
 </body>
+
 
 </html>
