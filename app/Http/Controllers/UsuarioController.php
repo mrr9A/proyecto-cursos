@@ -136,14 +136,15 @@ class UsuarioController extends Controller
          }
       }
 
-      if (!is_null($request->trabajos)) {
+      $trabajos = $request->trabajos;
+      if (!is_null($trabajos)) {
 
-         $trabajosExisten = DB::table('usuarios_trabajos')
-            ->whereIn('trabajo_id', $request->trabajos)
-            ->where('usuario_id', $usuario->id_usuario)
-            ->exists();
+         // $trabajosExisten = DB::table('usuarios_trabajos')
+         //    ->whereIn('trabajo_id', $trabajos)
+         //    ->where('usuario_id', $usuario->id_usuario)
+         //    ->exists();
 
-         if (!$trabajosExisten) {
+         // if (!$trabajosExisten) {
             DB::table("usuarios_trabajos")
                ->where("usuario_id", $usuario->id_usuario)
                ->delete();
@@ -156,7 +157,7 @@ class UsuarioController extends Controller
                array_push($data, $consulta);
             }
             DB::table("usuarios_trabajos")->insert($data);
-         }
+         // }
 
          return redirect()->route("usuarios.index")->with('success', 'usuario actualizado correctamente!');
       }

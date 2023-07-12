@@ -138,24 +138,26 @@
                     </td>
 
                     <td class="py-2 px-2.5 uppercase text-sm border-r-2">{{ $empleado->puesto ?? 'sin puesto' }}</td>
-                    <td class="w-1/12 h-full  border-r-2">
-                        <div class="flex flex-col justify-evenly flex-1 h-full ">
+                    <td class="w-1/12 h-full  border-r-2 relative">
+                        <div class="absolute top-0 bottom-0 left-0 right-0 flex flex-col justify-center">
                             <?php
                             $keys = array_keys($empleado->trabajos);
                             ?>
                             @foreach ($keys as $trabajo)
                                 <p
-                                    class="uppercase text-sm flex-1 border-b-[1px] border-gray-200 border-collapse py-1 px-2.5 @if ($trabajo == $empleado->puesto && count($empleado->trabajos) > 1) hidden @endif">
+                                    class="{{count($empleado->trabajos) > 1 ? 'flex-1' : ''  }} uppercase text-sm  border-t-[1px] border-gray-200 border-collapse  py-1 px-2.5 @if ($trabajo == $empleado->puesto && count($empleado->trabajos) > 1) hidden @endif">
                                     {{ $trabajo ?? 'sin trabajos' }}</p>
                             @endforeach
                         </div>
                     </td>
-                    <td class="w-full h-full grid grid-cols-[repeat(auto-fit,minmax(120px,1fr))] m-0 p-0">
-                        <x-tables.table-curses-tecnica :empleado="$empleado" :id="$empleado->id_usuario" :keys="$keys" />
+                    <td class="w-full h-full  relative inline-block">
+                        <div class="grid grid-cols-[repeat(auto-fit,minmax(120px,1fr))] m-0 p-0 ">
+                            <x-tables.table-curses-tecnica :empleado="$empleado" :id="$empleado->id_usuario" :keys="$keys" />
+                        </div>
                     </td>
                     <td class="bg-primary text-white text-center hover:bg-blue-800 font-semi-bold">
                         <a href="{{ route('matrices.show', $empleado->id_usuario) }}"
-                            class="inline-block  detail @if (count($empleado->trabajos[$empleado->puesto][0]['cursos']) > 0) h-auto @endif ">
+                            class="inline-block text-sm  detail @if (count($empleado->trabajos[$empleado->puesto][0]['cursos']) > 0) h-auto @endif ">
                             <i class='bx bx-show-alt @if (count($empleado->trabajos[$empleado->puesto][0]['cursos']) > 0) detail @endif bx-rotate-90'></i>
                             @if (count($empleado->trabajos[$empleado->puesto][0]['cursos']) > 0)
                                 detalle
