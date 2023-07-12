@@ -15,12 +15,16 @@ use Maatwebsite\Excel\Concerns\WithBackgroundColor;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Concerns\WithColumnWidths;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Maatwebsite\Excel\Concerns\WithEvents;
+use Maatwebsite\Excel\Events\AfterSheet;
+use PhpOffice\PhpSpreadsheet\Style\Conditional;
+use Maatwebsite\Excel\Concerns\Exportable;
 
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\FromArray;
 
-class ReportExport implements FromArray, WithHeadings, WithDefaultStyles, WithBackgroundColor, WithStyles, ShouldAutoSize, WithMapping
+class ReportExport implements FromArray, WithHeadings, WithDefaultStyles, WithBackgroundColor, WithStyles, ShouldAutoSize, WithMapping, WithEvents
 {
 
 
@@ -130,6 +134,29 @@ class ReportExport implements FromArray, WithHeadings, WithDefaultStyles, WithBa
         ],
       ],
     ];
+  }
+
+  // // PARA VERIFICAR EL FORMATO CONDICIONAL
+  public function registerEvents(): array
+  {
+      return [
+          AfterSheet::class => function(AfterSheet $event) {
+              $sheet = $event->sheet->getDelegate();
+  
+              // Estilo condicional para filas con el estado "aprobado"
+              $conditional = new Conditional();
+              $conditional->setConditionType(Conditional::CONDITION_EXPRESSION)
+                  ->setOperatorType(Conditional::OPERATOR_EQUAL)
+                  ->addCondition('=$J1="aprobado"') // Verifica el valor de la columna J (estado)
+                  ->getStyle()
+                  ->getFill()
+                  ->setFillType(Fill::FILL_SOLID)
+                  ->getStartColor()
+                  ->setRGB('00FF00'); // Color de fondo verde
+  
+              $sheet->getStyle('A1:J' . $sheet->getHighestRow())->setConditionalStyles([$conditional]);
+          }
+      ];
   }
 
 
