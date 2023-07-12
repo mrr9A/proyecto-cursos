@@ -116,12 +116,11 @@ class ReporteCursoInternoController extends Controller
                 }
             }
         }
-        // -------------------------------------------------------------------------------------------
         if ($request->has('export')) {
             $export = new ReportsCursosInternos($calificacionesCursos);
             return Excel::download($export, 'reporte.xlsx');
         }
-
+    
         return view('cursosinternos.reportes.reports', compact('cursos', 'calificacionesCursos'));
     }
 }
