@@ -22,17 +22,8 @@ class PlanesFormacion extends Model
 
     public static function getMatrices($buscar = "")
     {
-        $puestos = DB::table('planes_formacion as pf')
-            ->join('puestos as p', "p.plan_formacion_id", "=", "pf.id_plan_formacion")
-            ->where("area", "like", "tecnica")
-            ->pluck('id_puesto');
-        $puestos->toArray();
-
         $usuarios = User::with(['trabajos.cursos.tipo', 'calificaciones'])
             ->leftJoin('calificaciones', 'calificaciones.usuario_id', '=', 'usuarios.id_usuario')
-            // ->whereDoesntHave("puestos", function ($query) use ($puestos) {
-            //     $query->whereIn("puesto_id", $puestos);
-            // })
             ->where(function ($q) use ($buscar) {
                 $q->where(function ($innerQuery) use ($buscar) {
                     $innerQuery->where('usuarios.nombre', 'like', $buscar . "%")
@@ -48,6 +39,7 @@ class PlanesFormacion extends Model
                     ->orWhere('usuarios.id_sumtotal', 'like', $buscar . "%");
             })
             ->where("usuarios.estado", '=', 1)
+            ->where("usuarios.rol", '=', 1)
 
             ->select(
                 DB::raw("CONCAT(nombre, ' ', IFNULL(segundo_nombre, ''), ' ', apellido_paterno, ' ', IFNULL(apellido_materno, '')) AS empleado"),

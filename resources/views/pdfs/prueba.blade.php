@@ -43,14 +43,17 @@
         background-color: rgb(17, 17, 17);
         color: white;
     }
+    tbody{
+        text-transform: uppercase;
+        font-size: 12px;
+    }
 
     th {
         text-align: left;
     }
 
-    tr {
+    td{
         padding: 2mm;
-
     }
 
     tr>td:last-child() {
@@ -203,8 +206,8 @@
         </div>
 
         <div>
-            <h1>{{ $data->nombre }}</h1>
-            <h2>{{ $data->puesto }}</h2>
+            <h1 class="title">{{ $data->nombre }}</h1>
+            <h2 style="text-transform: uppercase">{{ $data->puesto }}</h2>
         </div>
 
         <div class="container-check">
@@ -226,7 +229,7 @@
 
     <main>
         @foreach ($data->trabajos as $trabajo)
-            <h3 style="margin:0mm 0mm 2mm 0mm;">Trabajo: {{ $trabajo['trabajo'] }}</h3>
+            <h3 style="margin:2mm 0mm 0mm 0mm; text-transform: uppercase;">Trabajo: {{ $trabajo['trabajo'] }}</h3>
             <?php
             // iniciales, especialidad,..etc
             $keys = array_keys($trabajo['cursos']->toArray());
@@ -246,7 +249,7 @@
                             <th>Cursos</th>
                             <th>tipo</th>
                             <th>progreso</th>
-                            <th>estado</th>
+                            <th style="text-align: center;">estado</th>
                         </tr>
                     </thead>
                     <tbody>
