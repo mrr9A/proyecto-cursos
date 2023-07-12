@@ -44,6 +44,7 @@ class CursosController extends Controller
         $buscar1 = $request->input('buscar1');
         $cursoId1 = $request->input('curso_id2');
         $curso = Curso::find($id);
+        $usuariosS = $curso->usuarioCurso()->paginate(10);
         $categoria = Categoria::all();
         $modalidad = ModalidadCurso::all();
         $tipo = TipoCurso::all();
@@ -76,7 +77,7 @@ class CursosController extends Controller
 
         $usuarios = User::all();
 
-        return view('Cursosinternos.cursos.configurarCursos', compact('curso', 'modalidad', 'tipo', 'usuarios', 'categoria', 'resultados','resultados2'));
+        return view('Cursosinternos.cursos.configurarCursos', compact('curso', 'modalidad', 'tipo', 'usuarios', 'categoria', 'resultados','resultados2','usuariosS'));
     }
 
 

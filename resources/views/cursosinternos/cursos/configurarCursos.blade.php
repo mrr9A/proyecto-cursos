@@ -8,30 +8,45 @@
         <!-- CUERPO DE TODO INFORMACION DEL CURSO, LECCIONES. CONTENIDO -->
         <div class="w-full p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
             <!-- OPCIONES -->
-            <div class="flex justify-start mx-12 items-center">
-                <x-modal title="EDITAR CURSO" textButton="Editar Información Curso" id="editar_curso_interno" vistaContenidoModal="cursosinternos.cursos.editarCurso" :curso="$curso" :modalidad="$modalidad" :categoria="$categoria" :tipo="$tipo" />
-                <div>
-                    <form action="{{url('Lecciones',[$curso])}}">
-                        <button class="block text-gray-50 bg-blue-800 border-b-2 border-2 rounded-md  focus:outline-none  font-medium text-sm px-5 py-2.5 text-center hover:bg-blue-900 hover:text-gray-200 hover:rounded-t-md">Agregar una Lección</button>
-                    </form>
+            <div class="flex justify-end">
+                <button id="dropdownButton1" data-dropdown-toggle="dropdown1" class="flex items-center text-input font-semi-bold dark:text-gray-400 hover:bg-gray-300 dark:hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg p-1.5" type="button">
+                    <span>Opciones</span>
+                    <span class="justify-end">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 16 16">
+                            <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
+                                <circle cx="8" cy="2.5" r=".75" />
+                                <circle cx="8" cy="8" r=".75" />
+                                <circle cx="8" cy="13.5" r=".75" />
+                            </g>
+                        </svg>
+                    </span>
+                </button>
+                <!-- Dropdown menu -->
+                <div id="dropdown1" class=" hidden z-50 text-base list-none  divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+                    <ul class="py-2" aria-labelledby="dropdownButton1">
+                        <li class="justify-center">
+                            <x-modal title="EDITAR CURSO" textButton="Editar Información Curso" id="editar_curso_interno" vistaContenidoModal="cursosinternos.cursos.editarCurso" :curso="$curso" :modalidad="$modalidad" :categoria="$categoria" :tipo="$tipo" />
+                            <form action="{{url('Lecciones',[$curso])}}">
+                                <button class="block text-gray-50 bg-blue-800 border-b-2 border-2 rounded-md  focus:outline-none  font-medium text-sm px-5 py-2.5 text-center hover:bg-blue-900 hover:text-gray-200 hover:rounded-t-md">Agregar una Lección</button>
+                            </form>
+                            @if(count($curso->examen) > 0 )
+                            <form action="{{url('examenes',[$curso->examen[0]->id_examen])}}" method="POST" id="" class="text-secondary formulario-eliminarEx">
+                                @method("DELETE")
+                                @csrf
+                                <button class="block text-gray-50 bg-red-800 border-b-2 border-2 rounded-md  focus:outline-none  font-medium text-sm px-5 py-2.5 text-center hover:bg-blue-900 hover:text-gray-200 hover:rounded-t-md">Eliminar Examen Final</button>
+                            </form>
+                            <a href="{{route('verExFinalMedit',$curso->id_curso)}}" class="block text-gray-50 bg-blue-800 border-b-2 border-2 rounded-md  focus:outline-none  font-medium text-sm px-5 py-2.5 text-center hover:bg-blue-900 hover:text-gray-200 hover:rounded-t-md">
+                                <span class="text-center">Editar Examen Final</span>
+                            </a>
+                            @else
+                            <form action="{{  route('newExamen',[$curso]) }}">
+                                <button class="block text-gray-50 bg-blue-800 border-b-2 border-2 rounded-md  focus:outline-none  font-medium text-sm px-5 py-2.5 text-center hover:bg-blue-900 hover:text-gray-200 hover:rounded-t-md">Agregar Examen Final</button>
+                            </form>
+                            @endif
+                        </li>
+                    </ul>
                 </div>
-                <div class="flex">
-                    @if(count($curso->examen) > 0 )
-                    <form action="{{url('examenes',[$curso->examen[0]->id_examen])}}" method="POST" id="" class="text-secondary formulario-eliminarEx">
-                        @method("DELETE")
-                        @csrf
-                        <button class="block text-gray-50 bg-red-800 border-b-2 border-2 rounded-md  focus:outline-none  font-medium text-sm px-5 py-2.5 text-center hover:bg-blue-900 hover:text-gray-200 hover:rounded-t-md">Eliminar Examen Final</button>
-                    </form>
-                    <a href="{{route('verExFinalMedit',$curso->id_curso)}}" class="block text-gray-50 bg-blue-800 border-b-2 border-2 rounded-md  focus:outline-none  font-medium text-sm px-5 py-2.5 text-center hover:bg-blue-900 hover:text-gray-200 hover:rounded-t-md">
-                        <span class="text-center">Editar examen</span>
-                    </a>
-                    @else
-                    <form action="{{  route('newExamen',[$curso]) }}">
-                        <button class="block text-gray-50 bg-blue-800 border-b-2 border-2 rounded-md  focus:outline-none  font-medium text-sm px-5 py-2.5 text-center hover:bg-blue-900 hover:text-gray-200 hover:rounded-t-md">Agregar Examen Final</button>
-                    </form>
-                    @endif
-                </div>
-            </div><br>
+            </div>
             <!-- FIN -->
             <div class="p-2 bg-white border border-gray-200 rounded-lg shadow mx-12 text-center">
                 <img src="{{$curso['imagen']}}" class="rounded-full w-96 h-96 inline-block object-cover" width="350" height="350">
@@ -235,7 +250,7 @@
                         <div class="flex justify-between px-4 items-center overflow-auto gap-3">
                             <div class="p-6  border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                                 <h5 class="mb-2 text-2xl font-bold tracking-tight text-center text-gray-900 dark:text-white">DESCRIPCIÓN DEL CURSO:</h5>
-                                <p>Este es el Examen final del curso: <span class="font-bold">{{$curso->nombre}}</span>  este examen tiene un valor del <span class="font-bold">40%</span> de la calificación final del curso.</p>
+                                <p>Este es el Examen final del curso: <span class="font-bold">{{$curso->nombre}}</span> este examen tiene un valor del <span class="font-bold">40%</span> de la calificación final del curso.</p>
                             </div>
                         </div><br>
                         <h2 class="text-center font-bold text-nav-hover">Examen final del curso:</h2><br>
@@ -311,36 +326,19 @@
                 </div>
             </div><br>
             <!-- CARD DE USUARIOS INSCRITOS -->
-            <div class="block p-6 border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+            <div class="block p-6 border  border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
                 <div class="flex justify-between px-4 items-center overflow-auto gap-3 mb-5 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
                     Usuarios Inscritos al Curso
                     <!-- OPCIONES -->
                     <div class="flex justify-end">
-                        <button id="dropdownButton1" data-dropdown-toggle="dropdown1" class="flex items-center text-input font-semi-bold dark:text-gray-400 hover:bg-gray-300 dark:hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg p-1.5" type="button">
-                            <!-- <span>Opciones</span> -->
+                        <button data-modal-target="agregar_usuario_curso_interno" data-modal-toggle="agregar_usuario_curso_interno" class="flex items-center text-input font-semi-bold dark:text-gray-400 hover:bg-gray-300 dark:hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg p-1.5" type="button">
                             <span class="justify-end">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 16 16">
-                                    <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
-                                        <circle cx="8" cy="2.5" r=".75" />
-                                        <circle cx="8" cy="8" r=".75" />
-                                        <circle cx="8" cy="13.5" r=".75" />
-                                    </g>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24">
+                                    <path fill="none" stroke="#01245a" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19c0-2.21-2.686-4-6-4s-6 1.79-6 4m16-3v-3m0 0v-3m0 3h-3m3 0h3M9 12a4 4 0 1 1 0-8a4 4 0 0 1 0 8Z" />
                                 </svg>
                             </span>
                         </button>
-                        <!-- Dropdown menu -->
-                        <div id="dropdown1" class=" hidden z-50 text-base list-none  divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
-                            <ul class="py-2" aria-labelledby="dropdownButton1">
-                                <li>
-                                    <!-- Modal toggle -->
-                                    <button data-modal-target="agregar_usuario_curso_interno" data-modal-toggle="agregar_usuario_curso_interno" class="block text-gray-50 bg-blue-800 border-b-2 border-2 rounded-md  focus:outline-none  font-medium text-sm px-5 py-2.5 text-center hover:bg-blue-900 hover:text-gray-200 hover:rounded-t-md" type="button"> Agregar Usuario al Curso
-                                    </button>
-
-                                </li>
-                            </ul>
-                        </div>
                     </div>
-                    <!-- FIN -->
                 </div>
                 <form class="flex items-center" action="{{ route('curs.show', $curso->id_curso) }}" method="GET">
                     <label for="simple-search" class="sr-only">Search</label>
@@ -360,21 +358,21 @@
                         <span class="sr-only">Search</span>
                     </button>
                 </form>
-                <div class="pt-5 pb-4 px-5 px-lg-3 px-xl-5">
+                <div class="pt-5 pb-4">
                     <ul class="list-group list-group-flush">
                         <table class="w-full text-center text-gray-500 dark:text-gray-400">
                             <thead class="text-sm text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
-                                    <th scope="col" class="py-3">
+                                    <th scope="col" class="text-sm py-3">
                                         C.SGP
                                     </th>
-                                    <th scope="col" class="px-1 py-3">
+                                    <th scope="col" class="text-sm py-3">
                                         Nombre
                                     </th>
-                                    <th scope="col" class="px-1 py-3">
+                                    <th scope="col" class="text-sm py-3">
                                         Fecha de Termino
                                     </th>
-                                    <th scope="col" class="px-1 py-3">
+                                    <th scope="col" class="text-sm py-3">
                                         Opciones
                                     </th>
                                 </tr>
@@ -384,13 +382,13 @@
                                 <h3>Resultados de la búsqueda:</h3>
                                 @foreach ($resultados2 as $resultado)
                                 <tr class=" border-b dark:bg-gray-800 text-sm dark:border-gray-800 text-center">
-                                    <td class="py-4 px-1 font-bold">
+                                    <td class="py-4 font-bold">
                                         {{$resultado->id_sgp}}
                                     </td>
                                     <td class="py-4 px-2 font-bold">
                                         {{$resultado->nombre}} {{$resultado->segundo_nombre}} {{$resultado->apellido_paterno}} {{$resultado->apellido_materno}}
                                     </td>
-                                    <td class="px-1 py-4 font-bold">
+                                    <td class="py-4 font-bold">
                                         <div>
                                             <label for="fecha_termino" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha Termino</label>
                                             <input type="date" id="fecha_termino" name="fecha_termino" @foreach($curso->usuarioCurso as $userCurso) @if($userCurso->id_usuario == $resultado->id_usuario) value="{{ $userCurso->pivot->fecha_termino ?? '' ? date('Y-m-d', strtotime($userCurso->pivot->fecha_termino ?? '')) : '' }}" @endif @endforeach class="bg-gray-50 border text-center border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required disabled>
@@ -400,21 +398,21 @@
                                         <form action="{{route('destroyuser',[$resultado])}}" method="POST" class="formulario-eliminar-User">
                                             @method("DELETE")
                                             @csrf
-                                            <button class="font-medium text-red-600 dark:text-red-500 hover:underline">Eliminar</button>
+                                            <button class="font-medium text-sm text-red-600 dark:text-red-500 hover:underline">Eliminar</button>
                                         </form>
                                     </td>
                                 </tr>
                                 @endforeach
                                 @else
-                                @foreach($curso->usuarioCurso as $userCurso)
+                                @foreach($usuariosS as $userCurso)
                                 <tr class=" border-b dark:bg-gray-800 text-sm dark:border-gray-800 text-center">
-                                    <td class="py-4 px-1 font-bold">
+                                    <td class="py-4 font-bold">
                                         {{$userCurso->id_sgp}}
                                     </td>
                                     <td class="py-4 px-2 font-bold">
                                         {{$userCurso->nombre}} {{$userCurso->segundo_nombre}} {{$userCurso->apellido_paterno}} {{$userCurso->apellido_materno}}
                                     </td>
-                                    <td class="px-1 py-4 font-bold">
+                                    <td class="py-4 font-bold">
                                         <div>
                                             <label for="fecha_termino" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha Termino</label>
                                             <input type="date" id="fecha_termino" name="fecha_termino" value="{{ $userCurso->pivot->fecha_termino ?? '' ? date('Y-m-d', strtotime($userCurso->pivot->fecha_termino ?? '')) : '' }}" class="bg-gray-50 border text-center border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required disabled>
@@ -432,6 +430,76 @@
                                 @endif
                             </tbody>
                         </table>
+                        {{-- PAGINACION --}}
+                        <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
+                            <div>
+                                {{-- $usuariosS->currentPage(): Devuelve el número de página actual.
+                    $usuariosS->perPage(): Devuelve la cantidad de resultados mostrados por página.
+                    $usuariosS->total(): Devuelve el total de resultados obtenidos. --}}
+                                <p class="text-sm text-gray-700">
+                                    Mostrando
+                                    <span class="font-medium">{{ $usuariosS->currentPage() }}</span>
+                                    a
+                                    <span class="font-medium">{{ $usuariosS->perPage() }}</span>
+                                    de
+                                    <span class="font-medium">{{ $usuariosS->total() }}</span>
+                                    resultados
+                                </p>
+                            </div>
+                            <div>
+                                <nav class="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
+
+                                    @if ($usuariosS->onFirstPage())
+                                    <a href="#" aria-label="@lang('pagination.previous')" class="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
+                                        <span class="sr-only">Previous</span>
+                                        <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                            <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
+                                        </svg>
+                                    </a>
+                                    @else
+                                    <a href="{{ $usuariosS->previousPageUrl() }}" aria-label="@lang('pagination.previous')" class="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
+                                        <span class="sr-only">Previous</span>
+                                        <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                            <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
+                                        </svg>
+                                    </a>
+                                    @endif
+
+                                    {{-- paginas --}}
+                                    <!-- @if ($usuariosS->currentPage() != 1)
+                                    <a href="{{ $usuariosS->url(1) }}" class="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">1</a>
+                                    @endif -->
+
+
+                                    @foreach ($usuariosS->getUrlRange(max(1, $usuariosS->currentPage() - 2), min($usuariosS->lastPage(), $usuariosS->currentPage() + 2)) as $page => $url)
+                                    <a href="{{ $url }}" class="{{ $usuariosS->currentPage() === $page ? 'relative z-10 inline-flex items-center bg-indigo-600 px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600' : 'relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0' }}">{{ $page }}</a>
+                                    @endforeach
+
+                                    <!-- @if ($usuariosS->currentPage() != $usuariosS->lastPage())
+                                    <a href="{{ $usuariosS->url($usuariosS->lastPage())}}" class="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">{{$usuariosS->lastPage()}}</a>
+                                    @endif -->
+
+                                    <!-- Enlace a la siguiente página -->
+                                    @if ($usuariosS->hasMorePages())
+                                    <a href="{{ $usuariosS->nextPageUrl() }}" aria-label="@lang('pagination.next')" class="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
+                                        <span class="sr-only">Next</span>
+                                        <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                            <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                                        </svg>
+                                    </a>
+                                    @else
+                                    <div aria-hidden="true" aria-label="@lang('pagination.next')" aria-disabled="true" aria-label="@lang('pagination.next')" class="disabled relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
+                                        <span class="sr-only">Next</span>
+                                        <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                            <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                    @endif
+
+                                </nav>
+                            </div>
+                        </div>
+                        {{-- FIN DE LA PAGINACION --}}
                     </ul>
                 </div>
             </div>
