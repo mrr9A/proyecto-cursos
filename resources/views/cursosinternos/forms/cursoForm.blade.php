@@ -1,4 +1,4 @@
-<x-app>
+<x-app title="CREAR CURSO">
 <div class="container">
     
     <div class="card">
