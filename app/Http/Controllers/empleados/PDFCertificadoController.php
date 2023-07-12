@@ -18,6 +18,9 @@ class PDFCertificadoController extends Controller
         $examenCalifinal = 0;
         $progresoTotal = 0;
         $curso = Curso::find($usuario);
+        if(is_null($curso)){
+            return redirect()->back();
+         }
         $usuarioNombre = Auth::user()->nombre;
         $usuarioSegundoNombre = Auth::user()->segundo_nombre;
         $usuarioApellidoPaterno = Auth::user()->apellido_paterno;
@@ -95,21 +98,5 @@ class PDFCertificadoController extends Controller
         $pdf->setPaper('letter', 'landscape');
 
         return $pdf->stream("certificado.pdf");
-        // // Access the course ratings and progress
-        // foreach ($calificacionesCursos as $calificacionesCurso) {
-        //     $curso = $calificacionesCurso['curso'];
-        //     $calificacion = $calificacionesCurso['calificacion'];
-        //     $progreso = $calificacionesCurso['progreso'];
-        //     $usua = $calificacionesCurso['usuario'];
-        //     $usuaN = $calificacionesCurso['segundoNombre'];
-        //     $usuaP = $calificacionesCurso['apellidoP'];
-        //     $usuaM = $calificacionesCurso['apellidoM'];
-
-        //     // Do something with the rating and progress of each course
-        //     echo "Curso: " . $curso->nombre . "<br>";
-        //     echo "Calificación: " . $calificacion . "<br>";
-        //     echo "Progreso: " . $progreso . "%<br><br>";
-        //     echo "usuario: " . $usua ,$usuaN, $usuaP, $usuaM. "<br><br>";
-        // }
     }
 }

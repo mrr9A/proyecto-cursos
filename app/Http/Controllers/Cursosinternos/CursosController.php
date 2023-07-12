@@ -40,24 +40,17 @@ class CursosController extends Controller
 
     public function show(Request $request, string $id)
     {
-        $searchTerm = $request->input('search');
+
         $buscar1 = $request->input('buscar1');
         $cursoId1 = $request->input('curso_id2');
         $curso = Curso::find($id);
+        if(is_null($curso)){
+           return redirect()->back();
+        }
         $usuariosS = $curso->usuarioCurso()->paginate(10);
         $categoria = Categoria::all();
         $modalidad = ModalidadCurso::all();
         $tipo = TipoCurso::all();
-        if ($searchTerm) {
-            $resultados = User::where('nombre', 'LIKE', '%' . $searchTerm . '%')
-                ->orWhere('segundo_nombre', 'LIKE', '%' . $searchTerm . '%')
-                ->orWhere('apellido_paterno', 'LIKE', '%' . $searchTerm . '%')
-                ->orWhere('apellido_materno', 'LIKE', '%' . $searchTerm . '%')
-                ->orWhere('id_sgp', 'LIKE', '%' . $searchTerm . '%')
-                ->get();
-        } else {
-            $resultados = null;
-        }
 
         if ($buscar1) {
             $resultados2 = User::whereHas('cursos', function ($query) use ($cursoId1) {
@@ -77,7 +70,7 @@ class CursosController extends Controller
 
         $usuarios = User::all();
 
-        return view('Cursosinternos.cursos.configurarCursos', compact('curso', 'modalidad', 'tipo', 'usuarios', 'categoria', 'resultados','resultados2','usuariosS'));
+        return view('Cursosinternos.cursos.configurarCursos', compact('curso', 'modalidad', 'tipo', 'usuarios', 'categoria', 'resultados2','usuariosS'));
     }
 
 
@@ -85,6 +78,9 @@ class CursosController extends Controller
     public function update(Request $request, string $id)
     {
         $curso = Curso::find($id);
+        if(is_null($curso)){
+            return redirect()->back();
+         }
         if ($request->hasFile('imagen')) {
             $img = $request->file('imagen')->store('public/imagenes');
             $url = Storage::url($img);
@@ -92,8 +88,6 @@ class CursosController extends Controller
         }
         $curso->codigo = $request->post('codigo');
         $curso->nombre = $request->post('nombre');
-        // $curso->fecha_inicio = $request->post('fecha_inicio');
-        // $curso->fecha_termino = $request->post('fecha_termino');
         $curso->estado = $request->post('estado');
         $curso->modalidad_id = $request->post('modalidad_id');
         $curso->tipo_curso_id = $request->post('tipo_curso_id');
@@ -127,6 +121,9 @@ class CursosController extends Controller
     public function destroyUser(string $id)
     {
         $user = User::find($id);
+        if(is_null($user)){
+            return redirect()->back();
+         }
         $id_user = $user->id_usuario;
         if ($user->examen()->where('usuario_id', $id_user)->exists()) {
             return redirect()->back()->with('error', 'No se puede eliminar el registro porque está asociado a otro campo');

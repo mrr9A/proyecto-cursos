@@ -79,6 +79,9 @@ class ExamenController extends Controller
     {
         $intentos = 3;
         $contenido = Contenido::find($id);
+        if(is_null($contenido)){
+            return redirect()->back();
+         }
         $examen = $contenido->examen;
         $totalPreguntas = $examen[0]->preguntas->count();
         return view('Cursosinternos.examenes.vistaExamen', compact('examen', 'intentos', 'totalPreguntas'));
@@ -88,6 +91,9 @@ class ExamenController extends Controller
     {
         $intentos = 3;
         $curso = Curso::find($id);
+        if(is_null($curso)){
+            return redirect()->back();
+         }
         $examen = $curso->examen;
         $totalPreguntas = $examen[0]->preguntas->count();
         return view('Cursosinternos.examenes.vistaExamen', compact('examen', 'intentos', 'totalPreguntas'));
@@ -96,6 +102,9 @@ class ExamenController extends Controller
     public function verExMedit(string $id)
     {
         $contenido = Contenido::find($id);
+        if(is_null($contenido)){
+            return redirect()->back();
+         }
         $examen = $contenido->examen;
         return view('Cursosinternos.examenes.editar', compact('examen', 'id'));
     }
@@ -104,6 +113,9 @@ class ExamenController extends Controller
     {
         // dd($request);
         $examen = Examen::find($request->id_examen);
+        if(is_null($examen)){
+            return redirect()->back();
+         }
 
         // Validar los datos enviados desde el formulario de edición
         $validatedData = $request->validate([
@@ -118,6 +130,9 @@ class ExamenController extends Controller
 
         foreach ($request->preguntas as $preguntaId => $preguntaData) {
             $pregunta = Pregunta::find($preguntaId);
+            if(is_null($pregunta)){
+                return redirect()->back();
+             }
             $nombrepregunta = $preguntaData['titulo'];
             $pregunta->pregunta = $nombrepregunta;
             $pregunta->saveOrFail();
@@ -131,6 +146,9 @@ class ExamenController extends Controller
                 if ($opcionCorrect == $opcionId) {
 
                     $opcion = Opcion::find($opcionId);
+                    if(is_null($opcion)){
+                        return redirect()->back();
+                     }
                     $nombreOpcion = $opcionData['titulo'];
                     // dd($nombreOpcion);
                     $opcion->opcion = $nombreOpcion;
@@ -139,6 +157,9 @@ class ExamenController extends Controller
                     continue;
                 }
                 $opcion = Opcion::find($opcionId);
+                if(is_null($opcion)){
+                    return redirect()->back();
+                 }
                 $nombreOpcion = $opcionData['titulo'];
                 $opcion->opcion = $nombreOpcion;
                 $opcion->correcta = false;
@@ -225,6 +246,9 @@ class ExamenController extends Controller
     public function destroy(string $id)
     {
         $examen = Examen::find($id);
+        if(is_null($examen)){
+            return redirect()->back();
+         }
         $id_exam = $examen->id_examen;
         // dd($examen->usuarios()->where('examen_id', $id_exam)->exists());
         $idPregun = $examen->preguntas->pluck('id_pregunta')->toArray();
@@ -308,6 +332,9 @@ class ExamenController extends Controller
     public function verExFinalMedit(string $id)
     {
         $curso = Curso::find($id);
+        if(is_null($curso)){
+            return redirect()->back();
+         }
         $examen = $curso->examen;
         return view('Cursosinternos.examenes.ditExamen', compact('examen', 'id'));
     }
@@ -316,7 +343,9 @@ class ExamenController extends Controller
     { 
         // dd($request);
         $examen = Examen::find($request->id_examen);
-
+        if(is_null($examen)){
+            return redirect()->back();
+         }
         // Validar los datos enviados desde el formulario de edición
         $validatedData = $request->validate([
             'nombre' => 'required',
@@ -330,6 +359,9 @@ class ExamenController extends Controller
 
         foreach ($request->preguntas as $preguntaId => $preguntaData) {
             $pregunta = Pregunta::find($preguntaId);
+            if(is_null($pregunta)){
+                return redirect()->back();
+             }
             $nombrepregunta = $preguntaData['titulo'];
             $pregunta->pregunta = $nombrepregunta;
             $pregunta->saveOrFail();
@@ -343,6 +375,9 @@ class ExamenController extends Controller
                 if ($opcionCorrect == $opcionId) {
 
                     $opcion = Opcion::find($opcionId);
+                    if(is_null($opcion)){
+                        return redirect()->back();
+                     }
                     $nombreOpcion = $opcionData['titulo'];
                     // dd($nombreOpcion);
                     $opcion->opcion = $nombreOpcion;
@@ -351,6 +386,9 @@ class ExamenController extends Controller
                     continue;
                 }
                 $opcion = Opcion::find($opcionId);
+                if(is_null($opcion)){
+                    return redirect()->back();
+                 }
                 $nombreOpcion = $opcionData['titulo'];
                 $opcion->opcion = $nombreOpcion;
                 $opcion->correcta = false;
