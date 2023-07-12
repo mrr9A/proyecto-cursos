@@ -30,20 +30,8 @@
         </div>
     </div>
     <ul class="h-48 px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownSearchButton" id="resultados_usuarios">
-        @if ($resultados)
         <h3>Resultados de la búsqueda:</h3>
-
-        @foreach ($resultados as $resultado)
-        <li  class="bg-gray-300 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
-            <input hidden type="text" name="curso_id" value="{{$curso->id_curso}}">
-            <div>
-                <input id="checkbox-item-11" type="checkbox" name="usuarios[]" value="{{$resultado->id_usuario}}" @foreach($curso->usuarioCurso as $user) {{{ $resultado->id_usuario == $user->id_usuario ? "disabled class=bg-green-500" : ""  }}} @endforeach class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" >
-                <label for="checkbox-item-11" class="w-full ml-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">{{$resultado->apellido_paterno}} {{$resultado->apellido_materno}} {{$resultado->nombre}} {{$resultado->segundo_nombre}} </label>
-            </div>
-        </li><br>
-        @endforeach
-
-        @else
+        <!-- aqui muestra los usuarios del buscador -->
         <br>
         @foreach($usuarios as $usuario)
         <li class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
@@ -52,7 +40,6 @@
             <label for="checkbox-item-11" class="w-full ml-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">{{$usuario->apellido_paterno}} {{$usuario->apellido_materno}} {{$usuario->nombre}} {{$usuario->segundo_nombre}} </label>
         </li><br>
         @endforeach
-        @endif
 
     </ul>
     <button class="flex  lg:px-28 p-3 text-sm font-medium text-blue-600 border-t border-gray-200 rounded-b-lg bg-gray-50 dark:border-gray-600 hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-red-500 hover:underline">
@@ -78,7 +65,7 @@
     
 
     function getUsers(texto){
-        fetch(`${API_URL}/usuarios?search=${texto}`)
+        fetch(`${API_URL}/usuarios?search=${texto}&curso_id={{$curso->id_curso}}`)
         .then(res => res.json())
         .then(data => {
             console.log(data.data)
@@ -88,7 +75,7 @@
                 <li id="resultados_usuarios" class="bg-gray-300 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
             <input hidden type="text" name="curso_id" value="{{$curso->id_curso}}">
             <div>
-                <input id="checkbox-item-11" type="checkbox" name="usuarios[]" value="${element.id_usuario}"  class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" >
+                <input id="checkbox-item-11" type="checkbox" name="usuarios[]" value="${element.id_usuario}"  ${ element.inscrito == 1 ? "disabled class=bg-green-500" : "" } class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" >
                 <label for="checkbox-item-11" class="w-full ml-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">
                     ${element.nombre + ' ' + element.segundo_nombre + ' ' + element.apellido_paterno + ' ' + element.apellido_materno}
                 </label>

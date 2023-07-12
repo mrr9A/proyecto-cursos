@@ -505,9 +505,8 @@
             </div>
         </div>
     </div>
-
     <!-- MODAL DE AÑADIR USUARIO -->
-    <x-modal-prueba title="Agregar Usuario al Curso" textButton="Agregar Usuarios" id="agregar_usuario_curso_interno" vistaContenidoModal="cursosinternos.cursos.agregarUsuarioCurso" :curso="$curso" :usuarios="$usuarios" :tipo="$tipo" :resultados="$resultados" />
+    <x-modal-prueba title="Agregar Usuario al Curso" textButton="Agregar Usuarios" id="agregar_usuario_curso_interno" vistaContenidoModal="cursosinternos.cursos.agregarUsuarioCurso" :curso="$curso" :usuarios="$usuarios" :tipo="$tipo"/>
 </x-app>
 
 

@@ -106,13 +106,34 @@ Route::get('cursosplanta/cursosxplanes/{id}', function (Request $request, $id) {
 
 
 Route::get('usuarios', function (Request $request) {
+    // curso_id
+
     $searchTerm = $request->search;
+    $id_curso = $request->curso_id;
     $usuarios = User::where('nombre', 'LIKE', '%' . $searchTerm . '%')
         ->orWhere('segundo_nombre', 'LIKE', '%' . $searchTerm . '%')
         ->orWhere('apellido_paterno', 'LIKE', '%' . $searchTerm . '%')
         ->orWhere('apellido_materno', 'LIKE', '%' . $searchTerm . '%')
         ->orWhere('id_sgp', 'LIKE', '%' . $searchTerm . '%')
         ->get();
+
+
+    foreach ($usuarios as $usuario) {
+        if (count($usuario->cursos) < 1) {
+            $usuario->inscrito = 0;
+            continue;
+        }
+
+        foreach ($usuario->cursos as $curso) {
+            if ($curso->id_curso == $id_curso) {
+                $usuario->inscrito = 1;
+                break;
+            }
+            $usuario->inscrito = 0;
+        }
+    }
+
+    // $cursoUser = $curso->usuarioCurso;
 
     return response()->json(['data' => $usuarios], 200);
 });

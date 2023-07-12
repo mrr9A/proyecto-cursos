@@ -40,7 +40,6 @@ class CursosController extends Controller
 
     public function show(Request $request, string $id)
     {
-        $searchTerm = $request->input('search');
         $buscar1 = $request->input('buscar1');
         $cursoId1 = $request->input('curso_id2');
         $curso = Curso::find($id);
@@ -48,16 +47,6 @@ class CursosController extends Controller
         $categoria = Categoria::all();
         $modalidad = ModalidadCurso::all();
         $tipo = TipoCurso::all();
-        if ($searchTerm) {
-            $resultados = User::where('nombre', 'LIKE', '%' . $searchTerm . '%')
-                ->orWhere('segundo_nombre', 'LIKE', '%' . $searchTerm . '%')
-                ->orWhere('apellido_paterno', 'LIKE', '%' . $searchTerm . '%')
-                ->orWhere('apellido_materno', 'LIKE', '%' . $searchTerm . '%')
-                ->orWhere('id_sgp', 'LIKE', '%' . $searchTerm . '%')
-                ->get();
-        } else {
-            $resultados = null;
-        }
 
         if ($buscar1) {
             $resultados2 = User::whereHas('cursos', function ($query) use ($cursoId1) {
@@ -77,7 +66,7 @@ class CursosController extends Controller
 
         $usuarios = User::all();
 
-        return view('Cursosinternos.cursos.configurarCursos', compact('curso', 'modalidad', 'tipo', 'usuarios', 'categoria', 'resultados','resultados2','usuariosS'));
+        return view('Cursosinternos.cursos.configurarCursos', compact('curso', 'modalidad', 'tipo', 'usuarios', 'categoria', 'resultados2','usuariosS'));
     }
 
 
