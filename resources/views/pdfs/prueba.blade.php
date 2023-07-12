@@ -256,8 +256,8 @@
                                 <td>{{ $curso->tipo }}</td>
                                 <td>{{ $curso->calificacion ?? 0 }}</td>
                                 <td>
-                                    @if($curso->estado == 0) Reprovado @endif
-                                    @if($curso->estado == 1) Aprovado @endif
+                                    @if($curso->estado == 0) Reprobado @endif
+                                    @if($curso->estado == 1) Aprobado @endif
                                     @if($curso->estado == 2) En progreso @endif
                                 </td>
                             </tr>

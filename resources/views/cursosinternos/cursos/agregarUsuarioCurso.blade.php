@@ -1,4 +1,4 @@
-<form class="flex items-center" action="{{ route('curs.show', $curso->id_curso) }}" method="GET">
+<form class="flex items-center" action="{{ route('curs.show', $curso->id_curso) }}" method="GET" id="search-users">
     <label for="simple-search" class="sr-only">Search</label>
     <div class="relative w-full">
         <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -6,7 +6,7 @@
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5v10M3 5a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm0 10a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm12 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm0 0V6a3 3 0 0 0-3-3H9m1.5-2-2 2 2 2" />
             </svg>
         </div>
-        <input type="text" id="simple-search" name="search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Buscar Usuario por nombre..." required>
+        <input type="text" id="usuarios_agregar" name="search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Buscar Usuario por nombre..." required>
     </div>
     <button type="submit" class="p-2.5 ml-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
         <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
@@ -29,11 +29,12 @@
             <input type="date" id="fecha_termino" name="fecha_termino" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
         </div>
     </div>
-    <ul class="h-48 px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownSearchButton">
+    <ul class="h-48 px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownSearchButton" id="resultados_usuarios">
         @if ($resultados)
         <h3>Resultados de la búsqueda:</h3>
+
         @foreach ($resultados as $resultado)
-        <li class="bg-gray-300 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
+        <li  class="bg-gray-300 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
             <input hidden type="text" name="curso_id" value="{{$curso->id_curso}}">
             <div>
                 <input id="checkbox-item-11" type="checkbox" name="usuarios[]" value="{{$resultado->id_usuario}}" @foreach($curso->usuarioCurso as $user) {{{ $resultado->id_usuario == $user->id_usuario ? "disabled class=bg-green-500" : ""  }}} @endforeach class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" >
@@ -41,6 +42,7 @@
             </div>
         </li><br>
         @endforeach
+
         @else
         <br>
         @foreach($usuarios as $usuario)
@@ -62,3 +64,41 @@
         Agregar Usuarios
     </button>
 </form>
+
+<script>
+    const searchUsersForm = $('#search-users')
+    const inputS = $('#usuarios_agregar')
+    const resultadosUsuarios = $('#resultados_usuarios')
+
+    searchUsersForm.addEventListener('submit', (e)=>{
+        e.preventDefault();
+        console.log()
+        getUsers(inputS.value)
+    })
+    
+
+    function getUsers(texto){
+        fetch(`${API_URL}/usuarios?search=${texto}`)
+        .then(res => res.json())
+        .then(data => {
+            console.log(data.data)
+            let dataLi = ''
+            data.data.forEach(element => {
+                dataLi += `
+                <li id="resultados_usuarios" class="bg-gray-300 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
+            <input hidden type="text" name="curso_id" value="{{$curso->id_curso}}">
+            <div>
+                <input id="checkbox-item-11" type="checkbox" name="usuarios[]" value="${element.id_usuario}"  class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" >
+                <label for="checkbox-item-11" class="w-full ml-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">
+                    ${element.nombre + ' ' + element.segundo_nombre + ' ' + element.apellido_paterno + ' ' + element.apellido_materno}
+                </label>
+            </div>
+        </li><br>
+                `
+            });
+
+            resultadosUsuarios.innerHTML = dataLi 
+        })
+        .catch(e => console.log(e))
+    }
+</script>

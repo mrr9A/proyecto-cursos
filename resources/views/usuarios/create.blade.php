@@ -34,11 +34,82 @@
                     <x-input-text type="email" nombre="email" text="Correo electronico"
                         placeholder="user@grupobonn.com" required classLabel="text-base" :value="$usuario->email ?? ''" />
                     @if (!is_null($usuario ?? null))
-                        <x-input-text type="password" nombre="password" text="contraseña" placeholder="********"
-                            classLabel="text-base" />
+                        {{-- <x-input-text type="password" nombre="password" text="contraseña" placeholder="********"
+                            classLabel="text-base" /> --}}
+                        <div class="relative">
+                            <label for="password"
+                                class="block mb-2 font-semi-bold font-poppins text-gray-600 dark:text-white text-base">contraseña</label>
+                            <input data-popover-target="popover-password" data-popover-placement="bottom"
+                                type="password" id="password" name="password" placeholder="********"
+                                class="bg-gray-50 border-[2px] border-input text-gray-900  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-2 py-1 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white placeholder:uppercase">
+
+                            <div data-popover id="popover-password" role="tooltip"
+                                class="absolute z-10 invisible inline-block text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-all opacity-0 w-72 ">
+                                <div class="p-3 space-y-2">
+                                    <p class="font-bold text-gray-900 dark:text-white text-sm">la contrseña tiene que
+                                        tener</p>
+                                    <ul id="contenido-requisitos">
+                                        <li class="flex items-center mb-1">
+                                            <span class="status"></span>
+                                            <p>Mayusculas y minusculas</p>
+                                        </li>
+                                        <li class="flex items-center mb-1">
+                                            <span class="status"></span>
+                                            <p>un numero (0-9)</p>
+                                        </li>
+                                        <li class="flex items-center">
+                                            <span class="status"></span>
+                                            <p>min. 8 caracteres</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div data-popper-arrow></div>
+                            </div>
+                            @error('password')
+                                <!-- variable mensaje disponible por laravel -->
+                                <small
+                                    class="absolute -bottom-8 text-sm text-red-500 font-semibold italic">{{ $message }}</small>
+                            @enderror
+                        </div>
                     @else
-                        <x-input-text type="password" nombre="password" text="contraseña" placeholder="********"
-                            classLabel="text-base" required />
+                        {{-- <x-input-text type="password" nombre="password" text="contraseña" placeholder="********"
+                            classLabel="text-base" required /> --}}
+                        <div class="relative">
+                            <label for="password"
+                                class="block mb-2 font-semi-bold font-poppins text-gray-600 dark:text-white text-base">contraseña*</label>
+                            <input data-popover-target="popover-password" data-popover-placement="bottom"
+                                type="password" id="password" name="password" placeholder="********"
+                                class="bg-gray-50 border-[2px] border-input text-gray-900  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-2 py-1 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white placeholder:uppercase"
+                                required>
+
+                            <div data-popover id="popover-password" role="tooltip"
+                                class="absolute z-10 invisible inline-block text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-all opacity-0 w-72 ">
+                                <div class="p-3 space-y-2">
+                                    <p class="font-bold text-gray-900 dark:text-white text-sm">la contrseña tiene que
+                                        tener</p>
+                                    <ul id="contenido-requisitos">
+                                        <li class="flex items-center mb-1">
+                                            <span class="status"></span>
+                                            <p>Mayusculas y minusculas</p>
+                                        </li>
+                                        <li class="flex items-center mb-1">
+                                            <span class="status"></span>
+                                            <p>un numero (0-9)</p>
+                                        </li>
+                                        <li class="flex items-center">
+                                            <span class="status"></span>
+                                            <p>min. 8 caracteres</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div data-popper-arrow></div>
+                            </div>
+                            @error('password')
+                                <!-- variable mensaje disponible por laravel -->
+                                <small
+                                    class="absolute -bottom-8 text-sm text-red-500 font-semibold italic">{{ $message }}</small>
+                            @enderror
+                        </div>
                     @endif
                 </div>
             </div>
@@ -71,9 +142,11 @@
                         value="{{ $usuario->rol ?? '' }}" />
 
                     <x-selects.input-select textLabel="Sucursales" name="sucursal_id"
-                        textOptionDefault="selecciona una sucursal" :sucursales="$sucursal" required :value="$usuario->sucursales[0] ?? ''" disabled />
+                        textOptionDefault="selecciona una sucursal" :sucursales="$sucursal" required :value="$usuario->sucursales[0] ?? ''"
+                        disabled />
                     <x-selects.input-select textLabel="Puestos" name="puesto_id"
-                        textOptionDefault="selecciona un puesto" :puestos="$puestos" required :value="$usuario->puestos ?? ''"  disabled/>
+                        textOptionDefault="selecciona un puesto" :puestos="$puestos" required :value="$usuario->puestos ?? ''"
+                        disabled />
 
                     <div id="trabajos" class="col-span-4"></div>
                 </div>
@@ -192,6 +265,53 @@
         });
 
 
+
+        // =====================FUNCIONES PARA EL POP OVER DE LA CONTRASE========================
+        const passwordInput = $('#password')
+        const contenidoRequisitos = $("#contenido-requisitos")
+        const li = contenidoRequisitos.getElementsByTagName("li")
+        let completados = 0;
+
+        let palomita = `<svg class="w-3.5 h-3.5 mr-2 text-green-400 dark:text-green-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5"/>
+                        </svg>`
+        let tache = `<svg class="w-3 h-3 mr-2.5 text-gray-300 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                        </svg>`
+
+        passwordInput.addEventListener('input', (e) => {
+            let texto = e.target.value;
+            let pattern = /^(?=.*[a-z])(?=.*[A-Z])/;
+
+            if (pattern.test(texto)) {
+                console.log('mayusculas y minusculas')
+                let texto_lista = li[0].querySelector('span');
+                texto_lista.innerHTML = palomita;
+            } else {
+                let texto_lista = li[0].querySelector('span');
+                texto_lista.innerHTML = tache
+            }
+
+            if ((/^(?=.*\d)/).test(texto)) {
+                let texto_lista = li[1].querySelector('span');
+                texto_lista.innerHTML = palomita;
+            } else {
+                let texto_lista = li[1].querySelector('span');
+                texto_lista.innerHTML = tache
+            }
+
+
+            if (texto.length > 8) {
+                console.log('minimo 8')
+                let texto_lista = li[2].querySelector('span');
+                texto_lista.innerHTML = palomita;
+            } else {
+                let texto_lista = li[2].querySelector('span');
+                texto_lista.innerHTML = tache
+            }
+
+
+        })
         //FUNCIONES PARA EL FORMULARIO POR PASOS
         // Obtén los elementos del formulario y los botones de navegación
         // const form = document.getElementById('multi-step-form');

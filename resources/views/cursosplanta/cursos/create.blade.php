@@ -11,7 +11,7 @@
                 <i class='bx bx-close '></i>
                 <span>Añadir otro curso</span>
             </button>
-            <div id="container_cursos" class="grid grid-cols-3 w-full gap-3">
+            <div id="container_cursos" class="grid grid-cols-3 w-full gap-3 sm:grid-cols-2">
                 <div id="curso_1" class="grid grid-cols-2 gap-3 w-full border-[1px]">
                     <h2 class="col-span-2 py-1 px-2 bg-blue-200">Curso 1</h2>
                     <x-input-text text="Nombre" nombre="curso_1[nombre]" placeholder="nombre" required
@@ -36,9 +36,36 @@
             </div>
         </form>
     </div>
-    <script src="{{ asset('js/utils/validarInputs.js') }}"></script>
     <script>
-        validarInputs();
+        function validarInputs() {
+            const inputsTexts = $$("input[type='text']")
+            inputsTexts.forEach(element => {
+                element.addEventListener('keypress', (e) => {
+
+                    const charCode = e.which || e.keyCode;
+                    const char = String.fromCharCode(charCode);
+                    let pattern = /[a-zA-Z0-9\s]/;
+                    if (e.target.id === 'codigo') {
+                        pattern = /[a-zA-Z0-9\s\-]/
+                    }
+                    if (!pattern.test(char)) {
+                        e.preventDefault();
+                    }
+                })
+
+                element.addEventListener('input', function(e) {
+                    let maxLength = 70; // Define la longitud máxima permitida
+                    if (e.target.id === 'codigo') {
+                        maxLength = 12
+                    }
+                    if (element.value.length > maxLength) {
+                        element.value = element.value.slice(0, maxLength); // Limita la longitud del valor
+                    }
+                });
+            });
+
+        }
+        validarInputs()
         // validarInputs
         const containerCursos = $('#container_cursos')
         const btnAddCurso = $("#add_curso")
