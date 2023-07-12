@@ -22,6 +22,9 @@ class ReporteCursoInternoController extends Controller
         if ($curso_id) {
 
             $cursoS = Curso::find($curso_id);
+            if(is_null($cursoS)){
+                return redirect()->back();
+             }
             $data = $usuarios = $cursoS->usersSSS;
             // ---------------------------------------------------------------------------------------------
             $calificacionesCursos = [];

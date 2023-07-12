@@ -15,6 +15,9 @@ class LeccionesController extends Controller
     public function destroy(string $id)
     {
         $leccione = Leccion::find($id);
+        if(is_null($leccione)){
+            return redirect()->back();
+         }
         $id_contenido = $leccione->contenido->pluck('id_contenido')->toArray();
         $coincidencias = DB::table('contenidos')
         ->whereIn('id_contenido',$id_contenido)
@@ -34,12 +37,18 @@ class LeccionesController extends Controller
     public function edit(string $id)
     {
         $leccion = Leccion::find($id);
+        if(is_null($leccion)){
+            return redirect()->back();
+         }
         return view('Cursosinternos.lecciones.editar', compact('leccion'));
     }
 
     public function update(Request $request, string $id)
     {
         $leccione = Leccion::find($id);
+        if(is_null($leccione)){
+            return redirect()->back();
+         }
         if ($request->hasFile('url_imagen')) {
             $lecciones = $request->file('url_imagen')->store('public/leccion');
             $url = Storage::url($lecciones);

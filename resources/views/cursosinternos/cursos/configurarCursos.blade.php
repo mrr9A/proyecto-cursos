@@ -25,7 +25,6 @@
                 <div id="dropdown1" class=" hidden z-50 text-base list-none  divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
                     <ul class="py-2" aria-labelledby="dropdownButton1">
                         <li class="justify-center">
-                            <x-modal title="EDITAR CURSO" textButton="Editar Información Curso" id="editar_curso_interno" vistaContenidoModal="cursosinternos.cursos.editarCurso" :curso="$curso" :modalidad="$modalidad" :categoria="$categoria" :tipo="$tipo" />
                             <form action="{{url('Lecciones',[$curso])}}">
                                 <button class="block text-gray-50 bg-blue-800 border-b-2 border-2 rounded-md  focus:outline-none  font-medium text-sm px-5 py-2.5 text-center hover:bg-blue-900 hover:text-gray-200 hover:rounded-t-md">Agregar una Lección</button>
                             </form>
@@ -43,6 +42,9 @@
                                 <button class="block text-gray-50 bg-blue-800 border-b-2 border-2 rounded-md  focus:outline-none  font-medium text-sm px-5 py-2.5 text-center hover:bg-blue-900 hover:text-gray-200 hover:rounded-t-md">Agregar Examen Final</button>
                             </form>
                             @endif
+                            <button data-modal-target="editar_curso_interno" data-modal-toggle="editar_curso_interno" class="block text-gray-50 bg-blue-800 border-b-2 border-2 rounded-md  focus:outline-none  font-medium text-sm px-5 py-2.5 text-center hover:bg-blue-900 hover:text-gray-200 hover:rounded-t-md" type="button">
+                                Editar Información del Curso
+                            </button>
                         </li>
                     </ul>
                 </div>
@@ -506,7 +508,8 @@
         </div>
     </div>
     <!-- MODAL DE AÑADIR USUARIO -->
-    <x-modal-prueba title="Agregar Usuario al Curso" textButton="Agregar Usuarios" id="agregar_usuario_curso_interno" vistaContenidoModal="cursosinternos.cursos.agregarUsuarioCurso" :curso="$curso" :usuarios="$usuarios" :tipo="$tipo"/>
+    <x-modal-prueba title="Agregar Usuario al Curso" textButton="Agregar Usuarios" id="agregar_usuario_curso_interno" vistaContenidoModal="cursosinternos.cursos.agregarUsuarioCurso" :curso="$curso" :usuarios="$usuarios" :tipo="$tipo" />
+    <x-modal-prueba title="EDITAR CURSO" textButton="Editar Información Curso" id="editar_curso_interno" vistaContenidoModal="cursosinternos.cursos.editarCurso" :curso="$curso" :modalidad="$modalidad" :categoria="$categoria" :tipo="$tipo" />
 </x-app>
 
 

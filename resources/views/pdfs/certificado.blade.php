@@ -40,7 +40,7 @@
 
         /*object-fit: cover;*/
         /*object-position: center;*/
-        img.left {
+        img {
             position: absolute;
             left: 50%;
             top: 50%;
