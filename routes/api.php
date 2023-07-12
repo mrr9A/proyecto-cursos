@@ -11,6 +11,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Validator;
+use PhpOffice\PhpSpreadsheet\Calculation\MathTrig\Round;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,7 +30,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // http://localhost:8000/api/cursosxplanes/1
 Route::get('cursosplanta/trabajo/{id}/cursos', function (Request $request, $id) {
     $buscar = $request->buscador;
-    $data = Curso::getCursesByJob($buscar,$id);
+    $data = Curso::getCursesByJob($buscar, $id);
     return response()->json($data);
 });
 // get numero de empleados por puesto
@@ -60,7 +61,7 @@ Route::get('cursosplanta/cursos', [ApiController::class, 'searchCursos']);
 Route::put('cursosplanta/puesto/edit/{id}', [PuestoController::class, 'update']);
 
 
-Route::get('cursosplanta/curso/{id}/edit', function ($id){
+Route::get('cursosplanta/curso/{id}/edit', function ($id) {
     $curso = Curso::find($id);
     $modalidades = ModalidadCurso::all();
     $tipos = TipoCurso::all();
@@ -72,7 +73,7 @@ Route::get('cursosplanta/curso/{id}/edit', function ($id){
     ], 200);
 });
 
-Route::post('curso/{id}', function (Request $request, $id){
+Route::post('curso/{id}', function (Request $request, $id) {
     $validator = Validator::make($request->all(), [
         'nombre' => 'required|string',
         'codigo' => 'required|string',
@@ -87,7 +88,7 @@ Route::post('curso/{id}', function (Request $request, $id){
     $curso = Curso::find($id);
     $curso->update($request->all());
 
-    return response()->json(['message'=> "curso actualizado correcatamente"], 200);
+    return response()->json(['message' => "curso actualizado correcatamente"], 200);
 });
 
 Route::get('buscador', [ApiController::class, 'buscar']);
@@ -99,8 +100,20 @@ Route::get('buscador', [ApiController::class, 'buscar']);
 Route::get('cursosplanta/cursosxplanes/{id}', function (Request $request, $id) {
     $buscar = $request->buscador;
     // return $id;
-    $data = Curso::getCursesAsigned($buscar,$id);
+    $data = Curso::getCursesAsigned($buscar, $id);
     return response()->json($data);
 });
 
+
+Route::get('usuarios', function (Request $request) {
+    $searchTerm = $request->search;
+    $usuarios = User::where('nombre', 'LIKE', '%' . $searchTerm . '%')
+        ->orWhere('segundo_nombre', 'LIKE', '%' . $searchTerm . '%')
+        ->orWhere('apellido_paterno', 'LIKE', '%' . $searchTerm . '%')
+        ->orWhere('apellido_materno', 'LIKE', '%' . $searchTerm . '%')
+        ->orWhere('id_sgp', 'LIKE', '%' . $searchTerm . '%')
+        ->get();
+
+    return response()->json(['data' => $usuarios], 200);
+});
 // http://localhost:8000/api/cursosplanta/cursosxplanes/5
