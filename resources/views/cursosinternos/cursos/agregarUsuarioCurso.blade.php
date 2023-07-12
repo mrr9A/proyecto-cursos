@@ -34,11 +34,13 @@
         <!-- aqui muestra los usuarios del buscador -->
         <br>
         @foreach($usuarios as $usuario)
+        @if($usuario->rol == 1)
         <li class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
             <input hidden type="text" name="curso_id" value="{{$curso->id_curso}}">
             <input id="checkbox-item-11" type="checkbox" name="usuarios[]" value="{{$usuario->id_usuario}}" @foreach($curso->usuarioCurso as $user) {{{ $usuario->id_usuario == $user->id_usuario ? "disabled class=bg-green-500" : ""  }}} @endforeach class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" >
             <label for="checkbox-item-11" class="w-full ml-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">{{$usuario->apellido_paterno}} {{$usuario->apellido_materno}} {{$usuario->nombre}} {{$usuario->segundo_nombre}} </label>
         </li><br>
+        @endif
         @endforeach
 
     </ul>
@@ -77,7 +79,7 @@
             <div>
                 <input id="checkbox-item-11" type="checkbox" name="usuarios[]" value="${element.id_usuario}"  ${ element.inscrito == 1 ? "disabled class=bg-green-500" : "" } class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" >
                 <label for="checkbox-item-11" class="w-full ml-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">
-                    ${element.nombre + ' ' + element.segundo_nombre + ' ' + element.apellido_paterno + ' ' + element.apellido_materno}
+                    ${element.nombre + ' '  + ' ' + element.apellido_paterno + ' '}
                 </label>
             </div>
         </li><br>

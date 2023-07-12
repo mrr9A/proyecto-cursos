@@ -12,13 +12,16 @@ use Maatwebsite\Excel\Concerns\WithBackgroundColor;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Concerns\WithColumnWidths;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Maatwebsite\Excel\Concerns\WithEvents;
 use PhpOffice\PhpSpreadsheet\Style\Border;
+use Maatwebsite\Excel\Events\AfterSheet;
+use PhpOffice\PhpSpreadsheet\Style\Conditional;
 
+use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\FromArray;
 
-class ReportsCursosInternos implements FromArray, WithHeadings, WithDefaultStyles, WithBackgroundColor, WithStyles, ShouldAutoSize
-
+class ReportsCursosInternos implements FromArray, WithHeadings, WithDefaultStyles, WithBackgroundColor, WithStyles, ShouldAutoSize, WithEvents
 {
   protected $usuarios = [];
 
@@ -105,7 +108,49 @@ class ReportsCursosInternos implements FromArray, WithHeadings, WithDefaultStyle
     ];
   }
 
+  public function registerEvents(): array
+{
+    return [
+        AfterSheet::class => function (AfterSheet $event) {
+            $sheet = $event->sheet->getDelegate();
 
+            // Estilo condicional para filas con el estado "aprobado"
+            $conditional1 = new Conditional();
+            $conditional1->setConditionType(Conditional::CONDITION_EXPRESSION)
+                ->setOperatorType(Conditional::OPERATOR_EQUAL)
+                ->addCondition('=$H1="Aprobado"') // Verifica el valor de la columna H (estado)
+                ->getStyle()
+                ->getFill()
+                ->setFillType(Fill::FILL_SOLID)
+                ->getStartColor()
+                ->setRGB('52c652'); // Color de fondo verde
+
+            // Estilo condicional para filas con el estado "reprobado"
+            $conditional2 = new Conditional();
+            $conditional2->setConditionType(Conditional::CONDITION_EXPRESSION)
+                ->setOperatorType(Conditional::OPERATOR_EQUAL)
+                ->addCondition('=$H1="Reprobado"') // Verifica el valor de la columna H (estado)
+                ->getStyle()
+                ->getFill()
+                ->setFillType(Fill::FILL_SOLID)
+                ->getStartColor()
+                ->setRGB('ff0000'); // Color de fondo rojo
+
+            // Estilo condicional para filas con el estado "pendiente"
+            $conditional3 = new Conditional();
+            $conditional3->setConditionType(Conditional::CONDITION_EXPRESSION)
+                ->setOperatorType(Conditional::OPERATOR_EQUAL)
+                ->addCondition('=$H1="Pendiente"') // Verifica el valor de la columna H (estado)
+                ->getStyle()
+                ->getFill()
+                ->setFillType(Fill::FILL_SOLID)
+                ->getStartColor()
+                ->setRGB('def0f7'); // Color de fondo rojo
+
+            $sheet->getStyle('A1:J' . $sheet->getHighestRow())->setConditionalStyles([$conditional1, $conditional2,$conditional3]);
+        }
+    ];
+  }
 
   private function applyConditionalFormatting(Worksheet $sheet)
   {
