@@ -43,7 +43,7 @@ class CursosController extends Controller
 
         $buscar1 = $request->input('buscar1');
         $cursoId1 = $request->input('curso_id2');
-        $curso = Curso::find($id);
+        $curso = Curso::where('id_curso',$id)->where('interno_planta', 1)->first();
         if(is_null($curso)){
            return redirect()->back();
         }
