@@ -272,21 +272,34 @@ class DatabaseSeeder extends Seeder
         ]);
         // FIND DE LA CREACION DE SUCRUSALES
 
-        \App\Models\User::factory(100)->create();
+        \App\Models\User::factory()->create();
 
         // ADMIN
-        User::create([
-            'nombre' => "luis",
-            'segundo_nombre' => 'anberto',
-            'apellido_paterno' => 'mendoza',
-            'apellido_materno' => 'vasquez',
-            'id_sgp' => 1,
-            'id_sumtotal' => 1,
-            'rol' => 0,
-            'email' => 'ann@gmail.com',
-            'password' => Hash::make('password123'), // Cambia 'password123' por el valor deseado
-            'estado' => 1,
-            'puesto_id' => 1,
-        ]);
+        // User::create([
+        //     'nombre' => "luis",
+        //     'segundo_nombre' => 'anberto',
+        //     'apellido_paterno' => 'mendoza',
+        //     'apellido_materno' => 'vasquez',
+        //     'id_sgp' => 1,
+        //     'id_sumtotal' => 1,
+        //     'rol' => 0,
+        //     'email' => 'ann@gmail.com',
+        //     'password' => Hash::make('Password123'), // Cambia 'password123' por el valor deseado
+        //     'estado' => 1,
+        //     'puesto_id' => 1,
+        // ]);
+        // User::create([
+        //     'nombre' => "luis",
+        //     'segundo_nombre' => 'anberto',
+        //     'apellido_paterno' => 'mendoza',
+        //     'apellido_materno' => 'vasquez',
+        //     'id_sgp' => 1,
+        //     'id_sumtotal' => 1,
+        //     'rol' => 0,
+        //     'email' => 'ann@gmail.com',
+        //     'password' => Hash::make('password123'), // Cambia 'password123' por el valor deseado
+        //     'estado' => 1,
+        //     'puesto_id' => 1,
+        // ]);
     }
 }

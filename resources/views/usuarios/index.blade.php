@@ -7,7 +7,7 @@
                 <span class="text-xs">usuarios activos y inactivos</span>
             </div>
             <div class="flex items-center justify-between">
-                <x-search.search-input route="usuarios.index"/>
+                <x-search.search-input route="usuarios.index" />
                 <div class="lg:ml-40 ml-10 space-x-8">
                     <a href="{{ route('usuarios.create') }}"
                         class="bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer hover:bg-primary">Agregar
@@ -15,6 +15,7 @@
                 </div>
             </div>
         </div>
+
 
 
         <div class="card-body">
@@ -31,6 +32,11 @@
                     </tr>
                 </thead>
                 <tbody class="">
+                    @if (count($usuarios) < 1)
+                        <tr class="text-title font-bold mt-6">
+                            <td colspan="4">Sin resultados...</td>
+                        </tr>
+                    @endif
                     @foreach ($usuarios as $usuario)
                         <tr class="border-b border-gray-200 hover:bg-gray-100">
                             <td class="whitespace-nowrap px-6 py-2 w-1/12 ">{{ $usuario->id_sgp }}</td>
@@ -61,6 +67,7 @@
                         </tr>
                     @endforeach
                 </tbody>
+
             </table>
             {{-- PAGINACION --}}
             <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
@@ -105,7 +112,8 @@
 
                         {{-- paginas --}}
                         @if ($usuarios->currentPage() != 1)
-                            <a href="{{ $usuarios->url(1) }}" class="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">1</a>
+                            <a href="{{ $usuarios->url(1) }}"
+                                class="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">1</a>
                         @endif
 
 
@@ -115,7 +123,8 @@
                         @endforeach
 
                         @if ($usuarios->currentPage() != $usuarios->lastPage())
-                            <a href="{{ $usuarios->url($usuarios->lastPage())}}" class="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">{{$usuarios->lastPage()}}</a>
+                            <a href="{{ $usuarios->url($usuarios->lastPage()) }}"
+                                class="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">{{ $usuarios->lastPage() }}</a>
                         @endif
 
                         <!-- Enlace a la siguiente página -->
@@ -147,6 +156,7 @@
             </div>
             {{-- FIN DE LA PAGINACION --}}
         </div>
+
     </div>
     </div>
 </x-app>

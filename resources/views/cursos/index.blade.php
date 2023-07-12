@@ -1,6 +1,6 @@
 <x-app title="Cursos">
     <div class="h-[calc(100%-70px)] flex gap-10 items-start justify-center">
-        <div class="contain-modalidad-tipo-curso absolute  left-5 overflow-y-scroll max-h-[calc(100%-70px)] py-2 px-2 bg-gray-100 rounded-sm">
+        <div class="contain-modalidad-tipo-curso absolute  left-5 overflow-y-auto max-h-[calc(100%-70px)] py-2 px-2 bg-gray-100 rounded-sm">
             <div>
                 <div class="flex gap-2 items-center">
                     <p class="font-bold">modalidades</p>

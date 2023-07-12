@@ -207,6 +207,7 @@ class User extends Authenticatable
                     ->orWhere('puestos.puesto', 'like', $buscar . "%")
                     ->where("usuarios.estado", '=', 1);
             })
+            ->where("usuarios.rol", '=', 1)
             ->select(
                 'usuarios.id_usuario',
                 DB::raw("CONCAT(nombre, ' ', IFNULL(segundo_nombre, ''), ' ', apellido_paterno, ' ', IFNULL(apellido_materno, '')) AS empleado"),

@@ -8,5 +8,9 @@
     </div>
 
 
+    @if(count($data['usuarios'])>0)
     <x-tables.table :empleados="$data" />
+    @else
+    <p class="text-title font-bold mt-6">Sin resultados...</p>
+    @endif
 </x-app>

@@ -121,6 +121,7 @@
                 </div>
             @endif
             {{-- fin pagination --}}
+            @if(count($data['data']) >0 )
             <div class="card-body">
                 <table class="min-w-full leading-normal my-2">
                     <thead class="border-b  dark:border-neutral-500 uppercase">
@@ -162,6 +163,9 @@
                     </tbody>
                 </table>
             </div>
+            @else
+            <p class="text-title font-bold mt-6">Sin registros...</p>
+            @endif
         </div>
     </div>
 

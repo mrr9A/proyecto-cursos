@@ -9,7 +9,7 @@
             </div>
             <div>
                 <x-selects.input-select textLabel="puestos" name="filtros[puesto_id]" class="text-sm"
-                    textOptionDefault="selecciona un puesto" :puestos="$puestos" id="puesto_id" disabled />
+                    textOptionDefault="selecciona un puesto" :puestos="$puestos" id="puesto_id"  />
             </div>
 
             <div>
@@ -113,6 +113,7 @@
 
         puestoSelect.addEventListener('change', (e) => {
             let id = e.target.value;
+            puestoSelect.options[0].setAttribute('disabled', true)
             getJobsByPosition(id)
         })
 
@@ -127,7 +128,7 @@
             fetch(`${API_URL}/cursosplanta/puesto/${id}/trabajos`)
                 .then(res => res.json())
                 .then(data => {
-                    let trabajos = '<option value="" class="text-gray-400">Selecciona un curso</option>'
+                    let trabajos = '<option value="" class="text-gray-400">Selecciona un trabajo</option>'
                     if (data.length < 1) return;
 
                     data.forEach(trabajo => {
@@ -148,7 +149,7 @@
                 .then(res => res.json())
                 .then(data => {
 
-                    let cursos = '<option value="" class="text-gray-400">Selecciona un trabajo</option>'
+                    let cursos = '<option value="" class="text-gray-400">Selecciona un curso</option>'
                     data.cursosPorTrabajo.forEach(curso => {
                         cursos +=
                             `<option value="${curso.id_curso}">${curso.nombre}</option>`
