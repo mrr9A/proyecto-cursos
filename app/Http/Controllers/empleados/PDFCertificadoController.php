@@ -91,11 +91,10 @@ class PDFCertificadoController extends Controller
         ];
 
         $pdf = PDF::loadView('pdfs.certificado', ['calificacionesCursos' => $calificacionesCursos]);
-        $pdf->setPaper('letter', 'landscape');
         $pdf->setOptions(['defaultFont' => 'poppins']);
+        $pdf->setPaper('letter', 'landscape');
 
-        return $pdf->stream(".pdf");
-
+        return $pdf->stream("certificado.pdf");
         // // Access the course ratings and progress
         // foreach ($calificacionesCursos as $calificacionesCurso) {
         //     $curso = $calificacionesCurso['curso'];

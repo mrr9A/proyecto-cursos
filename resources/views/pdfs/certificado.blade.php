@@ -2,6 +2,9 @@
 <html>
 
 <head>
+    @foreach($calificacionesCursos as $calificacionesCurso)
+    <title>CERTIFICADO DE TERMINO: {{$calificacionesCurso['usuario']}} {{$calificacionesCurso['segundoNombre']}} {{$calificacionesCurso['apellidoP']}} {{$calificacionesCurso['apellidoM']}}</title>
+    @endforeach
     <style>
         body {
             background-color: #fff;
@@ -77,7 +80,6 @@
             font-weight: bold;
         }
 
-        /* DATE of release*/
         h5 {
             font-size: 1.9rem;
             color: #01080d;
@@ -95,6 +97,7 @@
             text-align: center;
             margin-top: 120px;
         }
+
         .footer1 {
             text-align: center;
         }
@@ -104,7 +107,8 @@
             display: table;
             clear: both;
         }
-        span{
+
+        span {
             font-size: 0.9rem;
         }
     </style>
@@ -122,11 +126,11 @@
         <span class="float-left" style="float: left; width: 50%; box-sizing: border-box;">AUTOMOTRIZ BONN S.A DE C.V</span>
         <span class="float-left" style="float: left; width: 50%; box-sizing: border-box;">{{$calificacionesCurso['usuario']}} {{$calificacionesCurso['segundoNombre']}} {{$calificacionesCurso['apellidoP']}} {{$calificacionesCurso['apellidoM']}}</span>
     </div>
-    <div class="footer1 clearfix" style=" width: 100%; overflow: auto; margin-top: -5mm;">
+    <div class="footer1 clearfix" style=" width: 100%; overflow: auto; margin-top: -1cm;">
         <h6 class="float-left" style="float: left; width: 50%; box-sizing: border-box;">Nombre y Firma de la empresa</h6>
         <h6 class="float-left" style="float: left; width: 50%; box-sizing: border-box;">Nombre y Firma del Trabajador</h6>
     </div>
-    <!-- <p>Fecha de emisión: {{$calificacionesCurso['fechaImpresion']}}</p> -->
+    <p>Fecha de emisión: {{$calificacionesCurso['fechaImpresion']}}</p>
     @endforeach
 </body>
 
