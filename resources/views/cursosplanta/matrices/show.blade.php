@@ -69,20 +69,20 @@
                                         <div class="grid gap-3">
                                             @foreach ($trabajo['cursos'][$key] as $cursos)
                                                 <div
-                                                    class="flex items-center justify-between gap-3  rounded-md overflow-hidden py-1 px-2 @if ($cursos->estado == 0) bg-red-300 @endif @if ($cursos->calificacion == '100' && $cursos->estado == 1) bg-green-300 @else bg-blue-50 @endif @if ($cursos->calificacion > '0' && $cursos->calificacion < '100' && $cursos->estado == 2) bg-yellow-300 @else bg-blue-50 @endif ">
+                                                    class="flex items-center justify-between gap-3  rounded-md overflow-hidden py-1 px-2 @if ($cursos->estado == 0) bg-red-300 @endif @if ($cursos->calificacion == '100' && $cursos->estado == 1) bg-green-300 @else bg-blue-50 @endif @if ($cursos->calificacion > '0' && $cursos->calificacion <= '100' && $cursos->estado == 2) bg-yellow-300 @else bg-blue-50 @endif ">
                                                     <p class="uppercase text-sm">
                                                         {{ $cursos->curso }}
                                                     </p>
                                                     <div class="flex items-end gap-1">
                                                         <input type="number"
-                                                            class="w-[65px] border-t-0 border-x-0 border-b-2 font-semi-bold  @if ($cursos->estado == 0) bg-red-300 @endif @if ($cursos->calificacion == '100' && $cursos->estado == 1) bg-green-300 @else bg-blue-50 @endif @if ($cursos->calificacion > '0' && $cursos->calificacion < '100' && $cursos->estado == 2) bg-yellow-300 @else bg-blue-50 @endif "
+                                                            class="w-[65px] border-t-0 border-x-0 border-b-2 font-semi-bold  @if ($cursos->estado == 0) bg-red-300 @endif @if ($cursos->calificacion == '100' && $cursos->estado == 1) bg-green-300 @else bg-blue-50 @endif @if ($cursos->calificacion > '0' && $cursos->calificacion <= '100' && $cursos->estado == 2) bg-yellow-300 @else bg-blue-50 @endif "
                                                             name="cursos[{{ $cursos->id_curso }}]" {{-- value="{{ is_null($cursos->calificacion) ? 0 : $cursos->calificacion }}" --}}
                                                             value="{{ ($cursos->calificacion ?? '') != '' ? $cursos->calificacion : 0 }}"
                                                             min="0" max="100" />
 
 
                                                         <select name="estado[{{ $cursos->id_curso }}]"
-                                                            class="text-sm border-b-2 border-x-0 border-t-0 py-2 bg-blue-50 s @if ($cursos->estado == 0) bg-red-300 @endif @if ($cursos->calificacion == '100' && $cursos->estado == 1) bg-green-300 @else bg-blue-50 @endif @if ($cursos->calificacion > '0' && $cursos->calificacion < '100' && $cursos->estado == 2) bg-yellow-300 @else bg-blue-50 @endif ">
+                                                            class="text-sm border-b-2 border-x-0 border-t-0 py-2 bg-blue-50 s @if ($cursos->estado == 0) bg-red-300 @endif @if ($cursos->calificacion == '100' && $cursos->estado == 1) bg-green-300 @else bg-blue-50 @endif @if ($cursos->calificacion > '0' && $cursos->calificacion <= '100' && $cursos->estado == 2) bg-yellow-300 @else bg-blue-50 @endif ">
                                                             @foreach ($opciones as $key => $opcion)
                                                                 <option value="{{ $key }}"
                                                                     @if ($cursos->estado == $key) selected @endif>

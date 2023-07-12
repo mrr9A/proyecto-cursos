@@ -155,6 +155,7 @@ class ReportExport implements FromArray, WithHeadings, WithDefaultStyles, WithBa
                   ->setRGB('00FF00'); // Color de fondo verde
   
               $sheet->getStyle('A1:J' . $sheet->getHighestRow())->setConditionalStyles([$conditional]);
+              $sheet->setAutoFilter('A1:J' . $sheet->getHighestRow());
           }
       ];
   }
