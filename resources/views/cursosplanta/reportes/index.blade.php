@@ -27,6 +27,10 @@
                 <select id="curso_id" name="filtros[curso_id]"
                     class="bg-gray-50 border-[2px] border-input text-gray-900  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-2 py-1 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white text-sm">
                     <option value="">Selecciona un curso</option>
+                    @foreach ($cursos as $curso )
+                    <option value="{{$curso->id_curso}}">{{$curso->nombre}}</option>
+                        
+                    @endforeach
                 </select>
             </div>
 
@@ -148,6 +152,12 @@
             return fetch(`${API_URL}/cursosplanta/cursosxplanes/${id}?buscador=${text}`)
                 .then(res => res.json())
                 .then(data => {
+
+                    console.log(data.cursosPorTrabajo.length)
+                    if(data.cursosPorTrabajo.length < 1) {
+                        loader.innerHTML = ""
+                        return;
+                    };
 
                     let cursos = '<option value="" class="text-gray-400">Selecciona un curso</option>'
                     data.cursosPorTrabajo.forEach(curso => {
