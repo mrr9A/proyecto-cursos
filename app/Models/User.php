@@ -116,6 +116,7 @@ class User extends Authenticatable
             // ->selectRaw('Count(u.id_usuario) as num_empleados, (Count(u.id_usuario) * 100 / (Select Count(id_usuario) From usuarios)) as promedio, p.puesto, p.id_puesto')
             ->where("u.estado", 1)
             ->groupBy('p.id_puesto')
+            ->groupBy('p.puesto')
             ->orderBy("puesto")
             ->get()->toArray();
 

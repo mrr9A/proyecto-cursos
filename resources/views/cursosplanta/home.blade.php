@@ -4,8 +4,8 @@
             <button id="btn-puestos"
                 class="min-w-[250px] bg-primary-light text-white shadow-all shadow-primary-light rounded-md overflow-hidden py-2 px-2 flex gap-2 items-center justify-around hover:bg-[#3D52D595]  cursor-pointer">
                 <div class="data flex flex-col items-center">
-                    <span class="text-title font-semi-bold">{{ $allPuestos }}</span>
-                    <span class="text-base font-regular">Puestos</span>
+                    {{-- <span class="text-title font-semi-bold">{{ $allPuestos }}</span> --}}
+                    <span class="text-base font-regular">Núm. Empleados <br /> por puesto</span>
                 </div>
                 <i class='bx bx-briefcase'></i>
             </button>

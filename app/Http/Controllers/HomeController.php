@@ -19,7 +19,7 @@ class HomeController extends Controller
             $data = User::progresoEmpleados();
         }
          // Obtener los enlaces de paginación manualmente
-        $allPuestos = Puesto::count();
+        // $allPuestos = Puesto::count();
         $allEmpleados = User::where("estado", "=", 1)->count();
         $allSucursales = Sucursal::where("estado", "=", 1)->count();
 

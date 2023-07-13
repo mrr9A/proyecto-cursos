@@ -18,7 +18,7 @@
                         class="bg-white w-full h-full min-h-[100px] grid  grid-cols-[repeat(auto-fit,minmax(120px,1fr))]">
                         @foreach ($empleado->trabajos[$empleado->puesto][0]['cursos'][$tipo] as $curso)
                             <td
-                                class="w-full h-full border-[1px]  text-black @if ($curso->estado === 0) bg-red-300 @endif @if ($curso->calificacion == '100' && $curso->estado == 1) bg-green-300 @else bg-blue-50 @endif @if ($curso->calificacion > '0' && $curso->calificacion <= '100' && $curso->estado == 2) bg-yellow-300 @else bg-blue-50 @endif ">
+                                class="w-full h-full border-[1px]  text-black @if ($curso->estado === 0) bg-red-300 @endif @if ($curso->calificacion == '100' && $curso->estado == 1) bg-green-300 @else bg-blue-50 @endif @if ($curso->calificacion > '0' && $curso->calificacion <= '100' && $curso->estado == 2) bg-yellow-100 @else bg-blue-50 @endif ">
                                 <label class="w-full h-full cursor-pointer block overflow-hidden">
                                     <input class="hidden peer" type="checkbox" name="cursos[]"
                                         value="usuario_id:{{ $id }}-curso_id:{{ $curso->id_curso }}"
@@ -66,7 +66,7 @@
                                     class="bg-white w-full h-full grid  grid-cols-[repeat(auto-fit,minmax(120px,1fr))]">
                                     @foreach ($trabajo['cursos'][$tipo] as $curso)
                                         <td
-                                            class="w-full h-full border-[1px]  text-black @if ($curso->estado === 0) bg-red-300 @endif @if ($curso->calificacion == '100' && $curso->estado == 1) bg-green-300 @else bg-blue-50 @endif @if ($curso->calificacion > '0' && $curso->calificacion <= '100' && $curso->estado == 2) bg-yellow-300 @else bg-blue-50 @endif  ">
+                                            class="w-full h-full border-[1px]  text-black @if ($curso->estado === 0) bg-red-300 @endif @if ($curso->calificacion == '100' && $curso->estado == 1) bg-green-300 @else bg-blue-50 @endif @if ($curso->calificacion > '0' && $curso->calificacion <= '100' && $curso->estado == 2) bg-yellow-100 @else bg-blue-50 @endif  ">
                                             <label class="w-full h-full cursor-pointer block overflow-hidden ">
                                                 <input class="hidden peer" type="checkbox" name="cursos[]"
                                                     value="usuario_id:{{ $id }}-curso_id:{{ $curso->id_curso }}"
