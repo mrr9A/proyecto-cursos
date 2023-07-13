@@ -10,6 +10,7 @@ use App\Models\Trabajo;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class PuestoController extends Controller
 {
@@ -31,6 +32,7 @@ class PuestoController extends Controller
     {
         $puesto = Puesto::create([
             "puesto" => $request->puesto,
+            "codigo" => $request->codigo,
             "estado" => 1,
             "plan_formacion_id" => $request->plan_id,
         ]);
@@ -63,16 +65,31 @@ class PuestoController extends Controller
         return to_route("puestos.index")->with("status", "puesto creado correctamente");
     }
 
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
+
+        // return response()->json(['error' => $request->all()], 400);
+        $validator = Validator::make($request->all(), [
+            'codigo' => 'required|unique:puestos,codigo,'.$id.',id_puesto',
+            'puesto' => 'required',
+            'plan_id' => 'required',
+            'trabajo' => 'array',
+        ]);
+        if ($validator->fails()) {
+        return response()->json(['error' => $validator->errors()], 400);
+    }
+
+    
+
         $trabajos = json_decode($request->trabajos);
-        $id_puesto = $request->id_puesto;
+        $id_puesto = $id;
 
         $puesto = Puesto::find($id_puesto);
         $puesto->update([
             "puesto" => $request->puesto,
+            "codigo" => $request->codigo,
             "estado" => 1,
-            "plan_formacion_id" => $request->plan_formacion_id,
+            "plan_formacion_id" => $request->plan_id,
         ]);
 
         foreach ($trabajos as $trabajo) {
@@ -92,7 +109,7 @@ class PuestoController extends Controller
                     [
                         "nombre" => $trabajo->nombre,
                         "estado" => 1,
-                        "puesto_id" => $request->id_puesto
+                        "puesto_id" => $id_puesto
                     ]
                 );
             }

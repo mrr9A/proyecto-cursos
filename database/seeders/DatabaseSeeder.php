@@ -58,30 +58,31 @@ class DatabaseSeeder extends Seeder
 
             // Puestos y trabajos
             $puestos = [
-                ['puesto' => 'consultor de experiencia', 'estado' => 1, 'plan_formacion_id' => $consultorExperiencia->id_plan_formacion],
-                ['puesto' => 'gerente de servicio', 'estado' => 1, 'plan_formacion_id' => $volksWagenPostVenta->id_plan_formacion],
-                ['puesto' => 'jefe de taller', 'estado' => 1, 'plan_formacion_id' => $volksWagenPostVenta->id_plan_formacion],
-                ['puesto' => 'asesor de servicio', 'estado' => 1, 'plan_formacion_id' => $volksWagenPostVenta->id_plan_formacion],
-                ['puesto' => 'asesor de carroceria y pintura', 'estado' => 1, 'plan_formacion_id' => $volksWagenPostVenta->id_plan_formacion],
-                ['puesto' => 'gerente de refacciones', 'estado' => 1, 'plan_formacion_id' => $volksWagenPostVenta->id_plan_formacion],
-                ['puesto' => 'almacenista y vendedor de refacciones', 'estado' => 1, 'plan_formacion_id' => $volksWagenPostVenta->id_plan_formacion],
-                ['puesto' => 'administrador de garantías', 'estado' => 1, 'plan_formacion_id' => $volksWagenPostVenta->id_plan_formacion],
+                ['codigo'=>'p-1' ,'puesto' => 'consultor de experiencia', 'estado' => 1, 'plan_formacion_id' => $consultorExperiencia->id_plan_formacion],
+                ['codigo'=>'p-2' ,'puesto' => 'gerente de servicio', 'estado' => 1, 'plan_formacion_id' => $volksWagenPostVenta->id_plan_formacion],
+                ['codigo'=>'p-3' ,'puesto' => 'jefe de taller', 'estado' => 1, 'plan_formacion_id' => $volksWagenPostVenta->id_plan_formacion],
+                ['codigo'=>'p-4' ,'puesto' => 'asesor de servicio', 'estado' => 1, 'plan_formacion_id' => $volksWagenPostVenta->id_plan_formacion],
+                ['codigo'=>'p-5' ,'puesto' => 'asesor de carroceria y pintura', 'estado' => 1, 'plan_formacion_id' => $volksWagenPostVenta->id_plan_formacion],
+                ['codigo'=>'p-6' ,'puesto' => 'gerente de refacciones', 'estado' => 1, 'plan_formacion_id' => $volksWagenPostVenta->id_plan_formacion],
+                ['codigo'=>'p-7' ,'puesto' => 'almacenista y vendedor de refacciones', 'estado' => 1, 'plan_formacion_id' => $volksWagenPostVenta->id_plan_formacion],
+                ['codigo'=>'p-8' ,'puesto' => 'administrador de garantías', 'estado' => 1, 'plan_formacion_id' => $volksWagenPostVenta->id_plan_formacion],
 
-                ['puesto' => 'ejecutivo de ventas', 'estado' => 1, 'plan_formacion_id' => $ventas->id_plan_formacion],
-                ['puesto' => 'gerente de ventas', 'estado' => 1, 'plan_formacion_id' => $ventas->id_plan_formacion],
-                ['puesto' => 'ejecutivo de autos usados certificados', 'estado' => 1, 'plan_formacion_id' => $ventas->id_plan_formacion],
-                ['puesto' => 'gerente de autos usados certificados', 'estado' => 1, 'plan_formacion_id' => $ventas->id_plan_formacion],
+                ['codigo'=>'p-9' ,'puesto' => 'ejecutivo de ventas', 'estado' => 1, 'plan_formacion_id' => $ventas->id_plan_formacion],
+                ['codigo'=>'p-10' ,'puesto' => 'gerente de ventas', 'estado' => 1, 'plan_formacion_id' => $ventas->id_plan_formacion],
+                ['codigo'=>'p-11' ,'puesto' => 'ejecutivo de autos usados certificados', 'estado' => 1, 'plan_formacion_id' => $ventas->id_plan_formacion],
+                ['codigo'=>'p-12' ,'puesto' => 'gerente de autos usados certificados', 'estado' => 1, 'plan_formacion_id' => $ventas->id_plan_formacion],
                 // TECNICOS
-                ['puesto' => 'Master Technician', 'estado' => 1, 'plan_formacion_id' => $tecnica->id_plan_formacion],
-                ['puesto' => 'Tecnico Mecanico', 'estado' => 1, 'plan_formacion_id' => $tecnica->id_plan_formacion],
-                ['puesto' => 'Ayudante Tecnico', 'estado' => 1, 'plan_formacion_id' => $tecnica->id_plan_formacion],
-                ['puesto' => 'Tecnico Express', 'estado' => 1, 'plan_formacion_id' => $tecnica->id_plan_formacion],
-                ['puesto' => 'Tecnico Preparador de autos nuevos', 'estado' => 1, 'plan_formacion_id' => $tecnica->id_plan_formacion],
-                ['puesto' => 'controlista de calidad', 'estado' => 1, 'plan_formacion_id' => $tecnica->id_plan_formacion],
+                ['codigo'=>'p-13' ,'puesto' => 'Master Technician', 'estado' => 1, 'plan_formacion_id' => $tecnica->id_plan_formacion],
+                ['codigo'=>'p-14' ,'puesto' => 'Tecnico Mecanico', 'estado' => 1, 'plan_formacion_id' => $tecnica->id_plan_formacion],
+                ['codigo'=>'p-15' ,'puesto' => 'Ayudante Tecnico', 'estado' => 1, 'plan_formacion_id' => $tecnica->id_plan_formacion],
+                ['codigo'=>'p-16' ,'puesto' => 'Tecnico Express', 'estado' => 1, 'plan_formacion_id' => $tecnica->id_plan_formacion],
+                ['codigo'=>'p-17' ,'puesto' => 'Tecnico Preparador de autos nuevos', 'estado' => 1, 'plan_formacion_id' => $tecnica->id_plan_formacion],
+                ['codigo'=>'p-18' ,'puesto' => 'controlista de calidad', 'estado' => 1, 'plan_formacion_id' => $tecnica->id_plan_formacion],
             ];
 
             foreach ($puestos as $puestoData) {
                 $puesto = Puesto::create([
+                    'codigo' => $puestoData['codigo'],
                     'puesto' => $puestoData['puesto'],
                     'estado' => $puestoData['estado'],
                     'plan_formacion_id' => $puestoData['plan_formacion_id']
@@ -130,21 +131,18 @@ class DatabaseSeeder extends Seeder
         // Inserción 1
         $iniciales = TipoCurso::insertGetId([
             'nombre' => 'iniciales',
-            'duracion' => '0-3',
             'estado' => 1
         ]);
 
         // Inserción 2
         $fundamentos = TipoCurso::insertGetId([
             'nombre' => 'fundamentos',
-            'duracion' => '3-6',
             'estado' => 1
         ]);
 
         // Inserción 3
         $especialidad = TipoCurso::insertGetId([
             'nombre' => 'especialidad',
-            'duracion' => '6-12',
             'estado' => 1
         ]);
 
@@ -262,11 +260,13 @@ class DatabaseSeeder extends Seeder
         // ["nombre", "ciudad", "estado"];
         Sucursal::create([
             "nombre" => "Kia",
+            "codigo" => "s-1",
             "ciudad" => "Oaxaca de juarez",
             "estado" => 1
         ]);
         Sucursal::create([
             "nombre" => "volkswagen",
+            "codigo" => "s-2",
             "ciudad" => "Oaxaca de juarez",
             "estado" => 1
         ]);

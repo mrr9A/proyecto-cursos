@@ -3,8 +3,8 @@
         <div class="w-[75%] mt-2">
             <h2 class="text-subtitle -mt-5 italic">{{ $data->puesto }}</h2>
             <div class="bg-blue-100 py-2 px-4 rounded-md text-sm font-semi-bold">
-                Puedes calificar los cursos del uno al 100, en caso de ser necesario, si quieres calificar los
-                cursos al 100 te recomiendo ir a la pagina princial de matrices
+                Puedes calificar los cursos del 1 al 100 en caso de ser necesario. Si quieres calificar los
+                cursos al como aprobados y el progreso al 100% te recomiendo ir a la pagina princial de matrices
             </div>
 
             <div>

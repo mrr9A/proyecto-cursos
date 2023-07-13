@@ -16,7 +16,7 @@
                             <path fill="currentColor" d="M1760 1590q66 33 119 81t90 107t58 128t21 142h-128q0-79-30-149t-82-122t-123-83t-149-30q-80 0-149 30t-122 82t-83 123t-30 149h-128q0-73 20-142t58-128t91-107t119-81q-75-54-117-135t-43-175q0-79 30-149t82-122t122-83t150-30q79 0 149 30t122 82t83 123t30 149q0 94-42 175t-118 135zm-224-54q53 0 99-20t82-55t55-81t20-100q0-53-20-99t-55-82t-81-55t-100-20q-53 0-99 20t-82 55t-55 81t-20 100q0 53 20 99t55 82t81 55t100 20zm-512 80q-32 37-58 77t-46 86q-53-55-128-85t-152-30H256V384H128v1408h787q-14 31-23 63t-15 65H0V256h256V128h384q88 0 169 27t151 81q69-54 150-81t170-27h384v128h256v640q-58-57-128-95V384h-128v369q-32-9-64-13t-64-4V256h-256q-70 0-136 24t-120 71v1265zm-128-13V351q-54-46-120-70t-136-25H384v1280h256q67 0 132 17t124 50z" />
                         </svg>
                     </span>
-                    <P>Información del Curso</P>
+                    <P>Información del curso</P>
                 </div>
             </div>
             <div class="stepwizard-step">
@@ -51,7 +51,7 @@
                             </g>
                         </svg>
                     </span>
-                    <P>Conmfirmar Datos</P>
+                    <P>Conmfirmar datos</P>
                 </div>
             </div>
         </div>
@@ -61,21 +61,21 @@
         <div class="col-xs-12">
             <div class="col-md-12">
                 <br>
-                <h3 class="text-7xl font-bold tracking-tight text-gray-900 sm:text-4xl">Información General del Curso</h3><br>
+                <h3 class="text-7xl font-bold tracking-tight text-gray-900 sm:text-4xl">Información general del curso</h3><br>
                 <div class="grid col-11 gap-x-8 gap-y-6 text-blue-600/100">
-                    <label for="apellidoPaterno">Nombre del Curso <span class="text-red-500">*</span></label>
+                    <label for="apellidoPaterno">Nombre del curso <span class="text-red-500">*</span></label>
                     <input type="text" rows="3" wire:model="nombre" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" id="decription" require>
                     @error('nombre') <span class="error text-red-600">{{ $message }}</span> @enderror
                 </div>
                 <br>
                 <div class="grid col-11 gap-x-8 gap-y-8 text-blue-600/100">
-                    <label for="title">Codígo del Curso <span class="text-red-500">*</span></label>
+                    <label for="title">Codígo del curso <span class="text-red-500">*</span></label>
                     <input type="text" wire:model="codigo" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" id="nombre" require>
                     @error('codigo') <span class="error text-red-600">{{ $message }}</span> @enderror
                 </div>
                 <br>
                 <div class="col-11 text-blue-600/100">
-                    <label for="cover-photo">Imagen del Curso <span class="text-red-500">*</span></label>
+                    <label for="cover-photo">Imagen del curso <span class="text-red-500">*</span></label>
                     <div class="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25">
                         <div class="text-center">
                             <span class="inline-block ">
@@ -96,12 +96,12 @@
                             </span>
                             <div class="mt-4 flex text-sm leading-6 text-gray-600" enctype="multipart/form-data">
                                 <label for="file-upload" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light">
-                                    <span class="text-bold">Seleccionar una Imagen</span>
+                                    <span class="text-bold">Seleccionar una imagen</span>
                                     <input id="file-upload" wire:model="imagen" type="file" class="sr-only" accept="image/*" require>
                                 </label>
                             </div><br>
                             @error('imagen') <span class="error text-red-600">{{ $message }}</span> @enderror
-                            <p class="text-xs leading-5 text-gray-600">Formatos Admitidos: PNG, JPG</p>
+                            <p class="text-xs leading-5 text-gray-600">Formatos admitidos: PNG, JPG</p>
                         </div>
                     </div>
                 </div>
@@ -122,12 +122,12 @@
         <div class="col-xs-12">
             <div class="col-md-12">
 
-                <h3 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Información General del Curso</h3>
+                <h3 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Información general del curso</h3>
                 <br>
                 <div class="form-group ">
-                    <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Seleccione la Modalidad del Curso <span class="text-red-600">*</span></label>
+                    <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Seleccione la modalidad del curso <span class="text-red-600">*</span></label>
                     <select id="countries" wire:model="modalidad_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        <option selected>Seleccione la Modalidad</option>
+                        <option selected>Seleccione la modalidad</option>
                         @foreach ($modalidad as $modi)
                         <option value="{{$modi->id_modalidad}}">{{$modi->modalidad}}</option>
                         @endforeach
@@ -136,9 +136,9 @@
                 </div>
                 <br>
                 <div class="form-group">
-                    <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Seleccione el Tipo del Curso <span class="text-red-600">*</span></label>
+                    <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Seleccione el tipo del curso <span class="text-red-600">*</span></label>
                     <select id="countries" wire:model="tipo_curso_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        <option selected>Seleccione el Tipo</option>
+                        <option selected>Seleccione el tipo</option>
                         @foreach ($tipo as $tip)
                         <option value="{{$tip->id_tipo_curso}}">{{$tip->nombre}}</option>
                         @endforeach
@@ -149,7 +149,7 @@
                 <div class="form-group">
                     <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Seleccione la Categoria del Curso <span class="text-red-600">*</span></label>
                     <select id="countries" wire:model="categoria_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        <option selected>Seleccione la Categoria</option>
+                        <option selected>Seleccione la categoria</option>
                         @foreach ($categoria as $category)
                         <option value="{{$category->id_categoria}}">{{$category->nombre}}</option>
                         @endforeach
@@ -171,19 +171,19 @@
         <div class="col-xs-12">
             <div class="col-md-12">
                 <br>
-                <h3 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Confirar Datos</h3>
+                <h3 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Confirar datos</h3>
                 <br>
                 <table class="w-full text-gray-500 dark:text-gray-400">
                     <tr>
-                        <td class=" font-bold">Codigo del Curso</td>
+                        <td class=" font-bold">Codigo del curso</td>
                         <td class=" font-bold"><strong>{{$codigo}}</strong></td>
                     </tr>
                     <tr>
-                        <td class=" font-bold">Nombre del Curso</td>
+                        <td class=" font-bold">Nombre del curso</td>
                         <td class=" font-bold"><strong>{{$nombre}}</strong></td>
                     </tr>
                     <tr>
-                        <td class=" font-bold">Modalidad del Curso</td>
+                        <td class=" font-bold">Modalidad del curso</td>
                         @foreach ($modalidad as $modi)
                         @if($modi->id_modalidad == $modalidad_id)
                         <td class=" font-bold"><strong>{{$modi->modalidad}}</strong></td>
@@ -191,7 +191,7 @@
                         @endforeach
                     </tr>
                     <tr>
-                        <td class=" font-bold">Tipo de Curso</td>
+                        <td class=" font-bold">Tipo de curso</td>
                         @foreach ($tipo as $tip)
                         @if($tip->id_tipo_curso == $tipo_curso_id)
                         <td class=" font-bold"><strong>{{$tip->nombre}}</strong></td>
@@ -199,7 +199,7 @@
                         @endforeach
                     </tr>
                     <tr>
-                        <td class=" font-bold">Categoria del Curso</td>
+                        <td class=" font-bold">Categoria del curso</td>
                         @foreach ($categoria as $category)
                         @if($category->id_categoria == $categoria_id)
                         <td class=" font-bold"><strong>{{$category->nombre}}</strong></td>
@@ -207,11 +207,11 @@
                         @endforeach
                     </tr>
                     <tr>
-                        <td class=" font-bold">Estatus del Curso:</td>
+                        <td class=" font-bold">Estatus del curso:</td>
                         <td class=" font-bold"><strong>{{$estado ? 'Activo' : 'Inactivo'}}</strong></td>
                     </tr>
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-800">
-                        <td class=" font-bold">Imagen del Curso:</td>
+                        <td class=" font-bold">Imagen del curso:</td>
                         <!-- <td><img src="{{$imagen}}" alt="avatar" width="100" height="100"></td> -->
                         <td>
                             @if ($imagen)

@@ -22,7 +22,6 @@ class CategoriaController extends Controller
         $categoria = Categoria::find($id);
         $categoria->update([
             "nombre" => $request->nombre,
-            "descripcion" => $request->descripcion
         ]);
 
         return redirect()->back()->with('success', 'categoria actualizado correctamente');

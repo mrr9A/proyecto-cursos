@@ -10,6 +10,7 @@
             <table class="min-w-full">
                 <thead class="border-b uppercase bg-blue-200 text-left">
                     <tr>
+                        <th class="px-6 py-2">Codigo</th>
                         <th class="px-6 py-2">Sucursal</th>
                         <th class="px-6 py-2">Dirección</th>
                         <th class="px-6 py-2">Estatus</th>
@@ -19,8 +20,10 @@
                 <tbody class="uppercase">
                     @foreach ($sucursales as $sucursal)
                         <tr class="border-b border-gray-200 hover:bg-gray-100">
+                            <td class="py-3 px-6 text-left w-1/12 ">{{ $sucursal->codigo ?? 0 }}</td>
                             <td class="py-3 px-6 text-left flex items-center gap-2"> <i
                                     class='bx bx-buildings'></i>{{ $sucursal->nombre }}</td>
+
                             <td class="py-3 px-6 text-left ">{{ $sucursal->ciudad }}</td>
                             <td class="py-3 px-6 text-left ">
                                 @if ($sucursal->estado == 1)

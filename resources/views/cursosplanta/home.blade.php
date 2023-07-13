@@ -144,7 +144,7 @@
                             <tr class="border-b border-gray-200 hover:bg-gray-100">
                                 <td class="whitespace-nowrap px-6 py-2 w-1/12 ">{{ $usuario->id_sgp }}</td>
                                 <td class="whitespace-nowrap px-6 py-2 w-1/12 ">{{ $usuario->id_sumtotal }}</td>
-                                <td class="py-3 px-6 text-left">{{ $usuario->empleado }}</td>
+                                <td class="py-3 px-6 text-left capitalize">{{ $usuario->empleado }}</td>
                                 <td class="py-3 px-6 text-left">{{ $usuario->puesto }}</td>
                                 <td class="py-3 px-6 text-left">{{ $usuario->total }}</td>
                                 <td class="py-3 px-6 text-left">{{ $usuario->totalCursosPasados }}</td>

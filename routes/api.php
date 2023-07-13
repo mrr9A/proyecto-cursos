@@ -51,6 +51,9 @@ Route::get("cursosplanta/cursos/{puesto}", function ($puesto) {
 
 Route::get('cursosplanta/puesto/{id}', function ($id) {
     $puesto = Puesto::find($id);
+    if (is_null($puesto)) {
+        return response()->json(['error' => 'not found'], 400);
+    }
     $puesto->trabajos;
     $puesto->planes_formacion;
     return response()->json($puesto);

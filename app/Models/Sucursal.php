@@ -10,7 +10,7 @@ class Sucursal extends Model
     use HasFactory;
     protected $table = 'sucursales';
     protected $primaryKey = "id_sucursal";
-    protected $fillable = ["nombre", "ciudad", "estado"];
+    protected $fillable = ["nombre", "ciudad", "estado", "codigo"];
     public $timestamps = false;
 
     public function usuarios(){

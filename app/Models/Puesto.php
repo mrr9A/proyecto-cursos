@@ -11,7 +11,7 @@ class Puesto extends Model
     protected $primaryKey = "id_puesto";
     public $timestamps = false;
 
-    protected $fillable = ["puesto", "estado", "plan_formacion_id"];
+    protected $fillable = ["codigo","puesto", "estado", "plan_formacion_id"];
 
     public function usuarios()
     {
