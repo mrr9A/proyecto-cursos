@@ -22,27 +22,31 @@
                     </span>
                 </button>
                 <!-- Dropdown menu -->
-                <div id="dropdown1" class=" hidden z-50 text-base list-none  divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
-                    <ul class="py-2" aria-labelledby="dropdownButton1">
+                <div id="dropdown1" class="z-10 hidden bg-gray-100 divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+                    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownButton1">
                         <li class="justify-center">
                             <form action="{{url('Lecciones',[$curso])}}">
-                                <button class="block text-gray-50 bg-blue-800 border-b-2 border-2 rounded-md  focus:outline-none  font-medium text-sm px-5 py-2.5 text-center hover:bg-blue-900 hover:text-gray-200 hover:rounded-t-md">Agregar una Lección</button>
+                                <button class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-400 dark:hover:text-white">Agregar una Lección</button>
                             </form>
+                        </li>
+                        <li>
                             @if(count($curso->examen) > 0 )
                             <form action="{{url('examenes',[$curso->examen[0]->id_examen])}}" method="POST" id="" class="text-secondary formulario-eliminarEx">
                                 @method("DELETE")
                                 @csrf
-                                <button class="block text-gray-50 bg-red-800 border-b-2 border-2 rounded-md  focus:outline-none  font-medium text-sm px-5 py-2.5 text-center hover:bg-blue-900 hover:text-gray-200 hover:rounded-t-md">Eliminar Examen Final</button>
+                                <button class="block px-4 py-2 hover:bg-gray-100 text-incompleted dark:hover:bg-gray-600 dark:hover:text-white">Eliminar Examen Final</button>
                             </form>
-                            <a href="{{route('verExFinalMedit',$curso->id_curso)}}" class="block text-gray-50 bg-blue-800 border-b-2 border-2 rounded-md  focus:outline-none  font-medium text-sm px-5 py-2.5 text-center hover:bg-blue-900 hover:text-gray-200 hover:rounded-t-md">
+                            <a href="{{route('verExFinalMedit',$curso->id_curso)}}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                                 <span class="text-center">Editar Examen Final</span>
                             </a>
                             @else
                             <form action="{{  route('newExamen',[$curso]) }}">
-                                <button class="block text-gray-50 bg-blue-800 border-b-2 border-2 rounded-md  focus:outline-none  font-medium text-sm px-5 py-2.5 text-center hover:bg-blue-900 hover:text-gray-200 hover:rounded-t-md">Agregar Examen Final</button>
+                                <button class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Agregar Examen Final</button>
                             </form>
                             @endif
-                            <button data-modal-target="editar_curso_interno" data-modal-toggle="editar_curso_interno" class="block text-gray-50 bg-blue-800 border-b-2 border-2 rounded-md  focus:outline-none  font-medium text-sm px-5 py-2.5 text-center hover:bg-blue-900 hover:text-gray-200 hover:rounded-t-md" type="button">
+                        </li>
+                        <li>
+                            <button data-modal-target="editar_curso_interno" data-modal-toggle="editar_curso_interno" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" type="button">
                                 Editar Información del Curso
                             </button>
                         </li>
@@ -111,15 +115,15 @@
                                     </span>
                                 </button>
                                 <!-- Dropdown menu -->
-                                <div id="dropdown3-{{$leccion->id_leccion}}" class=" hidden text-base list-none  divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+                                <div id="dropdown3-{{$leccion->id_leccion}}" class="z-10 hidden bg-gray-100 divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
                                     <ul class="py-2" aria-labelledby="dropdownButton3-{{$leccion->id_leccion}}">
                                         <li>
-                                            <a href="{{ url('contenidos',[$leccion]) }}" class="block text-gray-50 bg-blue-800 border-b-2 border-2 rounded-md  focus:outline-none  font-medium text-sm px-5 py-2.5 text-center hover:bg-blue-900 hover:text-gray-200 hover:rounded-t-md">
+                                            <a href="{{ url('contenidos',[$leccion]) }}" class="block px-4 py-2 hover:bg-gray-100 text-sm dark:hover:bg-gray-600 dark:hover:text-white">
                                                 Agregar Contenido
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="{{ route('editLec',[$leccion]) }}" class="block text-gray-50 bg-blue-800 border-b-2 border-2 rounded-md  focus:outline-none  font-medium text-sm px-5 py-2.5 text-center hover:bg-blue-900 hover:text-gray-200 hover:rounded-t-md">
+                                            <a href="{{ route('editLec',[$leccion]) }}" class="block px-4 py-2 hover:bg-gray-100 text-sm dark:hover:bg-gray-600 dark:hover:text-white">
                                                 Editar Leccion
                                             </a>
                                         </li>
@@ -127,7 +131,7 @@
                                             <form action="{{ url('Lecciones',[$leccion]) }}" method="POST" class="formulario-eliminar">
                                                 @method("DELETE")
                                                 @csrf
-                                                <button type="submit" class="block text-gray-50 bg-blue-800 border-b-2 border-2 rounded-md  focus:outline-none  font-medium text-sm px-5 py-2.5 text-center hover:bg-blue-900 hover:text-gray-200 hover:rounded-t-md">
+                                                <button type="submit" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 text-sm text-incompleted dark:hover:text-white">
                                                     Eliminar Lección
                                                 </button>
                                             </form>

@@ -110,7 +110,8 @@ Route::get('usuarios', function (Request $request) {
 
     $searchTerm = $request->search;
     $id_curso = $request->curso_id;
-    $usuarios = User::where('nombre', 'LIKE', '%' . $searchTerm . '%')
+    $usuarios = User::where('rol', '=', 1)
+        ->where('nombre', 'LIKE', '%' . $searchTerm . '%')
         ->orWhere('segundo_nombre', 'LIKE', '%' . $searchTerm . '%')
         ->orWhere('apellido_paterno', 'LIKE', '%' . $searchTerm . '%')
         ->orWhere('apellido_materno', 'LIKE', '%' . $searchTerm . '%')
