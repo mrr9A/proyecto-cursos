@@ -119,16 +119,16 @@
     <h2>LA EMPRESA AUTOMOTRIZ BONN S.A DE C.V</h2>
     <h3>OTORGA A:</h3>
     @foreach($calificacionesCursos as $calificacionesCurso)
-    <h5>{{$calificacionesCurso['usuario']}} {{$calificacionesCurso['segundoNombre']}} {{$calificacionesCurso['apellidoP']}} {{$calificacionesCurso['apellidoM']}}</h5>
+    <h5 style="text-transform: capitalize">{{$calificacionesCurso['usuario']}} {{$calificacionesCurso['segundoNombre']}} {{$calificacionesCurso['apellidoP']}} {{$calificacionesCurso['apellidoM']}}</h5>
     <p>Por haber concluido satiscatoriamente el "{{$calificacionesCurso['progreso']}}%" del curso:</p>
-    <p> "{{$calificacionesCurso['curso']->nombre}}", y haber obtenido la calificación del: "{{$calificacionesCurso['calificacion']}}%".</p>
+    <p> "{{$calificacionesCurso['curso']->nombre}}" y haber obtenido la calificación del: "{{$calificacionesCurso['calificacion']}}%".</p>
     <div class="footer clearfix" style=" width: 100%; overflow: auto; margin-bottom: -1cm;">
         <span class="float-left" style="float: left; width: 50%; box-sizing: border-box;">AUTOMOTRIZ BONN S.A DE C.V</span>
-        <span class="float-left" style="float: left; width: 50%; box-sizing: border-box;">{{$calificacionesCurso['usuario']}} {{$calificacionesCurso['segundoNombre']}} {{$calificacionesCurso['apellidoP']}} {{$calificacionesCurso['apellidoM']}}</span>
+        <span class="float-left" style="float: left; width: 50%; box-sizing: border-box;text-transform: capitalize;">{{$calificacionesCurso['usuario']}} {{$calificacionesCurso['segundoNombre']}} {{$calificacionesCurso['apellidoP']}} {{$calificacionesCurso['apellidoM']}}</span>
     </div>
     <div class="footer1 clearfix" style=" width: 100%; overflow: auto; margin-top: -1cm;">
-        <h6 class="float-left" style="float: left; width: 50%; box-sizing: border-box;">Nombre y Firma de la empresa</h6>
-        <h6 class="float-left" style="float: left; width: 50%; box-sizing: border-box;">Nombre y Firma del Trabajador</h6>
+        <h6 class="float-left" style="float: left; width: 50%; box-sizing: border-box;">Nombre y firma de la empresa</h6>
+        <h6 class="float-left" style="float: left; width: 50%; box-sizing: border-box;">Nombre y firma del trabajador</h6>
     </div>
     <p>Fecha de emisión: {{$calificacionesCurso['fechaImpresion']}}</p>
     @endforeach
