@@ -23,6 +23,6 @@ class HomeController extends Controller
         $allEmpleados = User::where("estado", "=", 1)->count();
         $allSucursales = Sucursal::where("estado", "=", 1)->count();
 
-        return view('cursosplanta.home', compact('data','allPuestos', 'allEmpleados', 'allSucursales'));
+        return view('cursosplanta.home', compact('data', 'allEmpleados', 'allSucursales'));
     }
 }
