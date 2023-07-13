@@ -71,6 +71,14 @@
                                     Estado del curso
                                 </th>
 
+                                <th scope="col" class=" py-3.5 text-sm font-normal text-center rtl:text-right text-gray-500 dark:text-gray-400">
+                                    Inicia el:
+                                </th>
+
+                                <th scope="col" class=" py-3.5 text-sm font-normal text-center rtl:text-right text-gray-500 dark:text-gray-400">
+                                    Termina el:
+                                </th>
+
                                 <th scope="col" class="py-3.5 text-sm font-normal text-center rtl:text-right text-gray-500 dark:text-gray-400">Calificación del Curso</th>
 
 
@@ -122,6 +130,12 @@
                                     @endif
                                 </td>
                                 <td class="px-4 py-4 text-center text-sm whitespace-nowrap">
+                                    {{$calificacionesCurso['fecha_inicio']}}
+                                </td>
+                                <td class="px-4 py-4 text-center text-sm whitespace-nowrap">
+                                    {{$calificacionesCurso['fecha_termino']}}
+                                </td>
+                                <td class="px-4 py-4 text-center text-sm whitespace-nowrap">
                                     {{$calificacionesCurso['calificacion']}}
                                 </td>
                                 <td class="text-sm items-center text-center whitespace-nowrap">
@@ -164,7 +178,7 @@
                             </span>
                         </div>
                         <div class="flex justify-center">
-                            <span class="text-sm font-medium text-blue-700 dark:text-white">Pendiente por Iniciar</span>
+                            <span class="text-sm font-medium text-blue-700 dark:text-white">Pendiente por iniciar</span>
                         </div>
                         </a><br><br>
                         @else
@@ -220,9 +234,8 @@
                         <span class="relative inline-block px-3 py-1 text-center items-center text-green-900 leading-tight">
                             @if($calificacionesCurso['estatus'])
                             <span class="relative text-gray-800 font-bold">Activo</span>
-                            @elseif($calificacionesCurso['fecha'] < $calificacionesCurso['fecha_inicio'])
-                             <span class="relative text-gray-800 font-bold">Pendiente por Iniciar</span>
-                         @else
+                            @elseif($calificacionesCurso['fecha'] < $calificacionesCurso['fecha_inicio']) <span class="relative text-gray-800 font-bold">Pendiente por Iniciar</span>
+                        @else
                         <span class="relative text-gray-800 font-bold">Expirado</span>
                         @endif
                         </span>
@@ -244,6 +257,12 @@
                             <span class="font-bold text-primary">{{$calificacionesCurso['estado']}}</span>
                         </span>
                         @endif
+                    </td>
+                    <td class="px-4 py-4 text-center text-sm whitespace-nowrap">
+                        {{$calificacionesCurso['fecha_inicio']}}
+                    </td>
+                    <td class="px-4 py-4 text-center text-sm whitespace-nowrap">
+                        {{$calificacionesCurso['fecha_termino']}}
                     </td>
                     <td class="px-4 py-4 text-center text-sm whitespace-nowrap">
                         {{$calificacionesCurso['calificacion']}}

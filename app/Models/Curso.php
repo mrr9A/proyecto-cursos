@@ -213,7 +213,6 @@ class Curso extends Model
                 "id_curso",
                 "codigo",
                 "c.nombre",
-                "fecha_inicio",
                 "interno_planta",
                 "fecha_termino",
                 "tc.nombre as tipo",
