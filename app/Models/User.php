@@ -116,6 +116,7 @@ class User extends Authenticatable
             // ->selectRaw('Count(u.id_usuario) as num_empleados, (Count(u.id_usuario) * 100 / (Select Count(id_usuario) From usuarios)) as promedio, p.puesto, p.id_puesto')
             ->where("u.estado", 1)
             ->groupBy('p.id_puesto')
+            ->groupBy('p.puesto')
             ->orderBy("puesto")
             ->get()->toArray();
 
@@ -227,8 +228,9 @@ class User extends Authenticatable
             $todosCursosTotal = 0;
             $cursosPasadosTotal = 0;
             $cursosProgreso = [];
+            $cursosReprobados =[];
             // & indica que la variable esta siendo pasada por referencia
-            $trabajos = $usuario->trabajos->map(function ($trabajo) use ($usuario, &$todosCursosTotal, &$cursosPasadosTotal, &$cursosProgreso) {
+            $trabajos = $usuario->trabajos->map(function ($trabajo) use ($usuario, &$todosCursosTotal, &$cursosPasadosTotal, &$cursosProgreso,&$cursosReprobados) {
                 $cursos = $trabajo->cursos->map(function ($curso) use ($usuario) {
                     $calificacion = $usuario->calificaciones
                         ->firstWhere('curso_id', $curso->id_curso);
@@ -246,8 +248,10 @@ class User extends Authenticatable
                 $todosCursos = $cursos->count();
                 $todosCursosTotal += $todosCursos;
                 $cursosPasados = $cursos->where('calificacion', '=', '100')->where('estado', '=', 1)->count();
-                $cursosEnProgreso = $cursos->where('calificacion', '<', '100')->where('calificacion', '>', 0)->pluck('calificacion')->toArray();
+                $cursosEnProgreso = $cursos->where('calificacion', '<=', '100')->where('calificacion', '>', 0)->where('estado', 2)->pluck('calificacion')->toArray();
+                $cursoReprobados = $cursos->where('estado',0)->pluck('calificacion')->toArray();
                 array_push($cursosProgreso, $cursosEnProgreso);
+                array_push($cursosReprobados, $cursoReprobados);
                 $cursosPasadosTotal += $cursosPasados;
 
                 return [
@@ -259,7 +263,11 @@ class User extends Authenticatable
             $calCursosProgreso = array_reduce($cursosProgreso, function ($carry, $item) {
                 return $carry + array_sum($item);
             }, 0);
-            $porcentaje = bcdiv(($todosCursosTotal != 0) ? (((($cursosPasadosTotal * 100) + $calCursosProgreso) * 100) / ($todosCursosTotal * 100)) : 0, '1', 2);
+
+            $cursosReprobados = array_reduce($cursosReprobados, function ($carry, $item) {
+                return $carry + array_sum($item);
+            }, 0);
+            $porcentaje = bcdiv(($todosCursosTotal != 0) ? (((($cursosPasadosTotal * 100) + $calCursosProgreso + $cursosReprobados) * 100) / ($todosCursosTotal * 100)) : 0, '1', 2);
 
             return (object) [
                 'id_usuario' => $usuario->id_usuario,
@@ -320,6 +328,7 @@ class User extends Authenticatable
             ->when($curso_id, function ($query, $curso_id) {
                 return $query->where('id_curso', $curso_id);
             })
+            ->where('usuarios.rol',1)
             ->groupBy('curso', 'empleado')
             ->orderBy('id_puesto', 'asc')
             ->orderBy('id_usuario', 'asc')

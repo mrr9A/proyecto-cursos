@@ -9,7 +9,7 @@ class TipoCurso extends Model
 {
     use HasFactory;
     protected $primaryKey = "id_tipo_curso";
-    public $fillable = ["nombre", "duracion", "estado"];
+    public $fillable = ["nombre", "estado"];
     protected $table = "tipo_cursos";
     public $timestamps = false;
 

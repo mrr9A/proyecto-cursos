@@ -22,9 +22,9 @@
             </div>
             <div class="h-full w-1/2 py-10 px-5  bg-gray-100 md:px-10">
                 <div class="text-center mb-10">
-                    <h1 class="font-bold text-3xl text-title text-gray-900">Iniciar Sesion</h1>
+                    <h1 class="font-bold text-3xl text-title text-gray-900 uppercase">Iniciar sesión</h1>
                     <h1 class="font-bold text-3xl text-section-subtitle text-gray-600">LMS BOON</h1><br>
-                    <p>Porfavor Ingresa tus credenciales para iniciar sesión</p>
+                    <p>Porfavor ingresa tus credenciales para iniciar sesión</p>
                 </div>
                 <x-messages.login-messages />
                 <form action="{{ route('login') }}" method="POST">
@@ -32,7 +32,7 @@
                     <div>
                         <div class="flex -mx-3">
                             <div class="w-full px-3 mb-5">
-                                <label for="" class="text-xs font-bold px-1">Correo Electronico:</label>
+                                <label for="" class="text-xs font-bold px-1">Correo electrónico:</label>
                                 <div class="flex">
                                     <div
                                         class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
@@ -62,8 +62,7 @@
                         <div class="flex -mx-3">
                             <div class="w-full px-3 mb-5">
                                 <button type="submit"
-                                    class="block w-full max-w-xs mx-auto bg-input hover:bg-input-buscador focus:bg-input-buscador text-white rounded-lg px-3 py-3 font-bold">Iniciar
-                                    Sesión</button>
+                                    class="block w-full max-w-xs mx-auto bg-input hover:bg-input-buscador focus:bg-input-buscador text-white rounded-lg px-3 py-3 font-bold">continuar</button>
                             </div>
                         </div>
                     </div>

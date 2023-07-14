@@ -27,6 +27,7 @@
                         <th scope="col" class="px-6 py-2">ID SUMTOTAL</th>
                         <th scope="col" class="px-6 py-2">nombre</th>
                         <th scope="col" class="px-6 py-2">puesto</th>
+                        <th scope="col" class="px-6 py-2">rol</th>
                         <th scope="col" class="px-6 py-2">estado</th>
                         <th scope="col" class="px-6 py-2">opciones</th>
                     </tr>
@@ -45,7 +46,8 @@
                                 {{ $usuario->segundo_nombre }} {{ $usuario->apellido_paterno }}
                                 {{ $usuario->apellido_materno }}</td>
                             <td class="py-3 px-6 text-left">{{ $usuario->puestos->puesto }}</td>
-                            <td class="py-3 px-6 text-left">
+                            <td class="py-3 px-6 text-left">{{ $usuario->rol == 1 ? 'Empleado' : 'Administrador' }}</td>
+                            <td class="py-3 px-6 text-left w-1/12">
                                 <div
                                     class="w-4 h-4 rounded-full @if ($usuario->estado == 1) bg-success @else bg-gray-400 @endif">
                                 </div>

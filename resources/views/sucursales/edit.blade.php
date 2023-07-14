@@ -1,10 +1,12 @@
 {{-- <x-app title="Actualizar {{ $sucursale->nombre }}"> --}}
-<div class="w-full">
-    <form action="{{ url('sucursales', [$sucursale]) }}" method="POST" class="formulario-actualizar">
+<div class="w-full ">
+    <form action="{{ url('sucursales', [$sucursale]) }}" method="POST" class="formulario-actualizar  flex flex-col gap-5">
         @csrf
         @method('PUT')
-        <x-input-text nombre="nombre" text="Sucursal" :value="$sucursale->nombre" required classLabel="text-base" />
-        <x-input-text nombre="ciudad" text="Ciudad" :value="$sucursale->ciudad" required classLabel="text-base" />
+        <input name="id_sucursal" value="{{$sucursale->id_sucursal}}" class="hidden" />
+        <x-input-text nombre="nombre" text="Sucursal" :value="$sucursale->nombre" required classLabel="text-base"  required/>
+        <x-input-text nombre="ciudad" text="Ciudad" :value="$sucursale->ciudad" required classLabel="text-base" required />
+        <x-input-text nombre="codigo" text="Codigo" :value="$sucursale->codigo" required classLabel="text-base"  required/>
 
         <div class="form-group">
             <label for="" class="text-base font-semi-bold mt-3 inline-block">Estatus de la Sucursal</label>

@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SaveSucursalRequest;
 use App\Models\Sucursal;
-use Illuminate\Http\Request;
 
 class SucursalesController extends Controller
 {
@@ -14,9 +14,10 @@ class SucursalesController extends Controller
         return view('sucursales.index',compact('sucursales'));
     }
 
-    public function store(Request $request)
+    public function store(SaveSucursalRequest $request)
     {
         $data = [
+            "codigo" =>$request->codigo,
             "nombre" =>$request->nombre,
             "ciudad"=>$request->ciudad,
             "estado" => 1
@@ -36,7 +37,7 @@ class SucursalesController extends Controller
         return view('sucursales.edit',compact('sucursale'));
     }
 
-    public function update(Request $request, string $id)
+    public function update(SaveSucursalRequest $request, string $id)
     {
         $sucursale = Sucursal::find($id);
         $sucursale->fill($request->input());

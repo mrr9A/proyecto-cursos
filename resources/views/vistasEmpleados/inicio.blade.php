@@ -59,8 +59,8 @@
                     <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                         <thead class="bg-gray-50 dark:bg-gray-800">
                             <tr>
-                                <th scope="col" class="py-3.5 text-sm font-normal  rtl:text-right text-gray-500 dark:text-gray-400">Imagén del Curso</th>
-                                <th scope="col" class="py-3.5 text-center text-sm font-normal rtl:text-right text-gray-500 dark:text-gray-400"><span>Nombre del Curso</span></th>
+                                <th scope="col" class="py-3.5 text-sm font-normal  rtl:text-right text-gray-500 dark:text-gray-400">Imagén del curso</th>
+                                <th scope="col" class="py-3.5 text-center text-sm font-normal rtl:text-right text-gray-500 dark:text-gray-400"><span>Nombre del curso</span></th>
                                 <th scope="col" class="py-3.5 text-center text-sm font-normal rtl:text-right text-gray-500 dark:text-gray-400"><span>Num. Lecciones</span></th>
 
                                 <th scope="col" class=" py-3.5 text-sm font-normal text-center rtl:text-right text-gray-500 dark:text-gray-400">
@@ -71,6 +71,7 @@
                                     Estado del curso
                                 </th>
 
+
                                 <th scope="col" class=" py-3.5 text-sm font-normal text-center rtl:text-right text-gray-500 dark:text-gray-400">
                                     Inicia el:
                                 </th>
@@ -78,7 +79,6 @@
                                 <th scope="col" class=" py-3.5 text-sm font-normal text-center rtl:text-right text-gray-500 dark:text-gray-400">
                                     Termina el:
                                 </th>
-
                                 <th scope="col" class="py-3.5 text-sm font-normal text-center rtl:text-right text-gray-500 dark:text-gray-400">Calificación del curso</th>
 
 
@@ -203,7 +203,7 @@
                         </a><br><br>
                         @endif
                         @if($calificacionesCurso['calificacion'] >= 80 and $calificacionesCurso['progreso'] == 100)
-                        <a href="{{route('descargarCertificado',$calificacionesCurso['curso']->id_curso)}}" type="button">
+                        <a href="{{route('descargarCertificado',$calificacionesCurso['curso']->id_curso)}}" type="button" target="_blank">
                             <div class="flex justify-center">
                                 <span class="text-sm font-medium text-blue-700 dark:text-white">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 24 24">
@@ -234,6 +234,7 @@
                         <span class="relative inline-block px-3 py-1 text-center items-center text-green-900 leading-tight">
                             @if($calificacionesCurso['estatus'])
                             <span class="relative text-gray-800 font-bold">Activo</span>
+
                             @elseif($calificacionesCurso['fecha'] < $calificacionesCurso['fecha_inicio']) <span class="relative text-gray-800 font-bold">Pendiente por Iniciar</span>
                         @else
                         <span class="relative text-gray-800 font-bold">Expirado</span>

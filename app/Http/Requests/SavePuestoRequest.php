@@ -22,12 +22,21 @@ class SavePuestoRequest extends FormRequest
      */
     public function rules(): array
     {
-
-        if($this->isMethod('PATCH')){
-            // retornamos diferentes validaciones
-        }
+        // $idPuesto = $this->input('id_puesto');
+        // // unique:usuarios,id_sgp,'.$userId.',id_usuario',
+        // if($this->isMethod('PUT')){
+        //     // retornamos diferentes validaciones
+        //     return [
+        //         //
+        //         'codigo' => 'required|unique:puestos, codigo,'.$idPuesto.',id_puesto',
+        //         'puesto' => 'required',
+        //         'plan_id' => 'required',
+        //         'trabajo' => 'array',
+        //     ];
+        // }
         return [
             //
+            'codigo' => 'required|unique:puestos',
             'puesto' => 'required',
             'plan_id' => 'required',
             'trabajo' => 'array',

@@ -40,6 +40,7 @@
         </div>
     </div>
 
+
     <div class="w-full p-4 border-gray-200 rounded-lg px-44 dark:bg-gray-800 dark:border-gray-700 {{ $currentStep != 1 ? 'displayNone' : '' }}" id="step-1">
         <br>
         <div class="flex justify-between -mx-3 mb-6">
@@ -62,6 +63,7 @@
             <div class="w-full md:w-1/2 px-3 mt-16">
                 <div class="col-11">
                     <label for="cover-photo" class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">Imagen del curso <span class="text-red-500">*</span></label>
+
                     <div class="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25">
                         <div class="text-center">
                             <span class="inline-block ">
@@ -82,17 +84,20 @@
                             </span>
                             <div class="mt-4 flex text-sm leading-6 text-gray-600" enctype="multipart/form-data">
                                 <label for="file-upload" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light">
+
                                     <span class="text-bold">Selecciona una imagen</span>
+
                                     <input id="file-upload" wire:model="imagen" type="file" class="sr-only" accept="image/*" require>
                                 </label>
                             </div><br>
                             @error('imagen') <span class="error text-red-600">{{ $message }}</span> @enderror
-                            <p class="text-xs leading-5 text-gray-600">Formatos Admitidos: PNG, JPG</p>
+                            <p class="text-xs leading-5 text-gray-600">Formatos admitidos: PNG, JPG</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
         <div class="flex justify-between -mx-3 mb-6">
             <div class="w-full md:w-1/2 px-5">
                 <div class="form-group ">
@@ -108,7 +113,9 @@
             </div>
             <div class="w-full md:w-1/2 px-4">
                 <div class="form-group">
+
                     <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Seleccione el tipo<span class="text-red-600">*</span></label>
+
                     <select id="countries" wire:model="tipo_curso_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         <option selected>Seleccione el tipo</option>
                         @foreach ($tipo as $tip)

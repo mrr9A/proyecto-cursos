@@ -2,16 +2,17 @@
 
     {{-- <a href="{{ route('puestos.cursos') }}" --}}
     <a href="{{ route('planes.index') }}"
-                class="absolute right-4 text-base top-16 border-b-2 border-2 rounded-md  focus:outline-none font-medium px-5 py-1.5 text-center bg-blue-600 text-white hover:bg-blue-900 hover:text-gray-200 hover:rounded-t-md">
-                Asignar cursos
+        class="absolute right-4 text-base top-16 border-b-2 border-2 rounded-md  focus:outline-none font-medium px-5 py-1.5 text-center bg-blue-600 text-white hover:bg-blue-900 hover:text-gray-200 hover:rounded-t-md">
+        Asignar cursos
     </a>
 
     <form method="POST" id="crear_puesto" action="{{ route('puestos.store') }}" class="flex flex-wrap flex-col gap-4 mt-4">
         @csrf
 
         <div class="flex gap-6 items-center">
+            <x-input-text placeholder="0-12" nombre="codigo" text="Codigo" class="w-1/8" classLabel="text-base" required />
             <x-input-text placeholder="Ej. jefe de taller" nombre="puesto" text="Puesto" class="w-1/4"
-                classLabel="text-base" />
+                classLabel="text-base"  required/>
 
             <div class="relative flex flex-col font-poppins gap-21 text-base">
                 <label class="mb-2 font-semi-bold">Seleccionar plan de informacion</label>
@@ -43,8 +44,7 @@
                 </svg>
 
                 <span class="">si no crea trabajos para el puesto en automatico se creara un trabajo con el mismo
-                    nombre del puesto y en automatico se crea un puesto con el mismo nombre del puesto para cada
-                    puesto</span>
+                    nombre del puesto</span>
             </div>
 
             <div class="flex">
@@ -77,6 +77,7 @@
         <h2 class="text-subtitle">Lista de puestos</h2>
         <table class="min-w-full">
             <thead class="uppercase bg-blue-200 text-left">
+                <th class="px-6 py-2">Codigo</th>
                 <th class="px-6 py-2">Plan de formacion</th>
                 <th class="px-6 py-2">puesto</th>
                 <th class="px-6 py-2">trabajos</th>
@@ -85,6 +86,9 @@
             <tbody class="uppercase">
                 @foreach ($puestos as $puesto)
                     <tr class="mb-4 border-b border-gray-200 hover:bg-gray-100">
+                        <td class="whitespace-nowrap px-6 py-1 ">
+                            {{$puesto->codigo ?? 0}}
+                        </td>
                         <td class="whitespace-nowrap px-6 py-1 ">
                             {{ $puesto->planes_formacion->tema }} {{ $puesto->planes_formacion->area }}
                         </td>
@@ -249,8 +253,9 @@
                 e.preventDefault()
                 const formData = new FormData();
                 formData.append('id_puesto', formCrearPuesto.elements.puesto.name)
+                formData.append('codigo', formCrearPuesto.elements.codigo.value)
                 formData.append('puesto', formCrearPuesto.elements.puesto.value)
-                formData.append('plan_formacion_id', formCrearPuesto.elements.plan_id.value)
+                formData.append('plan_id', formCrearPuesto.elements.plan_id.value)
 
                 let trabajos = []
                 $$("[name='trabajo[]']").forEach(trabajo => {
@@ -264,6 +269,8 @@
                 formData.append("_method", 'put')
 
                 let id = formCrearPuesto.elements.puesto.name
+
+                // var formDataObj = Object.fromEntries(formData);
 
                 fetch(`${API_URL}/cursosplanta/puesto/edit/${id}`, {
                         method: "post",
@@ -283,6 +290,7 @@
             return fetch(`${API_URL}/cursosplanta/puesto/${id}`)
                 .then(res => res.json())
                 .then(data => {
+                    console.log(data)
                     $('#submit_button').value = "editar";
                     $$('option').forEach(option => {
                         option.removeAttribute('selected')
@@ -304,6 +312,8 @@
                     )
                     $('#puesto').value = data.puesto
                     $('#puesto').name = data.id_puesto
+
+                    $('#codigo').value = data.codigo
 
                     loader.innerHTML = ""
                     window.scrollTo({

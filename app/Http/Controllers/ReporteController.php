@@ -29,7 +29,7 @@ class ReporteController extends Controller
         $curso_id = $request->filtros['curso_id'] ?? 0;
         
         $data = [];
-        if($sucursal_id || $puesto_id){
+        if($sucursal_id || $puesto_id || $curso_id){
             $data = User::getUsuariosWithCurses($sucursal_id, $puesto_id,$trabajo_id, $curso_id);
         }
     

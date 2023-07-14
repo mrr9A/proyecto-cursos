@@ -15,7 +15,6 @@ class TipoController extends Controller
         $tipoCurso = TipoCurso::create([
             "nombre" => $request->nombre,
             "estado" => 1,
-            "duracion" => $request->duracion,
         ]);
 
         return redirect()->back()->with("success", "tipo de curso creado correctamente");
@@ -27,7 +26,6 @@ class TipoController extends Controller
         $tipo = TipoCurso::find($id);
         $tipo->update([
             "nombre" => $request->nombre,
-            "duracion" => $request->duracion
         ]);
 
         return redirect()->back()->with('success', 'tipo de curso actualizado correctamente');

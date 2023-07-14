@@ -194,8 +194,9 @@ class PlanesFormacion extends Model
             $todosCursosTotal = 0;
             $cursosPasadosTotal = 0;
             $cursosProgreso = [];
+            $cursosReprobados =[];
             // & indica que la variable esta siendo pasada por referencia
-            $trabajos = $usuario->trabajos->map(function ($trabajo) use ($usuario, &$todosCursosTotal, &$cursosPasadosTotal, &$cursosProgreso) {
+            $trabajos = $usuario->trabajos->map(function ($trabajo) use ($usuario, &$todosCursosTotal, &$cursosPasadosTotal, &$cursosProgreso, &$cursosReprobados) {
                 $cursos = $trabajo->cursos->map(function ($curso) use ($usuario) {
                     $calificacion = $usuario->calificaciones
                         ->firstWhere('curso_id', $curso->id_curso);
@@ -213,8 +214,10 @@ class PlanesFormacion extends Model
                 $todosCursos = $cursos->count();
                 $todosCursosTotal += $todosCursos;
                 $cursosPasados = $cursos->where('calificacion', '=', '100')->where('estado', '=' ,1)->count();
-                $cursosEnProgreso = $cursos->where('calificacion', '<', '100')->where('calificacion', '>', 0)->pluck('calificacion')->toArray();
+                $cursosEnProgreso = $cursos->where('calificacion', '<=', '100')->where('calificacion', '>', 0)->where('estado',2)->pluck('calificacion')->toArray();
+                $cursoReprobados = $cursos->where('estado',0)->pluck('calificacion')->toArray();
                 array_push($cursosProgreso, $cursosEnProgreso);
+                array_push($cursosReprobados, $cursoReprobados);
                 $cursosPasadosTotal += $cursosPasados;
 
                 return [
@@ -222,11 +225,15 @@ class PlanesFormacion extends Model
                     'cursos' => $cursos->groupBy('tipo'),
                 ];
             });
-            echo "<script>console.log(" . json_encode($cursosProgreso) . ")</script>";
+            // echo "<script>console.log(" . json_encode($cursosReprobados) . ")</script>";
             $cursosProgreso = array_reduce($cursosProgreso, function ($carry, $item) {
                 return $carry + array_sum($item);
             }, 0);
-            $porcentaje = bcdiv(($todosCursosTotal != 0) ? (((($cursosPasadosTotal * 100) + $cursosProgreso) * 100) / ($todosCursosTotal * 100)) : 0, '1', 2);
+
+            $cursosReprobados = array_reduce($cursosReprobados, function ($carry, $item) {
+                return $carry + array_sum($item);
+            }, 0);
+            $porcentaje = bcdiv(($todosCursosTotal != 0) ? (((($cursosPasadosTotal * 100) + $cursosProgreso + $cursosReprobados) * 100) / ($todosCursosTotal * 100)) : 0, '1', 2);
 
             return (object) [
                 'id_usuario' => $usuario->id_usuario,
