@@ -19,7 +19,7 @@
                     <option value="Todos" selected></option>
                 </select>
                 <button type="submit" class="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 bg-gray-100 sm:text-sm dark:bg-gray-800 dark:text-gray-300">
-                    Todos los cursos
+                    Todos los cursosS
                 </button>
             </form>
 
