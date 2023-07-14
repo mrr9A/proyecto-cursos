@@ -1,138 +1,106 @@
 <x-appEmpleado title="{{$curso->nombre}}" route="home">
     <nav class="mx-4">
-        <a href="{{route('inicioEmpleado')}}" class="text-base text-nav-hover font-bold">Inicio > </a>
-        <a href="{{url('cursosEmpleados',$curso->id_curso)}}" class="text-base text-nav-hover font-bold"> {{$curso->nombre}} ></a>
+        <a href="{{route('inicioEmpleado')}}" class="text-base text-nav-hover font-bold uppercase">Inicio > </a>
+        <a href="{{url('cursosEmpleados',$curso->id_curso)}}" class="text-base text-nav-hover font-bold uppercase"> {{$curso->nombre}} ></a>
     </nav><br>
     <div class="flex">
-        <!-- CUERPO DE TODO INFORMACION DEL CURSO, LECCIONES. CONTENIDO -->
-        <div class="w-full p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
-            <div class="p-2 bg-white border border-gray-200 rounded-lg shadow mx-12 text-center">
-                <img src="{{$curso['imagen']}}" class="rounded-full w-96 h-96 inline-block object-cover" width="350" height="350">
-            </div>
-            <div class="p-2  border border-gray-200 rounded-lg shadow mx-12 text-center">
-                <div class="text-center">
-                    <h2 class="text-subtitle font-bold tracking-tight text-gray-900">Nombre del Curso: <span class="text-nav-hover">{{$curso->nombre}}</span></h2><br>
-                    <h3 class="text-section-subtitle font-bold tracking-tight text-gray-600">Codigo del Curso: <span class="text-nav-hover">{{$curso->codigo}}</span></h3><br>
-                    <h5 class="text-section-subtitle font-bold tracking-tight text-gray-600">Modalidad del Curso:
-                        @foreach($modalidad as $modi)
-                        @if($modi->id_modalidad == $curso->modalidad_id)
-                        <span class="text-nav-hover">{{$modi->modalidad}}</span>
-                        @endif
-                        @endforeach
-                    </h5><br>
-                    <h5 class="text-section-subtitle font-bold tracking-tight text-gray-600">Tipo de Curso:
-                        @foreach($tipo as $tip)
-                        @if($tip->id_tipo_curso == $curso->tipo_curso_id)
-                        <span class="text-nav-hover">{{$tip->nombre}}</span>
-                        @endif
-                        @endforeach
-                    </h5><br>
-                    <h5 class="text-section-subtitle font-bold tracking-tight text-gray-600">Categoria del Curso:
-                        <span class="text-nav-hover">{{$curso->categoria[0]->nombre}}</span>
-                    </h5>
-                </div>
-            </div>
-            <br>
-            <div id="accordion-color" data-accordion="collapse" data-active-classes="bg-blue-100 dark:bg-gray-800 text-blue-600 dark:text-white">
-                @foreach($curso->lecciones as $leccion)
-                <h2 id="accordion-color-heading-{{$leccion->id_leccion}}" class="col-lg-12 mb-6 mb-lg-0 position-relative">
-                    <button type="button" class="flex items-center justify-between w-full p-5 font-medium text-left text-gray-500 border border-b-0 border-gray-200 rounded-t-xl focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-800 dark:border-gray-700 dark:text-gray-400 hover:bg-blue-100 dark:hover:bg-gray-800" data-accordion-target="#accordion-color-body-{{$leccion->id_leccion}}" aria-expanded="true" aria-controls="accordion-color-body-{{$leccion->id_leccion}}">
-                        <span><img src="{{$leccion->url_imagen}}" width="50" height="50" class="avatar" alt="Imagen"></span>
-                        <span class="text-subtitle text-lg italic">LECCIÓN : {{$leccion->nombre}}</span>
-                        <svg data-accordion-icon class="w-6 h-6 rotate-180 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-                        </svg>
-                    </button>
-                </h2>
-                <div id="accordion-color-body-{{$leccion->id_leccion}}" class="hidden" aria-labelledby="accordion-color-heading-{{$leccion->id_leccion}}">
-                    <div class="border border-b-0 border-gray-200 dark:border-gray-700 dark:bg-gray-900 col-lg-12 mb-6 mb-lg-0 position-relative">
-                        <br>
-                        <div class="flex justify-between px-4 items-center overflow-auto gap-3">
-                            <div class="p-6  border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                                <h5 class="mb-2 text-2xl font-bold tracking-tight text-center text-gray-900 dark:text-white">DESCRIPCIÓN DEL CURSO:</h5>
-                                <p>{{$leccion->descripcion}}</p>
-                            </div>
-                        </div><br>
-                        <h2 class="text-center font-bold text-nav-hover">CONTENIDOS DE LA LECCIÓN:</h2><br>
-                        @foreach($leccion->contenido as $conteni)
-                        <div class="border-top px-2 py-3 mx-4 min-height-70 d-md-flex align-items-center bg-gray-100 col-lg-11 mb-6 mb-lg-0">
-                            <div class="flex justify-between px-4 items-center overflow-auto gap-3">
-                                <span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 20 20">
-                                        <path fill="currentColor" d="M10 2c4.42 0 8 3.58 8 8s-3.58 8-8 8s-8-3.58-8-8s3.58-8 8-8zm0 14c3.31 0 6-2.69 6-6s-2.69-6-6-6s-6 2.69-6 6s2.69 6 6 6zm-.71-5.29c.07.05.14.1.23.15l-.02.02L14 13l-3.03-3.19L10 5l-.97 4.81h.01c0 .02-.01.05-.02.09S9 9.97 9 10c0 .28.1.52.29.71z" />
-                                    </svg>
-                                </span>{{$conteni->nombre}}
-                                <div class="flex overflow-auto gap-3 items-center">
-                                    <a href="{{route('verContenido',[$conteni])}}" class="text-secondary">
-                                        <!-- Icon -->
-                                        <span>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 16 16">
-                                                <path fill="currentColor" d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0a6.5 6.5 0 0 0-13 0Zm4.879-2.773l4.264 2.559a.25.25 0 0 1 0 .428l-4.264 2.559A.25.25 0 0 1 6 10.559V5.442a.25.25 0 0 1 .379-.215Z" />
-                                            </svg>
-                                        </span>
-                                        <span class="text-sm">Ver Contenido</span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        @endforeach
-                    </div>
-                </div>
-                <br>
-                @endforeach
-            </div>
-            @if(count($curso->examen) > 0 )
-            <div id="accordion-color" data-accordion="collapse" data-active-classes="bg-blue-100 dark:bg-gray-800 text-blue-600 dark:text-white">
-                <h2 id="accordion-color-heading-0" class="col-lg-12 mb-6 mb-lg-0 position-relative">
-                    <button type="button" class="flex items-center justify-between w-full p-5 font-medium text-left text-gray-500 border border-b-0 border-gray-200 rounded-t-xl focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-800 dark:border-gray-700 dark:text-gray-400 hover:bg-blue-100 dark:hover:bg-gray-800" data-accordion-target="#accordion-color-body-0" aria-expanded="true" aria-controls="accordion-color-body-0">
-                        <span><img src="../img/examen.png" width="50" height="50" class="avatar" alt="Imagen"></span>
-                        <span class="text-subtitle text-lg italic">EXAMEN FINAL</span>
-                        <svg data-accordion-icon class="w-6 h-6 rotate-180 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-                        </svg>
-                    </button>
-                </h2>
-                <div id="accordion-color-body-0" class="hidden" aria-labelledby="accordion-color-heading-0">
-                    <div class="border border-b-0 border-gray-200 dark:border-gray-700 dark:bg-gray-900 col-lg-12 mb-6 mb-lg-0 position-relative">
-                        <br>
-                        <div class="flex justify-between px-4 items-center overflow-auto gap-3">
-                            <div class="p-6  border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                                <h5 class="mb-2 text-2xl font-bold tracking-tight text-center text-gray-900 dark:text-white">DESCRIPCIÓN DEL CURSO:</h5>
-                                <p>Este es el Examen final del curso: <span class="font-bold">{{$curso->nombre}}</span> este examen tiene un valor del <span class="font-bold">40%</span> de la calificación final del curso.</p>
-                            </div>
-                        </div><br>
-                        <h2 class="text-center font-bold text-nav-hover">Examen final del curso:</h2><br>
-                        <div class="border-top px-2 py-3 mx-4 min-height-70 d-md-flex align-items-center bg-gray-100 col-lg-11 mb-6 mb-lg-0">
-                            <div class="flex justify-between px-4 items-center overflow-auto gap-3">
-                                <span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 20 20">
-                                        <path fill="currentColor" d="M10 2c4.42 0 8 3.58 8 8s-3.58 8-8 8s-8-3.58-8-8s3.58-8 8-8zm0 14c3.31 0 6-2.69 6-6s-2.69-6-6-6s-6 2.69-6 6s2.69 6 6 6zm-.71-5.29c.07.05.14.1.23.15l-.02.02L14 13l-3.03-3.19L10 5l-.97 4.81h.01c0 .02-.01.05-.02.09S9 9.97 9 10c0 .28.1.52.29.71z" />
-                                    </svg>
-                                </span>{{$curso->examen[0]->nombre}}
-                                <div class="flex overflow-auto gap-3 items-center">
-                                    <a href="{{route('verExamenempleado',$curso->examen[0]->id_examen)}}" class="text-secondary">
-                                        <!-- Icon -->
-                                        <span>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 16 16">
-                                                <path fill="currentColor" d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0a6.5 6.5 0 0 0-13 0Zm4.879-2.773l4.264 2.559a.25.25 0 0 1 0 .428l-4.264 2.559A.25.25 0 0 1 6 10.559V5.442a.25.25 0 0 1 .379-.215Z" />
-                                            </svg>
-                                        </span>
-                                        <span class="text-sm">Realizar Examen</span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            @endif
-        </div><br>
+
         <div class="w-full max-w-md p-4 border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
-            <!-- CARDS DE LA INFORMACION MAS RELEVANTE DELCURSO -->
-            <div class="block p-6 border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-                <div class="pt-5 pb-4 px-5 px-lg-3 px-xl-5">
+            <div class="max-w-sm bg-white border border-gray-200  shadow dark:bg-gray-800 dark:border-gray-700">
+                <div class="w-full h-full bg-primary">
+                    <img class="w-full h-full block object-cover" src="{{$curso['imagen']}}" />
+                </div>
+                <div class="p-5">
                     <h3 class="mb-5 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Información General del Curso</h3>
                     <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex align-items-center py-3">
+                            <div class="text-secondary items-center flex icon-uxs">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 48 48">
+                                    <g fill="currentColor">
+                                        <path d="M15 32a1 1 0 1 0 0 2h18a1 1 0 1 0 0-2H15Zm-1 5a1 1 0 0 1 1-1h12a1 1 0 1 1 0 2H15a1 1 0 0 1-1-1Z" />
+                                        <path fill-rule="evenodd" d="M20.923 15.615a1 1 0 0 0-1.846 0l-3.742 8.98a1.036 1.036 0 0 0-.017.042l-1.241 2.978a1 1 0 0 0 1.846.77L16.917 26h6.166l.994 2.385a1 1 0 0 0 1.846-.77l-1.241-2.978a1.036 1.036 0 0 0-.017-.042l-3.742-8.98ZM20 18.6l2.25 5.4h-4.5L20 18.6Z" clip-rule="evenodd" />
+                                        <path d="M30 21a1 1 0 0 1 1 1v2h2a1 1 0 1 1 0 2h-2v2a1 1 0 1 1-2 0v-2h-2a1 1 0 1 1 0-2h2v-2a1 1 0 0 1 1-1Z" />
+                                        <path fill-rule="evenodd" d="M38 15L28 4H14a4 4 0 0 0-4 4v32a4 4 0 0 0 4 4h20a4 4 0 0 0 4-4V15Zm-11 0a1 1 0 0 0 1 1h8v24a2 2 0 0 1-2 2H14a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h13v9Zm7.388-1L29 8.073V14h5.388Z" clip-rule="evenodd" />
+                                    </g>
+                                </svg>
+                                <h6 class="mb-0 ml-3 mr-2 font-bold tracking-tight text-gray-900">Nombre: </h6>
+                                <span>
+                                    {{$curso->nombre}}
+                                </span>
+                            </div>
+                        </li>
+                        <li class="list-group-item d-flex align-items-center py-3">
+                            <div class="text-secondary items-center flex icon-uxs">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 48 48">
+                                    <g fill="currentColor">
+                                        <path d="M15 32a1 1 0 1 0 0 2h18a1 1 0 1 0 0-2H15Zm-1 5a1 1 0 0 1 1-1h12a1 1 0 1 1 0 2H15a1 1 0 0 1-1-1Z" />
+                                        <path fill-rule="evenodd" d="M20.923 15.615a1 1 0 0 0-1.846 0l-3.742 8.98a1.036 1.036 0 0 0-.017.042l-1.241 2.978a1 1 0 0 0 1.846.77L16.917 26h6.166l.994 2.385a1 1 0 0 0 1.846-.77l-1.241-2.978a1.036 1.036 0 0 0-.017-.042l-3.742-8.98ZM20 18.6l2.25 5.4h-4.5L20 18.6Z" clip-rule="evenodd" />
+                                        <path d="M30 21a1 1 0 0 1 1 1v2h2a1 1 0 1 1 0 2h-2v2a1 1 0 1 1-2 0v-2h-2a1 1 0 1 1 0-2h2v-2a1 1 0 0 1 1-1Z" />
+                                        <path fill-rule="evenodd" d="M38 15L28 4H14a4 4 0 0 0-4 4v32a4 4 0 0 0 4 4h20a4 4 0 0 0 4-4V15Zm-11 0a1 1 0 0 0 1 1h8v24a2 2 0 0 1-2 2H14a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h13v9Zm7.388-1L29 8.073V14h5.388Z" clip-rule="evenodd" />
+                                    </g>
+                                </svg>
+                                <h6 class="mb-0 ml-3 mr-2 font-bold tracking-tight text-gray-900">Codígo: </h6>
+                                <span>
+                                    {{$curso->codigo}}
+                                </span>
+                            </div>
+                        </li>
+                        <li class="list-group-item d-flex align-items-center py-3">
+                            <div class="text-secondary items-center flex icon-uxs">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 48 48">
+                                    <g fill="currentColor">
+                                        <path d="M15 32a1 1 0 1 0 0 2h18a1 1 0 1 0 0-2H15Zm-1 5a1 1 0 0 1 1-1h12a1 1 0 1 1 0 2H15a1 1 0 0 1-1-1Z" />
+                                        <path fill-rule="evenodd" d="M20.923 15.615a1 1 0 0 0-1.846 0l-3.742 8.98a1.036 1.036 0 0 0-.017.042l-1.241 2.978a1 1 0 0 0 1.846.77L16.917 26h6.166l.994 2.385a1 1 0 0 0 1.846-.77l-1.241-2.978a1.036 1.036 0 0 0-.017-.042l-3.742-8.98ZM20 18.6l2.25 5.4h-4.5L20 18.6Z" clip-rule="evenodd" />
+                                        <path d="M30 21a1 1 0 0 1 1 1v2h2a1 1 0 1 1 0 2h-2v2a1 1 0 1 1-2 0v-2h-2a1 1 0 1 1 0-2h2v-2a1 1 0 0 1 1-1Z" />
+                                        <path fill-rule="evenodd" d="M38 15L28 4H14a4 4 0 0 0-4 4v32a4 4 0 0 0 4 4h20a4 4 0 0 0 4-4V15Zm-11 0a1 1 0 0 0 1 1h8v24a2 2 0 0 1-2 2H14a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h13v9Zm7.388-1L29 8.073V14h5.388Z" clip-rule="evenodd" />
+                                    </g>
+                                </svg>
+                                <h6 class="mb-0 ml-3 mr-2 font-bold tracking-tight text-gray-900">Modalidad: </h6>
+                                <span>
+                                    @foreach($modalidad as $modi)
+                                    @if($modi->id_modalidad == $curso->modalidad_id)
+                                    <span>{{$modi->modalidad}}</span>
+                                    @endif
+                                    @endforeach
+                                </span>
+                            </div>
+                        </li>
+                        <li class="list-group-item d-flex align-items-center py-3">
+                            <div class="text-secondary items-center flex icon-uxs">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 48 48">
+                                    <g fill="currentColor">
+                                        <path d="M15 32a1 1 0 1 0 0 2h18a1 1 0 1 0 0-2H15Zm-1 5a1 1 0 0 1 1-1h12a1 1 0 1 1 0 2H15a1 1 0 0 1-1-1Z" />
+                                        <path fill-rule="evenodd" d="M20.923 15.615a1 1 0 0 0-1.846 0l-3.742 8.98a1.036 1.036 0 0 0-.017.042l-1.241 2.978a1 1 0 0 0 1.846.77L16.917 26h6.166l.994 2.385a1 1 0 0 0 1.846-.77l-1.241-2.978a1.036 1.036 0 0 0-.017-.042l-3.742-8.98ZM20 18.6l2.25 5.4h-4.5L20 18.6Z" clip-rule="evenodd" />
+                                        <path d="M30 21a1 1 0 0 1 1 1v2h2a1 1 0 1 1 0 2h-2v2a1 1 0 1 1-2 0v-2h-2a1 1 0 1 1 0-2h2v-2a1 1 0 0 1 1-1Z" />
+                                        <path fill-rule="evenodd" d="M38 15L28 4H14a4 4 0 0 0-4 4v32a4 4 0 0 0 4 4h20a4 4 0 0 0 4-4V15Zm-11 0a1 1 0 0 0 1 1h8v24a2 2 0 0 1-2 2H14a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h13v9Zm7.388-1L29 8.073V14h5.388Z" clip-rule="evenodd" />
+                                    </g>
+                                </svg>
+                                <h6 class="mb-0 ml-3 mr-2 font-bold tracking-tight text-gray-900">Tipo: </h6>
+                                <span>
+                                    @foreach($tipo as $tip)
+                                    @if($tip->id_tipo_curso == $curso->tipo_curso_id)
+                                    <span>{{$tip->nombre}}</span>
+                                    @endif
+                                    @endforeach
+                                </span>
+                            </div>
+                        </li>
+                        <li class="list-group-item d-flex align-items-center py-3">
+                            <div class="text-secondary items-center flex icon-uxs">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 48 48">
+                                    <g fill="currentColor">
+                                        <path d="M15 32a1 1 0 1 0 0 2h18a1 1 0 1 0 0-2H15Zm-1 5a1 1 0 0 1 1-1h12a1 1 0 1 1 0 2H15a1 1 0 0 1-1-1Z" />
+                                        <path fill-rule="evenodd" d="M20.923 15.615a1 1 0 0 0-1.846 0l-3.742 8.98a1.036 1.036 0 0 0-.017.042l-1.241 2.978a1 1 0 0 0 1.846.77L16.917 26h6.166l.994 2.385a1 1 0 0 0 1.846-.77l-1.241-2.978a1.036 1.036 0 0 0-.017-.042l-3.742-8.98ZM20 18.6l2.25 5.4h-4.5L20 18.6Z" clip-rule="evenodd" />
+                                        <path d="M30 21a1 1 0 0 1 1 1v2h2a1 1 0 1 1 0 2h-2v2a1 1 0 1 1-2 0v-2h-2a1 1 0 1 1 0-2h2v-2a1 1 0 0 1 1-1Z" />
+                                        <path fill-rule="evenodd" d="M38 15L28 4H14a4 4 0 0 0-4 4v32a4 4 0 0 0 4 4h20a4 4 0 0 0 4-4V15Zm-11 0a1 1 0 0 0 1 1h8v24a2 2 0 0 1-2 2H14a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h13v9Zm7.388-1L29 8.073V14h5.388Z" clip-rule="evenodd" />
+                                    </g>
+                                </svg>
+                                <h6 class="mb-0 ml-3 mr-2 font-bold tracking-tight text-gray-900">Categoría: </h6>
+                                <span>
+                                    {{$curso->categoria[0]->nombre}}
+                                </span>
+                            </div>
+                        </li>
                         <li class="list-group-item d-flex align-items-center py-3">
                             <div class="text-secondary items-center flex icon-uxs">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 48 48">
@@ -151,7 +119,6 @@
                         </li>
                         <li class="list-group-item d-flex align-items-center py-3">
                             <div class="text-secondary items-center flex icon-uxs">
-                                <!-- Icon -->
                                 <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M15.7262 1.94825C13.4059 0.396725 10.401 0.315126 8.00002 1.73839C5.59897 0.315126 2.59406 0.396725 0.273859 1.94825C0.102729 2.06241 -3.54271e-05 2.25456 6.30651e-07 2.46027V14.6553C-0.000323889 14.8826 0.124616 15.0914 0.324917 15.1987C0.525109 15.3058 0.768066 15.294 0.9569 15.168C2.98471 13.8111 5.63063 13.8111 7.65844 15.168C7.66645 15.1735 7.67568 15.1747 7.68368 15.1796C7.69169 15.1846 7.7003 15.1932 7.70953 15.1987C7.73102 15.2079 7.75302 15.2159 7.77538 15.2227C7.79773 15.2329 7.82077 15.2415 7.84428 15.2486C7.87828 15.2564 7.91286 15.2616 7.94766 15.264C7.96551 15.264 7.98213 15.2714 7.99998 15.2714C8.00492 15.2714 8.00982 15.2714 8.01538 15.2714C8.03604 15.2699 8.05655 15.2672 8.07693 15.2634C8.10808 15.2602 8.13895 15.2547 8.16923 15.2467C8.19018 15.2399 8.21074 15.2319 8.23078 15.2227C8.24986 15.2147 8.27016 15.2104 8.28862 15.2006C8.29724 15.1956 8.30402 15.1883 8.31264 15.1827C8.32125 15.1772 8.3311 15.1753 8.33971 15.1698C10.3675 13.8129 13.0134 13.8129 15.0413 15.1698C15.3233 15.3595 15.7057 15.2846 15.8953 15.0026C15.9643 14.9 16.0008 14.779 16 14.6554V2.46027C16 2.25456 15.8973 2.06241 15.7262 1.94825ZM7.38462 13.6036C5.43516 12.6896 3.18022 12.6896 1.23076 13.6036V2.79993C3.12732 1.67313 5.48806 1.67313 7.38462 2.79993V13.6036ZM14.7692 13.6036C12.8198 12.6896 10.5648 12.6896 8.61538 13.6036V2.79993C10.5119 1.67313 12.8727 1.67313 14.7692 2.79993V13.6036Z" fill="currentColor"></path>
                                 </svg>
@@ -240,10 +207,110 @@
                 </div>
             </div>
         </div>
+
+        <!-- CUERPO DE TODO INFORMACION DEL CURSO, LECCIONES. CONTENIDO -->
+        <div class="w-full p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
+            <div id="accordion-color" data-accordion="collapse" data-active-classes="bg-blue-100 dark:bg-gray-800 text-blue-600 dark:text-white">
+                @foreach($curso->lecciones as $leccion)
+                <h2 id="accordion-color-heading-{{$leccion->id_leccion}}" class="col-lg-12 mb-6 mb-lg-0 position-relative">
+                    <div class="flex w-full overflow-auto gap-3 justify-between p-5 font-medium text-left text-gray-500 border  border-gray-300 rounded-t-xl focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-800 dark:border-gray-700 dark:text-gray-400 hover:bg-blue-100 dark:hover:bg-gray-800" type="button" data-accordion-target="#accordion-color-body-{{$leccion->id_leccion}}" aria-expanded="false" aria-controls="accordion-color-body-{{$leccion->id_leccion}}">
+                        <div class="flex justify-center overflow-auto gap-2">
+                            <span><img src="{{$leccion->url_imagen}}" width="50" height="50" alt="Imagen"></span>
+                            <span class="text-subtitle px-4 text-lg italic">LECCIÓN : {{$leccion->nombre}}</span>
+                        </div>
+                        <div class="justify-end">
+                            <button>
+                                <svg data-accordion-icon class="w-6 h-6 rotate-180 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </h2>
+                <div id="accordion-color-body-{{$leccion->id_leccion}}" class="hidden" aria-labelledby="accordion-color-heading-{{$leccion->id_leccion}}">
+                    <div class="border border-b-0 border-gray-200 dark:border-gray-700 dark:bg-gray-900 col-lg-12 mb-6 mb-lg-0 position-relative">
+                        <br>
+                        <div class="flex justify-between px-4 items-center overflow-auto gap-3">
+                            <div class="p-6  border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                                <h5 class="mb-2 text-2xl font-bold tracking-tight text-center text-gray-900 dark:text-white">DESCRIPCIÓN DEL CURSO:</h5>
+                                <p>{{$leccion->descripcion}}</p>
+                            </div>
+                        </div><br>
+                        <h2 class="text-center font-bold text-nav-hover">CONTENIDOS DE LA LECCIÓN:</h2><br>
+                        @foreach($leccion->contenido as $conteni)
+                        <div class="border-top px-2 py-3 mx-4 min-height-70 d-md-flex align-items-center bg-blue-50 col-lg-11 mb-6 mb-lg-0">
+                            <div class="flex justify-between uppercase px-4 items-center overflow-auto gap-3">
+                                <span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 20 20">
+                                        <path fill="currentColor" d="M10 2c4.42 0 8 3.58 8 8s-3.58 8-8 8s-8-3.58-8-8s3.58-8 8-8zm0 14c3.31 0 6-2.69 6-6s-2.69-6-6-6s-6 2.69-6 6s2.69 6 6 6zm-.71-5.29c.07.05.14.1.23.15l-.02.02L14 13l-3.03-3.19L10 5l-.97 4.81h.01c0 .02-.01.05-.02.09S9 9.97 9 10c0 .28.1.52.29.71z" />
+                                    </svg>
+                                </span>{{$conteni->nombre}}
+                                <div class="flex overflow-auto gap-3 items-center">
+                                    <a href="{{route('verContenido',[$conteni])}}" class="text-secondary">
+                                        <span>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 16 16">
+                                                <path fill="currentColor" d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0a6.5 6.5 0 0 0-13 0Zm4.879-2.773l4.264 2.559a.25.25 0 0 1 0 .428l-4.264 2.559A.25.25 0 0 1 6 10.559V5.442a.25.25 0 0 1 .379-.215Z" />
+                                            </svg>
+                                        </span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+                <br>
+                @endforeach
+            </div>
+
+            @if(count($curso->examen) > 0 )
+            <div id="accordion-color" data-accordion="collapse" data-active-classes="bg-blue-100 dark:bg-gray-800 text-blue-600 dark:text-white">
+                <h2 id="accordion-color-heading-0">
+                    <button type="button" class="flex items-center justify-between w-full p-3 font-medium text-left text-gray-500 border border-gray-400 rounded-t-xl focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-800 dark:border-gray-700 dark:text-gray-400 hover:bg-blue-100 dark:hover:bg-gray-800" data-accordion-target="#accordion-color-body-0" aria-expanded="false" aria-controls="accordion-color-body-0">
+                        <span class="px-7">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 2048 2048">
+                                <path fill="currentColor" d="m1344 998l147-147l90 90l-237 237l-173-173l90-90l83 83zm-832 538h512v128H512v-128zm512-896H512V512h512v128zm0 512H512v-128h512v128zm557-723l-237 237l-173-173l90-90l83 83l147-147l90 90zm-426 1491l128 128H256V0h1536v1283l-128 128V128H384v1792h771zm874-467l-557 558l-269-270l90-90l179 178l467-466l90 90z" />
+                            </svg>
+                        </span>
+                        <span class="text-subtitle text-lg italic">EXAMEN FINAL</span>
+                        <svg data-accordion-icon class="w-6 h-6 rotate-180 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                        </svg>
+                    </button>
+                </h2>
+                <div id="accordion-color-body-0" class="hidden" aria-labelledby="accordion-color-heading-0">
+                    <div class="border border-b-0 border-gray-200 dark:border-gray-700 dark:bg-gray-900 col-lg-12 mb-6 mb-lg-0 position-relative">
+                        <br>
+                        <div class="flex justify-between px-4 items-center overflow-auto gap-3">
+                            <div class="p-6  border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                                <h5 class="mb-2 text-2xl font-bold tracking-tight text-center text-gray-900 dark:text-white">DESCRIPCIÓN DEL CURSO:</h5>
+                                <p>Este es el Examen final del curso: <span class="font-bold">{{$curso->nombre}}</span> este examen tiene un valor del <span class="font-bold">40%</span> de la calificación final del curso.</p>
+                            </div>
+                        </div><br>
+                        <h2 class="text-center font-bold text-nav-hover">Examen final del curso:</h2><br>
+                        <div class="border-top px-2 py-3 mx-4 min-height-70 d-md-flex align-items-center bg-gray-100 col-lg-11 mb-6 mb-lg-0">
+                            <div class="flex justify-between uppercase px-4 items-center overflow-auto gap-3">
+                                <span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 20 20">
+                                        <path fill="currentColor" d="M10 2c4.42 0 8 3.58 8 8s-3.58 8-8 8s-8-3.58-8-8s3.58-8 8-8zm0 14c3.31 0 6-2.69 6-6s-2.69-6-6-6s-6 2.69-6 6s2.69 6 6 6zm-.71-5.29c.07.05.14.1.23.15l-.02.02L14 13l-3.03-3.19L10 5l-.97 4.81h.01c0 .02-.01.05-.02.09S9 9.97 9 10c0 .28.1.52.29.71z" />
+                                    </svg>
+                                </span>{{$curso->examen[0]->nombre}}
+                                <div class="flex overflow-auto gap-3 items-center">
+                                    <a href="{{route('verExamenempleado',$curso->examen[0]->id_examen)}}" class="text-secondary">
+                                        <!-- Icon -->
+                                        <span>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 16 16">
+                                                <path fill="currentColor" d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0a6.5 6.5 0 0 0-13 0Zm4.879-2.773l4.264 2.559a.25.25 0 0 1 0 .428l-4.264 2.559A.25.25 0 0 1 6 10.559V5.442a.25.25 0 0 1 .379-.215Z" />
+                                            </svg>
+                                        </span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endif
+        </div>
     </div>
 </x-appEmpleado>
-
-
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>

@@ -19,7 +19,7 @@
                     <option value="Todos" selected></option>
                 </select>
                 <button type="submit" class="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 bg-gray-100 sm:text-sm dark:bg-gray-800 dark:text-gray-300">
-                    Todos los Cursos
+                    Todos los cursos
                 </button>
             </form>
 
@@ -28,7 +28,7 @@
                     <option value="Aprobado"></option>
                 </select>
                 <button type="submit" class="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 sm:text-sm dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100">
-                    Cursos Aprovados
+                    Cursos aprobados
                 </button>
             </form>
 
@@ -37,7 +37,7 @@
                     <option value="Pendiente"></option>
                 </select>
                 <button type="submit" class="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 sm:text-sm dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100">
-                    Cursos Pendientes
+                    Cursos pendientes
                 </button>
             </form>
 
@@ -46,7 +46,7 @@
                     <option value="Reprobado"></option>
                 </select>
                 <button type="submit" class="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 sm:text-sm dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100">
-                    Cursos Reprobados
+                    Cursos reprobados
                 </button>
             </form>
         </div>
@@ -64,7 +64,7 @@
                                 <th scope="col" class="py-3.5 text-center text-sm font-normal rtl:text-right text-gray-500 dark:text-gray-400"><span>Num. Lecciones</span></th>
 
                                 <th scope="col" class=" py-3.5 text-sm font-normal text-center rtl:text-right text-gray-500 dark:text-gray-400">
-                                    Estatus del Curso
+                                    Estatus del curso
                                 </th>
 
                                 <th scope="col" class=" py-3.5 text-sm font-normal text-center rtl:text-right text-gray-500 dark:text-gray-400">
@@ -79,7 +79,7 @@
                                     Termina el:
                                 </th>
 
-                                <th scope="col" class="py-3.5 text-sm font-normal text-center rtl:text-right text-gray-500 dark:text-gray-400">Calificación del Curso</th>
+                                <th scope="col" class="py-3.5 text-sm font-normal text-center rtl:text-right text-gray-500 dark:text-gray-400">Calificación del curso</th>
 
 
                                 <th scope="col" class="py-3.5 text-sm font-normal text-center rtl:text-right text-gray-500 dark:text-gray-400">Progreso del curso</th>
@@ -105,7 +105,7 @@
                                     <span class="relative inline-block px-3 py-1 text-center items-center text-green-900 leading-tight">
                                         @if($calificacionesCurso['estatus'])
                                         <span class="relative text-gray-800 font-bold">Activo</span>
-                                        @elseif($calificacionesCurso['fecha'] < $calificacionesCurso['fecha_inicio']) <span class="relative text-gray-800 font-bold">Pendiente por Iniciar</span>
+                                        @elseif($calificacionesCurso['fecha'] < $calificacionesCurso['fecha_inicio']) <span class="relative text-gray-800 font-bold">Pendiente por iniciar</span>
                                     @else
                                     <span class="relative text-gray-800 font-bold">Expirado</span>
                                     @endif
@@ -198,7 +198,7 @@
                                 </span>
                             </div>
                             <div class="flex justify-center">
-                                <span class="text-sm font-medium text-blue-700 dark:text-white">Curso Expirado</span>
+                                <span class="text-sm font-medium text-blue-700 dark:text-white">Curso expirado</span>
                             </div>
                         </a><br><br>
                         @endif
@@ -294,7 +294,7 @@
                         </span>
                     </div>
                     <div class="flex justify-center">
-                        <span class="text-sm font-medium text-blue-700 dark:text-white">Pendiente por Iniciar</span>
+                        <span class="text-sm font-medium text-blue-700 dark:text-white">Pendiente por iniciar</span>
                     </div>
                     </a><br><br>
                     @elseif($calificacionesCurso['estatus'])
@@ -327,7 +327,7 @@
                             </span>
                         </div>
                         <div class="flex justify-center">
-                            <span class="text-sm font-medium text-blue-700 dark:text-white">Curso Expirado</span>
+                            <span class="text-sm font-medium text-blue-700 dark:text-white">Curso expirado</span>
                         </div>
                     </a><br><br>
                     @endif

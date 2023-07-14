@@ -3,7 +3,7 @@
         <div class="flex justify-between">
             <div class="mx-9">
                 <a type="button" class="text-white bg-nav hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700" href="{{route('crearCurso')}}">
-                    <img src="./img/agregar-usuario.png" alt=""><span>Agregar Curso</span>
+                    <img src="./img/agregar-usuario.png" alt=""><span>Agregar curso</span>
                 </a>
                 <a type="button" class="text-white bg-nav hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700" href="{{ route('reportesinternos.index') }}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 512 512">
@@ -32,16 +32,16 @@
                                         Imagen
                                     </th>
                                     <th scope="col" class="px-6 py-3">
-                                        Nombre Completo del Curso
+                                        Nombre completo del curso
                                     </th>
                                     <th scope="col" class="px-6 py-3">
                                         Codígo del Curso
                                     </th>
                                     <th scope="col" class="px-6 py-3">
-                                        Categoria del curso
+                                        Categoría del curso
                                     </th>
                                     <th scope="col" class="px-6 py-3">
-                                        Cantidad de usuarios Inscritos
+                                        Cantidad de usuarios inscritos
                                     </th>
                                     <th scope="col" class="px-6 py-3">
                                         Configuración
@@ -55,17 +55,17 @@
                                     <td class="inline-block ">
                                         <img src="{{$curso->imagen}}" width="50" height="50">
                                     </td>
-                                    <td class="py-4 font-bold">
+                                    <td class="py-4 font-bold uppercase">
                                         {{$curso->nombre}}
                                     </td>
-                                    <td class=" font-bold">
+                                    <td class=" font-bold uppercase">
                                         {{$curso->codigo}}
                                     </td>
-                                    <td class=" font-bold">
+                                    <td class=" font-bold uppercase">
                                         {{$curso->categoria[0]->nombre}}
                                     </td>
-                                    <td class=" font-bold">
-                                        {{$curso->usuarioCurso->count()}} Usuarios Incritos
+                                    <td class=" font-bold uppercase">
+                                        {{$curso->usuarioCurso->count()}} Usuarios incritos
                                     </td>
                                     <td class=" text-center ">
                                         <a href="{{url('curs',[$curso])}}" type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg   dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">

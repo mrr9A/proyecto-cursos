@@ -12,8 +12,8 @@
     </nav><br>
     <div class="flex">
         <div class="w-full p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
-            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white mx-12 text-title">Nombre del Examén: <span class="text-input-buscador">{{$examen->nombre}}</span></h5>
-            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white mx-12 text-subtitle">Duración del Examén: <span class="text-input-buscador">{{$examen->duracion}} Minutos</span></h5>
+            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white mx-12 text-title">Nombre del examen: <span class="text-input-buscador">{{$examen->nombre}}</span></h5>
+            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white mx-12 text-subtitle">Duración del examen: <span class="text-input-buscador">{{$examen->duracion}} Minutos</span></h5>
             @if(Auth::user()->examen()->where('examen_id', $examen->id_examen)->exists())
             @foreach(Auth::user()->examen as $examm)
             @if($examm->id_examen == $examen->id_examen)
@@ -37,9 +37,9 @@
                 @if($examm->pivot->numero_intento < 3) 
                 @if($examm->pivot->calificacion >= 80)
                 @if($examen->contenido_id)
-                <a href="{{route('verContenido',$examen->contenido_id)}}" class="block text-center w-full max-w-xs mx-auto bg-input hover:bg-input-buscador focus:bg-input-buscador text-white rounded-lg px-3 py-3 font-bold">Regresar al Curso</a> <br>
+                <a href="{{route('verContenido',$examen->contenido_id)}}" class="block text-center w-full max-w-xs mx-auto bg-input hover:bg-input-buscador focus:bg-input-buscador text-white rounded-lg px-3 py-3 font-bold">Regresar al contenido</a> <br>
                 @else
-                <a href="{{url('cursosEmpleados',$examen->curso_id)}}" class="block text-center w-full max-w-xs mx-auto bg-input hover:bg-input-buscador focus:bg-input-buscador text-white rounded-lg px-3 py-3 font-bold">Regresar al Curso</a> <br>
+                <a href="{{url('cursosEmpleados',$examen->curso_id)}}" class="block text-center w-full max-w-xs mx-auto bg-input hover:bg-input-buscador focus:bg-input-buscador text-white rounded-lg px-3 py-3 font-bold">Regresar al curso</a> <br>
                 @endif
                     <div class="min-w-screen h-full min-h-screen   px-5 py-5 flex justify-center shadow-all">
                         <div class="h-4/5 w-1/2 py-10 px-5  bg-gray-100 md:px-10">
@@ -96,7 +96,7 @@
                     @endforeach
                     <div class="items-center text-center">
                         <button id="btnTerminar" type="submit" class=" button bg-primary text-white text-dark text-center capitalize py-2 px-2 rounded-lg tracking-widest font-bold  hover:bg-input-buscador w-full cursor-pointer">
-                            Terminar Examén
+                            Terminar examen
                         </button>
                     </div>
                 </form>

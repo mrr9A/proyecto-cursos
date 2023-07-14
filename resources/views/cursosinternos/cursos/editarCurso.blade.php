@@ -2,29 +2,29 @@
                     @csrf
                     @method("PUT")
                     <div>
-                        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre del Curso</label>
+                        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre del curso</label>
                         <input type="text" id="nombre" name="nombre" value="{{$curso->nombre}}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required>
                     </div>
                     <div>
-                        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Codígo del Curso</label>
+                        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Codígo del curso</label>
                         <input type="text" id="codigo" name="codigo" value="{{$curso->codigo}}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="name@company.com" required>
                         @error('codigo') <span class="error text-red-600">{{ $message }}</span> @enderror
                     </div>
                     <div>
-                        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Estatus del Curso: </label>
+                        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Estatus del curso: </label>
                         <div class="grid md:grid-cols-2 md:gap-6">
                             <div class="flex items-center pl-4 border border-gray-200 rounded dark:border-gray-700">
                                 <input id="bordered-checkbox-1" type="radio" name="estado" value="1" {{{ $curso->estado == '1' ? "checked" : "" }}} class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="bordered-checkbox-1" class="w-full py-4 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Curso Activo</label>
+                                <label for="bordered-checkbox-1" class="w-full py-4 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Curso activo</label>
                             </div>
                             <div class="flex items-center pl-4 border border-gray-200 rounded dark:border-gray-700">
                                 <input id="bordered-checkbox-1" type="radio" name="estado" value="0" {{{ $curso->estado == '0' ? "checked" : "" }}} class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="bordered-checkbox-2" class="w-full py-4 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Curso Inactivo</label>
+                                <label for="bordered-checkbox-2" class="w-full py-4 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Curso inactivo</label>
                             </div>
                         </div>
                     </div>
                     <div>
-                        <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Modalidad del Curso:</label>
+                        <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Modalidad del curso:</label>
                         <select id="countries" name="modalidad_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             @foreach ($modalidad as $modi)
                             <option value="{{$modi->id_modalidad}}" {{{ $curso->modalidad_id == $modi->id_modalidad ? "selected" : "" }}}>{{$modi->modalidad}}</option>
@@ -32,7 +32,7 @@
                         </select>
                     </div>
                     <div>
-                        <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Modalidad del Curso:</label>
+                        <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tipo del curso:</label>
                         <select id="countries" name="tipo_curso_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             @foreach ($tipo as $tip)
                             <option value="{{$tip->id_tipo_curso}}" {{{ $curso->tipo_curso_id == $tip->id_tipo_curso ? "selected" : "" }}}>{{$tip->nombre}}</option>
@@ -40,7 +40,7 @@
                         </select>
                     </div>
                     <div>
-                        <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Modalidad del Curso:</label>
+                        <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">categoría del Curso:</label>
                         <select id="countries" name="categoria_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
 
                             @foreach ($categoria as $categori)
@@ -49,7 +49,7 @@
                         </select>
                     </div>
                     <div>
-                        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Imagen del Curso</label>
+                        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Imagen del curso</label>
                         <img src="{{$curso->imagen}}" width="150" height="150" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                         <input type="file" id="imagen" accept="image/*" name="imagen" value="{{$curso->imagen}}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
                     </div>

@@ -1,17 +1,18 @@
 <x-app title="Cursos:">
     <nav class="mx-4">
         <a href="{{url('curs')}}" class="text-base text-nav-hover font-bold uppercase">Catalago de Cursos > </a>
-        <a href="{{url('curs',$curso->id_curso)}}" class="text-base text-nav-hover font-bold"> {{$curso->nombre}} ></a>
+        <a href="{{url('curs',$curso->id_curso)}}" class="text-base text-nav-hover uppercase font-bold"> {{$curso->nombre}} ></a>
     </nav><br>
     <div class="flex">
         <!-- CUERPO DE TODO INFORMACION DEL CURSO, LECCIONES. CONTENIDO -->
         <div class="w-full p-4 border border-gray-200 rounded-lg shadow sm:p-6 md:p-4 dark:bg-gray-800 dark:border-gray-700">
             <div id="accordion-color" data-accordion="collapse" data-active-classes="bg-blue-100 dark:bg-gray-800 text-blue-600 dark:text-white">
+                @if(count($curso->lecciones)>0)
                 @foreach($curso->lecciones as $leccion)
                 <h2 id="accordion-color-heading-{{$leccion->id_leccion}}" class="col-lg-12 mb-6 mb-lg-0 position-relative">
                     <div class="flex w-full overflow-auto gap-3 justify-between p-5 font-medium text-left text-gray-500 border  border-gray-300 rounded-t-xl focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-800 dark:border-gray-700 dark:text-gray-400 hover:bg-blue-100 dark:hover:bg-gray-800" type="button" data-accordion-target="#accordion-color-body-{{$leccion->id_leccion}}" aria-expanded="false" aria-controls="accordion-color-body-{{$leccion->id_leccion}}">
                         <div class="flex justify-center overflow-auto gap-2">
-                            <span><img src="{{$leccion->url_imagen}}" width="50" height="50" class="avatar" alt="Imagen"></span>
+                            <span><img src="{{$leccion->url_imagen}}" width="50" height="50" alt="Imagen"></span>
                             <span class="text-subtitle px-4 text-lg italic">LECCIÓN : {{$leccion->nombre}}</span>
                         </div>
                         <div class="justify-end">
@@ -51,9 +52,12 @@
                                 <div id="dropdown3-{{$leccion->id_leccion}}" class="z-10 hidden bg-blue-50 divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-100">
                                     <ul class="py-2" aria-labelledby="dropdownButton3-{{$leccion->id_leccion}}">
                                         <li>
+                                            @if(count($usuariosS)>0)
+                                            @else
                                             <a href="{{ url('contenidos',[$leccion]) }}" class="block px-4 py-2 hover:bg-gray-100 text-sm dark:hover:bg-gray-600 dark:hover:text-white">
                                                 Agregar Contenido
                                             </a>
+                                            @endif
                                         </li>
                                         <li>
                                             <a href="{{ route('editLec',[$leccion]) }}" class="block px-4 py-2 hover:bg-gray-100 text-sm dark:hover:bg-gray-600 dark:hover:text-white">
@@ -82,8 +86,24 @@
                                         <path fill="currentColor" d="M10 2c4.42 0 8 3.58 8 8s-3.58 8-8 8s-8-3.58-8-8s3.58-8 8-8zm0 14c3.31 0 6-2.69 6-6s-2.69-6-6-6s-6 2.69-6 6s2.69 6 6 6zm-.71-5.29c.07.05.14.1.23.15l-.02.02L14 13l-3.03-3.19L10 5l-.97 4.81h.01c0 .02-.01.05-.02.09S9 9.97 9 10c0 .28.1.52.29.71z" />
                                     </svg>
                                 </span>
-                                <span class="text-base">{{$conteni->nombre}}</span>
+                                <span class="text-base uppercase">{{$conteni->nombre}}</span>
                                 <div class="flex overflow-auto gap-3 items-center">
+                                @if(count($conteni->examen) > 0 )
+                                @else
+                                    <a href="{{url('examenes',[$conteni])}}" class="block px-4 py-2 hover:bg-gray-100 text-sm dark:hover:bg-gray-600 dark:hover:text-white">
+                                        <span class="text-center items-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 48 48">
+                                                <g fill="currentColor">
+                                                    <path d="M20 15a1 1 0 0 1 1-1h8a1 1 0 1 1 0 2h-8a1 1 0 0 1-1-1Zm1 3a1 1 0 1 0 0 2h8a1 1 0 1 0 0-2h-8Zm-1 10a1 1 0 0 1 1-1h8a1 1 0 1 1 0 2h-8a1 1 0 0 1-1-1Zm1 3a1 1 0 1 0 0 2h8a1 1 0 1 0 0-2h-8Z" />
+                                                    <path fill-rule="evenodd" d="M10 27a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1v-5Zm2 1v3h3v-3h-3Z" clip-rule="evenodd" />
+                                                    <path d="M17.707 15.707a1 1 0 0 0-1.414-1.414L13 17.586l-1.293-1.293a1 1 0 0 0-1.414 1.414L13 20.414l4.707-4.707Z" />
+                                                    <path fill-rule="evenodd" d="M10 6a4 4 0 0 0-4 4v28a4 4 0 0 0 4 4h20a4 4 0 0 0 4-4V10a4 4 0 0 0-4-4H10Zm-2 4a2 2 0 0 1 2-2h20a2 2 0 0 1 2 2v28a2 2 0 0 1-2 2H10a2 2 0 0 1-2-2V10Zm28 6a3 3 0 1 1 6 0v20.303l-3 4.5l-3-4.5V16Zm3-1a1 1 0 0 0-1 1v2h2v-2a1 1 0 0 0-1-1Zm0 22.197l-1-1.5V20h2v15.697l-1 1.5Z" clip-rule="evenodd" />
+                                                </g>
+                                            </svg>
+                                        </span>
+                                        <span class="text-center text-sm">Agregar examen</span>
+                                    </a>
+                                    @endif
                                     <button id="dropdownButto-{{$conteni->id_contenido}}" data-dropdown-toggle="dropdow-{{$conteni->id_contenido}}" class="flex items-center text-input font-bold dark:text-gray-400 hover:bg-gray-300 dark:hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg p-1.5" type="button">
                                         <span class="justify-end">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 32 32">
@@ -147,20 +167,6 @@
                                                     </span>
                                                     <span class="text-center text-sm">Editar examen</span>
                                                 </a>
-                                                @else
-                                                <a href="{{url('examenes',[$conteni])}}" class="block px-4 py-2 hover:bg-gray-100 text-sm dark:hover:bg-gray-600 dark:hover:text-white">
-                                                    <span class="text-center items-center">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 48 48">
-                                                            <g fill="currentColor">
-                                                                <path d="M20 15a1 1 0 0 1 1-1h8a1 1 0 1 1 0 2h-8a1 1 0 0 1-1-1Zm1 3a1 1 0 1 0 0 2h8a1 1 0 1 0 0-2h-8Zm-1 10a1 1 0 0 1 1-1h8a1 1 0 1 1 0 2h-8a1 1 0 0 1-1-1Zm1 3a1 1 0 1 0 0 2h8a1 1 0 1 0 0-2h-8Z" />
-                                                                <path fill-rule="evenodd" d="M10 27a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1v-5Zm2 1v3h3v-3h-3Z" clip-rule="evenodd" />
-                                                                <path d="M17.707 15.707a1 1 0 0 0-1.414-1.414L13 17.586l-1.293-1.293a1 1 0 0 0-1.414 1.414L13 20.414l4.707-4.707Z" />
-                                                                <path fill-rule="evenodd" d="M10 6a4 4 0 0 0-4 4v28a4 4 0 0 0 4 4h20a4 4 0 0 0 4-4V10a4 4 0 0 0-4-4H10Zm-2 4a2 2 0 0 1 2-2h20a2 2 0 0 1 2 2v28a2 2 0 0 1-2 2H10a2 2 0 0 1-2-2V10Zm28 6a3 3 0 1 1 6 0v20.303l-3 4.5l-3-4.5V16Zm3-1a1 1 0 0 0-1 1v2h2v-2a1 1 0 0 0-1-1Zm0 22.197l-1-1.5V20h2v15.697l-1 1.5Z" clip-rule="evenodd" />
-                                                            </g>
-                                                        </svg>
-                                                    </span>
-                                                    <span class="text-center text-sm">Agregar examen</span>
-                                                </a>
                                                 @endif
                                             </li>
                                         </ul>
@@ -180,6 +186,33 @@
                 </div>
                 <br>
                 @endforeach
+                @else
+                <div class="w-full p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700 items-center text-center">
+                    <h2 class="text-subtitle font-bold tracking-tight text-gray-900">BIENVENIDO</h2>
+                    <h5 class="text-start px-12 justify-start font-bold text-gray-600"><span>Siga los siguientes pasos para crear las lecciones, contenidos y examenes correctamente del curso:</span></h5>
+                    <h1 class="mt-4 flex justify-start px-12 text">Paso 1: De clic en el siguiente icono.
+                        <span class="px-2 justify-start items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 32 32">
+                                <path fill="#40535b" d="m23.265 24.381l.9-.894c4.164.136 4.228-.01 4.411-.438l1.144-2.785l.085-.264l-.093-.231c-.049-.122-.2-.486-2.8-2.965V15.5c3-2.89 2.936-3.038 2.765-3.461l-1.139-2.814c-.171-.422-.236-.587-4.37-.474l-.9-.93a20.166 20.166 0 0 0-.141-4.106l-.116-.263l-2.974-1.3c-.438-.2-.592-.272-3.4 2.786l-1.262-.019c-2.891-3.086-3.028-3.03-3.461-2.855L9.149 3.182c-.433.175-.586.237-.418 4.437l-.893.89c-4.162-.136-4.226.012-4.407.438l-1.146 2.786l-.09.267l.094.232c.049.12.194.48 2.8 2.962v1.3c-3 2.89-2.935 3.038-2.763 3.462l1.138 2.817c.174.431.236.584 4.369.476l.9.935a20.243 20.243 0 0 0 .137 4.1l.116.265l2.993 1.308c.435.182.586.247 3.386-2.8l1.262.016c2.895 3.09 3.043 3.03 3.466 2.859l2.759-1.115c.436-.173.588-.234.413-4.436Zm-11.858-6.524a4.957 4.957 0 1 1 6.488 2.824a5.014 5.014 0 0 1-6.488-2.824Z" />
+                            </svg>
+                        </span>
+                    </h1>
+                    <h1 class="mt-2 flex justify-start px-12 text">Paso 2: Seleccione la opción agregar una lección.</h1>
+                    <h1 class="mt-2 flex justify-start px-12 text">Paso 3: Una vez creada la lección, abra la lección y de clic en opciones.</h1>
+                    <h1 class="mt-2 flex justify-start px-12 text">Paso 4: Seleccione la opción agregar contenido.</h1>
+                    <h1 class="mt-2 flex justify-start px-12 text">Paso 5: Una vez creado el contenido, de clic en agregar examen para asignar un examen al contenido</h1>
+                    <h1 class="mt-1 flex justify-start px-12 text">tenga en cuenta que el examen es obligatorio. <span class="text-red-700">*</span></h1>
+                    <h1 class="mt-2 flex justify-start px-12 text">Paso 6: Para asignar el examen final de clic en el siguiente icono en información general.
+                        <span class="px-2 justify-start items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 32 32">
+                                <path fill="#40535b" d="m23.265 24.381l.9-.894c4.164.136 4.228-.01 4.411-.438l1.144-2.785l.085-.264l-.093-.231c-.049-.122-.2-.486-2.8-2.965V15.5c3-2.89 2.936-3.038 2.765-3.461l-1.139-2.814c-.171-.422-.236-.587-4.37-.474l-.9-.93a20.166 20.166 0 0 0-.141-4.106l-.116-.263l-2.974-1.3c-.438-.2-.592-.272-3.4 2.786l-1.262-.019c-2.891-3.086-3.028-3.03-3.461-2.855L9.149 3.182c-.433.175-.586.237-.418 4.437l-.893.89c-4.162-.136-4.226.012-4.407.438l-1.146 2.786l-.09.267l.094.232c.049.12.194.48 2.8 2.962v1.3c-3 2.89-2.935 3.038-2.763 3.462l1.138 2.817c.174.431.236.584 4.369.476l.9.935a20.243 20.243 0 0 0 .137 4.1l.116.265l2.993 1.308c.435.182.586.247 3.386-2.8l1.262.016c2.895 3.09 3.043 3.03 3.466 2.859l2.759-1.115c.436-.173.588-.234.413-4.436Zm-11.858-6.524a4.957 4.957 0 1 1 6.488 2.824a5.014 5.014 0 0 1-6.488-2.824Z" />
+                            </svg>
+                        </span>
+                    </h1>
+                    <h1 class="mt-2 flex justify-start px-12 text">Paso 7: Seleccione la opción agregar examen final.</h1>
+                    <h3 class="text mt-3 uppercase font-bold px-8 justify-start tracking-tight text-gray-900">Nota:</h3><span class=" font-bold text-red-700 justify-start px-8"> Asegúrese de crear correctamente todas las lecciones y contenidos con su respectivo examen y examen final que tendrá el curso antes de agregar a los usuarios correspondientes</span>
+                </div>
+                @endif
             </div>
             @if(count($curso->examen) > 0 )
             <div id="accordion-color" data-accordion="collapse" data-active-classes="bg-blue-100 dark:bg-gray-800 text-blue-600 dark:text-white">
@@ -249,9 +282,12 @@
                             <div id="dropdown1" class="z-10 hidden bg-gray-100 divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
                                 <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownButton1">
                                     <li class="justify-center">
+                                        @if(count($usuariosS)>0)
+                                        @else
                                         <form action="{{url('Lecciones',[$curso])}}">
                                             <button class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-400 dark:hover:text-white">Agregar una Lección</button>
                                         </form>
+                                        @endif
                                     </li>
                                     <li>
                                         @if(count($curso->examen) > 0 )
@@ -410,7 +446,7 @@
             <!-- CARD DE USUARIOS INSCRITOS -->
             <div class="block p-6 border  border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
                 <div class="flex justify-between px-4 items-center overflow-auto gap-3 mb-5 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-                    Usuarios Inscritos al Curso
+                    Usuarios inscritos al curso
                     <!-- OPCIONES -->
                     <div class="flex justify-end">
                         <button data-modal-target="agregar_usuario_curso_interno" data-modal-toggle="agregar_usuario_curso_interno" class="flex items-center text-input font-semi-bold dark:text-gray-400 hover:bg-gray-300 dark:hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg p-1.5" type="button">
@@ -588,7 +624,7 @@
         </div>
     </div>
     <!-- MODAL DE AÑADIR USUARIO -->
-    <x-modal-prueba title="Agregar Usuario al Curso" textButton="Agregar Usuarios" id="agregar_usuario_curso_interno" vistaContenidoModal="cursosinternos.cursos.agregarUsuarioCurso" :curso="$curso" :usuarios="$usuarios" :tipo="$tipo" />
+    <x-modal-prueba title="Agregar usuario al curso" textButton="Agregar Usuarios" id="agregar_usuario_curso_interno" vistaContenidoModal="cursosinternos.cursos.agregarUsuarioCurso" :curso="$curso" :usuarios="$usuarios" :tipo="$tipo" />
     <x-modal-prueba title="EDITAR CURSO" textButton="Editar Información Curso" id="editar_curso_interno" vistaContenidoModal="cursosinternos.cursos.editarCurso" :curso="$curso" :modalidad="$modalidad" :categoria="$categoria" :tipo="$tipo" />
 </x-app>
 

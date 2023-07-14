@@ -1,18 +1,18 @@
 <form class="flex items-center" action="{{ route('curs.show', $curso->id_curso) }}" method="GET" id="search-users">
-    <label for="simple-search" class="sr-only">Search</label>
+    <label for="simple-search" class="sr-only">Buscar</label>
     <div class="relative w-full">
         <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
             <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 20">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5v10M3 5a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm0 10a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm12 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm0 0V6a3 3 0 0 0-3-3H9m1.5-2-2 2 2 2" />
             </svg>
         </div>
-        <input type="text" id="usuarios_agregar" name="search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Buscar Usuario por nombre..." required>
+        <input type="text" id="usuarios_agregar" name="search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Buscar usuario por nombre..." required>
     </div>
     <button type="submit" class="p-2.5 ml-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
         <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
         </svg>
-        <span class="sr-only">Search</span>
+        <span class="sr-only">Buscar</span>
     </button>
 </form>
 
@@ -21,11 +21,11 @@
     @csrf
     <div class="grid gap-6 mb-6 md:grid-cols-2">
         <div>
-            <label for="fecha_inicio" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha Inicio</label>
+            <label for="fecha_inicio" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha inicio</label>
             <input type="date" id="fecha_inicio" name="fecha_inicio" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
         </div>
         <div>
-            <label for="fecha_termino" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha Termino</label>
+            <label for="fecha_termino" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha termino</label>
             <input type="date" id="fecha_termino" name="fecha_termino" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
         </div>
     </div>
@@ -38,7 +38,7 @@
         <li class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
             <input hidden type="text" name="curso_id" value="{{$curso->id_curso}}">
             <input id="checkbox-item-11" type="checkbox" name="usuarios[]" value="{{$usuario->id_usuario}}" @foreach($curso->usuarioCurso as $user) {{{ $usuario->id_usuario == $user->id_usuario ? "disabled class=bg-green-500" : ""  }}} @endforeach class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" >
-            <label for="checkbox-item-11" class="w-full ml-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">{{$usuario->apellido_paterno}} {{$usuario->apellido_materno}} {{$usuario->nombre}} {{$usuario->segundo_nombre}} </label>
+            <label for="checkbox-item-11" class="w-full ml-2 text-sm font-medium capitalize text-gray-900 rounded dark:text-gray-300">{{$usuario->apellido_paterno}} {{$usuario->apellido_materno}} {{$usuario->nombre}} {{$usuario->segundo_nombre}} </label>
         </li><br>
         @endif
         @endforeach
@@ -50,7 +50,7 @@
                 <path d="M11 6a3 3 0 11-6 0 3 3 0 016 0zM14 17a6 6 0 00-12 0h12zM13 8a1 1 0 100 2h4a1 1 0 100-2h-4z"></path>
             </svg>
         </span>
-        Agregar Usuarios
+        Agregar usuarios
     </button>
 </form>
 
@@ -77,7 +77,7 @@
                 <li id="resultados_usuarios" class="bg-gray-300 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
             <input hidden type="text" name="curso_id" value="{{$curso->id_curso}}">
             <div>
-                <input id="checkbox-item-11" type="checkbox" name="usuarios[]" value="${element.id_usuario}"  ${ element.inscrito == 1 ? "disabled class=bg-green-500" : ""} class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" >
+                <input id="checkbox-item-11" type="checkbox" name="usuarios[]" value="${element.id_usuario}"  ${ element.inscrito == 1 ? "disabled class=bg-green-500" : ""} class="w-4 h-4 text-blue-600 bg-gray-100 capitalize border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" >
                 <label for="checkbox-item-11" class="w-full ml-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">
                     ${element.nombre + ' '  + ' ' + element.apellido_paterno + ' '}
                 </label>

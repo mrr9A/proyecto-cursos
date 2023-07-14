@@ -1,12 +1,12 @@
 <x-appEmpleado title="{{$contenido->nombre}}" route="home">
     <nav class="mx-4">
-        <a href="{{url('cursosEmpleados',[$contenido->leccion->curso_id])}}" class="text-base text-nav-hover font-bold">{{$leccion->course->nombre}} > </a>
-        <a href="{{url('cursosEmpleados',[$contenido->leccion->curso_id])}}" class="text-base text-nav-hover font-bold"> {{$contenido->leccion->nombre}} ></a>
-        <a href="{{route('verContenido',[$contenido])}}" class="text-base text-nav-hover font-bold">{{$contenido->nombre}}</a>
+        <a href="{{url('cursosEmpleados',[$contenido->leccion->curso_id])}}" class="text-base text-nav-hover font-bold uppercase">{{$leccion->course->nombre}} > </a>
+        <a href="{{url('cursosEmpleados',[$contenido->leccion->curso_id])}}" class="text-base text-nav-hover font-bold uppercase"> {{$contenido->leccion->nombre}} ></a>
+        <a href="{{route('verContenido',[$contenido])}}" class="text-base text-nav-hover font-bold uppercase">{{$contenido->nombre}}</a>
     </nav><br>
     <div class="flex">
         <div class="w-full p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
-            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white mx-12 text-title">{{$contenido->nombre}}:</h5>
+            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white mx-12 text-title uppercase">{{$contenido->nombre}}:</h5>
             <div class="p-2 bg-white border border-gray-200 rounded-lg shadow mx-12 text-center">
                 @if(in_array($extension, ['mp4', 'webm']))
                 <video src="{{$contenido->media[0]->url}}" controls class="w-full h-96 inline-block object-cover" width="800" height="500"></video>
@@ -22,8 +22,8 @@
             </div><br>
             @if(count($contenido->examen) > 0 )
             <div class="items-center text-center">
-                <a href="{{route('verExamenempleado',$contenido->examen[0]->id_examen)}}" class="button bg-blue-100 text-dark text-center capitalize py-2 px-2 rounded-lg tracking-widest font-bold  hover:bg-blue-200 w-96 cursor-pointer">
-                    Realizar Examén
+                <a href="{{route('verExamenempleado',$contenido->examen[0]->id_examen)}}" class="button bg-blue-100 text-dark text-center uppercase py-2 px-2 rounded-lg tracking-widest font-bold  hover:bg-blue-200 w-96 cursor-pointer">
+                    Realizar Examen
                 </a>
             </div>
             @endif
@@ -32,7 +32,7 @@
             <div class="block p-6 border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
                 <div class="text-center justify-between px-4 items-center overflow-auto gap-3 mb-5 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
                     <span class="text-center text-subtitle text-orange-300">
-                        LECCIÓN: <span class="text-nav-hover">{{$contenido->leccion->nombre}}</span>
+                        LECCIÓN: <span class="text-nav-hover uppercase">{{$contenido->leccion->nombre}}</span>
                     </span>
                 </div>
                 <h2 class="text-center text-nav-hover">CONTENIDOS DE LA LECCIÓN</h2>
@@ -43,7 +43,7 @@
                 @if($user->id_usuario == Auth::User()->id_usuario)
                 @if($user->pivot->calificacion >= 80)
                 <div class="pt-5 pb-4 px-5 px-lg-3 px-xl-5">
-                    <a href="{{route('verContenido',[$leccCont])}}" class="{{ $leccCont->id_contenido == $contenido->id_contenido ? 'bg-green-300' : ''  }} bg-green-300  flex items-center justify-between w-full p-5 font-medium text-left text-gray-500 border border-gray-400 rounded-2xl focus:ring-8 focus:ring-blue-200 dark:focus:ring-blue-800 dark:text-gray-400  dark:hover:bg-gray-800">
+                    <a href="{{route('verContenido',[$leccCont])}}" class="{{ $leccCont->id_contenido == $contenido->id_contenido ? 'bg-green-300' : ''  }} bg-green-300 uppercase  flex items-center justify-between w-full p-5 font-medium text-left text-gray-500 border border-gray-400 rounded-2xl focus:ring-8 focus:ring-blue-200 dark:focus:ring-blue-800 dark:text-gray-400  dark:hover:bg-gray-800">
                         {{$leccCont->nombre}}
                         <span>
                             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 512 512">
@@ -56,7 +56,7 @@
                 </div>
                 @elseif($user->pivot->calificacion < 80) 
                 <div class="pt-5 pb-4 px-5 px-lg-3 px-xl-5">
-                    <a href="{{route('verContenido',[$leccCont])}}" class="{{ $leccCont->id_contenido == $contenido->id_contenido ? 'bg-red-400' : ''  }} bg-red-400  flex items-center justify-between w-full p-5 font-medium text-left text-gray-500 border border-gray-400 rounded-2xl focus:ring-8 focus:ring-blue-200 dark:focus:ring-blue-800 dark:text-gray-400  dark:hover:bg-gray-800">
+                    <a href="{{route('verContenido',[$leccCont])}}" class="{{ $leccCont->id_contenido == $contenido->id_contenido ? 'bg-red-400' : ''  }} bg-red-400  uppercase flex items-center justify-between w-full p-5 font-medium text-left text-gray-500 border border-gray-400 rounded-2xl focus:ring-8 focus:ring-blue-200 dark:focus:ring-blue-800 dark:text-gray-400  dark:hover:bg-gray-800">
                         {{$leccCont->nombre}}
                         <span>
                             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 512 512">
@@ -72,7 +72,7 @@
             @endforeach
             @else
             <div class="pt-5 pb-4 px-5 px-lg-3 px-xl-5">
-                    <a href="{{route('verContenido',[$leccCont])}}" class="{{ $leccCont->id_contenido == $contenido->id_contenido ? 'bg-blue-100' : ''  }}   flex items-center justify-between w-full p-5 font-medium text-left text-gray-500 border border-gray-400 rounded-2xl focus:ring-8 focus:ring-blue-200 dark:focus:ring-blue-800 dark:text-gray-400  dark:hover:bg-gray-800">
+                    <a href="{{route('verContenido',[$leccCont])}}" class="{{ $leccCont->id_contenido == $contenido->id_contenido ? 'bg-blue-100' : ''  }}   flex items-center uppercase justify-between w-full p-5 font-medium text-left text-gray-500 border border-gray-400 rounded-2xl focus:ring-8 focus:ring-blue-200 dark:focus:ring-blue-800 dark:text-gray-400  dark:hover:bg-gray-800">
                         {{$leccCont->nombre}}
                         <span>
                             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 512 512">
