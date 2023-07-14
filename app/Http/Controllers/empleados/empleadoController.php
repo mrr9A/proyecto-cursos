@@ -128,7 +128,8 @@ class empleadoController extends Controller
                     'lecciones' => $totalLeccionesfinal,
                     'estatus' => $cursoVigente,
                     'fecha' => $fechaActual,
-                    'fecha_inicio' => $fechaInicioCurso
+                    'fecha_inicio' => $fechaInicioCurso,
+                    'fecha_termino' => $fechaTerminoCurso,
                 ];
             }
         }

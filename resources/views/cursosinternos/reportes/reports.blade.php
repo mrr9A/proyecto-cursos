@@ -1,22 +1,33 @@
 <x-app title="Generar reportes por Cursos">
 
-    <form action="{{ route('reportesinternos.index') }}" method="GET">
-        @method('GET')
-        <div class=" flex gap-4 flex-wrap items-end">
-            <div class="form-group">
-                <label for="curso_id">Seleccionar Curso:</label>
-                <select name="curso_id" id="curso_id" class="form-control">
-                    <option value="">Seleccione un curso</option>
-                    @foreach($cursos as $curso)
-                    @if($curso->interno_planta == 1)
-                    <option value="{{ $curso->id_curso }}">{{ $curso->nombre }}</option>
-                    @endif
-                    @endforeach
-                </select>
+    <div class="flex">
+        <form action="{{ route('reportesinternos.index') }}" method="GET">
+            @method('GET')
+            <div class=" flex gap-4 flex-wrap items-end">
+                <div class="form-group">
+                    <label for="sucursal_id">Seleccionar una Sucursal:</label>
+                    <select name="sucursal_id" id="sucursal_id" class="form-control">
+                        <option value="">Seleccione una Sucursal</option>
+                        @foreach($sucursales as $sucursal)
+                        <option value="{{ $sucursal->id_sucursal }}">{{ $sucursal->nombre }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="curso_id">Seleccionar Curso:</label>
+                    <select name="curso_id" id="curso_id" class="form-control">
+                        <option value="">Seleccione un curso</option>
+                        @foreach($cursos as $curso)
+                        @if($curso->interno_planta == 1)
+                        <option value="{{ $curso->id_curso }}">{{ $curso->nombre }}</option>
+                        @endif
+                        @endforeach
+                    </select>
+                </div>
+                <x-input-submit text="Filtrar" class="max-h-[40px]" />
             </div>
-            <x-input-submit text="Filtrar" class="max-h-[40px]" />
-        </div>
-    </form>
+        </form>
+    </div>
     @if(count($calificacionesCursos) > 0)
 
     <div class="mt-4 ">
@@ -41,16 +52,16 @@
                 </tr>
             </thead>
             <tbody class="">
-            @foreach ($calificacionesCursos as $usuario)
-            <tr class="border-b border-gray-200 hover:bg-gray-100">
-                        <td class="whitespace-nowrap px-6 py-2 w-1/12 ">{{ $usuario['sucursal']}}</td>
-                        <td class="whitespace-nowrap px-6 py-2 w-1/12 ">{{ $usuario['cursoC']}}</td>
-                        <td class="py-3 px-6 text-left">{{ $usuario['cursoN']}}</td>
-                        <td class="py-3 px-6 text-left capitalize">{{ $usuario['usuarioN']}} {{ $usuario['usuarioSN']}} {{ $usuario['usuarioAP']}} {{ $usuario['usuarioAM']}}</td>
-                        <td class="py-3 px-6 text-center">{{ $usuario['estado']}}</td>
-                        <td class="py-3 px-6 text-center">{{ $usuario['calificacion']}}</td>
-                        <td class="py-3 px-6 text-center">{{ $usuario['progreso']}}</td>
-                    </tr>
+                @foreach ($calificacionesCursos as $usuario)
+                <tr class="border-b border-gray-200 hover:bg-gray-100">
+                    <td class="whitespace-nowrap px-6 py-2 w-1/12 ">{{ $usuario['sucursal']}}</td>
+                    <td class="whitespace-nowrap px-6 py-2 w-1/12 ">{{ $usuario['cursoC']}}</td>
+                    <td class="py-3 px-6 text-left">{{ $usuario['cursoN']}}</td>
+                    <td class="py-3 px-6 text-left capitalize">{{ $usuario['usuarioN']}} {{ $usuario['usuarioSN']}} {{ $usuario['usuarioAP']}} {{ $usuario['usuarioAM']}}</td>
+                    <td class="py-3 px-6 text-center">{{ $usuario['estado']}}</td>
+                    <td class="py-3 px-6 text-center">{{ $usuario['calificacion']}}</td>
+                    <td class="py-3 px-6 text-center">{{ $usuario['progreso']}}</td>
+                </tr>
                 @endforeach
             </tbody>
         </table>

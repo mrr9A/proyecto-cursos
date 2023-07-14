@@ -32,7 +32,7 @@ slot con nombre
             <main class=" h-full m-auto px-4 relative  overflow-x-auto min-w-[100%] z-20">
                 <div class="flex items-center justify-between border-b-[1px] border-nav mb-5 py-2">
                     @if(is_null(($class ?? null)))
-                    <h1 class="uppercase font-bold text-title ">
+                    <a href="{{route('inicioEmpleado')}}" class="uppercase font-bold text-title ">
                         <div class="inline-flex items-center">
                             <span><svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" viewBox="0 0 24 24">
                                     <path fill="#012254" fill-opacity="0" d="M5 8.5L12 3L19 8.5V21H15V13L14 12H10L9 13V21H5V8.5Z">
@@ -55,7 +55,7 @@ slot con nombre
                                 </svg></span>
                                 <span class="mx-3">{{ $title ?? 'INICIO' }} </span>
                         </div>
-                    </h1>
+                    </a>
                     @else
                     <h1 class="{{$class ?? ''}} uppercase font-bold ">{{ $title ?? 'INICIO' }}</h1>
                     @endif

@@ -47,7 +47,7 @@ class CursosController extends Controller
         if(is_null($curso)){
            return redirect()->back();
         }
-        $usuariosS = $curso->usuarioCurso()->paginate(10);
+        $usuariosS = $curso->usuarioCurso()->paginate(5);
         $categoria = Categoria::all();
         $modalidad = ModalidadCurso::all();
         $tipo = TipoCurso::all();

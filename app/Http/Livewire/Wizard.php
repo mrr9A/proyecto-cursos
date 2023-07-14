@@ -36,21 +36,12 @@ class Wizard extends Component
             'codigo' => 'required|string|min:5 |unique:cursos',
             'nombre' => 'required|string|min:5,max:45|unique:cursos',
             'imagen' => 'required|image|mimes:jpg,png',
-
-        ]);
-
-        $this->currentStep = 2;
-    }
-
-    public function secondStepSubmit()
-    {
-        $validatedData = $this->validate([
             'modalidad_id' => 'required',
             'tipo_curso_id' => 'required',
             'categoria_id' => 'required',
         ]);
 
-        $this->currentStep = 3;
+        $this->currentStep = 2;
     }
 
 

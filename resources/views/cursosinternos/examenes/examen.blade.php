@@ -4,7 +4,7 @@
         <div class="col-11">
             <div class="col-11 mx-6">
                 <br>
-                <h3 class="font-semi-bold">Información General del Examen</h3>
+                <h3 class="font-semi-bold">Información general</h3>
                 <br>
                 <input hidden type="text" rows="3" name="contenido_id" value="{{$id}}" required>
                 <div class="grid col-4">

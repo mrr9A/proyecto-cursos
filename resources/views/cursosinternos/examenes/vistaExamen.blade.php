@@ -1,9 +1,9 @@
 <x-app title="Examen">
     <div class="flex">
         <div class="w-full p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
-            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white mx-12 text-title">Nombre del Examén: <span class="text-input-buscador">{{$examen[0]->nombre}}</span></h5>
-            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white mx-12 text-subtitle">Duración del Examén: <span class="text-input-buscador">{{$examen[0]->duracion}} Minutos</span></h5>
-            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white mx-12 text-subtitle">Intentos de realizar el Examén: <span class="text-input-buscador">{{$intentos}} Disponibles</span></h5>
+            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white mx-12 text-title">Nombre del examen: <span class="text-input-buscador">{{$examen[0]->nombre}}</span></h5>
+            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white mx-12 text-subtitle">Duración del examen: <span class="text-input-buscador">{{$examen[0]->duracion}} Minutos</span></h5>
+            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white mx-12 text-subtitle">Intentos de realizar el examen: <span class="text-input-buscador">{{$intentos}} Disponibles</span></h5>
             <!-- Botón "Comenzar" para iniciar el examen -->
             <div class="items-center text-center"><br><br>
                 <button id="btnComenzar" class="button bg-primary text-white text-dark text-center capitalize py-2 px-2 rounded-lg tracking-widest font-bold  hover:bg-input-buscador w-96 cursor-pointer">
@@ -33,8 +33,8 @@
                     </div><br>
                     @endforeach
                     <div class="items-center text-center">
-                        <button id="btnTerminar" type="submit" class=" button bg-primary text-white text-dark text-center capitalize py-2 px-2 rounded-lg tracking-widest font-bold  hover:bg-input-buscador w-full cursor-pointer">
-                            Terminar Examén
+                        <button id="btnTerminar" type="submit" class=" button uppercase bg-primary text-white text-dark text-center py-2 px-2 rounded-lg tracking-widest font-bold  hover:bg-input-buscador w-full cursor-pointer">
+                            Terminar examen
                         </button>
                     </div>
                 </form>
