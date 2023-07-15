@@ -53,7 +53,7 @@
             <table class="min-w-full leading-normal my-2">
                 <thead class="border-b  dark:border-neutral-500 uppercase">
                     <tr
-                        class="px-5 py-3 border-b-2 border-gray-200 bg-blue-200 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                        class="px-5 py-3 border-b-2 border-gray-200 bg-th-table text-th-table-text text-left text-xs font-semibold uppercase tracking-wider">
                         <th scope="col" class="px-6 py-2 w-1/12">ID SGP</th>
                         <th scope="col" class="px-6 py-2">ID SUMTOTAL</th>
                         <th scope="col" class="px-6 py-2 ">SUCURSAL</th>

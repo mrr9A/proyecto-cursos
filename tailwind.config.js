@@ -63,7 +63,11 @@ export default {
       'incompleted': '#F40C0C',
       'gray': '#8D8D8D',
       'gray-light': '#F3F3F3',
-      'gray-light-brigthness': '#737373'
+      'gray-light-brigthness': '#737373',
+      'btn-primary': '#023e7d',
+      'btn-primary-light': '#023e7d89',
+      'th-table': '#01245A',
+      'th-table-text' : '#F3F3F3'
     },
     extend: {
       spacing: {

@@ -1,18 +1,11 @@
 <x-app title="puestos">
-
-    {{-- <a href="{{ route('puestos.cursos') }}" --}}
-    <a href="{{ route('planes.index') }}"
-        class="absolute right-4 text-base top-16 border-b-2 border-2 rounded-md  focus:outline-none font-medium px-5 py-1.5 text-center bg-blue-600 text-white hover:bg-blue-900 hover:text-gray-200 hover:rounded-t-md">
-        Asignar cursos
-    </a>
-
     <form method="POST" id="crear_puesto" action="{{ route('puestos.store') }}" class="flex flex-wrap flex-col gap-4 mt-4">
         @csrf
 
         <div class="flex gap-6 items-center">
             <x-input-text placeholder="0-12" nombre="codigo" text="Codigo" class="w-1/8" classLabel="text-base" required />
             <x-input-text placeholder="Ej. jefe de taller" nombre="puesto" text="Puesto" class="w-1/4"
-                classLabel="text-base"  required/>
+                classLabel="text-base" required />
 
             <div class="relative flex flex-col font-poppins gap-21 text-base">
                 <label class="mb-2 font-semi-bold">Seleccionar plan de informacion</label>
@@ -76,7 +69,7 @@
     <div class="flex flex-col gap-3 mt-5">
         <h2 class="text-subtitle">Lista de puestos</h2>
         <table class="min-w-full">
-            <thead class="uppercase bg-blue-200 text-left">
+            <thead class="uppercase bg-th-table text-th-table-text text-left">
                 <th class="px-6 py-2">Codigo</th>
                 <th class="px-6 py-2">Plan de formacion</th>
                 <th class="px-6 py-2">puesto</th>
@@ -87,7 +80,7 @@
                 @foreach ($puestos as $puesto)
                     <tr class="mb-4 border-b border-gray-200 hover:bg-gray-100">
                         <td class="whitespace-nowrap px-6 py-1 ">
-                            {{$puesto->codigo ?? 0}}
+                            {{ $puesto->codigo ?? 0 }}
                         </td>
                         <td class="whitespace-nowrap px-6 py-1 ">
                             {{ $puesto->planes_formacion->tema }} {{ $puesto->planes_formacion->area }}

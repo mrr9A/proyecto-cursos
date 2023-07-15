@@ -88,7 +88,7 @@ class Curso extends Model
                     ->orWhere('c.nombre', 'like', $buscar . "%");
             })
             ->where("c.estado", '=', 1)
-            ->get();
+            ->paginate(10)->appends(request()->query());
 
         return $cursos;
     }
