@@ -10,7 +10,7 @@
                 <x-search.search-input route="usuarios.index" />
                 <div class="lg:ml-40 ml-10 space-x-8">
                     <a href="{{ route('usuarios.create') }}"
-                        class="bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer hover:bg-primary">Agregar
+                        class="bg-btn-primary px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer hover:bg-btn-primary-light">Agregar
                         usuario</a>
                 </div>
             </div>
@@ -22,7 +22,7 @@
             <table class="min-w-full leading-normal my-2">
                 <thead class="border-b  dark:border-neutral-500 uppercase">
                     <tr
-                        class="px-5 py-3 border-b-2 border-gray-200 bg-blue-200 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                        class="px-5 py-3 border-b-2 border-gray-200 bg-th-table text-left text-xs font-semibold text-th-table-text uppercase tracking-wider">
                         <th scope="col" class="px-6 py-2 w-1/12">ID SGP</th>
                         <th scope="col" class="px-6 py-2">ID SUMTOTAL</th>
                         <th scope="col" class="px-6 py-2">nombre</th>
