@@ -3,7 +3,7 @@
         <form action="{{ route('planes.store') }}" method="POST"
             class="border-2 border-blue-200 rounded-md bg-blue-100 mt-2 p-2 w-1/2">
             @csrf
-            <div class="flex  gap-3 mb-2 ">
+            <div class="flex  gap-3 mb-2 flex-wrap ">
                 <div class="flex flex-col justify-start relative">
                     <label>Puesto</label>
                     <select name="puesto_id" id="puestos"

@@ -73,7 +73,7 @@ class CursoController extends Controller
             }
 
             // Insertar los datos en la tabla puestos_cursos
-            DB::table('trabajos_cursos')->insert($trabajosCursos);
+            DB::table('trabajos_cursos')->insertOrIgnore($trabajosCursos);
 
             // Confirmar la transacción
             DB::commit();

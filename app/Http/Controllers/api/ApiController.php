@@ -28,7 +28,7 @@ class ApiController extends Controller
 
     public function searchCursos(Request $request){
         $buscar = $request->buscador;
-        $data = Curso::getAllCursos($buscar);
+        $data = Curso::getAllCursos($buscar, false);
 
         return response()->json($data, 200);
     }

@@ -25,8 +25,8 @@
                 <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
                     <div>
                         {{-- $usuarios->currentPage(): Devuelve el número de página actual.
-        $usuarios->perPage(): Devuelve la cantidad de resultados mostrados por página.
-        $usuarios->total(): Devuelve el total de resultados obtenidos. --}}
+                            $usuarios->perPage(): Devuelve la cantidad de resultados mostrados por página.
+                            $usuarios->total(): Devuelve el total de resultados obtenidos. --}}
                         <p class="text-sm text-gray-700">
                             Mostrando
                             <span class="font-medium">{{ $cursos->currentPage() }}</span>
@@ -110,7 +110,7 @@
                 <table class="min-w-full leading-normal my-2">
                     <thead class="border-b  dark:border-neutral-500 uppercase">
                         <tr
-                            class="px-5 py-3 border-b-2 border-gray-200 bg-th-table text-th-table-text text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                            class="px-5 py-3 border-b-2 border-gray-200 bg-th-table text-th-table-text text-left text-xs font-semibold uppercase tracking-wider">
                             <th class="px-6 py-2 w-1/12">Codigo</th>
                             <th class="px-6 py-2 ">Nombre</th>
                             <th class="px-6 py-2 ">tipo</th>
@@ -127,7 +127,7 @@
                                 <td class="py-3 px-6 text-left">{{ $curso->tipo }}</td>
                                 <td class="py-3 px-6 text-left">{{ $curso->modalidad }}</td>
                                 <td class="py-3 px-6 text-left relative w-1/12">
-                                    <div class="flex justify-center">
+                                    <div class="flex justify-center gap-2">
                                         <button id="{{ $curso->id_curso }}"
                                             class="cursos text-blue-600 text-sm hover:text-blue-800 hover:font-bold">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
@@ -195,17 +195,14 @@
                 })
 
                 contenido = `
-                <div class="m-auto my-auto w-[40%] h-[70%] bg-white rounded-md py-4 px-3 overflow-auto flex">
-                    <form id="update_curso" method="POST"  class=" bg-white" class="flex flex-col flex-grow h-full">
-                    @method('POST')
-                    @csrf
-                        <div id="container_cursos" class="w-full gap-3 ">
-                            <div id="curso_1" class="grid grid-cols-2 gap-3 w-full border-[1px]">
-                                <h2 class="col-span-2 py-1 px-2 bg-blue-200">Actualizar curso</h2>
-                                <x-input-text text="Nombre" nombre="nombre" placeholder="nombre" required
-                                    classLabel="text-base" mensaje="nombre" value='${data.curso.nombre}' />
-                                <x-input-text text="codigo" nombre="codigo" placeholder="codigo "
-                                    classLabel="text-base" mensaje="codigo" value='${data.curso.codigo}'/>
+                <div class="m-auto my-auto md:w-[70%] lg:w-[40%] h-[70%] bg-white rounded-md  overflow-auto flex justify-center p-2">
+                    <form id="update_curso" method="POST"  class=" bg-white flex flex-col flex-1 h-full w-full justify-stretch">
+                        @method('POST')
+                        @csrf
+                        <div id="container_cursos" class=" grid grid-cols-2 gap-4  w-full border-[1px] gap-y-5">
+                                    <h2 class="col-span-2 py-1 px-2 bg-blue-200">Actualizar curso</h2>
+                                    <x-input-text text="Nombre" nombre="nombre" placeholder="nombre" required classLabel="text-base" mensaje="nombre" value='${data.curso.nombre}' />
+                                    <x-input-text text="codigo" nombre="codigo" placeholder="codigo " classLabel="text-base" mensaje="codigo" value='${data.curso.codigo}'/>
                                 
                                     {{-- SELECTS --}}
 
@@ -230,10 +227,9 @@
                                             ${optsTipo}
                                         </select>
                                     </div>
-                            </div>
+                        </div>
                         <div class="mt-4">
                             <x-input-submit text="Actualizar" class="w-full" />
-                        </div>
                         </div>
                     </form>
                 </div>

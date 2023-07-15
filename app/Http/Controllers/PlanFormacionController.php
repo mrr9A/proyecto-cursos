@@ -17,7 +17,7 @@ class PlanFormacionController extends Controller
     {
         $planesFormacion = PlanesFormacion::all();
         $puestos = PlanesFormacion::with('puestos')->get();
-        $cursos = Curso::getAllCursos();
+        $cursos = Curso::getAllCursos("",false);
         $puestos = Puesto::all();
         return view('cursosplanta.planes.index', compact("planesFormacion", "puestos", "cursos"));
     }
