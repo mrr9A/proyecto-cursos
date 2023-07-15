@@ -49,7 +49,7 @@ class PDFCertificadoController extends Controller
                 foreach ($examCurso->usuarios as $caliCu) {
                     if ($caliCu->pivot->usuario_id == Auth::user()->id_usuario) {
                         $calificacion2 = $caliCu->pivot->calificacion ?? 0; // Get the "calificacion" property
-                        $calificacionLeccion2 += $calificacion2;
+                        $calificacionLeccion2 = $calificacion2;
                     }
                     if ($examCurso->usuarios()->where('examen_id', $curso->examen()->first()->id_examen)->exists() and $examen->usuarios()->where('usuario_id', Auth::user()->id_usuario)->exists()) {
                         if ($caliCu->pivot->usuario_id == Auth::user()->id_usuario) {
