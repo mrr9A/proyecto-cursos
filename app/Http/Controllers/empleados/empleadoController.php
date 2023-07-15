@@ -48,7 +48,7 @@ class empleadoController extends Controller
                     foreach ($leccion->contenido as $contenido) {
                         $examen = $contenido->examen()->first(); // Retrieve the first exam
                         $examCurso = $curso->examen()->first();
-                        
+
                         if (count($examen->usuarios  ?? []) > 0) {
 
                             foreach ($examen->usuarios as $calificacionnn) {
@@ -63,7 +63,6 @@ class empleadoController extends Controller
                                 }
                             }
                         }
-
                         if (count($examCurso->usuarios ?? []) > 0) {
                             foreach ($examCurso->usuarios as $caliCu) {
                                 if ($caliCu->pivot->usuario_id == Auth::user()->id_usuario) {
@@ -140,9 +139,9 @@ class empleadoController extends Controller
     public function show(string $id)
     {
         $curso = Curso::find($id);
-        if(is_null($curso)){
+        if (is_null($curso)) {
             return redirect()->back();
-         }
+        }
         $categoria = Categoria::all();
         $modalidad = ModalidadCurso::all();
         $tipo = TipoCurso::all();
@@ -154,9 +153,9 @@ class empleadoController extends Controller
     public function ver(string $id)
     {
         $contenido = Contenido::find($id);
-        if(is_null($contenido)){
+        if (is_null($contenido)) {
             return redirect()->back();
-         }
+        }
         $archivo = public_path($contenido->media[0]->url); // Ruta al archivo que deseas obtener la extensión
         $extension = File::extension($archivo);
         $leccion = Leccion::find($contenido->leccion_id);
@@ -167,9 +166,9 @@ class empleadoController extends Controller
     {
         $intentos = $this->intentos;
         $examen = Examen::find($id);
-        if(is_null($examen)){
+        if (is_null($examen)) {
             return redirect()->back();
-         }
+        }
         $totalPreguntas = $examen->preguntas->count();
         return view('vistasEmpleados.vistaExamenEmpleado.index', compact('examen', 'intentos', 'totalPreguntas'));
     }
@@ -181,13 +180,13 @@ class empleadoController extends Controller
         $totalQuestions = $request->total_pregunta;
         $id_user = Auth::user()->id_usuario;
         $user = User::find($id_user);
-        if(is_null($user)){
+        if (is_null($user)) {
             return redirect()->back();
-         }
+        }
         $examenn = Examen::find($id);
-        if(is_null($examenn)){
+        if (is_null($examenn)) {
             return redirect()->back();
-         }
+        }
         $id_examen = $examenn->id_examen;
         $correctAnswers = 0;
         foreach ($validatedData as $pregunta => $opcion) {
@@ -215,9 +214,9 @@ class empleadoController extends Controller
     private function isAnswerCorrect($par)
     {
         $opcion = Opcion::find($par);
-        if(is_null($opcion)){
+        if (is_null($opcion)) {
             return redirect()->back();
-         }
+        }
         if ($opcion->correcta == 1) {
             return true;
         } else {

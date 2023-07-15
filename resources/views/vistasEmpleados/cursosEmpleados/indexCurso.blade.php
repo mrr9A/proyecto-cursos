@@ -212,7 +212,7 @@
         <div class="w-full p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
             <div id="accordion-color" data-accordion="collapse" data-active-classes="bg-blue-100 dark:bg-gray-800 text-blue-600 dark:text-white">
                 @foreach($curso->lecciones as $leccion)
-                <h2 id="accordion-color-heading-{{$leccion->id_leccion}}" class="col-lg-12 mb-6 mb-lg-0 position-relative">
+                <h2 id="accordion-color-heading-{{$leccion->id_leccion}}" class="col-lg-12  mb-lg-0 position-relative">
                     <div class="flex w-full overflow-auto gap-3 justify-between p-5 font-medium text-left text-gray-500 border  border-gray-300 rounded-t-xl focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-800 dark:border-gray-700 dark:text-gray-400 hover:bg-blue-100 dark:hover:bg-gray-800" type="button" data-accordion-target="#accordion-color-body-{{$leccion->id_leccion}}" aria-expanded="false" aria-controls="accordion-color-body-{{$leccion->id_leccion}}">
                         <div class="flex justify-center overflow-auto gap-2">
                             <span><img src="{{$leccion->url_imagen}}" width="50" height="50" alt="Imagen"></span>
@@ -238,16 +238,23 @@
                         </div><br>
                         <h2 class="text-center font-bold text-nav-hover">CONTENIDOS DE LA LECCIÓN:</h2><br>
                         @foreach($leccion->contenido as $conteni)
-                        <div class="border-top px-2 py-3 mx-4 min-height-70 d-md-flex align-items-center bg-blue-50 col-lg-11 mb-6 mb-lg-0">
+                        @foreach($conteni->examen as $examUser)
+                        @if($examUser->usuarios()->where('usuario_id',Auth::User()->id_usuario)->exists())
+                        @foreach($examUser->usuarios as $user)
+                        @if($user->id_usuario == Auth::User()->id_usuario)
+                        @if($user->pivot->calificacion >= 80)
+                        <div class="border-top px-2 py-3 mx-4 min-height-70 d-md-flex align-items-center bg-blue-50 mb-2 col-lg-11 mb-lg-0">
                             <div class="flex justify-between uppercase px-4 items-center overflow-auto gap-3">
-                                <span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 20 20">
-                                        <path fill="currentColor" d="M10 2c4.42 0 8 3.58 8 8s-3.58 8-8 8s-8-3.58-8-8s3.58-8 8-8zm0 14c3.31 0 6-2.69 6-6s-2.69-6-6-6s-6 2.69-6 6s2.69 6 6 6zm-.71-5.29c.07.05.14.1.23.15l-.02.02L14 13l-3.03-3.19L10 5l-.97 4.81h.01c0 .02-.01.05-.02.09S9 9.97 9 10c0 .28.1.52.29.71z" />
-                                    </svg>
-                                </span>{{$conteni->nombre}}
+                                <div class="flex justify-center overflow-auto gap-2">
+                                    <span> <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 20 20">
+                                            <path fill="currentColor" d="M10 2c4.42 0 8 3.58 8 8s-3.58 8-8 8s-8-3.58-8-8s3.58-8 8-8zm0 14c3.31 0 6-2.69 6-6s-2.69-6-6-6s-6 2.69-6 6s2.69 6 6 6zm-.71-5.29c.07.05.14.1.23.15l-.02.02L14 13l-3.03-3.19L10 5l-.97 4.81h.01c0 .02-.01.05-.02.09S9 9.97 9 10c0 .28.1.52.29.71z" />
+                                        </svg>
+                                    </span>
+                                    <span class="text px-4 text-lg">{{$conteni->nombre}}</span>
+                                </div>
                                 <div class="flex overflow-auto gap-3 items-center">
                                     <a href="{{route('verContenido',[$conteni])}}" class="text-secondary">
-                                        <span>
+                                        <span class="text-green-500">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 16 16">
                                                 <path fill="currentColor" d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0a6.5 6.5 0 0 0-13 0Zm4.879-2.773l4.264 2.559a.25.25 0 0 1 0 .428l-4.264 2.559A.25.25 0 0 1 6 10.559V5.442a.25.25 0 0 1 .379-.215Z" />
                                             </svg>
@@ -256,61 +263,160 @@
                                 </div>
                             </div>
                         </div>
-                        @endforeach
-                    </div>
-                </div>
-                <br>
-                @endforeach
-            </div>
-
-            @if(count($curso->examen) > 0 )
-            <div id="accordion-color" data-accordion="collapse" data-active-classes="bg-blue-100 dark:bg-gray-800 text-blue-600 dark:text-white">
-                <h2 id="accordion-color-heading-0">
-                    <button type="button" class="flex items-center justify-between w-full p-3 font-medium text-left text-gray-500 border border-gray-400 rounded-t-xl focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-800 dark:border-gray-700 dark:text-gray-400 hover:bg-blue-100 dark:hover:bg-gray-800" data-accordion-target="#accordion-color-body-0" aria-expanded="false" aria-controls="accordion-color-body-0">
-                        <span class="px-7">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 2048 2048">
-                                <path fill="currentColor" d="m1344 998l147-147l90 90l-237 237l-173-173l90-90l83 83zm-832 538h512v128H512v-128zm512-896H512V512h512v128zm0 512H512v-128h512v128zm557-723l-237 237l-173-173l90-90l83 83l147-147l90 90zm-426 1491l128 128H256V0h1536v1283l-128 128V128H384v1792h771zm874-467l-557 558l-269-270l90-90l179 178l467-466l90 90z" />
-                            </svg>
-                        </span>
-                        <span class="text-subtitle text-lg italic">EXAMEN FINAL</span>
-                        <svg data-accordion-icon class="w-6 h-6 rotate-180 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-                        </svg>
-                    </button>
-                </h2>
-                <div id="accordion-color-body-0" class="hidden" aria-labelledby="accordion-color-heading-0">
-                    <div class="border border-b-0 border-gray-200 dark:border-gray-700 dark:bg-gray-900 col-lg-12 mb-6 mb-lg-0 position-relative">
-                        <br>
-                        <div class="flex justify-between px-4 items-center overflow-auto gap-3">
-                            <div class="p-6  border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                                <h5 class="mb-2 text-2xl font-bold tracking-tight text-center text-gray-900 dark:text-white">DESCRIPCIÓN DEL CURSO:</h5>
-                                <p>Este es el Examen final del curso: <span class="font-bold">{{$curso->nombre}}</span> este examen tiene un valor del <span class="font-bold">40%</span> de la calificación final del curso.</p>
-                            </div>
-                        </div><br>
-                        <h2 class="text-center font-bold text-nav-hover">Examen final del curso:</h2><br>
-                        <div class="border-top px-2 py-3 mx-4 min-height-70 d-md-flex align-items-center bg-gray-100 col-lg-11 mb-6 mb-lg-0">
+                        @elseif($user->pivot->calificacion < 80) <div class="border-top px-2 py-3 mx-4 min-height-70 d-md-flex align-items-center bg-blue-50 mb-2 col-lg-11 mb-lg-0">
                             <div class="flex justify-between uppercase px-4 items-center overflow-auto gap-3">
+                                <div class="flex justify-center overflow-auto gap-2">
+                                    <span> <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 20 20">
+                                            <path fill="currentColor" d="M10 2c4.42 0 8 3.58 8 8s-3.58 8-8 8s-8-3.58-8-8s3.58-8 8-8zm0 14c3.31 0 6-2.69 6-6s-2.69-6-6-6s-6 2.69-6 6s2.69 6 6 6zm-.71-5.29c.07.05.14.1.23.15l-.02.02L14 13l-3.03-3.19L10 5l-.97 4.81h.01c0 .02-.01.05-.02.09S9 9.97 9 10c0 .28.1.52.29.71z" />
+                                        </svg>
+                                    </span>
+                                    <span class="text px-4 text-lg">{{$conteni->nombre}}</span>
+                                </div>
+                                <div class="flex overflow-auto gap-3 items-center">
+                                    <a href="{{route('verContenido',[$conteni])}}" class="text-secondary">
+                                        <span class="text-red-500">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 16 16">
+                                                <path fill="currentColor" d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0a6.5 6.5 0 0 0-13 0Zm4.879-2.773l4.264 2.559a.25.25 0 0 1 0 .428l-4.264 2.559A.25.25 0 0 1 6 10.559V5.442a.25.25 0 0 1 .379-.215Z" />
+                                            </svg>
+                                        </span>
+                                    </a>
+                                </div>
+                            </div>
+                    </div>
+                    @endif
+                    @endif
+                    @endforeach
+                    @else
+                    <div class="border-top px-2 py-3 mx-4 min-height-70 d-md-flex align-items-center bg-blue-50 col-lg-11 mb-2 mb-lg-0">
+                        <div class="flex justify-between uppercase px-4 items-center overflow-auto gap-3">
+                            <div class="flex justify-center overflow-auto gap-2">
+                                <span> <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 20 20">
+                                        <path fill="currentColor" d="M10 2c4.42 0 8 3.58 8 8s-3.58 8-8 8s-8-3.58-8-8s3.58-8 8-8zm0 14c3.31 0 6-2.69 6-6s-2.69-6-6-6s-6 2.69-6 6s2.69 6 6 6zm-.71-5.29c.07.05.14.1.23.15l-.02.02L14 13l-3.03-3.19L10 5l-.97 4.81h.01c0 .02-.01.05-.02.09S9 9.97 9 10c0 .28.1.52.29.71z" />
+                                    </svg>
+                                </span>
+                                <span class="text px-4 text-lg">{{$conteni->nombre}}</span>
+                            </div>
+                            <div class="flex overflow-auto gap-3 items-center">
+                                <a href="{{route('verContenido',[$conteni])}}" class="text-secondary">
+                                    <span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 16 16">
+                                            <path fill="currentColor" d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0a6.5 6.5 0 0 0-13 0Zm4.879-2.773l4.264 2.559a.25.25 0 0 1 0 .428l-4.264 2.559A.25.25 0 0 1 6 10.559V5.442a.25.25 0 0 1 .379-.215Z" />
+                                        </svg>
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    @endif
+                    @endforeach
+                    @endforeach
+                </div>
+            </div>
+            <br>
+            @endforeach
+        </div>
+
+        @if(count($curso->examen) > 0 )
+        <div id="accordion-color" data-accordion="collapse" data-active-classes="bg-blue-100 dark:bg-gray-800 text-blue-600 dark:text-white">
+            <h2 id="accordion-color-heading-0">
+                <button type="button" class="flex items-center justify-between w-full p-3 font-medium text-left text-gray-500 border border-gray-400 rounded-t-xl focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-800 dark:border-gray-700 dark:text-gray-400 hover:bg-blue-100 dark:hover:bg-gray-800" data-accordion-target="#accordion-color-body-0" aria-expanded="false" aria-controls="accordion-color-body-0">
+                    <span class="px-7">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 2048 2048">
+                            <path fill="currentColor" d="m1344 998l147-147l90 90l-237 237l-173-173l90-90l83 83zm-832 538h512v128H512v-128zm512-896H512V512h512v128zm0 512H512v-128h512v128zm557-723l-237 237l-173-173l90-90l83 83l147-147l90 90zm-426 1491l128 128H256V0h1536v1283l-128 128V128H384v1792h771zm874-467l-557 558l-269-270l90-90l179 178l467-466l90 90z" />
+                        </svg>
+                    </span>
+                    <span class="text-subtitle text-lg italic">EXAMEN FINAL</span>
+                    <svg data-accordion-icon class="w-6 h-6 rotate-180 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                    </svg>
+                </button>
+            </h2>
+            <div id="accordion-color-body-0" class="hidden" aria-labelledby="accordion-color-heading-0">
+                <div class="border border-b-0 border-gray-200 dark:border-gray-700 dark:bg-gray-900 col-lg-12 mb-6 mb-lg-0 position-relative">
+                    <br>
+                    <div class="flex justify-between px-4 items-center overflow-auto gap-3">
+                        <div class="p-6  border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                            <h5 class="mb-2 text-2xl font-bold tracking-tight text-center text-gray-900 dark:text-white">DESCRIPCIÓN DEL CURSO:</h5>
+                            <p>Este es el Examen final del curso: <span class="font-bold">{{$curso->nombre}}</span> este examen tiene un valor del <span class="font-bold">40%</span> de la calificación final del curso.</p>
+                        </div>
+                    </div><br>
+                    <h2 class="text-center font-bold text-nav-hover">Examen final del curso:</h2><br>
+                    @if($curso->examen[0]->usuarios()->where('usuario_id',Auth::User()->id_usuario)->exists())
+                    @foreach($curso->examen[0]->usuarios as $user)
+                    @if($user->id_usuario == Auth::User()->id_usuario)
+                    @if($user->pivot->calificacion >= 80)
+                    <div class="border-top px-2 py-3 mx-4 min-height-70 d-md-flex align-items-center bg-blue-50 col-lg-11 mb-6 mb-lg-0">
+                        <div class="flex justify-between uppercase px-4 items-center overflow-auto gap-3">
+                            <div class="flex justify-center overflow-auto gap-2">
                                 <span>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 20 20">
                                         <path fill="currentColor" d="M10 2c4.42 0 8 3.58 8 8s-3.58 8-8 8s-8-3.58-8-8s3.58-8 8-8zm0 14c3.31 0 6-2.69 6-6s-2.69-6-6-6s-6 2.69-6 6s2.69 6 6 6zm-.71-5.29c.07.05.14.1.23.15l-.02.02L14 13l-3.03-3.19L10 5l-.97 4.81h.01c0 .02-.01.05-.02.09S9 9.97 9 10c0 .28.1.52.29.71z" />
                                     </svg>
-                                </span>{{$curso->examen[0]->nombre}}
-                                <div class="flex overflow-auto gap-3 items-center">
-                                    <a href="{{route('verExamenempleado',$curso->examen[0]->id_examen)}}" class="text-secondary">
-                                        <!-- Icon -->
-                                        <span>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 16 16">
-                                                <path fill="currentColor" d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0a6.5 6.5 0 0 0-13 0Zm4.879-2.773l4.264 2.559a.25.25 0 0 1 0 .428l-4.264 2.559A.25.25 0 0 1 6 10.559V5.442a.25.25 0 0 1 .379-.215Z" />
-                                            </svg>
-                                        </span>
-                                    </a>
-                                </div>
+                                </span>
+                                <span class="text px-4 text-lg">{{$curso->examen[0]->nombre}}</span>
+                            </div>
+                            <div class="flex overflow-auto gap-3 items-center">
+                                <a href="{{route('verExamenempleado',$curso->examen[0]->id_examen)}}" class="text-secondary">
+                                    <span class="text-green-500">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 16 16">
+                                            <path fill="currentColor" d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0a6.5 6.5 0 0 0-13 0Zm4.879-2.773l4.264 2.559a.25.25 0 0 1 0 .428l-4.264 2.559A.25.25 0 0 1 6 10.559V5.442a.25.25 0 0 1 .379-.215Z" />
+                                        </svg>
+                                    </span>
+                                </a>
                             </div>
                         </div>
                     </div>
+                    @elseif($user->pivot->calificacion < 80) <div class="border-top px-2 py-3 mx-4 min-height-70 d-md-flex align-items-center bg-blue-50 col-lg-11 mb-6 mb-lg-0">
+                        <div class="flex justify-between uppercase px-4 items-center overflow-auto gap-3">
+                            <div class="flex justify-center overflow-auto gap-2">
+                                <span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 20 20">
+                                        <path fill="currentColor" d="M10 2c4.42 0 8 3.58 8 8s-3.58 8-8 8s-8-3.58-8-8s3.58-8 8-8zm0 14c3.31 0 6-2.69 6-6s-2.69-6-6-6s-6 2.69-6 6s2.69 6 6 6zm-.71-5.29c.07.05.14.1.23.15l-.02.02L14 13l-3.03-3.19L10 5l-.97 4.81h.01c0 .02-.01.05-.02.09S9 9.97 9 10c0 .28.1.52.29.71z" />
+                                    </svg>
+                                </span>
+                                <span class="text px-4 text-lg">{{$curso->examen[0]->nombre}}</span>
+                            </div>
+                            <div class="flex overflow-auto gap-3 items-center">
+                                <a href="{{route('verExamenempleado',$curso->examen[0]->id_examen)}}" class="text-secondary">
+                                    <span class="text-red-500">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 16 16">
+                                            <path fill="currentColor" d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0a6.5 6.5 0 0 0-13 0Zm4.879-2.773l4.264 2.559a.25.25 0 0 1 0 .428l-4.264 2.559A.25.25 0 0 1 6 10.559V5.442a.25.25 0 0 1 .379-.215Z" />
+                                        </svg>
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
                 </div>
+                @endif
+                @endif
+                @endforeach
+                @else
+                <div class="border-top px-2 py-3 mx-4 min-height-70 d-md-flex align-items-center bg-gray-100 col-lg-11 mb-6 mb-lg-0">
+                    <div class="flex justify-between uppercase px-4 items-center overflow-auto gap-3">
+                        <div class="flex justify-center overflow-auto gap-2">
+                                <span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 20 20">
+                                        <path fill="currentColor" d="M10 2c4.42 0 8 3.58 8 8s-3.58 8-8 8s-8-3.58-8-8s3.58-8 8-8zm0 14c3.31 0 6-2.69 6-6s-2.69-6-6-6s-6 2.69-6 6s2.69 6 6 6zm-.71-5.29c.07.05.14.1.23.15l-.02.02L14 13l-3.03-3.19L10 5l-.97 4.81h.01c0 .02-.01.05-.02.09S9 9.97 9 10c0 .28.1.52.29.71z" />
+                                    </svg>
+                                </span>
+                                <span class="text px-4 text-lg">{{$curso->examen[0]->nombre}}</span>
+                            </div>
+                        <div class="flex overflow-auto gap-3 items-center">
+                            <a href="{{route('verExamenempleado',$curso->examen[0]->id_examen)}}" class="text-secondary">
+                                <span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 16 16">
+                                        <path fill="currentColor" d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0a6.5 6.5 0 0 0-13 0Zm4.879-2.773l4.264 2.559a.25.25 0 0 1 0 .428l-4.264 2.559A.25.25 0 0 1 6 10.559V5.442a.25.25 0 0 1 .379-.215Z" />
+                                    </svg>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                @endif
             </div>
-            @endif
         </div>
+    </div>
+    @endif
+    </div>
     </div>
 </x-appEmpleado>

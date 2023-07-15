@@ -53,25 +53,29 @@ class ReporteCursoInternoController extends Controller
                                     foreach ($leccion->contenido as $contenido) {
                                         $examen = $contenido->examen()->first(); // Retrieve the first exam
                                         $examCurso = $cursoS->examen()->first();
-                                        foreach ($examen->usuarios as $calificacionnn) {
-                                            if ($calificacionnn->pivot->usuario_id == $usuario->id_usuario) {
-                                                $calificacion = $calificacionnn->pivot->calificacion ?? 0; // Get the "calificacion" property
-                                                $calificacionLeccion += $calificacion;
-                                            }
-                                            if ($examen->usuarios()->where('examen_id', $contenido->examen()->first()->id_examen)->exists() and $examen->usuarios()->where('usuario_id',  $usuario->id_usuario)->exists()) {
-                                                if ($calificacionnn->pivot->usuario_id ==  $usuario->id_usuario) {
-                                                    $progresoLeccion++;
+                                        if (count($examen->usuarios  ?? []) > 0) {
+                                            foreach ($examen->usuarios as $calificacionnn) {
+                                                if ($calificacionnn->pivot->usuario_id == $usuario->id_usuario) {
+                                                    $calificacion = $calificacionnn->pivot->calificacion ?? 0; // Get the "calificacion" property
+                                                    $calificacionLeccion += $calificacion;
+                                                }
+                                                if ($examen->usuarios()->where('examen_id', $contenido->examen()->first()->id_examen)->exists() and $examen->usuarios()->where('usuario_id',  $usuario->id_usuario)->exists()) {
+                                                    if ($calificacionnn->pivot->usuario_id ==  $usuario->id_usuario) {
+                                                        $progresoLeccion++;
+                                                    }
                                                 }
                                             }
                                         }
-                                        foreach ($examCurso->usuarios as $caliCu) {
-                                            if ($caliCu->pivot->usuario_id == $usuario->id_usuario) {
-                                                $calificacion2 = $caliCu->pivot->calificacion ?? 0; // Get the "calificacion" property
-                                                $calificacionLeccion2 = $calificacion2;
-                                            }
-                                            if ($examCurso->usuarios()->where('examen_id', $cursoS->examen()->first()->id_examen)->exists() and $examen->usuarios()->where('usuario_id', $usuario->id_usuario)->exists()) {
+                                        if (count($examCurso->usuarios ?? []) > 0) {
+                                            foreach ($examCurso->usuarios as $caliCu) {
                                                 if ($caliCu->pivot->usuario_id == $usuario->id_usuario) {
-                                                    $progresoLeccion2 = 20;
+                                                    $calificacion2 = $caliCu->pivot->calificacion ?? 0; // Get the "calificacion" property
+                                                    $calificacionLeccion2 = $calificacion2;
+                                                }
+                                                if ($examCurso->usuarios()->where('examen_id', $cursoS->examen()->first()->id_examen)->exists() and $examen->usuarios()->where('usuario_id', $usuario->id_usuario)->exists()) {
+                                                    if ($caliCu->pivot->usuario_id == $usuario->id_usuario) {
+                                                        $progresoLeccion2 = 20;
+                                                    }
                                                 }
                                             }
                                         }
@@ -150,25 +154,29 @@ class ReporteCursoInternoController extends Controller
                             foreach ($leccion->contenido as $contenido) {
                                 $examen = $contenido->examen()->first(); // Retrieve the first exam
                                 $examCurso = $cursoS->examen()->first();
-                                foreach ($examen->usuarios as $calificacionnn) {
-                                    if ($calificacionnn->pivot->usuario_id == $usuario->id_usuario) {
-                                        $calificacion = $calificacionnn->pivot->calificacion ?? 0; // Get the "calificacion" property
-                                        $calificacionLeccion += $calificacion;
-                                    }
-                                    if ($examen->usuarios()->where('examen_id', $contenido->examen()->first()->id_examen)->exists() and $examen->usuarios()->where('usuario_id',  $usuario->id_usuario)->exists()) {
-                                        if ($calificacionnn->pivot->usuario_id ==  $usuario->id_usuario) {
-                                            $progresoLeccion++;
+                                if (count($examen->usuarios  ?? []) > 0) {
+                                    foreach ($examen->usuarios as $calificacionnn) {
+                                        if ($calificacionnn->pivot->usuario_id == $usuario->id_usuario) {
+                                            $calificacion = $calificacionnn->pivot->calificacion ?? 0; // Get the "calificacion" property
+                                            $calificacionLeccion += $calificacion;
+                                        }
+                                        if ($examen->usuarios()->where('examen_id', $contenido->examen()->first()->id_examen)->exists() and $examen->usuarios()->where('usuario_id',  $usuario->id_usuario)->exists()) {
+                                            if ($calificacionnn->pivot->usuario_id ==  $usuario->id_usuario) {
+                                                $progresoLeccion++;
+                                            }
                                         }
                                     }
                                 }
-                                foreach ($examCurso->usuarios as $caliCu) {
-                                    if ($caliCu->pivot->usuario_id == $usuario->id_usuario) {
-                                        $calificacion2 = $caliCu->pivot->calificacion ?? 0; // Get the "calificacion" property
-                                        $calificacionLeccion2 = $calificacion2;
-                                    }
-                                    if ($examCurso->usuarios()->where('examen_id', $cursoS->examen()->first()->id_examen)->exists() and $examen->usuarios()->where('usuario_id', $usuario->id_usuario)->exists()) {
+                                if (count($examCurso->usuarios ?? []) > 0) {
+                                    foreach ($examCurso->usuarios as $caliCu) {
                                         if ($caliCu->pivot->usuario_id == $usuario->id_usuario) {
-                                            $progresoLeccion2 = 20;
+                                            $calificacion2 = $caliCu->pivot->calificacion ?? 0; // Get the "calificacion" property
+                                            $calificacionLeccion2 = $calificacion2;
+                                        }
+                                        if ($examCurso->usuarios()->where('examen_id', $cursoS->examen()->first()->id_examen)->exists() and $examen->usuarios()->where('usuario_id', $usuario->id_usuario)->exists()) {
+                                            if ($caliCu->pivot->usuario_id == $usuario->id_usuario) {
+                                                $progresoLeccion2 = 20;
+                                            }
                                         }
                                     }
                                 }
@@ -241,25 +249,30 @@ class ReporteCursoInternoController extends Controller
                         foreach ($leccion->contenido as $contenido) {
                             $examen = $contenido->examen()->first(); // Retrieve the first exam
                             $examCurso = $cursoUser->examen()->first();
-                            foreach ($examen->usuarios as $calificacionnn) {
-                                if ($calificacionnn->pivot->usuario_id == $usuario->id_usuario) {
-                                    $calificacion = $calificacionnn->pivot->calificacion ?? 0; // Get the "calificacion" property
-                                    $calificacionLeccion += $calificacion;
-                                }
-                                if ($examen->usuarios()->where('examen_id', $contenido->examen()->first()->id_examen)->exists() and $examen->usuarios()->where('usuario_id',  $usuario->id_usuario)->exists()) {
-                                    if ($calificacionnn->pivot->usuario_id ==  $usuario->id_usuario) {
-                                        $progresoLeccion++;
+
+                            if (count($examen->usuarios  ?? []) > 0) {
+                                foreach ($examen->usuarios as $calificacionnn) {
+                                    if ($calificacionnn->pivot->usuario_id == $usuario->id_usuario) {
+                                        $calificacion = $calificacionnn->pivot->calificacion ?? 0; // Get the "calificacion" property
+                                        $calificacionLeccion += $calificacion;
+                                    }
+                                    if ($examen->usuarios()->where('examen_id', $contenido->examen()->first()->id_examen)->exists() and $examen->usuarios()->where('usuario_id',  $usuario->id_usuario)->exists()) {
+                                        if ($calificacionnn->pivot->usuario_id ==  $usuario->id_usuario) {
+                                            $progresoLeccion++;
+                                        }
                                     }
                                 }
                             }
-                            foreach ($examCurso->usuarios as $caliCu) {
-                                if ($caliCu->pivot->usuario_id == $usuario->id_usuario) {
-                                    $calificacion2 = $caliCu->pivot->calificacion ?? 0; // Get the "calificacion" property
-                                    $calificacionLeccion2 = $calificacion2;
-                                }
-                                if ($examCurso->usuarios()->where('examen_id', $cursoUser->examen()->first()->id_examen)->exists() and $examen->usuarios()->where('usuario_id', $usuario->id_usuario)->exists()) {
+                            if (count($examCurso->usuarios ?? []) > 0) {
+                                foreach ($examCurso->usuarios as $caliCu) {
                                     if ($caliCu->pivot->usuario_id == $usuario->id_usuario) {
-                                        $progresoLeccion2 = 20;
+                                        $calificacion2 = $caliCu->pivot->calificacion ?? 0; // Get the "calificacion" property
+                                        $calificacionLeccion2 = $calificacion2;
+                                    }
+                                    if ($examCurso->usuarios()->where('examen_id', $cursoUser->examen()->first()->id_examen)->exists() and $examen->usuarios()->where('usuario_id', $usuario->id_usuario)->exists()) {
+                                        if ($caliCu->pivot->usuario_id == $usuario->id_usuario) {
+                                            $progresoLeccion2 = 20;
+                                        }
                                     }
                                 }
                             }
