@@ -54,6 +54,7 @@
                         </button>
                         @endif
                         @elseif($examm->pivot->numero_intento >= 3)
+                        @if($examen->contenido_id)
                         <a href="{{route('verContenido',$examen->contenido_id)}}" class="block text-center w-full max-w-xs mx-auto bg-input hover:bg-input-buscador focus:bg-input-buscador text-white rounded-lg px-3 py-3 font-bold">Regresar al Curso</a> <br>
                         <div class="min-w-screen h-full min-h-screen   px-5 py-5 flex justify-center shadow-all">
                             <div class="h-4/5 w-1/2 py-10 px-5  bg-gray-100 md:px-10">
@@ -63,6 +64,17 @@
                                 </div><br>
                             </div>
                         </div>
+                        @else
+                        <a href="{{url('cursosEmpleados',$examen->curso_id)}}" class="block text-center w-full max-w-xs mx-auto bg-input hover:bg-input-buscador focus:bg-input-buscador text-white rounded-lg px-3 py-3 font-bold">Regresar al Curso</a> <br>
+                        <div class="min-w-screen h-full min-h-screen   px-5 py-5 flex justify-center shadow-all">
+                            <div class="h-4/5 w-1/2 py-10 px-5  bg-gray-100 md:px-10">
+                                <div class="text-center mb-10">
+                                    <h1 class="font-bold text-3xl text-title text-gray-900">TU CALIFICACIÓN OBTENIDA ES DE: </h1><br>
+                                    <p class="mb-2 text-title font-bold tracking-tight text-gray-900 dark:text-white">{{$examm->pivot->calificacion}} %</p>
+                                </div><br>
+                            </div>
+                        </div>
+                        @endif
                         @endif
                         @endif
                         @endforeach
