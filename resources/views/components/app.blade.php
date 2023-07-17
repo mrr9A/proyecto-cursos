@@ -15,6 +15,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script src="{{ asset('js/constants.js') }}"></script>
     <script src="{{ asset('js/config/api.js') }}"></script>
+    <script src="{{ asset('js/utils/correcionModal.js') }}"></script>
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     @livewireStyles
 
@@ -31,12 +32,13 @@
         <div class="flex flex-grow overflow-x-auto">
             <main class="min-h-full h-full m-auto px-4 relative  overflow-x-auto min-w-[100%] z-20">
                 <div class="flex items-center justify-between border-b-[1px] border-nav mb-5 h-[50px]">
-                    @if(is_null(($class ?? null)))
-                    <h1 class="uppercase font-bold text-title ">{{ $title ?? 'INICIO' }}</h1>
+                    @if (is_null($class ?? null))
+                        <h1 class="uppercase font-bold text-title ">{{ $title ?? 'INICIO' }}</h1>
                     @else
-                    <h1 class="{{$class ?? ''}} uppercase font-bold ">{{ $title ?? 'INICIO' }}</h1>
+                        <h1 class="{{ $class ?? '' }} uppercase font-bold ">{{ $title ?? 'INICIO' }}</h1>
                     @endif
-                    <div class="flex gap-2 items-center cursor-pointer" id="dropdownInformationButton" data-dropdown-toggle="dropdownInformation">
+                    <div class="flex gap-2 items-center cursor-pointer" id="dropdownInformationButton"
+                        data-dropdown-toggle="dropdownInformation">
                         <x-navs.menu-profile />
                     </div>
                 </div>
@@ -50,6 +52,9 @@
         <!-- slot es una variable definida que indica donde se vacolocar el html dinamico -->
     </div>
     @livewireScripts
+
 </body>
+
+
 
 </html>

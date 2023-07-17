@@ -99,6 +99,7 @@
 @endif
 
 <script>
+    correccionModal()
     const forms = document.querySelectorAll(".formulario-eliminar")
 
     forms.forEach(form => {

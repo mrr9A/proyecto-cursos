@@ -81,7 +81,7 @@
 
                             <!-- Enlace a la siguiente página -->
                             @if ($cursos->hasMorePages())
-                                <a href="{{ $cursos->nextPageUrl() }}" aria-label="@lang('pagination.next')"
+                                <a href="{{ $cursos->nextPageUrl() }}" aria-label="@lang('pagination.next')" 
                                     class="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
                                     <span class="sr-only">Next</span>
                                     <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
