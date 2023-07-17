@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class SavePlanFormacionRequest extends FormRequest
 {
@@ -21,13 +23,19 @@ class SavePlanFormacionRequest extends FormRequest
      */
     public function rules(): array
     {
-        if($this->isMethod('PATCH')){
+        if ($this->isMethod('PATCH')) {
             // retornamos diferentes validaciones
         }
         return [
             //
-            'trabajo_id' => 'required | numeric',
+            'trabajos' => 'required | array',
             'cursos' => 'required | array',
         ];
+    }
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(
+            redirect()->back()->with('error', 'trabajos y cursos son obligatorios')
+        );
     }
 }

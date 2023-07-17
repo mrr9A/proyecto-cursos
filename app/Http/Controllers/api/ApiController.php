@@ -4,13 +4,15 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Curso;
+use App\Models\Trabajo;
 use App\Models\User;
 use Illuminate\Http\Request;
 
 class ApiController extends Controller
 {
     //
-    public function buscar(Request $request){
+    public function buscar(Request $request)
+    {
 
         // $resultados = DB::table('cursos as c')
         // ->select("c.nombre as nombre")
@@ -26,10 +28,20 @@ class ApiController extends Controller
         return response()->json($resultados);
     }
 
-    public function searchCursos(Request $request){
+    public function searchCursos(Request $request)
+    {
         $buscar = $request->buscador;
-        $data = Curso::getAllCursos($buscar);
+        $data = Curso::getAllCursos($buscar, false);
 
         return response()->json($data, 200);
+    }
+
+    public function searchTrabajos(Request $request)
+    {
+        $keyword = $request->buscador; // Obtener la palabra clave del formulario de búsqueda
+
+        $trabajos = Trabajo::where('nombre', 'like', '%' . $keyword . '%')->get();
+
+        return response()->json($trabajos);
     }
 }

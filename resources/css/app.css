@@ -24,13 +24,13 @@
 }
 
 ::-webkit-scrollbar-track {
-    border-radius: 100vh;
+    /* border-radius: 100vh; */
     background: #f7f4ed;
 }
 
 ::-webkit-scrollbar-thumb {
     background: #eaeaea;
-    border-radius: 100vh;
+    /* border-radius: 100vh; */
     border: 3px solid #f6f7ed;
 }
 

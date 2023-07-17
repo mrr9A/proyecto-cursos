@@ -59,6 +59,7 @@ Route::get('cursosplanta/puesto/{id}', function ($id) {
     return response()->json($puesto);
 });
 Route::get('cursosplanta/cursos', [ApiController::class, 'searchCursos']);
+Route::get('cursosplanta/trabajos', [ApiController::class, 'searchTrabajos']);
 
 // editar la informacion de puesto
 Route::put('cursosplanta/puesto/edit/{id}', [PuestoController::class, 'update']);

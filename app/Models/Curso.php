@@ -32,7 +32,7 @@ class Curso extends Model
     }
     public function usuarioCurso()
     {
-        return $this->belongsToMany(User::class, "usuarios_cursos", 'curso_id', 'usuario_id')->withPivot('fecha_inicio','fecha_termino');
+        return $this->belongsToMany(User::class, "usuarios_cursos", 'curso_id', 'usuario_id')->withPivot('fecha_inicio', 'fecha_termino');
     }
 
     public function puestos()
@@ -66,7 +66,7 @@ class Curso extends Model
         return $this->hasMany(Examen::class, 'curso_id');
     }
 
-    public static function getAllCursos($buscar = "")
+    public static function getAllCursos($buscar = "", $pagination = true)
     {
         $cursos = DB::table('cursos as c')
             ->select(
@@ -88,7 +88,13 @@ class Curso extends Model
                     ->orWhere('c.nombre', 'like', $buscar . "%");
             })
             ->where("c.estado", '=', 1)
-            ->get();
+            ->orderBy('id_curso', 'asc');
+
+        if ($pagination) {
+            $cursos = $cursos->paginate(10)->appends(request()->query());
+        } else {
+            $cursos = $cursos->get();
+        }
 
         return $cursos;
     }
@@ -232,5 +238,4 @@ class Curso extends Model
 
         return $cursosSSS;
     }
-
 }

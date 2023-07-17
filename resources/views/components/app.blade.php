@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="relative">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -41,8 +41,9 @@
                     </div>
                 </div>
 
-
-                <x-messages.status-messages />
+                <div id="alerts">
+                    <x-messages.status-messages />
+                </div>
                 {{ $slot }}
             </main>
         </div>

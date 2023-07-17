@@ -8,7 +8,7 @@
         </div>
         <div class="my-5">
             <table class="min-w-full">
-                <thead class="border-b uppercase bg-blue-200 text-left">
+                <thead class="border-b uppercase bg-th-table text-th-table-text text-left">
                     <tr>
                         <th class="px-6 py-2">Codigo</th>
                         <th class="px-6 py-2">Sucursal</th>

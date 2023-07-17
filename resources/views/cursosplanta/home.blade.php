@@ -125,7 +125,7 @@
                 <table class="min-w-full leading-normal my-2">
                     <thead class="border-b  dark:border-neutral-500 uppercase">
                         <tr
-                            class="px-5 border-b-2 border-gray-200 bg-blue-200 text-left text-base font-semibold text-gray-600 uppercase tracking-wider">
+                            class="px-5 border-b-2 border-gray-200 bg-th-table text-th-table-text text-left text-base font-semibold  uppercase tracking-wider">
                             <th scope="col" class="px-6 py-2 w-1/12">ID SGP</th>
                             <th scope="col" class="px-6 py-2">ID SUMTOTAL</th>
                             <th scope="col" class="px-6 py-2">empleado</th>
@@ -153,7 +153,7 @@
                                 <td class="py-3 px-6 text-left">
                                     <div class="w-full flex justify-end mt-2">
                                         <a target="_blank" href="{{ route('descargarPDF', $usuario->id_usuario) }}"
-                                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-xs px-3 py-1.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Ver
+                                            class="text-white bg-btn-primary hover:bg-btn-primary-light focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-xs px-3 py-1.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Ver
                                             reporte</a>
                                     </div>
                                 </td>

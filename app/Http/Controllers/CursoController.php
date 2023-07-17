@@ -6,6 +6,7 @@ use App\Models\Curso;
 use App\Models\Puesto;
 use App\Models\ModalidadCurso;
 use App\Models\TipoCurso;
+use App\Models\Trabajo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -26,8 +27,10 @@ class CursoController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->all());
-        $datosCursos = $request->except(['_token', '_method']);
+        $datosCursos = $request->cursos;
+        $trabajos = $request->trabajos;
+
+        // return $datosCursos;
         DB::beginTransaction();
 
         try {
@@ -35,7 +38,7 @@ class CursoController extends Controller
             $cursos = [];
             foreach ($datosCursos as $cursoId => $cursoDatos) {
                 $validator = Validator::make($cursoDatos, [
-                    'nombre' => 'required|string',
+                    'nombre' => 'required|string|unique:cursos',
                     'modalidad_id' => 'required|numeric',
                     'tipo_id' => 'required|numeric',
                 ]);
@@ -52,10 +55,26 @@ class CursoController extends Controller
                     'tipo_curso_id' => $cursoDatos['tipo_id'],
                     'estado' => 1,
                 ];
-                $cursos[] = $curso;
+                $cursoId = DB::table('cursos')->insertGetId($curso);
+                $cursos[] = $cursoId;
             }
-            // Insertar los cursos en la tabla cursos
-            DB::table('cursos')->insert($cursos);
+            // Insertar los cursos en la tabla cursos y obtener los IDs de los cursos insertados
+
+            // Crear un arreglo con los IDs de los cursos y los IDs de los puestos
+            $trabajosCursos = [];
+            if (!is_null($trabajos)) {
+                foreach ($trabajos as $trabajoId) {
+                    foreach ($cursos as $cursoId) {
+                        $trabajosCursos[] = [
+                            'trabajo_id' => $trabajoId,
+                            'curso_id' => $cursoId,
+                        ];
+                    }
+                }
+            }
+
+            // Insertar los datos en la tabla puestos_cursos
+            DB::table('trabajos_cursos')->insertOrIgnore($trabajosCursos);
 
             // Confirmar la transacción
             DB::commit();
@@ -76,17 +95,19 @@ class CursoController extends Controller
     {
         $modalidades = ModalidadCurso::all();
         $tipos = TipoCurso::all();
-        return view('cursosplanta.cursos.create', compact('modalidades', 'tipos'));
+        $trabajos = Trabajo::where('estado', '=', 1)->get();
+        return view('cursosplanta.cursos.create', compact('modalidades', 'tipos', 'trabajos'));
     }
 
-    public function update(Request $request, $id){
-
+    public function update(Request $request, $id)
+    {
     }
-    public function destroy($id){
+    public function destroy($id)
+    {
 
-        $coincidencia = DB::table('trabajos_cursos')->where('curso_id', '=',$id)->exists();
+        $coincidencia = DB::table('trabajos_cursos')->where('curso_id', '=', $id)->exists();
 
-        if($coincidencia){
+        if ($coincidencia) {
             return redirect()->back()->with('error', 'El curso ya esta enlazado a un trabajos. No se puede eliminar');
         }
 
