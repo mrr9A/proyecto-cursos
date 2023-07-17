@@ -31,7 +31,6 @@ class ReporteCursoInternoController extends Controller
             $data = $usuarios = $cursoS->usersSSS;
             // ---------------------------------------------------------------------------------------------
             $calificacionesCursos = [];
-
             foreach ($cursoS->usersSSS as $usuario) {
                 $sucursalUser = "";
                 foreach ($usuario->sucursales as $sucursal) {

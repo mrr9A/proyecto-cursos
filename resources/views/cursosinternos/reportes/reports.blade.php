@@ -27,6 +27,7 @@
                 <x-input-submit text="Filtrar" class="max-h-[40px]" />
             </div>
         </form>
+
     </div>
     @if(count($calificacionesCursos) > 0)
 
