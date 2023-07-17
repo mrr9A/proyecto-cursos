@@ -20,7 +20,7 @@ class ReporteController extends Controller
         $sucursales = Sucursal::all();
         $puestos = Puesto::all();
         $trabajos = Trabajo::all();
-        $cursos = Curso::getAllCursos();
+        $cursos = Curso::getAllCursos('', $pagination = false);
     
         
         $sucursal_id = $request->filtros['sucursal_id'] ?? 0;
