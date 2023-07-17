@@ -30,6 +30,7 @@ class CursoController extends Controller
         $datosCursos = $request->cursos;
         $trabajos = $request->trabajos;
 
+        // return $datosCursos;
         DB::beginTransaction();
 
         try {
