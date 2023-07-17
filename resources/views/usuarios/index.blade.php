@@ -112,21 +112,20 @@
                             </a>
                         @endif
 
-                        {{-- paginas --}}
-                        @if ($usuarios->currentPage() != 1)
-                            <a href="{{ $usuarios->url(1) }}"
-                                class="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">1</a>
-                        @endif
-
-
+                        {{-- Páginas --}}
                         @foreach ($usuarios->getUrlRange(max(1, $usuarios->currentPage() - 2), min($usuarios->lastPage(), $usuarios->currentPage() + 2)) as $page => $url)
-                            <a href="{{ $url }}"
-                                class="{{ $usuarios->currentPage() === $page ? 'relative z-10 inline-flex items-center bg-indigo-600 px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600' : 'relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0' }}">{{ $page }}</a>
+                            {{-- Mostrar solo la página más cercana al margen --}}
+                            @if ($page == 1 || $page == $usuarios->lastPage() || abs($page - $usuarios->currentPage()) <= 2)
+                                <a href="{{ $url }}"
+                                    class="{{ $usuarios->currentPage() === $page ? 'relative z-10 inline-flex items-center bg-indigo-600 px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600' : 'relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0' }}">{{ $page }}</a>
+                            @endif
                         @endforeach
 
+
                         @if ($usuarios->currentPage() != $usuarios->lastPage())
+                            {{-- Mostrar siempre la última página --}}
                             <a href="{{ $usuarios->url($usuarios->lastPage()) }}"
-                                class="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">{{ $usuarios->lastPage() }}</a>
+                                class="{{ $usuarios->currentPage() === $usuarios->lastPage() ? 'relative z-10 inline-flex items-center bg-indigo-600 px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600' : 'relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0' }}">{{ $cursos->lastPage() }}</a>
                         @endif
 
                         <!-- Enlace a la siguiente página -->
