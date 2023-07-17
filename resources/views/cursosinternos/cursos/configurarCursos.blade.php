@@ -316,7 +316,7 @@
                                         @endif
                                     </li>
                                     <li>
-                                        <button data-modal-target="editar_curso_interno" data-modal-toggle="editar_curso_interno" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" type="button">
+                                        <button data-modal-target="editar_curso_interno" data-modal-toggle="editar_curso_interno" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white boton_modal" type="button">
                                             Editar Información del Curso
                                         </button>
                                     </li>
@@ -460,7 +460,7 @@
                     Usuarios inscritos al curso
                     <!-- OPCIONES -->
                     <div class="flex justify-end">
-                        <button data-modal-target="agregar_usuario_curso_interno" data-modal-toggle="agregar_usuario_curso_interno" class="flex items-center text-input font-semi-bold dark:text-gray-400 hover:bg-gray-300 dark:hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg p-1.5" type="button">
+                        <button data-modal-target="agregar_usuario_curso_interno" data-modal-toggle="agregar_usuario_curso_interno" class="flex items-center text-input font-semi-bold dark:text-gray-400 hover:bg-gray-300 dark:hover:bg-gray-700 focus:ring-4 focus:outline-none boton_modal focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg p-1.5" type="button">
                             <span class="justify-end">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24">
                                     <path fill="none" stroke="#01245a" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19c0-2.21-2.686-4-6-4s-6 1.79-6 4m16-3v-3m0 0v-3m0 3h-3m3 0h3M9 12a4 4 0 1 1 0-8a4 4 0 0 1 0 8Z" />
@@ -781,6 +781,7 @@
 </script>
 @endif
 <script>
+         correccionModal()
     const forms = document.querySelectorAll(".formulario-eliminar")
 
     forms.forEach(form => {
@@ -813,6 +814,7 @@
     })
 </script>
 <script>
+
     const forms1 = document.querySelectorAll(".formulario-eliminarCont")
 
     forms1.forEach(form => {
