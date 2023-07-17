@@ -22,7 +22,7 @@
             </div><br>
             @if(count($contenido->examen) > 0 )
             <div class="items-center text-center">
-                <a href="{{route('verExamen',$contenido)}}" class="button bg-blue-100 text-dark text-center capitalize py-2 px-2 rounded-lg tracking-widest font-bold  hover:bg-blue-200 w-96 cursor-pointer">
+                <a href="{{route('verExamen',$contenido)}}" class="button  text-white text-center capitalize py-2 px-2 rounded-lg tracking-widest font-bold  bg-btn-primary hover:bg-btn-primary-light  w-96 cursor-pointer">
                     Realizar examen
                 </a>
             </div>

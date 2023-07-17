@@ -2,7 +2,7 @@
     <div class="-mt-3.5">
         <div class="">
             <div class="flex flex-col gap-2 items-start justify-center">
-                <div class="flex items-center">
+                <div class="flex items-center gap-1">
                     <h2 class="text-subtitle font-semi-bold">Lista de cursos</h2>
                     <a href="{{ route('cursos.create') }}"
                         class=" rounded-md  focus:outline-none text-base  text-blue-600 hover:rounded-t-md underline font-bold hover:text-blue-800">
@@ -11,7 +11,8 @@
                 </div>
             </div>
             <div class="flex items-center justify-between  mb-3 -mt-3">
-                <a href="{{ route('planes.index') }}" target="_blanck"
+                <a href="{{ route('puestos.cursos') }}" target="_blanck"
+                {{-- <a href="{{ route('planes.index') }}" target="_blanck" --}}
                     class=" block text-base border-b-2 border-2 rounded-md  focus:outline-none font-medium px-5 py-1.5 text-center bg-btn-primary text-white hover:bg-btn-primary-light hover:text-gray-200">
                     Asignar cursos
                 </a>

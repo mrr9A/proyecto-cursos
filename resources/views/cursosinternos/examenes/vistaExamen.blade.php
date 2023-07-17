@@ -33,7 +33,7 @@
                     </div><br>
                     @endforeach
                     <div class="items-center text-center">
-                        <button id="btnTerminar" type="submit" class=" button uppercase bg-primary text-white text-dark text-center py-2 px-2 rounded-lg tracking-widest font-bold  hover:bg-input-buscador w-full cursor-pointer">
+                        <button id="btnTerminar" type="submit" class=" button uppercase bg-btn-primary hover:bg-btn-primary-light text-white text-dark text-center py-2 px-2 rounded-lg tracking-widest font-bold  hover:bg-input-buscador w-full cursor-pointer">
                             Terminar examen
                         </button>
                     </div>

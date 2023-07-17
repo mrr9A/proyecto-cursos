@@ -18,7 +18,7 @@
                     </div>
                     <div class="flex mx-3">
                         <div class="w-full px-3 mb-5">
-                            <button  class="block w-full max-w-xs mx-auto bg-input hover:bg-input-buscador focus:bg-input-buscador text-white rounded-lg px-3 py-3 font-bold">Volver a intentarlo</button>
+                            <button  class="block w-full max-w-xs mx-auto bg-btn-primary hover:bg-btn-primary-light focus:bg-input-buscador text-white rounded-lg px-3 py-3 font-bold">Volver a intentarlo</button>
                         </div>
                     </div>
                 </div>
