@@ -93,4 +93,5 @@
         })
         .catch(e => console.log(e))
     }
+    correccionModal()
 </script>

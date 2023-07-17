@@ -2,10 +2,10 @@
     <div>
         <div class="flex justify-between">
             <div class="mx-9">
-                <a type="button" class="text-white bg-nav hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700" href="{{route('crearCurso')}}">
+                <a type="button" class="text-white bg-btn-primary hover:bg-btn-primary-light focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700" href="{{route('crearCurso')}}">
                     <img src="./img/agregar-usuario.png" alt=""><span>Agregar curso</span>
                 </a>
-                <a type="button" class="text-white bg-nav hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700" href="{{ route('reportesinternos.index') }}">
+                <a type="button" class="text-white bg-btn-primary hover:bg-btn-primary-light focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700" href="{{ route('reportesinternos.index') }}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 512 512">
                         <path fill="currentColor" d="M453.547 273.449H372.12v-40.714h81.427v40.714zm0 23.264H372.12v40.714h81.427v-40.714zm0-191.934H372.12v40.713h81.427V104.78zm0 63.978H372.12v40.713h81.427v-40.713zm0 191.934H372.12v40.714h81.427V360.69zm56.242 80.264c-2.326 12.098-16.867 12.388-26.58 12.796H302.326v52.345h-36.119L0 459.566V52.492L267.778 5.904h34.548v46.355h174.66c9.83.407 20.648-.291 29.197 5.583c5.991 8.608 5.41 19.543 5.817 29.43l-.233 302.791c-.29 16.925 1.57 34.2-1.978 50.892zm-296.51-91.256c-16.052-32.57-32.395-64.909-48.39-97.48c15.82-31.698 31.408-63.512 46.937-95.327c-13.203.64-26.406 1.454-39.55 2.385c-9.83 23.904-21.288 47.169-28.965 71.888c-7.154-23.323-16.634-45.774-25.3-68.515c-12.796.698-25.592 1.454-38.387 2.21c13.493 29.78 27.86 59.15 40.946 89.104c-15.413 29.081-29.837 58.57-44.785 87.825c12.737.523 25.475 1.047 38.212 1.221c9.074-23.148 20.357-45.424 28.267-69.038c7.096 25.359 19.135 48.798 29.023 73.051c14.017.99 27.976 1.862 41.993 2.676zM484.26 79.882H302.326v24.897h46.53v40.713h-46.53v23.265h46.53v40.713h-46.53v23.265h46.53v40.714h-46.53v23.264h46.53v40.714h-46.53v23.264h46.53v40.714h-46.53v26.897H484.26V79.882z" />
                     </svg>
@@ -26,7 +26,7 @@
 
                     <div class="relative overflow-x-auto">
                         <table class="w-full text-center text-gray-500 dark:text-gray-400">
-                            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <thead class="text-xs text-th-table-text uppercase bg-th-table dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
                                     <th scope="col" class="px-6 py-3">
                                         Imagen
@@ -52,7 +52,7 @@
                                 @foreach ($cursos as $curso)
                                 @if($curso->interno_planta == 1 and $curso->estado == 1)
                                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-800 text-center">
-                                    <td class="inline-block ">
+                                    <td class="inline-block mt-2">
                                         <img src="{{$curso->imagen}}" width="50" height="50">
                                     </td>
                                     <td class="py-4 font-bold uppercase">
@@ -68,7 +68,7 @@
                                         {{$curso->usuarioCurso->count()}} Usuarios incritos
                                     </td>
                                     <td class=" text-center ">
-                                        <a href="{{url('curs',[$curso])}}" type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg   dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
+                                        <a href="{{url('curs',[$curso])}}" type="button" class="text-white bg-btn-primary hover:bg-btn-primary-light focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg   dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="64" height="32" viewBox="0 0 512 560">
                                                 <path fill="currentColor" d="m184.785 471.562l76.992-115.487l-76.992-115.487h57.743l76.993 115.487l-76.993 115.487h-57.743zm76.992 0l76.992-115.487l-76.992-115.487h57.744l153.982 230.974h-57.744l-48.118-72.178l-48.12 72.178h-57.744zm186.063-67.366L422.178 365.7l89.822-.003v38.498h-64.16zm-38.495-57.744l-25.665-38.495l128.32-.002v38.497H409.345zM169.028 176.54c50.881-29.318 112.082-6.227 135.345 41.445h65.802a154.223 154.223 0 0 0-13.278-33.034l35.475-62.993L357.014 86.6l-62.4 35.654a161.966 161.966 0 0 0-31.679-13.54l-18.869-68.275h-50.09l-18.337 66.874c-11.728 3.226-23.355 7.903-34.692 14.143L81.52 88.072L46.161 123.43l32.976 58.956c-6.21 11.113-10.972 22.86-14.3 34.948L0 236.378v50.09l65.185 17.707a156.965 156.965 0 0 0 14.572 34.737l-32.122 60.013l35.357 35.358l59.415-34.709c8.687 4.668 29.805 12.987 48.128 18.3l41.032-61.799C130.288 370.491 75.488 230.436 169.028 176.54z" />
                                             </svg>

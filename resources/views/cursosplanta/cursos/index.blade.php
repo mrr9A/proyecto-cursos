@@ -2,7 +2,7 @@
     <div class="-mt-3.5">
         <div class="">
             <div class="flex flex-col gap-2 items-start justify-center">
-                <div class="flex items-center">
+                <div class="flex items-center gap-1">
                     <h2 class="text-subtitle font-semi-bold">Lista de cursos</h2>
                     <a href="{{ route('cursos.create') }}"
                         class=" rounded-md  focus:outline-none text-base  text-blue-600 hover:rounded-t-md underline font-bold hover:text-blue-800">
@@ -11,7 +11,8 @@
                 </div>
             </div>
             <div class="flex items-center justify-between  mb-3 -mt-3">
-                <a href="{{ route('planes.index') }}" target="_blanck"
+                <a href="{{ route('puestos.cursos') }}" target="_blanck"
+                {{-- <a href="{{ route('planes.index') }}" target="_blanck" --}}
                     class=" block text-base border-b-2 border-2 rounded-md  focus:outline-none font-medium px-5 py-1.5 text-center bg-btn-primary text-white hover:bg-btn-primary-light hover:text-gray-200">
                     Asignar cursos
                 </a>
@@ -106,7 +107,35 @@
                                     </div>
                                 @endif
 
+<<<<<<< HEAD
                             </nav>
+=======
+                            <!-- Enlace a la siguiente página -->
+                            @if ($cursos->hasMorePages())
+                                <a href="{{ $cursos->nextPageUrl() }}" aria-label="@lang('pagination.next')" 
+                                    class="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
+                                    <span class="sr-only">Next</span>
+                                    <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                        <path fill-rule="evenodd"
+                                            d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </a>
+                            @else
+                                <div aria-hidden="true" aria-label="@lang('pagination.next')" aria-disabled="true"
+                                    aria-label="@lang('pagination.next')"
+                                    class="disabled relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
+                                    <span class="sr-only">Next</span>
+                                    <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                        <path fill-rule="evenodd"
+                                            d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                            @endif
+
+                        </nav>
+>>>>>>> prueba1
                     </div>
                 </div>
                 {{-- FIN DE LA PAGINACION --}}
