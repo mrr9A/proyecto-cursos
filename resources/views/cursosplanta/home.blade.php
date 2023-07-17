@@ -27,7 +27,7 @@
         </div>
         <div>
             <div class="flex justify-between items-center mb-2">
-                <h2 class="font-poppins font-medium text-subtitle">PROGESO DE LOS EMPLEADOS</h2>
+                <h2 class="font-poppins font-medium text-subtitle">PROGRESO DE LOS EMPLEADOS</h2>
                 <x-search.search-input placeholder="id, id sgp, id sumtotal, nombre, puesto..." route="home" />
             </div>
             @if (count($data['data']) > 0)
@@ -131,8 +131,9 @@
                             <th scope="col" class="px-6 py-2">empleado</th>
                             <th scope="col" class="px-6 py-2">puesto</th>
                             <th scope="col" class="px-6 py-2">total de cursos</th>
-                            <th scope="col" class="px-6 py-2">cursos pasados</th>
-                            <th scope="col" class="px-6 py-2">cursos progreso</th>
+                            <th scope="col" class="px-6 py-2">cursos aprobados</th>
+                            <th scope="col" class="px-6 py-2">cursos reprobados</th>
+                            <th scope="col" class="px-6 py-2">cursos progresos</th>
                             <th scope="col" class="px-6 py-2">progreso</th>
                             <th scope="col" class="px-6 py-2">opciones</th>
                         </tr>
@@ -148,6 +149,7 @@
                                 <td class="py-3 px-6 text-left">{{ $usuario->puesto }}</td>
                                 <td class="py-3 px-6 text-left">{{ $usuario->total }}</td>
                                 <td class="py-3 px-6 text-left">{{ $usuario->totalCursosPasados }}</td>
+                                <td class="py-3 px-6 text-left">{{ $usuario->cursosReprobados }}</td>
                                 <td class="py-3 px-6 text-left">{{ $usuario->cursosEnProgreso }}</td>
                                 <td class="py-3 px-6 text-left">{{ $usuario->promedioTotal }}</td>
                                 <td class="py-3 px-6 text-left">

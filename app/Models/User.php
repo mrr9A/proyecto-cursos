@@ -264,10 +264,10 @@ class User extends Authenticatable
                 return $carry + array_sum($item);
             }, 0);
 
-            $cursosReprobados = array_reduce($cursosReprobados, function ($carry, $item) {
+            $calcCursosReprobados = array_reduce($cursosReprobados, function ($carry, $item) {
                 return $carry + array_sum($item);
             }, 0);
-            $porcentaje = bcdiv(($todosCursosTotal != 0) ? (((($cursosPasadosTotal * 100) + $calCursosProgreso + $cursosReprobados) * 100) / ($todosCursosTotal * 100)) : 0, '1', 2);
+            $porcentaje = bcdiv(($todosCursosTotal != 0) ? (((($cursosPasadosTotal * 100) + $calCursosProgreso + $calcCursosReprobados) * 100) / ($todosCursosTotal * 100)) : 0, '1', 2);
 
             return (object) [
                 'id_usuario' => $usuario->id_usuario,
@@ -278,6 +278,7 @@ class User extends Authenticatable
                 'total' => $todosCursosTotal,
                 'totalCursosPasados' => $cursosPasadosTotal,
                 'cursosEnProgreso' => count($cursosProgreso[0]),//aqui quite esto [0]
+                'cursosReprobados' => count($cursosReprobados[0]),//aqui quite esto [0]
                 'promedioTotal' => $porcentaje,
             ];
         });
