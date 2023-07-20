@@ -29,7 +29,7 @@
         </form>
 
     </div>
-    @if(count($calificacionesCursos) > 0)
+    @if(count($data) > 0)
 
     <div class="mt-4 ">
 
@@ -42,7 +42,7 @@
 
         <table class="min-w-full leading-normal my-2">
             <thead class="border-b  dark:border-neutral-500 uppercase">
-                <tr class="px-5 py-3 border-b-2 border-gray-200 bg-th-table text-th-table-text text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                <tr class="px-5 py-3 border-b-2 border-gray-200 bg-th-table text-th-table-text text-left text-xs font-semibold uppercase tracking-wider">
                     <th scope="col" class="px-6 py-2 w-1/12">Sucursal</th>
                     <th scope="col" class="px-6 py-2 w-1/12">Codigo del Curso</th>
                     <th scope="col" class="px-6 py-2">Nombre del Curso</th>
@@ -53,15 +53,15 @@
                 </tr>
             </thead>
             <tbody class="">
-                @foreach ($calificacionesCursos as $usuario)
+                @foreach($data['cursos'] as $usuario)
                 <tr class="border-b border-gray-200 hover:bg-gray-100">
                     <td class="whitespace-nowrap px-6 py-2 w-1/12 ">{{ $usuario['sucursal']}}</td>
-                    <td class="whitespace-nowrap px-6 py-2 w-1/12 ">{{ $usuario['cursoC']}}</td>
-                    <td class="py-3 px-6 text-left">{{ $usuario['cursoN']}}</td>
-                    <td class="py-3 px-6 text-left capitalize">{{ $usuario['usuarioN']}} {{ $usuario['usuarioSN']}} {{ $usuario['usuarioAP']}} {{ $usuario['usuarioAM']}}</td>
-                    <td class="py-3 px-6 text-center">{{ $usuario['estado']}}</td>
-                    <td class="py-3 px-6 text-center">{{ $usuario['calificacion']}}</td>
-                    <td class="py-3 px-6 text-center">{{ $usuario['progreso']}}</td>
+                    <td class="whitespace-nowrap px-6 py-2 w-1/12 ">{{ $usuario['codigo']}}</td>
+                    <td class="whitespace-nowrap px-6 py-2 w-1/12 ">{{ $usuario['curso']}}</td>
+                    <td class="py-3 px-6 text-left capitalize">{{ $usuario['nombre']}} {{ $usuario['segundo_nombre']}} {{ $usuario['apellido_paterno']}} {{ $usuario['apellido_materno']}}</td>
+                    <td class="py-3 px-6 text-left capitalize">{{ $usuario['estatus']}}</td>
+                    <td class="py-3 px-6 text-center">{{ $usuario['calificacion']}}%</td>
+                    <td class="py-3 px-6 text-center">{{ $usuario['progreso_curso']}}%</td>
                 </tr>
                 @endforeach
             </tbody>

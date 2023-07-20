@@ -35,6 +35,10 @@ Route::middleware('auth.admin')->group(function () {
 
     Route::resource('curs', \App\Http\Controllers\Cursosinternos\CursosController::class);
 
+    Route::resource('avances', \App\Http\Controllers\Cursosinternos\AvanceUsuarioController::class);
+
+    Route::resource('Reporteavances', \App\Http\Controllers\Cursosinternos\ReporteAvanceUsuarioController::class);
+
     Route::resource('Lecciones', \App\Http\Controllers\Cursosinternos\LeccionesController::class);
 
     Route::resource('contenidos', \App\Http\Controllers\Cursosinternos\ContenidoController::class);
