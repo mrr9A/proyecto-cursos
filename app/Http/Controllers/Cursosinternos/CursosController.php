@@ -24,8 +24,7 @@ class CursosController extends Controller
         $buscar = $request->buscador;
         $cursos = Curso::where(function ($query) use ($buscar) {
             $query->where('nombre', 'like', $buscar . "%")
-                ->orWhere('codigo', 'like', $buscar . "%")
-                ->orWhere('fecha_inicio', 'like', $buscar . "%");
+                ->orWhere('codigo', 'like', $buscar . "%");
         })
             ->where('interno_planta', '=', 1)
             ->orWhereHas('categoria', function ($query) use ($buscar) {

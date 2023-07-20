@@ -25,9 +25,10 @@ class CalificacionController extends Controller
                 $resultado["estado"] = 1;
                 $resultado["valor"] = "100";
             }
-
+            
             array_push($calificaciones, $resultado);
         }
+        // dd($calificaciones);
 
 
         $ignoredData = [];
@@ -41,6 +42,7 @@ class CalificacionController extends Controller
                     ->where('curso_id', $registro['curso_id'])
                     ->update([
                         'valor' => $registro['valor'],
+                        'estado' => $registro['estado'],
                     ]);
             }
         }

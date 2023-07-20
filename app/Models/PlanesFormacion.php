@@ -20,11 +20,18 @@ class PlanesFormacion extends Model
         return $this->hasMany(Puesto::class, "plan_formacion_id");
     }
 
-    public static function getMatrices($buscar = "")
+    public static function getMatrices($buscar = "", $sucursal)
     {
         $usuarios = User::with(['trabajos.cursos.tipo', 'calificaciones'])
             ->leftJoin('calificaciones', 'calificaciones.usuario_id', '=', 'usuarios.id_usuario')
-            ->where(function ($q) use ($buscar) {
+            ->join('sucursales_usuarios', 'sucursales_usuarios.usuario_id', '=', 'usuarios.id_usuario')
+            ->join('sucursales', 'sucursales.id_sucursal', '=', 'sucursales_usuarios.sucursal_id')
+            ->where(function ($query) use ($sucursal) {
+                if ($sucursal !== null) {
+                    $query->where('sucursales.id_sucursal', $sucursal);
+                }
+            })
+            ->where(function ($q) use ($buscar, $sucursal) {
                 $q->where(function ($innerQuery) use ($buscar) {
                     $innerQuery->where('usuarios.nombre', 'like', $buscar . "%")
                         ->orWhere(DB::raw('CONCAT(usuarios.nombre, " ", IFNULL(usuarios.segundo_nombre, ""), " ", usuarios.apellido_paterno, " ", IFNULL(usuarios.apellido_materno, ""))'), 'like', $buscar . "%")
@@ -42,7 +49,7 @@ class PlanesFormacion extends Model
             ->where("usuarios.rol", '=', 1)
 
             ->select(
-                DB::raw("CONCAT(nombre, ' ', IFNULL(segundo_nombre, ''), ' ', apellido_paterno, ' ', IFNULL(apellido_materno, '')) AS empleado"),
+                DB::raw("CONCAT(usuarios.nombre, ' ', IFNULL(segundo_nombre, ''), ' ', apellido_paterno, ' ', IFNULL(apellido_materno, '')) AS empleado"),
                 'usuarios.*'
             )
             ->orderBy('puesto_id', 'asc')

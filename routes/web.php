@@ -40,6 +40,9 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout')->midd
 require __DIR__ . '/resource.php';
 Route::middleware('auth.admin')->group(function () {
     // Rutas protegidas para el rol de administrador
+// ruta para obtener el reporte general de los cursos por sucursal
+Route::get('reporte-general', [HomeController::class, 'reporteGeneral'])->name('reporte.general');
+
 
     Route::get('/pdf/{user}', [PDFController::class,'pdf'])->name('descargarPDF');
     Route::get('/reporte', [ReporteController::class, 'generateExcelReport'])->name('exportarExcel');

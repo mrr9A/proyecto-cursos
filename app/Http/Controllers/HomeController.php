@@ -6,6 +6,7 @@ use App\Models\Puesto;
 use App\Models\Sucursal;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -18,7 +19,7 @@ class HomeController extends Controller
         } else {
             $data = User::progresoEmpleados();
         }
-         // Obtener los enlaces de paginación manualmente
+        // Obtener los enlaces de paginación manualmente
         // $allPuestos = Puesto::count();
         $allEmpleados = User::where("estado", "=", 1)->count();
         $allSucursales = Sucursal::where("estado", "=", 1)->count();

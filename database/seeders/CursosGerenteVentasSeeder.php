@@ -29,7 +29,7 @@ class CursosGerenteVentasSeeder extends Seeder
             ['codigo' => 'w-33', 'nombre' => 'procesos de ventas volkswagen', 'estado' => 1, 'modalidad_id' => $online, 'tipo_curso_id' => $iniciales],
             ['codigo' => 'w-021','nombre' => 'long drive', 'estado' => 1, 'modalidad_id' => $online, 'tipo_curso_id' => $iniciales],
             ['codigo' => '0-01', 'nombre' => 'trabajo en equipo', 'estado' => 1, 'modalidad_id' => $online, 'tipo_curso_id' => $iniciales],
-            ['codigo' => 'w-34', 'nombre' => 'proceso de ventas digital(online booking)', 'estado' => $online, 'modalidad_id' => $online, 'tipo_curso_id' => $iniciales],
+            ['codigo' => 'w-34', 'nombre' => 'proceso de ventas digital(online booking)', 'estado' => 1, 'modalidad_id' => $online, 'tipo_curso_id' => $iniciales],
             ['codigo' => 'v-116', 'nombre' => 'salesforce ventas', 'estado' => 1, 'modalidad_id' => $online, 'tipo_curso_id' => $iniciales],
             ['codigo' => 'w-16', 'nombre' => 'gestión de reclamaciones ventas', 'estado' => 1, 'modalidad_id' => $online, 'tipo_curso_id' => $iniciales],
             ['codigo' => 'w-701', 'nombre' => 'detención y prospección de clientes comerciales', 'estado' => 1, 'modalidad_id' => $online, 'tipo_curso_id' => $iniciales],

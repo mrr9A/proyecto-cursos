@@ -20,16 +20,6 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    // protected $fillable = [
-    //     'nombre',
-    //     'apellido_paterno',
-    //     'apellido_materno',
-    //     'segundo_nombre',
-    //     'estado',
-    //     'email',
-    //     'password',
-    //     "puesto_id"
-    // ];
     protected $fillable = [
         'nombre',
         'segundo_nombre',
@@ -217,12 +207,6 @@ class User extends Authenticatable
             ->orderBy('puestos.puesto', 'asc')
             ->paginate(10)->appends(request()->query());
 
-        // dd($usuarios);
-
-        // if ($usuarios->isEmpty()) {
-        //     // El usuario no existe, manejar el caso de error aquí
-        //     return 0;
-        // }
 
         $result = $usuarios->map(function ($usuario) {
             $todosCursosTotal = 0;

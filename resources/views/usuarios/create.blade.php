@@ -123,9 +123,10 @@
                         classLabel="text-base" :value="$usuario->id_sgp ?? ''" />
                     <x-input-text type="number" nombre="id_sumtotal" text="ID SUMTOTAL" placeholder="1351" required
                         classLabel="text-base" :value="$usuario->id_sumtotal ?? ''" />
-                    <x-input-text type="date" nombre="fecha_alta_planta" text="Fecha de alta en planta" required
+                    <x-input-text type="date" nombre="fecha_alta_planta" text="Fecha de alta en planta"
                         classLabel="text-base"
                         value="{{ $usuario->fecha_alta_planta ?? '' ? date('Y-m-d', strtotime($usuario->fecha_alta_planta ?? '')) : '' }}" />
+
                     <x-input-text type="date" nombre="fecha_ingreso_puesto" text="Fecha de ingreso al puesto"
                         required classLabel="text-base"
                         value="{{ $usuario->fecha_ingreso_puesto ?? '' ? date('Y-m-d', strtotime($usuario->fecha_ingreso_puesto ?? '')) : '' }}" />
@@ -158,7 +159,7 @@
     </div>
 
     <script>
-        // Llamando los trabos de los puestos y renderizarlos
+        // Llamando los trabajos de los puestos y renderizarlos
         const puestoSelecter = document.getElementById('puesto_id');
         const trabajosSelector = document.getElementById("trabajos")
         let puesto = "";
@@ -312,75 +313,6 @@
 
 
         })
-        //FUNCIONES PARA EL FORMULARIO POR PASOS
-        // Obtén los elementos del formulario y los botones de navegación
-        // const form = document.getElementById('multi-step-form');
-        // const steps = Array.from(form.getElementsByClassName('step'));
-        // const nextButtons = Array.from(form.getElementsByClassName('next-button'));
-        // const previousButtons = Array.from(form.getElementsByClassName('previous-button'));
-        // const num = $$('.num')
-
-        // // Agrega eventos de clic a los botones de navegación
-        // nextButtons.forEach(button => {
-        // button.addEventListener('click', () => {
-        // navigateToNextStep(button);
-        // });
-        // });
-
-        // previousButtons.forEach(button => {
-        // button.addEventListener('click', () => {
-        // navigateToPreviousStep(button);
-        // });
-        // });
-
-        // // Función para mostrar el siguiente paso
-        // function navigateToNextStep(button) {
-        // const currentStep = button.closest('.step');
-        // const nextStep = currentStep.nextElementSibling;
-        // // Verificar la validez de los campos de entrada dentro del contenedor actual
-        // const inputs = currentStep.querySelectorAll('input, select, textarea');
-        // let isValid = true;
-        // inputs.forEach(input => {
-        // if (!input.checkValidity()) {
-        // isValid = false;
-        // // Agrega lógica para manejar el error en el campo de entrada si es necesario
-        // }
-        // });
-
-        // if (isValid) {
-        // currentStep.classList.remove('active');
-        // nextStep.classList.add('active');
-
-        // if (currentStep.getAttribute('data-step') == 1) {
-        // num[0].classList.add('checked')
-        // }
-        // if (currentStep.getAttribute('data-step') == 2) {
-        // num[1].classList.add('checked')
-        // }
-        // if (currentStep.getAttribute('data-step') == 3) {
-        // num[2].classList.add('checked')
-        // }
-        // }
-        // }
-
-        // // Función para mostrar el paso anterior
-        // function navigateToPreviousStep(button) {
-        // const currentStep = button.closest('.step');
-        // const previousStep = currentStep.previousElementSibling;
-        // currentStep.classList.remove('active');
-        // previousStep.classList.add('active');
-        // // Eliminando el color verde de que ya completo ese paso
-        // if (previousStep.getAttribute('data-step') == 1) {
-        // num[0].classList.remove('checked')
-        // }
-        // if (previousStep.getAttribute('data-step') == 2) {
-        // num[1].classList.remove('checked')
-        // }
-        // if (previousStep.getAttribute('data-step') == 3) {
-        // num[2].classList.remove('checked')
-        // }
-
-
-        // }
+        
     </script>
 </x-app>

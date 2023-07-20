@@ -29,34 +29,34 @@ class UserFactory extends Factory
         $puesto = Puesto::inRandomOrder()->first();
         $puestoId = $puesto->id_puesto;
 
-        // $attributes = [
-        //     'nombre' => $this->faker->firstName,
-        //     'segundo_nombre' => $this->faker->optional()->firstName,
-        //     'apellido_paterno' => $this->faker->lastName,
-        //     'apellido_materno' => $this->faker->optional()->lastName,
-        //     'id_sgp' => $this->faker->unique()->randomNumber(),
-        //     'id_sumtotal' => $this->faker->unique()->randomNumber(),
-        //     'rol' => $rol,
-        //     'email' => $this->faker->unique()->email,
-        //     'password' => Hash::make('password123'), // Cambia 'password123' por el valor deseado
-        //     'estado' => $estado,
-        //     'fecha_alta_planta' => $this->faker->date(),
-        //     'fecha_ingreso_puesto' => $this->faker->date(),
-        //     'puesto_id' => $puestoId,
-        // ];
         $attributes = [
-            'nombre' => "luis",
-            'segundo_nombre' => 'anberto',
-            'apellido_paterno' => 'mendoza',
-            'apellido_materno' => 'vasquez',
-            'id_sgp' => 1,
-            'id_sumtotal' => 1,
-            'rol' => 0,
-            'email' => 'ann@gmail.com',
-            'password' => Hash::make('Password123'), // Cambia 'password123' por el valor deseado
-            'estado' => 1,
+            'nombre' => $this->faker->firstName,
+            'segundo_nombre' => $this->faker->optional()->firstName,
+            'apellido_paterno' => $this->faker->lastName,
+            'apellido_materno' => $this->faker->optional()->lastName,
+            'id_sgp' => $this->faker->unique()->randomNumber(),
+            'id_sumtotal' => $this->faker->unique()->randomNumber(),
+            'rol' => $rol,
+            'email' => $this->faker->unique()->email,
+            'password' => Hash::make('password123'), // Cambia 'password123' por el valor deseado
+            'estado' => $estado,
+            'fecha_alta_planta' => $this->faker->optional()->date(),
+            'fecha_ingreso_puesto' => $this->faker->date(),
             'puesto_id' => $puestoId,
         ];
+        // $attributes = [
+        //     'nombre' => "luis",
+        //     'segundo_nombre' => 'anberto',
+        //     'apellido_paterno' => 'mendoza',
+        //     'apellido_materno' => 'vasquez',
+        //     'id_sgp' => 1,
+        //     'id_sumtotal' => 1,
+        //     'rol' => 0,
+        //     'email' => 'ann@gmail.com',
+        //     'password' => Hash::make('Password123'), // Cambia 'password123' por el valor deseado
+        //     'estado' => 1,
+        //     'puesto_id' => $puestoId,
+        // ];
 
         return $attributes;
     }

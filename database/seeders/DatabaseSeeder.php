@@ -131,18 +131,21 @@ class DatabaseSeeder extends Seeder
         // Inserción 1
         $iniciales = TipoCurso::insertGetId([
             'nombre' => 'iniciales',
+            'duracion' => 2,
             'estado' => 1
         ]);
 
         // Inserción 2
         $fundamentos = TipoCurso::insertGetId([
             'nombre' => 'fundamentos',
+            'duracion' => 6,
             'estado' => 1
         ]);
 
         // Inserción 3
         $especialidad = TipoCurso::insertGetId([
             'nombre' => 'especialidad',
+            'duracion' => 18,
             'estado' => 1
         ]);
 
@@ -272,7 +275,7 @@ class DatabaseSeeder extends Seeder
         ]);
         // FIND DE LA CREACION DE SUCRUSALES
 
-        \App\Models\User::factory()->create();
+        \App\Models\User::factory(50)->create();
 
         // ADMIN
         // User::create([
