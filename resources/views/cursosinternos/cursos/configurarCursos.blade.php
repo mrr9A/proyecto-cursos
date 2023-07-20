@@ -2,7 +2,7 @@
     <nav class="mx-4 flex justify-between items-center">
 
         <div>
-            <a href="{{ url('curs') }}" class="text-base text-nav-hover font-bold uppercase">Catalago de Cursos > </a>
+            <a href="{{ url('curs') }}" class="text-base text-nav-hover font-bold uppercase">CATÁLOGO de Cursos > </a>
             <a href="{{ url('curs', $curso->id_curso) }}" class="text-base text-nav-hover uppercase font-bold">
                 {{ $curso->nombre }} ></a>
         </div>
@@ -523,7 +523,7 @@
                                             clip-rule="evenodd" />
                                     </g>
                                 </svg>
-                                <h6 class="mb-0 ml-3 mr-2 font-bold tracking-tight text-gray-900">Codígo: </h6>
+                                <h6 class="mb-0 ml-3 mr-2 font-bold tracking-tight text-gray-900">Código: </h6>
                                 <span>
                                     {{ $curso->codigo }}
                                 </span>
@@ -623,7 +623,7 @@
                                             clip-rule="evenodd" />
                                     </g>
                                 </svg>
-                                <h6 class="mb-0 ml-3 mr-2 font-bold tracking-tight text-gray-900">Calificación minima:
+                                <h6 class="mb-0 ml-3 mr-2 font-bold tracking-tight text-gray-900">Calificación mínima:
                                 </h6>
                                 <span>
                                     80%
@@ -654,7 +654,7 @@
                                         fill="currentColor"></path>
                                 </svg>
                                 <h6 class="mb-0 ml-4 mr-2 font-bold tracking-tight text-gray-900">Certificado de
-                                    termino: </h6>
+                                término: </h6>
                                 <span> Sí</span>
                             </div>
                         </li>
@@ -760,6 +760,7 @@
                                                     method="POST" class="formulario-eliminar-User">
                                                     @method('DELETE')
                                                     @csrf
+                                                    <input type="number" value="{{ $curso->id_curso }}" hidden name="curso_id">
                                                     <button
                                                         class="font-medium text-sm text-red-600 dark:text-red-500 hover:underline">Eliminar</button>
                                                 </form>
@@ -793,6 +794,7 @@
                                                     method="POST" class="formulario-eliminar-User">
                                                     @method('DELETE')
                                                     @csrf
+                                                    <input type="number" value="{{ $curso->id_curso }}" hidden name="curso_id">
                                                     <button
                                                         class="font-medium text-red-600 dark:text-red-500 hover:underline">Eliminar</button>
                                                 </form>

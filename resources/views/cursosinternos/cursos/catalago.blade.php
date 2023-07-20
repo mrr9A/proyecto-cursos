@@ -1,9 +1,13 @@
-<x-app title="Catalago de Cursos:">
+<x-app title="CATÁLOGO de Cursos:">
     <div>
         <div class="flex justify-between">
             <div class="mx-9">
                 <a type="button" class="text-white bg-btn-primary hover:bg-btn-primary-light focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700" href="{{route('crearCurso')}}">
-                    <img src="./img/agregar-usuario.png" alt=""><span>Agregar curso</span>
+                    <img src="./img/elearning.png" alt=""><span>Agregar curso</span>
+                </a>
+                <a type="button" class="text-white bg-btn-primary hover:bg-btn-primary-light focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700" href="{{ url('avances') }}">
+                    <img src="./img/usuario.png" alt="">
+                    <span>Usuarios internos</span>
                 </a>
                 <a type="button" class="text-white bg-btn-primary hover:bg-btn-primary-light focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700" href="{{ route('reportesinternos.index') }}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 512 512">
@@ -13,7 +17,7 @@
                 </a>
             </div>
             <div class="mx-10">
-                <x-search.search-input route="curs.index" placeholder="Buscar por Categoria, Nombre, Codigo"></x-search.search-input>
+                <x-search.search-input route="curs.index" placeholder="Buscar por Categoria, Nombre, Código"></x-search.search-input>
             </div>
         </div>
 
@@ -35,7 +39,7 @@
                                         Nombre completo del curso
                                     </th>
                                     <th scope="col" class="px-6 py-3">
-                                        Codígo del Curso
+                                    CÓDIGO del Curso
                                     </th>
                                     <th scope="col" class="px-6 py-3">
                                         Categoría del curso

@@ -42,9 +42,9 @@ class CursosController extends Controller
 
         $buscar1 = $request->input('buscar1');
         $cursoId1 = $request->input('curso_id2');
-        $curso = Curso::where('id_curso',$id)->where('interno_planta', 1)->first();
-        if(is_null($curso)){
-           return redirect()->back();
+        $curso = Curso::where('id_curso', $id)->where('interno_planta', 1)->first();
+        if (is_null($curso)) {
+            return redirect()->back();
         }
         $usuariosS = $curso->usuarioCurso()->paginate(5);
         $categoria = Categoria::all();
@@ -53,7 +53,7 @@ class CursosController extends Controller
 
         if ($buscar1) {
             $resultados2 = User::whereHas('cursos', function ($query) use ($cursoId1) {
-                $query->where('curso_id', $cursoId1);
+                $query->where('curso_id', '=', $cursoId1);
             })
                 ->where(function ($query) use ($buscar1) {
                     $query->where('nombre', 'LIKE', '%' . $buscar1 . '%')
@@ -69,7 +69,7 @@ class CursosController extends Controller
 
         $usuarios = User::all();
 
-        return view('Cursosinternos.cursos.configurarCursos', compact('curso', 'modalidad', 'tipo', 'usuarios', 'categoria', 'resultados2','usuariosS'));
+        return view('Cursosinternos.cursos.configurarCursos', compact('curso', 'modalidad', 'tipo', 'usuarios', 'categoria', 'resultados2', 'usuariosS'));
     }
 
 
@@ -77,9 +77,9 @@ class CursosController extends Controller
     public function update(Request $request, string $id)
     {
         $curso = Curso::find($id);
-        if(is_null($curso)){
+        if (is_null($curso)) {
             return redirect()->back();
-         }
+        }
         if ($request->hasFile('imagen')) {
             $img = $request->file('imagen')->store('public/imagenes');
             $url = Storage::url($img);
@@ -98,7 +98,6 @@ class CursosController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request);
         $request->validate(['usuarios' => 'array|required']);
         $dataUsuarios = [];
         foreach ($request->usuarios as $usuario) {
@@ -113,23 +112,22 @@ class CursosController extends Controller
         }
         DB::table("usuarios_cursos")->insert($dataUsuarios);
         return redirect()->back()->with('agregado', 'Usuario agregado a curso');
-
-
     }
 
-    public function destroyUser(string $id)
+    public function destroyUser(Request $request, string $id)
     {
         $user = User::find($id);
-        if(is_null($user)){
+        if (is_null($user)) {
             return redirect()->back();
-         }
-        $id_user = $user->id_usuario;
-        if ($user->examen()->where('usuario_id', $id_user)->exists()) {
-            return redirect()->back()->with('error', 'No se puede eliminar el registro porque está asociado a otro campo');
-        } else {
-            $Curso = $user->cursos[0]->id_curso;
-            $user->cursos()->detach($Curso);
-            return redirect()->back()->with('eliminado', 'Eliminado Correctamente');
+        }
+        $curso_id = $request->curso_id;
+        foreach ($user->cursos as $curso) {
+            if ($curso->id_curso == $curso_id) {
+                $user->cursos()->detach($curso_id);
+                return redirect()->back()->with('eliminado', 'Eliminado Correctamente');
+            }else{
+                return redirect()->back()->with('error', 'No se puedo eliminar, vuelve a intentarlo');
+            }
         }
     }
 }
