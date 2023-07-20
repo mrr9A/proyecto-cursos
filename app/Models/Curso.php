@@ -220,7 +220,6 @@ class Curso extends Model
                 "codigo",
                 "c.nombre",
                 "interno_planta",
-                "fecha_termino",
                 "tc.nombre as tipo",
                 "modalidad"
             )
