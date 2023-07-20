@@ -15,11 +15,13 @@
                                 cursos
                             </p>
                             <div class="flex flex-col gap-1">
+                                <button class="bg-gray-700 text-white rounded-sm py-1 hover:bg-gray-600" id="todos">selecionar
+                                    todos</button>
                                 @foreach ($trabajos as $trabajo)
                                     <div class="flex gap-3 items-center ">
                                         <input type="checkbox" id="trabajo_{{ $trabajo->id_trabajo }}"
                                             value="{{ $trabajo->id_trabajo }}" name="trabajos[]"
-                                            class="cursor-pointer" />
+                                            class="cursor-pointer trabajos" />
                                         <label for="trabajo_{{ $trabajo->id_trabajo }}"
                                             class="cursor-pointer">{{ $trabajo->nombre }}</label>
                                     </div>
@@ -94,6 +96,32 @@
         const containerCursos = $('#container_cursos')
         const btnAddCurso = $("#add_curso")
         const formCursos = $("#form_cursos")
+
+
+        const btnSelectTodos = $("#todos").addEventListener('click', (e) => {
+            e.preventDefault()
+            const trabajosCheck = $$(".trabajos")
+            // Verificar si todos los trabajos están seleccionados
+            const todosSeleccionados = [...trabajosCheck].every(checkbox => checkbox.checked);
+
+            // Cambiar el texto del botón según el estado de selección
+            if (todosSeleccionados) {
+                // Si todos están seleccionados, deseleccionar todos
+                trabajosCheck.forEach(checkbox => checkbox.checked = false);
+                e.target.textContent = "Seleccionar Todos";
+            } else {
+                // Si no todos están seleccionados, seleccionar todos
+                trabajosCheck.forEach(checkbox => checkbox.checked = true);
+                e.target.textContent = "Deseleccionar Todos";
+            }
+
+
+
+        })
+
+
+
+
 
 
         let cursoCounter = 1; // Inicializamos el contador en 1
