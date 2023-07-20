@@ -26,4 +26,9 @@ class HomeController extends Controller
 
         return view('cursosplanta.home', compact('data', 'allEmpleados', 'allSucursales'));
     }
+
+    public function reporteGeneral(){
+        $data = Sucursal::progresoEmpleadosPorTipo();
+        return view('cursosplanta.reportGeneral.index', compact('data'));
+    }
 }

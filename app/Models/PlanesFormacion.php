@@ -22,6 +22,7 @@ class PlanesFormacion extends Model
 
     public static function getMatrices($buscar = "", $sucursal)
     {
+        DB::statement("SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));");
         $usuarios = User::with(['trabajos.cursos.tipo', 'calificaciones'])
             ->leftJoin('calificaciones', 'calificaciones.usuario_id', '=', 'usuarios.id_usuario')
             ->join('sucursales_usuarios', 'sucursales_usuarios.usuario_id', '=', 'usuarios.id_usuario')
@@ -54,9 +55,11 @@ class PlanesFormacion extends Model
                 DB::raw("CONCAT(usuarios.nombre, ' ', IFNULL(segundo_nombre, ''), ' ', apellido_paterno, ' ', IFNULL(apellido_materno, '')) AS empleado"),
                 'usuarios.*'
             )
+            ->groupBy('usuarios.id_usuario')
             ->orderBy('puesto_id', 'asc')
             ->distinct()
             ->paginate(6)->appends(request()->query());
+
         $result = $usuarios->map(function ($usuario) {
             $trabajos = $usuario->trabajos->map(function ($trabajo) use ($usuario) {
                 $cursos = $trabajo->cursos->map(function ($curso) use ($usuario) {

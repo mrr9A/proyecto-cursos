@@ -1,5 +1,5 @@
 <x-app>
-  @dump($historial)
+  @dump($data)
 {{-- 
     @foreach ($progresoCursosSucursal as $sucursal)
         <?php
