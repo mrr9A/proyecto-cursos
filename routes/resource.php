@@ -27,7 +27,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth.admin')->group(function () {
     // Rutas protegidas para el rol de administrador
 
-
     //Ruta del formulario de agregar Cursos
     Route::get('curso', function () {
         return view('Cursosinternos.forms.cursoForm');

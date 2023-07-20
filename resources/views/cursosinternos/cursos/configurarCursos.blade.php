@@ -760,6 +760,7 @@
                                                     method="POST" class="formulario-eliminar-User">
                                                     @method('DELETE')
                                                     @csrf
+                                                    <input type="number" value="{{ $curso->id_curso }}" hidden name="curso_id">
                                                     <button
                                                         class="font-medium text-sm text-red-600 dark:text-red-500 hover:underline">Eliminar</button>
                                                 </form>
@@ -793,6 +794,7 @@
                                                     method="POST" class="formulario-eliminar-User">
                                                     @method('DELETE')
                                                     @csrf
+                                                    <input type="number" value="{{ $curso->id_curso }}" hidden name="curso_id">
                                                     <button
                                                         class="font-medium text-red-600 dark:text-red-500 hover:underline">Eliminar</button>
                                                 </form>
