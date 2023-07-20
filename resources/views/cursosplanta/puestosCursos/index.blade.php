@@ -46,10 +46,10 @@
                 <div class="flex-auto w-full min-w-0 lg:static lg:max-h-full lg:overflow-visible">
                     <div class="flex w-full justify-between ">
 
-                        <div class="flex-auto  min-w-0 pt-6 lg:px-8 lg:pt-8 pb:12 xl:pb-24 lg:pb-16 bg-blue-600">
+                        <div class="flex-auto  min-w-0 pt-6 lg:px-8 lg:pt-8 pb:12 xl:pb-24 lg:pb-16 bg-blue-800">
                             <div class="flex justify-between items-center mb-2">
                                 <p class="text-subtitle font-semi-bold text-white">Asignar cursos</p>
-                                <x-input-submit text="Continuar" />
+                                <x-input-submit text="Continuar" class="bg-blue-900"/>
                             </div>
                             <div class="flex justify-between items-center">
                                 <h2 class="text-white text-section-subtitle font-semi-bold">Lista de cursos</h2>
@@ -100,11 +100,13 @@
                                         cursos
                                     </p>
                                     <div class="flex flex-col gap-1">
+                                        <button class="bg-gray-700 text-white rounded-sm py-1 hover:bg-gray-600" id="todos">selecionar
+                                            todos</button>
                                         @foreach ($trabajos as $trabajo)
                                             <div class="flex gap-3 items-center ">
                                                 <input type="checkbox" id="trabajo_{{ $trabajo->id_trabajo }}"
                                                     value="{{ $trabajo->id_trabajo }}" name="trabajos[]"
-                                                    class="cursor-pointer" />
+                                                    class="cursor-pointer trabajos" />
                                                 <label for="trabajo_{{ $trabajo->id_trabajo }}"
                                                     class="cursor-pointer">{{ $trabajo->nombre }}</label>
                                             </div>
@@ -138,7 +140,26 @@
         const btnBuscar = $('#submit-buscar')
         const contentCursos = $('#content_cursos')
         // 
+        const btnSelectTodos = $("#todos").addEventListener('click', (e) => {
+            e.preventDefault()
+            const trabajosCheck = $$(".trabajos")
+            // Verificar si todos los trabajos están seleccionados
+            const todosSeleccionados = [...trabajosCheck].every(checkbox => checkbox.checked);
 
+            // Cambiar el texto del botón según el estado de selección
+            if (todosSeleccionados) {
+                // Si todos están seleccionados, deseleccionar todos
+                trabajosCheck.forEach(checkbox => checkbox.checked = false);
+                e.target.textContent = "Seleccionar Todos";
+            } else {
+                // Si no todos están seleccionados, seleccionar todos
+                trabajosCheck.forEach(checkbox => checkbox.checked = true);
+                e.target.textContent = "Deseleccionar Todos";
+            }
+
+
+
+        })
         // 
         const contentModal = $("#content_modal");
 
