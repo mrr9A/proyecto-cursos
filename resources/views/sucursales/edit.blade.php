@@ -2,7 +2,7 @@
 <div class="w-full ">
     <form action="{{ url('sucursales', [$sucursale]) }}" method="POST" class="formulario-actualizar  flex flex-col gap-5">
         @csrf
-        @method('PUT')
+        @method('PATCH')
         <input name="id_sucursal" value="{{$sucursale->id_sucursal}}" class="hidden" />
         <x-input-text nombre="nombre" text="Sucursal" :value="$sucursale->nombre" required classLabel="text-base"  required/>
         <x-input-text nombre="ciudad" text="Ciudad" :value="$sucursale->ciudad" required classLabel="text-base" required />

@@ -13,7 +13,7 @@
                         <input id="red-radio" type="checkbox" value="20" name="colored-radio" checked disabled
                             class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                         <label for="red-radio" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">No
-                            aprovado</label>
+                            aprobado</label>
                     </div>
                     <div class="flex items-center mr-4">
                         <input id="green-radio" type="checkbox" value="50" name="colored-radio" checked disabled
@@ -37,7 +37,7 @@
         <div class="container-resumen bg-white py-2 px-4 w-[25%] rounded-sm border-1 shadow-all">
             <h3 class="font-semi-bold text-section-subtitle">Resumen</h3>
             <p class="font-regular">Total de cursos: <span>{{ $data->totalCursos }}</span></p>
-            <p class="font-regular">Cursos pasados: <span>{{ $data->cursosPasados }}</span></p>
+            <p class="font-regular">Cursos aprobados: <span>{{ $data->cursosPasados }}</span></p>
             <p class="font-regular">Progreso: <span>{{ $data->progreso }} %</span></p>
         </div>
     </div>

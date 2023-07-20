@@ -1,17 +1,17 @@
 <x-app title="matrices">
-    <div class="flex justify-between my-2 items-center">
-        <p>Para calificar a un empleado seleccione el curso a calificar y click en el boton de calificar.
-            <br>Para indicar el procentaje que lleva por curso ir al detalle de cada usuario
-        </p>
-
-        <form action="{{route("matrices.index")}}">
-            <div class="flex overflow-hidden rounded-md py-2">
-                <select name="sucursal_id" class="border-gray-300">
-                    <option value="">sucursales</option>
-                    @foreach ($sucursales as $sucursal )
-                    <option value="{{$sucursal->id_sucursal}}">{{$sucursal->nombre}}</option>
-                    @endforeach
-                </select>
+    <x-messages.alert-message
+        text="Para calificar a un empleado seleccione el curso a calificar y click en el boton de calificar.Para indicar el procentaje que lleva por curso ir al detalle de cada usuario" />
+    <div class="flex justify-end my-2 items-center">
+        <form action="{{ route('matrices.index') }}">
+            <div class="flex overflow-hidden rounded-md">
+                <div class="bg-red-200 w-auto">
+                    <select name="sucursal_id" class="border-gray-300 capitalize rounded-md w-full">
+                        <option value=" " class="inline-block capitalize">sucursales</option>
+                        @foreach ($sucursales as $sucursal)
+                            <option value="{{ $sucursal->id_sucursal }}" class="inline-block capitalize">{{ $sucursal->nombre }}</option>
+                        @endforeach
+                    </select>
+                </div>
                 <div class="relative w-full">
                     <input type="search" id="search-dropdown" name="buscador"
                         class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-l-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
@@ -28,9 +28,6 @@
                 </div>
             </div>
         </form>
-
-
-        {{-- <x-search.search-input route="matrices.index" /> --}}
     </div>
 
 

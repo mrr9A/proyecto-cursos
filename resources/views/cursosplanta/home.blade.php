@@ -125,16 +125,16 @@
                 <table class="min-w-full leading-normal my-2">
                     <thead class="border-b  dark:border-neutral-500 uppercase">
                         <tr
-                            class="px-5 border-b-2 border-gray-200 bg-th-table text-th-table-text text-left text-base font-semibold  uppercase tracking-wider">
+                            class="px-5 border-b-2 border-gray-200 bg-th-table text-th-table-text text-left text-sm font-semibold  uppercase tracking-wider">
                             <th scope="col" class="px-6 py-2 w-1/12">ID SGP</th>
                             <th scope="col" class="px-6 py-2">ID SUMTOTAL</th>
                             <th scope="col" class="px-6 py-2">empleado</th>
                             <th scope="col" class="px-6 py-2">puesto</th>
-                            <th scope="col" class="px-6 py-2">total de cursos</th>
-                            <th scope="col" class="px-6 py-2">cursos aprobados</th>
-                            <th scope="col" class="px-6 py-2">cursos reprobados</th>
-                            <th scope="col" class="px-6 py-2">cursos progresos</th>
-                            <th scope="col" class="px-6 py-2">progreso</th>
+                            <th scope="col" class="px-6 py-2 w-1/12 ">total de cursos</th>
+                            <th scope="col" class="px-6 py-2 w-1/12 ">cursos aprobados</th>
+                            <th scope="col" class="px-6 py-2 w-1/12 ">cursos reprobados</th>
+                            <th scope="col" class="px-6 py-2 w-1/12 ">cursos progresos</th>
+                            <th scope="col" class="px-6 py-2 w-1/12 ">progreso</th>
                             <th scope="col" class="px-6 py-2">opciones</th>
                         </tr>
                     </thead>
@@ -142,16 +142,16 @@
                         @foreach ($data['data'] as $usuario)
                             {{-- @dump($usuario) --}}
 
-                            <tr class="border-b border-gray-200 hover:bg-gray-100">
+                            <tr class="border-b border-gray-200 hover:bg-gray-100 text-sm">
                                 <td class="whitespace-nowrap px-6 py-2 w-1/12 ">{{ $usuario->id_sgp }}</td>
                                 <td class="whitespace-nowrap px-6 py-2 w-1/12 ">{{ $usuario->id_sumtotal }}</td>
                                 <td class="py-3 px-6 text-left capitalize">{{ $usuario->empleado }}</td>
                                 <td class="py-3 px-6 text-left">{{ $usuario->puesto }}</td>
                                 <td class="py-3 px-6 text-left">{{ $usuario->total }}</td>
-                                <td class="py-3 px-6 text-left">{{ $usuario->totalCursosPasados }}</td>
-                                <td class="py-3 px-6 text-left">{{ $usuario->cursosReprobados }}</td>
-                                <td class="py-3 px-6 text-left">{{ $usuario->cursosEnProgreso }}</td>
-                                <td class="py-3 px-6 text-left">{{ $usuario->promedioTotal }}</td>
+                                <td class="py-3 px-6 text-left w-1/12 ">{{ $usuario->totalCursosPasados }}</td>
+                                <td class="py-3 px-6 text-left w-1/12 ">{{ $usuario->cursosReprobados }}</td>
+                                <td class="py-3 px-6 text-left w-1/12 ">{{ $usuario->cursosEnProgreso }}</td>
+                                <td class="py-3 px-6 text-left w-1/12 ">{{ $usuario->promedioTotal }}</td>
                                 <td class="py-3 px-6 text-left">
                                     <div class="w-full flex justify-end mt-2">
                                         <a target="_blank" href="{{ route('descargarPDF', $usuario->id_usuario) }}"

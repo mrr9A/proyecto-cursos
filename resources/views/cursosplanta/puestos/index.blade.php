@@ -119,7 +119,7 @@
                                 <img src="/svg/edit.svg" />
                             </button>
 
-                            <button data-modal-target="puesto-{{ $puesto->id_puesto }}"
+                            <button data-modal-target="puesto-{{ $puesto->id_puesto }}" class="boton_modal"
                                 data-modal-toggle="puesto-{{ $puesto->id_puesto }}">
                                 <img src="/svg/delete.svg" />
                             </button>
@@ -185,6 +185,7 @@
     <div id="loader" />
     <script src="{{ asset('js/utils/validarInputs.js') }}"></script>
     <script>
+        correccionModal()
         var id = 1
         const buttonAddTrabajo = $('#add_trabajo');
         const containerTrabajos = $('#trabajos')
@@ -293,11 +294,13 @@
                         }
                     })
 
-                    if (data.trabajos.length > 0) {
+                    if (data.trabajos.length > 1) {
                         let dataTrabajos = ""
-                        data.trabajos.forEach((trabajo => {
-                            dataTrabajos +=
-                                `<x-input-text placeholder="Ej. jefe de taller" nombre="trabajo[]" text="Trabajo" value="${trabajo.nombre}" id="${trabajo.id_trabajo}" />`
+                        data.trabajos.forEach(((trabajo, i) => {
+                            if (i !== 0) {
+                                dataTrabajos +=
+                                    `<x-input-text placeholder="Ej. jefe de taller" nombre="trabajo[]" text="Trabajo"  value="${trabajo.nombre}" id="${trabajo.id_trabajo}" />`
+                            };
                         }))
                         containerTrabajos.innerHTML = dataTrabajos
                     } else(

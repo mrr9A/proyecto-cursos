@@ -16,7 +16,7 @@ class MatrizController extends Controller
         $data = [];
         $data = PlanesFormacion::getMatrices($request->buscador, $request->sucursal_id);
         $puestos = Puesto::all();
-        $sucursales = Sucursal::all();
+        $sucursales = Sucursal::all()->where('estado',1);
         return view('cursosplanta.matrices.index', compact('data', 'puestos', 'sucursales'));
     }
 
