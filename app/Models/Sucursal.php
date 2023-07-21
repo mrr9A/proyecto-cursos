@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use DateTime;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -20,101 +20,78 @@ class Sucursal extends Model
         return $this->belongsToMany(User::class, "sucursales_usuarios", "sucursal_id", "usuario_id")->where("usuarios.rol", "=", 1);
     }
 
-    // PRUEBA NUMERO 1000 PARA GENERARA EL HISTORIAL
-    public static function progresoEmpleadosPorTipo($buscar="consultor")
+    // // PRUEBA NUMERO 1000 PARA GENERARA EL HISTORIAL
+    public static function reporteGeneral($buscar = "consultor")
     {
-        $usuarios = User::with([
-            'puestos',
-            'trabajos.cursos.tipo',
-            'calificaciones'
-        ])
-            ->leftJoin('puestos', 'usuarios.puesto_id', '=', 'puestos.id_puesto')
-            ->join('sucursales_usuarios', 'sucursales_usuarios.usuario_id', '=', 'usuarios.id_usuario')
-            ->join('sucursales', 'sucursales.id_sucursal', '=', 'sucursales_usuarios.sucursal_id')
-            ->whereNotNull('usuarios.fecha_alta_planta')
-            ->where("sucursales.estado", 1)
-            ->where(function ($q) use ($buscar) {
-                $q->where('usuarios.nombre', 'like', $buscar . "%")
-                    ->orWhere(DB::raw('CONCAT(usuarios.nombre, " ", IFNULL(usuarios.segundo_nombre, ""), " ", usuarios.apellido_paterno, " ", IFNULL(usuarios.apellido_materno, ""))'), 'like', $buscar . "%")
-                    ->orWhere('usuarios.segundo_nombre', 'like', $buscar . "%")
-                    ->orWhere('usuarios.apellido_paterno', 'like', $buscar . "%")
-                    ->orWhere('usuarios.apellido_materno', 'like', $buscar . "%")
-                    ->orWhere('usuarios.id_sgp', 'like', $buscar . "%")
-                    ->orWhere('usuarios.id_sumtotal', 'like', $buscar . "%")
-                    ->orWhere('puestos.puesto', 'like', $buscar . "%")
-                    ->where("usuarios.estado", '=', 1);
-            })
-            ->where("usuarios.rol", '=', 1)
-            ->select(
-                'usuarios.id_usuario',
-                DB::raw("CONCAT(usuarios.nombre, ' ', IFNULL(segundo_nombre, ''), ' ', apellido_paterno, ' ', IFNULL(apellido_materno, '')) AS empleado"),
-                'usuarios.*'
-            )
-            ->orderBy('puestos.puesto', 'asc')
-            ->paginate(10)->appends(request()->query());
+        $resultados = DB::select('CALL progresoEmpleados()');
+        $totalEmpleadosSucursalPorTipos = DB::select('CALL totalEmpleadosSucursal()');
+        // Convertir los resultados a una colección de Laravel
+        $coleccionResultados = collect($resultados);
+
+        // Agrupar los datos por sucursal
+        $datosAgrupadosPorSucursal = $coleccionResultados->groupBy('sucursal');
+
+        // Realizar el agrupamiento por nombre_curso y fecha dentro de cada sucursal
+        $datosProcesados = $datosAgrupadosPorSucursal->map(function ($empleadosPorSucursal) use ($totalEmpleadosSucursalPorTipos) {
+            return $empleadosPorSucursal->groupBy(function ($empleado) {
+                return $empleado->nombre_curso . '|' . $empleado->fecha;
+            })->map(function ($empleadosPorCursoFecha) use ($totalEmpleadosSucursalPorTipos) {
+                $porcentajeAprobadoTotal = $empleadosPorCursoFecha->sum('porcentaje_aprobado');
+                $nombreCurso = $empleadosPorCursoFecha->first()->nombre_curso;
+                $fecha = $empleadosPorCursoFecha->first()->fecha;
+                $sucursal = $empleadosPorCursoFecha->first()->sucursal;
+                // dd($sucursal);
 
 
-        $result = $usuarios->map(function ($usuario) {
-            $todosCursosTotal = 0;
-            $cursosPasadosTotal = 0;
-            $cursosProgreso = [];
-            $cursosReprobados = [];
-            // & indica que la variable esta siendo pasada por referencia
-            $trabajos = $usuario->trabajos->map(function ($trabajo) use ($usuario, &$todosCursosTotal, &$cursosPasadosTotal, &$cursosProgreso, &$cursosReprobados) {
-                $cursos = $trabajo->cursos->map(function ($curso) use ($usuario) {
-                    $calificacion = $usuario->calificaciones
-                        ->firstWhere('curso_id', $curso->id_curso);
-                    $cali = $calificacion ? $calificacion->valor : null;
+                // Obtener la cantidad de empleados únicos para la sucursal y tipo de curso actual
+                $numEmpleadosUnicos = collect($totalEmpleadosSucursalPorTipos)
+                    ->filter(function ($item) use ($sucursal, $nombreCurso) {
+                        return $item->sucursal === $sucursal && $item->tipo_curso === $nombreCurso;
+                    })
+                    ->first()
+                    ->cantidad_usuarios ?? 0;
 
-                    return (object) [
-                        'calificacion' => $cali,
-                        'estado' => $calificacion->estado ?? 2,
-                        'curso' => $curso->nombre,
-                        'tipo' => $curso->tipo->nombre,
-                        'id_curso' => $curso->id_curso,
-                    ];
-                });
-
-                $todosCursos = $cursos->count();
-                $todosCursosTotal += $todosCursos;
-                $cursosPasados = $cursos->where('calificacion', '=', '100')->where('estado', '=', 1)->count();
-                $cursosEnProgreso = $cursos->where('calificacion', '<=', '100')->where('calificacion', '>', 0)->where('estado', 2)->pluck('calificacion')->toArray();
-                $cursoReprobados = $cursos->where('estado', 0)->pluck('calificacion')->toArray();
-                array_push($cursosProgreso, $cursosEnProgreso);
-                array_push($cursosReprobados, $cursoReprobados);
-                $cursosPasadosTotal += $cursosPasados;
+                // Calcular el porcentaje aprobado promedio
+                $porcentajeAprobadoPromedio = $porcentajeAprobadoTotal / max(1, $numEmpleadosUnicos);
 
                 return [
-                    'trabajo' => $trabajo->nombre,
-                    'cursos' => $cursos->groupBy('tipo'),
+                    'nombre_curso' => $nombreCurso,
+                    'fecha' => $fecha,
+                    'porcentaje_aprobado_promedio' => $porcentajeAprobadoPromedio,
                 ];
             });
-            $calCursosProgreso = array_reduce($cursosProgreso, function ($carry, $item) {
-                return $carry + array_sum($item);
-            }, 0);
-
-            $calcCursosReprobados = array_reduce($cursosReprobados, function ($carry, $item) {
-                return $carry + array_sum($item);
-            }, 0);
-            $porcentaje = bcdiv(($todosCursosTotal != 0) ? (((($cursosPasadosTotal * 100) + $calCursosProgreso + $calcCursosReprobados) * 100) / ($todosCursosTotal * 100)) : 0, '1', 2);
-
-            return (object) [
-                'id_usuario' => $usuario->id_usuario,
-                "id_sgp" => $usuario->id_sgp,
-                "id_sumtotal" => $usuario->id_sumtotal,
-                'empleado' => $usuario->empleado,
-                'puesto' => $usuario->puestos->puesto,
-                'total' => $todosCursosTotal,
-                'totalCursosPasados' => $cursosPasadosTotal,
-                'cursosEnProgreso' => count($cursosProgreso[0]), //aqui quite esto [0]
-                'cursosReprobados' => count($cursosReprobados[0]), //aqui quite esto [0]
-                'promedioTotal' => $porcentaje,
-            ];
         });
+        // return $datosProcesados;
 
-        return [
-            "data" => $result,
-            "links" => $usuarios->links()
-        ];
+        // Recorrer los datos agrupados por sucursal, nombre_curso y fecha
+        foreach ($datosProcesados as $sucursal => $empleadosPorSucursal) {
+            foreach ($empleadosPorSucursal as $clave => $empleadosPorCursoFecha) {
+                $porcentajeAprobadoPromedio = $empleadosPorCursoFecha['porcentaje_aprobado_promedio'];
+                // dd( $empleadosPorCursoFecha['fecha']);
+                $fecha = Carbon::createFromFormat('Y-m', $empleadosPorCursoFecha['fecha']);
+                $nombreCurso = $empleadosPorCursoFecha['nombre_curso'];
+
+                // Obtener la cantidad de empleados únicos para la sucursal y tipo de curso actual
+                // $numEmpleadosUnicos = $empleadosPorTipo[$sucursal][$nombreCurso] ?? 0;
+
+                // Calcular el objetivo según las condiciones especificadas
+                $fechaMinima = Carbon::createFromFormat('Y-m', $empleadosPorSucursal->min('fecha'));
+                $objetivo = ($fecha == $fechaMinima)
+                    ? 16
+                    : ($porcentajeAprobadoPromedio + 16);
+
+                // Ahora puedes almacenar los datos en la tabla historia
+                // Reemplaza 'nombre_tabla_historia' con el nombre real de tu tabla 'historia'
+                DB::table('historial')->insert([
+                    'sucursal' => $sucursal,
+                    'objetivo' => $objetivo,
+                    'real' => $porcentajeAprobadoPromedio,
+                    'fecha' => $fecha,
+                    'tipo' => $nombreCurso,
+                    // Agrega los demás campos que correspondan...
+                ]);
+            }
+        }
+        return "hola";
     }
 }
