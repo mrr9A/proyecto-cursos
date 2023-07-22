@@ -88,7 +88,6 @@ class ContenidoController extends Controller
         $curso = $leccion->curso_id;
 
         return to_route("curs.show", $curso)->with('actualizado', 'Contenido Actualizada Correctamente');
-        // return redirect()->back()->with('actualizado', 'Actualizado Correctamente');
     }
 
     public function edi($id)

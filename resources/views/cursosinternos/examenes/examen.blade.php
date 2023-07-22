@@ -130,7 +130,7 @@
 
             const charCode = e.which || e.keyCode;
             const char = String.fromCharCode(charCode);
-            const pattern = /[a-zA-Z0-9\s\-+]/
+            const pattern = /[a-zA-Z0-9\s\-+¿?]/
 
             if (!pattern.test(char)) {
                 e.preventDefault();

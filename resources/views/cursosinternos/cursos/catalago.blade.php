@@ -7,7 +7,7 @@
                 </a>
                 <a type="button" class="text-white bg-btn-primary hover:bg-btn-primary-light focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700" href="{{ url('avances') }}">
                     <img src="./img/usuario.png" alt="">
-                    <span>Usuarios internos</span>
+                    <span>Inicio cursos internos</span>
                 </a>
                 <a type="button" class="text-white bg-btn-primary hover:bg-btn-primary-light focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700" href="{{ route('reportesinternos.index') }}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 512 512">
