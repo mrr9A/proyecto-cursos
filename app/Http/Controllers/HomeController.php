@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Puesto;
 use App\Models\Sucursal;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -24,11 +25,15 @@ class HomeController extends Controller
         $allEmpleados = User::where("estado", "=", 1)->count();
         $allSucursales = Sucursal::where("estado", "=", 1)->count();
 
-        return view('cursosplanta.home', compact('data', 'allEmpleados', 'allSucursales'));
-    }
+        // Registros de la tabla historial a mostrar
+        $fechaActual = Carbon::now(); // Obtiene la fecha y hora actual
+        $primerDiaMesAnterior = Carbon::now()->subMonth()->startOfMonth(); // Obtiene el primer día del mes anterior
 
-    public function reporteGeneral(){
-        $data = Sucursal::reporteGeneral();
-        return view('cursosplanta.reportGeneral.index', compact('data'));
+        $historial = DB::table("historial")
+            ->whereBetween('fecha', [$primerDiaMesAnterior, $fechaActual])
+            ->get()->groupBy('sucursal')->map(function ($registro) {
+                return $registro->groupBy('fecha');
+            });
+        return view('cursosplanta.home', compact('data', 'allEmpleados', 'allSucursales', 'historial'));
     }
 }

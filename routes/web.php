@@ -41,23 +41,20 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout')->midd
 require __DIR__ . '/resource.php';
 Route::middleware('auth.admin')->group(function () {
     // Rutas protegidas para el rol de administrador
-// ruta para obtener el reporte general de los cursos por sucursal
-Route::get('reporte-general', [HomeController::class, 'reporteGeneral'])->name('reporte.general');
-
-
-    Route::get('/pdf/{user}', [PDFController::class,'pdf'])->name('descargarPDF');
+    // ruta para obtener el reporte general de los cursos por sucursal
+    Route::get('/pdf/{user}', [PDFController::class, 'pdf'])->name('descargarPDF');
     Route::get('/reporte', [ReporteController::class, 'generateExcelReport'])->name('exportarExcel');
     Route::get('home', [HomeController::class, 'index'])->name('home')->middleware('preventBackHistory');
     Route::get('/cursosplanta/cursos-puestos/asignar-cursos', [PuestoController::class, 'asignarCursos'])->name('puestos.cursos');
-    
-    Route::get('/cursos', function (){
+
+    Route::get('/cursos', function () {
         $modalidad = ModalidadCurso::all();
         $tipos = TipoCurso::all();
         $categorias = Categoria::all();
         return view('cursos.index', compact('modalidad', 'tipos', 'categorias'));
     })->name('cursos.home');
     Route::delete('/cursosplanta/cursos/puestos/trabajos/{id}', [TrabajoController::class, 'destroy'])->name("trabajos.destroy");
-    
+
     Route::resource('sucursales', SucursalesController::class, ['names' => 'sucursales']);
     Route::resource("cursosplanta/puestos", PuestoController::class, ["names" => "puestos"]);
     Route::resource("usuarios", UsuarioController::class, ["names" => "usuarios"]);
@@ -72,12 +69,12 @@ Route::get('reporte-general', [HomeController::class, 'reporteGeneral'])->name('
     Route::resource("cursosplanta/reportes", ReporteController::class, ["names" => "reportes"]);
     Route::resource('categorias', CategoriaController::class, ["names" => "categorias"]);
     Route::resource('configuracion', ConfiguracionController::class, ["names" => "configuracion"]);
+    Route::get('reporte-general', [ConfiguracionController::class, 'cierreMes'])->name('reporte.general');
 
-    
+
     Route::fallback(function () {
         return redirect('home');
     });
 });
 
 // REPORT EXCEL
-

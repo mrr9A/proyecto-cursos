@@ -25,6 +25,14 @@
                 <i class='bx bx-buildings'></i>
             </div>
         </div>
+
+        <div>
+            <div class="flex justify-between items-center mb-2">
+                <h2 class="font-poppins font-medium text-subtitle uppercase">Historial</h2>
+            </div>
+            <x-tables.table-historial :data="$historial" />
+        </div>
+
         <div>
             <div class="flex justify-between items-center mb-2">
                 <h2 class="font-poppins font-medium text-subtitle">PROGRESO DE LOS EMPLEADOS</h2>
@@ -36,8 +44,8 @@
                 <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
                     <div>
                         {{-- $usuarios->currentPage(): Devuelve el número de página actual.
-        $usuarios->perPage(): Devuelve la cantidad de resultados mostrados por página.
-        $usuarios->total(): Devuelve el total de resultados obtenidos. --}}
+                        $usuarios->perPage(): Devuelve la cantidad de resultados mostrados por página.
+                        $usuarios->total(): Devuelve el total de resultados obtenidos. --}}
                         <p class="text-sm text-gray-700">
                             Mostrando
                             <span class="font-medium">{{ $data['links']['paginator']->currentPage() }}</span>

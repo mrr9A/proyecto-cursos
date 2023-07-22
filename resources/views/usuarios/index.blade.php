@@ -134,7 +134,7 @@
                                 <a href="{{ route('usuarios.edit', $usuario->id_usuario) }}">
                                     <img src="/svg/edit.svg" />
                                 </a>
-                                <button data-modal-target="usuario-{{ $usuario->id_usuario }}"
+                                <button data-modal-target="usuario-{{ $usuario->id_usuario }}" class="boton_modal"
                                     data-modal-toggle="usuario-{{ $usuario->id_usuario }}">
                                     <img src="/svg/delete.svg" />
                                 </button>
@@ -153,4 +153,7 @@
 
     </div>
     </div>
+    <script>
+        correccionModal()
+    </script>
 </x-app>
