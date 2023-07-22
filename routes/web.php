@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CalificacionController;
 use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\ConfiguracionController;
 use App\Http\Controllers\CursoController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MatrizController;
@@ -70,6 +71,7 @@ Route::get('reporte-general', [HomeController::class, 'reporteGeneral'])->name('
     Route::resource("cursosplanta/calificaciones", CalificacionController::class, ["names" => "calificaciones"]);
     Route::resource("cursosplanta/reportes", ReporteController::class, ["names" => "reportes"]);
     Route::resource('categorias', CategoriaController::class, ["names" => "categorias"]);
+    Route::resource('configuracion', ConfiguracionController::class, ["names" => "configuracion"]);
 
     
     Route::fallback(function () {

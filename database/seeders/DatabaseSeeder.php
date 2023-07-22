@@ -275,7 +275,7 @@ class DatabaseSeeder extends Seeder
         ]);
         // FIND DE LA CREACION DE SUCRUSALES
 
-        \App\Models\User::factory(50)->create();
+        \App\Models\User::factory(10)->create();
 
         // ADMIN
         // User::create([

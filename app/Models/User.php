@@ -267,8 +267,11 @@ class User extends Authenticatable
                 'cursosEnProgreso' => count($cursosProgreso[0]),//aqui quite esto [0]
                 'cursosReprobados' => count($cursosReprobados[0]),//aqui quite esto [0]
                 'promedioTotal' => $porcentaje,
+                'trabajos' => $trabajos,
             ];
         });
+        
+        
 
         return [
             "data" => $result,
