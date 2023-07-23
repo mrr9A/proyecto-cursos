@@ -95,10 +95,10 @@
     </div>
 
 
-    <table id="tabla1" class="uppercase min-w-full leading-normal my-2 border-collapse">
+    <table id="tabla1" class="uppercase min-w-full leading-normal my-2 border-collapse border-2 border-gray-400">
         <thead class="border-b  dark:border-neutral-500 uppercase">
             <tr
-                class="px-5 border-b-2 border-gray-200 bg-primary text-left text-base font-semibold text-white uppercase tracking-wider">
+                class="px-5 border-b-2 border-gray-300 bg-primary text-left text-base font-semibold text-white uppercase tracking-wider">
                 <th scope="col" class="px-6 py-2 border-r-2">Personal</th>
                 <th scope="col" class="px-6 py-2 border-r-2">Puesto</th>
                 <th scope="col" class="px-6 py-2 border-r-2">Trabajos</th>
@@ -108,7 +108,7 @@
         </thead>
         <tbody>
             @foreach ($empleados['usuarios'] as $empleado)
-                <tr class="border-b border-gray-200 hover:bg-gray-100">
+                <tr class="border-b border-gray-300 hover:bg-gray-100">
                     <td class="w-1/12 min-h-full border-r-2">
                         <label class="w-full min-h-full cursor-pointer block overflow-hidden">
                             <input class="hidden peer" type="checkbox" name="empleado"

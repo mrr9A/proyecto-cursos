@@ -12,7 +12,7 @@
 
             <input id="buscador" name="buscador" type="text"
                 placeholder="{{ $placeholder ?? 'Identificador, puesto, nombre ...' }}"
-                class="block w-full py-2.5 pr-5 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-80  placeholder-gray-400/70 pl-11 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40 {{$classInput ?? "" }} ">
+                class="block w-full py-2.5 pr-5 text-gray-700 bg-white border border-gray-300 rounded-lg md:w-80  placeholder-gray-400/70 pl-11 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40 {{$classInput ?? "" }} ">
         </div>
         <button type="submit"
             class="p-2.5 ml-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">

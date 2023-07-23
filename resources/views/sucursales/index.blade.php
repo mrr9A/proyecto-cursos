@@ -7,7 +7,7 @@
                 vistaContenidoModal="sucursales.create" />
         </div>
         <div class="my-5">
-            <table class="min-w-full">
+            <table class="min-w-full border-2">
                 <thead class="border-b uppercase bg-th-table text-th-table-text text-left">
                     <tr>
                         <th class="px-6 py-2">Codigo</th>
@@ -19,7 +19,7 @@
                 </thead>
                 <tbody class="uppercase">
                     @foreach ($sucursales as $sucursal)
-                        <tr class="border-b border-gray-200 hover:bg-gray-100">
+                        <tr class="border-b border-gray-300 hover:bg-gray-200">
                             <td class="py-3 px-6 text-left w-1/12 ">{{ $sucursal->codigo ?? 0 }}</td>
                             <td class="py-3 px-6 text-left flex items-center gap-2"> <i
                                     class='bx bx-buildings'></i>{{ $sucursal->nombre }}</td>

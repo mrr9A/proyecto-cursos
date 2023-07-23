@@ -23,44 +23,8 @@ class Sucursal extends Model
     // // PRUEBA NUMERO 1000 PARA GENERARA EL HISTORIAL
     public static function cierreMes()
     {
-        $resultados = DB::select('CALL progresoEmpleados()');
-        $totalEmpleadosSucursalPorTipos = DB::select('CALL totalEmpleadosSucursal()');
-        // Convertir los resultados a una colección de Laravel
-        $coleccionResultados = collect($resultados);
+        $datosProcesados = Sucursal::reporteMesActual();
 
-        // Agrupar los datos por sucursal
-        $datosAgrupadosPorSucursal = $coleccionResultados->groupBy('sucursal');
-
-        // Realizar el agrupamiento por nombre_curso y fecha dentro de cada sucursal
-        $datosProcesados = $datosAgrupadosPorSucursal->map(function ($empleadosPorSucursal) use ($totalEmpleadosSucursalPorTipos) {
-            return $empleadosPorSucursal->groupBy(function ($empleado) {
-                return $empleado->nombre_curso;
-            })->map(function ($empleadosPorCursoFecha) use ($totalEmpleadosSucursalPorTipos) {
-                $porcentajeAprobadoTotal = $empleadosPorCursoFecha->sum('porcentaje_aprobado');
-                $nombreCurso = $empleadosPorCursoFecha->first()->nombre_curso;
-                $fecha = $empleadosPorCursoFecha->first()->fecha;
-                $sucursal = $empleadosPorCursoFecha->first()->sucursal;
-
-                // Obtener la cantidad de empleados únicos para la sucursal y tipo de curso actual
-                $numEmpleadosUnicos = collect($totalEmpleadosSucursalPorTipos)
-                    ->filter(function ($item) use ($sucursal, $nombreCurso) {
-                        return $item->sucursal === $sucursal && $item->tipo_curso === $nombreCurso;
-                    })
-                    ->first()
-                    ->cantidad_usuarios ?? 0;
-
-                // Calcular el porcentaje aprobado promedio
-                $porcentajeAprobadoPromedio = $porcentajeAprobadoTotal / max(1, $numEmpleadosUnicos);
-
-                return [
-                    'nombre_curso' => $nombreCurso,
-                    'fecha' => $fecha,
-                    'porcentaje_aprobado_promedio' => $porcentajeAprobadoPromedio,
-                    'empleados' => $numEmpleadosUnicos
-                ];
-            });
-        });
-        // return $datosProcesados;
 
         // Recorrer los datos agrupados por sucursal, nombre_curso y fecha
         foreach ($datosProcesados as $sucursal => $empleadosPorSucursal) {
@@ -149,5 +113,47 @@ class Sucursal extends Model
                 }
             }
         }
+    }
+
+    public static function reporteMesActual()
+    {
+        $resultados = DB::select('CALL progresoEmpleados()');
+        $totalEmpleadosSucursalPorTipos = DB::select('CALL totalEmpleadosSucursal()');
+        // Convertir los resultados a una colección de Laravel
+        $coleccionResultados = collect($resultados);
+
+        // Agrupar los datos por sucursal
+        $datosAgrupadosPorSucursal = $coleccionResultados->groupBy('sucursal');
+
+        // Realizar el agrupamiento por nombre_curso y fecha dentro de cada sucursal
+        $datosProcesados = $datosAgrupadosPorSucursal->map(function ($empleadosPorSucursal) use ($totalEmpleadosSucursalPorTipos) {
+            return $empleadosPorSucursal->groupBy(function ($empleado) {
+                return $empleado->nombre_curso;
+            })->map(function ($empleadosPorCursoFecha) use ($totalEmpleadosSucursalPorTipos) {
+                $porcentajeAprobadoTotal = $empleadosPorCursoFecha->sum('porcentaje_aprobado');
+                $nombreCurso = $empleadosPorCursoFecha->first()->nombre_curso;
+                $fecha = $empleadosPorCursoFecha->first()->fecha;
+                $sucursal = $empleadosPorCursoFecha->first()->sucursal;
+
+                // Obtener la cantidad de empleados únicos para la sucursal y tipo de curso actual
+                $numEmpleadosUnicos = collect($totalEmpleadosSucursalPorTipos)
+                    ->filter(function ($item) use ($sucursal, $nombreCurso) {
+                        return $item->sucursal === $sucursal && $item->tipo_curso === $nombreCurso;
+                    })
+                    ->first()
+                    ->cantidad_usuarios ?? 0;
+
+                // Calcular el porcentaje aprobado promedio
+                $porcentajeAprobadoPromedio = $porcentajeAprobadoTotal / max(1, $numEmpleadosUnicos);
+
+                return [
+                    'nombre_curso' => $nombreCurso,
+                    'fecha' => $fecha,
+                    'porcentaje_aprobado_promedio' => number_format($porcentajeAprobadoPromedio, 2),
+                    'empleados' => $numEmpleadosUnicos
+                ];
+            });
+        });
+        return $datosProcesados;
     }
 }

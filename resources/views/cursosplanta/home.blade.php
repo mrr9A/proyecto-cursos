@@ -26,11 +26,9 @@
             </div>
         </div>
 
-        <div>
-            <div class="flex justify-between items-center mb-2">
-                <h2 class="font-poppins font-medium text-subtitle uppercase">Historial</h2>
-            </div>
-            <x-tables.table-historial :data="$historial" />
+        <div class="bg-primary py-2 px-2 rounded-md mb-4">
+            <h2 class="font-poppins font-medium text-subtitle uppercase text-white">Historial</h2>
+            <x-tables.table-sucursal :data="$historial" :reporteMesActual="$reporteMesActual" />
         </div>
 
         <div>
@@ -122,10 +120,10 @@
             {{-- fin pagination --}}
             @if (count($data['data']) > 0)
                 <div class="card-body">
-                    <table class="min-w-full leading-normal my-2">
+                    <table class="min-w-full leading-normal my-2 border-2">
                         <thead class="border-b  dark:border-neutral-500 uppercase">
                             <tr
-                                class="px-5 border-b-2 border-gray-200 bg-th-table text-th-table-text text-left text-sm font-semibold  uppercase tracking-wider">
+                                class="px-5 border-b-2 border-gray-300 bg-th-table text-th-table-text text-left text-sm font-semibold  uppercase tracking-wider">
                                 <th scope="col" class="px-6 py-2 w-1/12">ID SGP</th>
                                 <th scope="col" class="px-6 py-2">ID SUMTOTAL</th>
                                 <th scope="col" class="px-6 py-2">empleado</th>
@@ -142,7 +140,7 @@
                             @foreach ($data['data'] as $usuario)
                                 {{-- @dump($usuario) --}}
 
-                                <tr class="border-b border-gray-200 hover:bg-gray-100 text-sm">
+                                <tr class="border-b border-gray-300 hover:bg-gray-200 text-sm">
                                     <td class="whitespace-nowrap px-6 py-2 w-1/12 ">{{ $usuario->id_sgp }}</td>
                                     <td class="whitespace-nowrap px-6 py-2 w-1/12 ">{{ $usuario->id_sumtotal }}</td>
                                     <td class="py-3 px-6 text-left capitalize">{{ $usuario->empleado }}</td>
