@@ -68,7 +68,7 @@
     {{-- Lista de los puestos --}}
     <div class="flex flex-col gap-3 mt-5">
         <h2 class="text-subtitle">Lista de puestos</h2>
-        <table class="min-w-full">
+        <table class="min-w-full border-2">
             <thead class="uppercase bg-th-table text-th-table-text text-left">
                 <th class="px-6 py-2">Codigo</th>
                 <th class="px-6 py-2">Plan de formacion</th>
@@ -78,7 +78,7 @@
             </thead>
             <tbody class="uppercase">
                 @foreach ($puestos as $puesto)
-                    <tr class="mb-4 border-b border-gray-200 hover:bg-gray-100">
+                    <tr class="mb-4 border-b border-gray-300 hover:bg-gray-200">
                         <td class="whitespace-nowrap px-6 py-1 ">
                             {{ $puesto->codigo ?? 0 }}
                         </td>

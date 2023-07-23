@@ -96,7 +96,7 @@
             {{-- FIN DE LA PAGINACION --}}
 
 
-            <table class="min-w-full leading-normal my-2">
+            <table class="min-w-full leading-normal my-2 border-2">
                 <thead class="border-b  dark:border-neutral-500 uppercase">
                     <tr
                         class="px-5 py-3 border-b-2 border-gray-200 bg-th-table text-left text-xs font-semibold text-th-table-text uppercase tracking-wider">
@@ -116,7 +116,7 @@
                         </tr>
                     @endif
                     @foreach ($usuarios as $usuario)
-                        <tr class="border-b border-gray-200 hover:bg-gray-100">
+                        <tr class="border-b border-gray-300 hover:bg-gray-200">
                             <td class="whitespace-nowrap px-6 py-2 w-1/12 ">{{ $usuario->id_sgp }}</td>
                             <td class="py-3 px-6 text-left">{{ $usuario->id_sumtotal }}</td>
                             <td class="py-3 px-6 text-left capitalize">{{ $usuario->nombre }}
