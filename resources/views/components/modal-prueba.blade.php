@@ -1,9 +1,7 @@
-
-
 <!-- Main modal -->
 <div id="{{$id}}" tabindex="-1" aria-hidden="true"
     class="bg-[rgba(0,0,0,.3)] fixed top-0 left-0 right-0 bottom-0 z-[100] hidden w-full p-4 overflow-x-hidden overflow-y-auto   h-[100vh]">
-    <div class="relative w-full max-w-md max-h-vh m-auto {{ $class ?? ""}}">
+    <div class=" {{ $class ?? "max-w-md max-h-vh m-auto  w-full"}} relative ">
         <!-- Modal content -->
         <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
             <button type="button"
