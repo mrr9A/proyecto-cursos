@@ -37,6 +37,7 @@
                 <h2 class="bg-blue-800  text-white font-medium uppercase pl-2">{{ $sucursal }}</h2>
                 <div class="grid-cols-[repeat(auto-fit,minmax(120px,1fr))] grid">
                     @foreach ($datos as $fecha => $fechas)
+                    <?php $fecha = date("Y/m/d") ?>
                         <div>
                             <h2 class="pl-2 font-semi-bold">{{ $fecha }}</h2>
                             <div class="">
