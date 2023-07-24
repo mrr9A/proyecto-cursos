@@ -18,7 +18,7 @@
                                     <div
                                         class="grid grid-cols-3 gap-2 py-1 px-2 bg-gray-100 hover:bg-gray-300 hover:cursor-pointer">
                                         <span>{{ $dato->tipo }}</span>
-                                        <span class="text-center">{{ $dato->objetivo }} %</span>
+                                        <span class="text-center">{{ $dato->objetivo > 100 ? "100" :$dato->objetivo }} %</span>
                                         <span class="text-center">{{ $dato->real }} %</span>
                                     </div>
                                 @endforeach

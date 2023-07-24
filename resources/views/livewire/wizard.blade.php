@@ -34,7 +34,7 @@
                             </g>
                         </svg>
                     </span>
-                    <P>Conmfirmar datos</P>
+                    <P>Confirmar datos</P>
                 </div>
             </div>
         </div>
