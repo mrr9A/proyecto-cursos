@@ -19,7 +19,7 @@
                     <option value="Todos" selected></option>
                 </select>
                 <button type="submit" class="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 bg-gray-100 sm:text-sm dark:bg-gray-800 dark:text-gray-300">
-                    Todos los cursosS
+                    Todos los cursos
                 </button>
             </form>
 
@@ -59,9 +59,9 @@
                     <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                         <thead class="bg-gray-50 dark:bg-gray-800">
                             <tr>
-                                <th scope="col" class="py-3.5 text-sm font-normal  rtl:text-right text-gray-500 dark:text-gray-400">Imagén del curso</th>
+                                <th scope="col" class="py-3.5 text-sm font-normal  rtl:text-right text-gray-500 dark:text-gray-400">Imagen del curso</th>
                                 <th scope="col" class="py-3.5 text-center text-sm font-normal rtl:text-right text-gray-500 dark:text-gray-400"><span>Nombre del curso</span></th>
-                                <th scope="col" class="py-3.5 text-center text-sm font-normal rtl:text-right text-gray-500 dark:text-gray-400"><span>Num. Lecciones</span></th>
+                                <th scope="col" class="py-3.5 text-center text-sm font-normal rtl:text-right text-gray-500 dark:text-gray-400"><span>N.º Lecciones</span></th>
 
                                 <th scope="col" class=" py-3.5 text-sm font-normal text-center rtl:text-right text-gray-500 dark:text-gray-400">
                                     Estatus del curso
@@ -73,11 +73,11 @@
 
 
                                 <th scope="col" class=" py-3.5 text-sm font-normal text-center rtl:text-right text-gray-500 dark:text-gray-400">
-                                    Inicia el:
+                                    Inicia él:
                                 </th>
 
                                 <th scope="col" class=" py-3.5 text-sm font-normal text-center rtl:text-right text-gray-500 dark:text-gray-400">
-                                    Termina el:
+                                    Termina él:
                                 </th>
                                 <th scope="col" class="py-3.5 text-sm font-normal text-center rtl:text-right text-gray-500 dark:text-gray-400">Calificación del curso</th>
 

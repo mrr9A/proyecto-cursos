@@ -69,7 +69,7 @@ Route::middleware('auth.admin')->group(function () {
     Route::resource("cursosplanta/reportes", ReporteController::class, ["names" => "reportes"]);
     Route::resource('categorias', CategoriaController::class, ["names" => "categorias"]);
     Route::resource('configuracion', ConfiguracionController::class, ["names" => "configuracion"]);
-    Route::get('reporte-general', [ConfiguracionController::class, 'cierreMes'])->name('reporte.general');
+    Route::post('reporte-general', [ConfiguracionController::class, 'cierreMes'])->name('reporte.general');
 
 
     Route::fallback(function () {

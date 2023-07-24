@@ -82,7 +82,7 @@
         // Validar el tamaño del archivo
         if (fileSize > maxSize) {
             // El archivo excede el tamaño máximo permitido
-            alert('El archivo seleccionado es demasiado grande. Por favor, selecciona un archivo más pequeño.');
+            alert('El archivo seleccionado es demasiado grande. Por favor, selecciona un archivo más pequeño. \nMenor a 50MB');
             // Limpiar el campo de entrada de archivo
             fileInput.value = '';
             document
