@@ -117,7 +117,6 @@ class Sucursal extends Model
 
     public static function reporteMesActual()
     {
-        // DB::statement("SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));");
         $resultados = DB::select('CALL progresoEmpleados()');
         $totalEmpleadosSucursalPorTipos = DB::select('CALL totalEmpleadosSucursal()');
         // Convertir los resultados a una colección de Laravel

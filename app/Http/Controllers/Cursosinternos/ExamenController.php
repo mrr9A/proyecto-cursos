@@ -111,7 +111,6 @@ class ExamenController extends Controller
 
     public function update(Request $request, string $id)
     {
-        // dd($request);
         $examen = Examen::find($request->id_examen);
         if(is_null($examen)){
             return redirect()->back();
