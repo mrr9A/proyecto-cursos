@@ -68,7 +68,7 @@
     {{-- Lista de los puestos --}}
     <div class="flex flex-col gap-3 mt-5">
         <h2 class="text-subtitle">Lista de puestos</h2>
-        <table class="min-w-full">
+        <table class="min-w-full border-2">
             <thead class="uppercase bg-th-table text-th-table-text text-left">
                 <th class="px-6 py-2">Codigo</th>
                 <th class="px-6 py-2">Plan de formacion</th>
@@ -78,7 +78,7 @@
             </thead>
             <tbody class="uppercase">
                 @foreach ($puestos as $puesto)
-                    <tr class="mb-4 border-b border-gray-200 hover:bg-gray-100">
+                    <tr class="mb-4 border-b border-gray-300 hover:bg-gray-200">
                         <td class="whitespace-nowrap px-6 py-1 ">
                             {{ $puesto->codigo ?? 0 }}
                         </td>
@@ -119,7 +119,7 @@
                                 <img src="/svg/edit.svg" />
                             </button>
 
-                            <button data-modal-target="puesto-{{ $puesto->id_puesto }}"
+                            <button data-modal-target="puesto-{{ $puesto->id_puesto }}" class="boton_modal"
                                 data-modal-toggle="puesto-{{ $puesto->id_puesto }}">
                                 <img src="/svg/delete.svg" />
                             </button>
@@ -185,6 +185,7 @@
     <div id="loader" />
     <script src="{{ asset('js/utils/validarInputs.js') }}"></script>
     <script>
+        correccionModal()
         var id = 1
         const buttonAddTrabajo = $('#add_trabajo');
         const containerTrabajos = $('#trabajos')
@@ -293,11 +294,13 @@
                         }
                     })
 
-                    if (data.trabajos.length > 0) {
+                    if (data.trabajos.length > 1) {
                         let dataTrabajos = ""
-                        data.trabajos.forEach((trabajo => {
-                            dataTrabajos +=
-                                `<x-input-text placeholder="Ej. jefe de taller" nombre="trabajo[]" text="Trabajo" value="${trabajo.nombre}" id="${trabajo.id_trabajo}" />`
+                        data.trabajos.forEach(((trabajo, i) => {
+                            if (i !== 0) {
+                                dataTrabajos +=
+                                    `<x-input-text placeholder="Ej. jefe de taller" nombre="trabajo[]" text="Trabajo"  value="${trabajo.nombre}" id="${trabajo.id_trabajo}" />`
+                            };
                         }))
                         containerTrabajos.innerHTML = dataTrabajos
                     } else(

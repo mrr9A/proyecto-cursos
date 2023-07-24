@@ -20,16 +20,6 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    // protected $fillable = [
-    //     'nombre',
-    //     'apellido_paterno',
-    //     'apellido_materno',
-    //     'segundo_nombre',
-    //     'estado',
-    //     'email',
-    //     'password',
-    //     "puesto_id"
-    // ];
     protected $fillable = [
         'nombre',
         'segundo_nombre',
@@ -197,6 +187,10 @@ class User extends Authenticatable
             'calificaciones'
         ])
             ->leftJoin('puestos', 'usuarios.puesto_id', '=', 'puestos.id_puesto')
+            ->join('sucursales_usuarios', 'sucursales_usuarios.usuario_id', '=', 'usuarios.id_usuario')
+            ->join('sucursales', 'sucursales.id_sucursal', '=', 'sucursales_usuarios.sucursal_id')
+            ->whereNotNull('usuarios.fecha_alta_planta')
+            ->where("sucursales.estado", 1)
             ->where(function ($q) use ($buscar) {
                 $q->where('usuarios.nombre', 'like', $buscar . "%")
                     ->orWhere(DB::raw('CONCAT(usuarios.nombre, " ", IFNULL(usuarios.segundo_nombre, ""), " ", usuarios.apellido_paterno, " ", IFNULL(usuarios.apellido_materno, ""))'), 'like', $buscar . "%")
@@ -211,18 +205,12 @@ class User extends Authenticatable
             ->where("usuarios.rol", '=', 1)
             ->select(
                 'usuarios.id_usuario',
-                DB::raw("CONCAT(nombre, ' ', IFNULL(segundo_nombre, ''), ' ', apellido_paterno, ' ', IFNULL(apellido_materno, '')) AS empleado"),
+                DB::raw("CONCAT(usuarios.nombre, ' ', IFNULL(segundo_nombre, ''), ' ', apellido_paterno, ' ', IFNULL(apellido_materno, '')) AS empleado"),
                 'usuarios.*'
             )
             ->orderBy('puestos.puesto', 'asc')
             ->paginate(10)->appends(request()->query());
 
-        // dd($usuarios);
-
-        // if ($usuarios->isEmpty()) {
-        //     // El usuario no existe, manejar el caso de error aquí
-        //     return 0;
-        // }
 
         $result = $usuarios->map(function ($usuario) {
             $todosCursosTotal = 0;
@@ -259,15 +247,14 @@ class User extends Authenticatable
                     'cursos' => $cursos->groupBy('tipo'),
                 ];
             });
-            // echo "<script>console.log(" . json_encode($cursosProgreso) . ")</script>";
             $calCursosProgreso = array_reduce($cursosProgreso, function ($carry, $item) {
                 return $carry + array_sum($item);
             }, 0);
 
-            $cursosReprobados = array_reduce($cursosReprobados, function ($carry, $item) {
+            $calcCursosReprobados = array_reduce($cursosReprobados, function ($carry, $item) {
                 return $carry + array_sum($item);
             }, 0);
-            $porcentaje = bcdiv(($todosCursosTotal != 0) ? (((($cursosPasadosTotal * 100) + $calCursosProgreso + $cursosReprobados) * 100) / ($todosCursosTotal * 100)) : 0, '1', 2);
+            $porcentaje = bcdiv(($todosCursosTotal != 0) ? (((($cursosPasadosTotal * 100) + $calCursosProgreso + $calcCursosReprobados) * 100) / ($todosCursosTotal * 100)) : 0, '1', 2);
 
             return (object) [
                 'id_usuario' => $usuario->id_usuario,
@@ -278,9 +265,13 @@ class User extends Authenticatable
                 'total' => $todosCursosTotal,
                 'totalCursosPasados' => $cursosPasadosTotal,
                 'cursosEnProgreso' => count($cursosProgreso[0]),//aqui quite esto [0]
+                'cursosReprobados' => count($cursosReprobados[0]),//aqui quite esto [0]
                 'promedioTotal' => $porcentaje,
+                'trabajos' => $trabajos,
             ];
         });
+        
+        
 
         return [
             "data" => $result,

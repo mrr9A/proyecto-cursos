@@ -73,8 +73,6 @@ class Curso extends Model
                 "id_curso",
                 "codigo",
                 "c.nombre",
-                "fecha_inicio",
-                "fecha_termino",
                 "tc.nombre as tipo",
                 "modalidad"
             )
@@ -88,7 +86,9 @@ class Curso extends Model
                     ->orWhere('c.nombre', 'like', $buscar . "%");
             })
             ->where("c.estado", '=', 1)
+            ->orderByRaw("CASE WHEN tipo LIKE 'i%' THEN 0 WHEN tipo LIKE 'f%' THEN 1 WHEN tipo LIKE 'e%' THEN 2 ELSE 3 END")
             ->orderBy('id_curso', 'asc');
+            // ->orderBy('tipo', 'asc');
 
         if ($pagination) {
             $cursos = $cursos->paginate(10)->appends(request()->query());
@@ -220,7 +220,6 @@ class Curso extends Model
                 "codigo",
                 "c.nombre",
                 "interno_planta",
-                "fecha_termino",
                 "tc.nombre as tipo",
                 "modalidad"
             )

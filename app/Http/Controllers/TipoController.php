@@ -12,8 +12,13 @@ class TipoController extends Controller
     public function store(Request $request)
     {
 
+        $request->validate([
+            "nombre" => 'required|string'
+        ]);
+
         $tipoCurso = TipoCurso::create([
             "nombre" => $request->nombre,
+            "duracion" => $request->duracion,
             "estado" => 1,
         ]);
 
@@ -26,6 +31,7 @@ class TipoController extends Controller
         $tipo = TipoCurso::find($id);
         $tipo->update([
             "nombre" => $request->nombre,
+            "duracion" => $request->duracion,
         ]);
 
         return redirect()->back()->with('success', 'tipo de curso actualizado correctamente');

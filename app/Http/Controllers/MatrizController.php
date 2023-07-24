@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\PlanesFormacion;
 use App\Models\Puesto;
+use App\Models\Sucursal;
 use Illuminate\Http\Request;
 
 class MatrizController extends Controller
@@ -13,9 +14,10 @@ class MatrizController extends Controller
     {
 
         $data = [];
-        $data = PlanesFormacion::getMatrices($request->buscador);
+        $data = PlanesFormacion::getMatrices($request->buscador, $request->sucursal_id);
         $puestos = Puesto::all();
-        return view('cursosplanta.matrices.index', compact('data', 'puestos'));
+        $sucursales = Sucursal::all()->where('estado',1);
+        return view('cursosplanta.matrices.index', compact('data', 'puestos', 'sucursales'));
     }
 
     public function show($id)
