@@ -16,7 +16,7 @@ class TrabajoController extends Controller
         $trabajosUsuarios = DB::table('usuarios_trabajos')->where('trabajo_id', '=', $id)->exists();
 
         if($trabajosUsuarios){
-            return to_route('puestos.index')->with("error", "El trabajo ha sido asigando a un usuario. No se puede eliminar");
+            return to_route('puestos.index')->with("error", "El trabajo ha sido asignado a un usuario. No se puede eliminar");
         }
         if($trabajosCursos){
             return to_route('puestos.index')->with("error", "El trabajo ya tiene cursos. No se puede eliminar");
