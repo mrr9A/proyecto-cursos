@@ -29,9 +29,15 @@
         <div class="bg-primary py-2 px-2 rounded-md mb-4">
             <div class="flex items-center justify-between">
                 <h2 class="font-poppins font-medium text-subtitle uppercase text-white">Historial</h2>
-                <a href="{{route("reporte.general")}}" class="bg-red-500 text-white uppercase font-semi-bold py-1 px-2 rounded-md">Cierre de mes</a>
+                <form id="cierre_mes" action="{{ route('reporte.general') }}" method="POST">
+                    @csrf
+                    <input  type="submit"
+                        class="bg-red-500 text-white uppercase font-semi-bold py-1 px-2 rounded-md cursor-pointer"
+                        value="Cierre de mes" />
+                </form>
             </div>
-            <small class="text-white">Antes de cerrar mes verifique el progreso de los empleados. Una vez cerrado el mes, podra ver los cambios guardados en el mes siguiente</small>
+            <small class="text-white">Antes de cerrar mes verifique el progreso de los empleados. Una vez cerrado el
+                mes, podra ver los cambios guardados en el mes siguiente</small>
 
             <x-tables.table-sucursal :data="$historial" :reporteMesActual="$reporteMesActual" />
         </div>
@@ -157,7 +163,8 @@
                                     <td class="py-3 px-6 text-left w-1/12 ">{{ $usuario->promedioTotal }}</td>
                                     <td class="py-3 px-6 text-left">
                                         <div class="w-full flex justify-end mt-2">
-                                            <a target="_blank" href="{{ route('descargarPDF', $usuario->id_usuario) }}"
+                                            <a target="_blank"
+                                                href="{{ route('descargarPDF', $usuario->id_usuario) }}"
                                                 class="text-white bg-btn-primary hover:bg-btn-primary-light focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-xs px-3 py-1.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Ver
                                                 reporte</a>
                                         </div>
@@ -180,6 +187,7 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         const btnPuestos = $("#btn-puestos");
         const contentModal = $("#content_modal");
@@ -238,5 +246,33 @@
             console.log(respuesta);
             return respuesta
         }
+
+        const btnCierre = $("#cierre_mes")
+
+        btnCierre.addEventListener("submit", (e) => {
+            e.preventDefault();
+
+            swal.fire({
+                title: 'Estas seguro de cerrar mes',
+                text: "una vez cerrado el mes ya no puedes cerrar mes hasta el siguiente y todos los cambios seran guardados",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#252850',
+                confirmButtonText: 'Continuar',
+                cancelButtonText: 'Cancelar',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    btnCierre.submit();
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    swal.fire(
+                        'Cancelado',
+                        'Cancelado correctamente',
+                        'error'
+                    )
+                }
+            })
+        });
     </script>
 </x-app>
