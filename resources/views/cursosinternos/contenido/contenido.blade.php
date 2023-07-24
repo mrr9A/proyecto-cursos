@@ -105,13 +105,3 @@
 
     })
 </script>
-
-@if (session('agregado') == 'Agregado Correctamente')
-<script>
-    Swal.fire(
-        'Contenido Agregado Correctamente!!!',
-        'Para agregar el examen del contenido regrese ala pagina principal',
-        'success'
-    )
-</script>
-@endif

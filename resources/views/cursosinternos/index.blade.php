@@ -1,4 +1,4 @@
-<x-app>
+<x-app title="Información por empleado">
     <div class="flex justify-between">
         <div class="mx-10 justify-end ">
             <x-search.search-input route="avances.index" placeholder="Buscar por Nombre..."></x-search.search-input>

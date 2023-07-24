@@ -1,7 +1,7 @@
 <x-app title="Editar Contenido">
     <div class="w-full bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 items-center text-center">
             <h2 class="text-subtitle font-bold tracking-tight text-gray-900">BIENVENIDO ES MOMENTO DE EDITAR EL CONTENIDO DEL CURSO</h2>
-            <h5 class="text-section-subtitle font-bold tracking-tight text-gray-600"><span>Siga los pasos para crear corectamente el contenido.</span></h5>
+            <h5 class="text-section-subtitle font-bold tracking-tight text-gray-600"><span>Siga los pasos para crear correctamente el contenido.</span></h5>
     </div>
     <form action="{{url('contenidos',[$contenido])}}" method="POST" class="w-full p-4 mt-2 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700" enctype="multipart/form-data">
         @csrf
@@ -31,7 +31,7 @@
                     @error('nombre') <span class="error text-incompleted">{{ $message }}</span> @enderror
                 </div>
                 <div class="w-full px-3">
-                    <label for="descripcion" class="font-bold">Descripcion del Contenido <span class="text-red-500">*</span></label>
+                    <label for="descripcion" class="font-bold">Descripción del Contenido <span class="text-red-500">*</span></label>
                     <textarea type="text" rows="10" name="descripcion" class="bg-gray-50 border border-gray-300 text-gray-900  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="fecha_inicio">{{$contenido->descripcion}}</textarea>
                     @error('descripcion') <span class="error">{{ $message }}</span> @enderror
                 </div>

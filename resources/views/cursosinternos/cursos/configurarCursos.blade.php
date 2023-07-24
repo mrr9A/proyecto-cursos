@@ -718,13 +718,13 @@
                                 class="text-sm text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
                                     <th scope="col" class="text-sm py-3">
-                                        C.SGP
+                                        C. SGP
                                     </th>
                                     <th scope="col" class="text-sm py-3">
                                         Nombre
                                     </th>
                                     <th scope="col" class="text-sm py-3">
-                                        Fecha de termino
+                                        Fecha de terminó
                                     </th>
                                     <th scope="col" class="text-sm py-3">
                                         Opciones
@@ -782,7 +782,7 @@
                                                 <div>
                                                     <label for="fecha_termino"
                                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha
-                                                        termino</label>
+                                                        terminó</label>
                                                     <input type="date" id="fecha_termino" name="fecha_termino"
                                                         value="{{ $userCurso->pivot->fecha_termino ?? '' ? date('Y-m-d', strtotime($userCurso->pivot->fecha_termino ?? '')) : '' }}"
                                                         class="bg-gray-50 border text-center border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -924,7 +924,7 @@
     <script>
         Swal.fire(
             'Actualizado!',
-            'Examen Actualizado Correctamente',
+            'Examen actualizado correctamente',
             'success'
         )
     </script>
@@ -933,7 +933,7 @@
     <script>
         Swal.fire(
             'Actualizado!',
-            'Actualizado Correctamente',
+            'Actualizado correctamente',
             'success'
         )
     </script>
@@ -941,8 +941,8 @@
 @if (session('agregado') == 'Agregado Correctamente')
     <script>
         Swal.fire(
-            'Creado Correctamente!!!!!',
-            'Felicidades ahora Termina de configurar tu curso!!!!',
+            'Creado correctamente!!!!!',
+            'Felicidades ahora termina de configurar tu curso!!!!',
             'success'
         )
     </script>
@@ -950,7 +950,7 @@
 @if (session('agregado') == 'Usuario agregado a curso')
     <script>
         Swal.fire(
-            'Usuarios Agregados Correctamente!!!!!',
+            'Usuarios agregados correctamente!!!!!',
             'Felicidades!!!!',
             'success'
         )
@@ -959,8 +959,8 @@
 @if (session('agregado') == 'Leccion Agregado Correctamente')
     <script>
         Swal.fire(
-            'Leccion Creada Correctamente!!!!!',
-            'Felicidades ahora Puede Agregar Contenido a ella!!!!',
+            'Leccion creada correctamente!!!!!',
+            'Felicidades ahora puedes agregar sus contenidos!!!!',
             'success'
         )
     </script>
@@ -968,7 +968,7 @@
 @if (session('agregado') == 'Contenido Agregado Correctamente')
     <script>
         Swal.fire(
-            'Contenido Creado Correctamente!!!!!',
+            'Contenido creado correctamente!!!!!',
             'Felicidades!!!!',
             'success'
         )
@@ -977,7 +977,7 @@
 @if (session('agregado') == 'Examen Agregado Correctamente')
     <script>
         Swal.fire(
-            'Examen Creado Correctamente!!!!!',
+            'Examen creado correctamente!!!!!',
             'Felicidades!!!!',
             'success'
         )
@@ -986,7 +986,7 @@
 @if (session('actualizado') == 'Actualizado Correctamente')
     <script>
         Swal.fire(
-            'Curso Actualizado Correctamente!!!!!',
+            'Curso actualizado correctamente!!!!!',
             'Felicidades!!!!',
             'success'
         )
@@ -995,7 +995,7 @@
 @if (session('actualizado') == 'Contenido Actualizada Correctamente')
     <script>
         Swal.fire(
-            'Contenido Actualizada Correctamente!!!!!',
+            'Contenido actualizado correctamente!!!!!',
             'Felicidades!!!!',
             'success'
         )
@@ -1004,7 +1004,7 @@
 @if (session('agregado') == 'Leccion Actualizada Correctamente')
     <script>
         Swal.fire(
-            'Leccion Actualizada Correctamente!!!!!',
+            'Leccion actualizado correctamente!!!!!',
             'Felicidades!!!!',
             'success'
         )
@@ -1042,7 +1042,7 @@
     <script>
         Swal.fire(
             'LO SIENTO!',
-            'No puedes eliminar esta Leccion porque pertenece a un contenido',
+            'No puedes eliminar esta leccion porque pertenece a un contenido',
             'warning'
         )
     </script>
@@ -1051,7 +1051,7 @@
     <script>
         Swal.fire(
             'Eliminado!',
-            'Eliminado Correctamente',
+            'Eliminado correctamente',
             'success'
         )
     </script>
