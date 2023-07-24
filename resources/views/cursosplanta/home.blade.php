@@ -254,7 +254,7 @@
 
             swal.fire({
                 title: 'Estas seguro de cerrar mes',
-                text: "una vez cerrado el mes ya no puedes cerrar mes hasta el siguiente y todos los cambios seran guardados",
+                text: "una vez cerrado el mes este boton desaparecera y ya no podras cerrar mes, hasta finales del siguiente mes",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#d33',
@@ -265,6 +265,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     btnCierre.submit();
+                    btnCierre.classList.add("hidden")
                 } else if (result.dismiss === Swal.DismissReason.cancel) {
                     swal.fire(
                         'Cancelado',

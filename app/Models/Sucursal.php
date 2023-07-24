@@ -53,7 +53,10 @@ class Sucursal extends Model
                         'observaciones' => "",
                     ];
                 }
-                DB::table('historial')->insertOrIgnore($registros);
+                try {
+                    DB::table('historial')->insertOrIgnore($registros);
+                } catch (\Illuminate\Database\QueryException $exception) {
+                }
                 continue;
             }
 
