@@ -1,6 +1,6 @@
 <x-app title="matrices">
     <x-messages.alert-message
-        text="Para calificar a un empleado seleccione el curso a calificar y click en el boton de calificar.Para indicar el procentaje que lleva por curso ir al detalle de cada usuario" />
+        text="Para calificar a un empleado, seleccione el curso a calificar y clic en el botón de calificar. Para indicar el porcentaje que lleva por curso ir al detalle de cada usuario" />
 
     <form autocomplete="on" class="flex  w-auto items-center justify-between border-b-2 border-gray-200 mb-2 pb-2" action="{{ route('matrices.index') }}">
         <div class="">

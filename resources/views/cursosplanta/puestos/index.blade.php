@@ -8,10 +8,10 @@
                 classLabel="text-base" required />
 
             <div class="relative flex flex-col font-poppins gap-21 text-base">
-                <label class="mb-2 font-semi-bold">Seleccionar plan de informacion</label>
+                <label class="mb-2 font-semi-bold">Seleccionar plan de formación</label>
                 <select name="plan_id" required
                     class="py-1.5 px-2 leading-tight text-gray-700 border-2 rounded-lg border-input cursor-pointer uppercase">
-                    <option value="" class="text-gray-400">plan de formacion</option>
+                    <option value="" class="text-gray-400">plan de formación</option>
                     @foreach ($planesFormacion as $plan)
                         <option value="{{ $plan->id_plan_formacion }}">
                             {{ $plan->tema }} {{ $plan->area }}
@@ -36,8 +36,7 @@
                         clip-rule="evenodd"></path>
                 </svg>
 
-                <span class="">si no crea trabajos para el puesto en automatico se creara un trabajo con el mismo
-                    nombre del puesto</span>
+                <span class="">Si no crea trabajos para el puesto en automático se creará un trabajo con el mismo nombre del puesto</span>
             </div>
 
             <div class="flex">
@@ -70,8 +69,8 @@
         <h2 class="text-subtitle">Lista de puestos</h2>
         <table class="min-w-full border-2">
             <thead class="uppercase bg-th-table text-th-table-text text-left">
-                <th class="px-6 py-2">Codigo</th>
-                <th class="px-6 py-2">Plan de formacion</th>
+                <th class="px-6 py-2">CÓDIGO</th>
+                <th class="px-6 py-2">Plan de FORMACIÓN</th>
                 <th class="px-6 py-2">puesto</th>
                 <th class="px-6 py-2">trabajos</th>
                 <th class="px-6 py-2">opciones</th>

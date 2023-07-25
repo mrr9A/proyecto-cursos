@@ -4,7 +4,7 @@
         <div class="flex items-center justify-between ">
             <div>
                 <h2 class="text-gray-600 font-semibold">Lista de usuarios</h2>
-                <span class="text-xs">usuarios activos y inactivos</span>
+                <span class="text-xs">usuarios activos e inactivos</span>
             </div>
             <div class="flex items-center justify-between">
                 <x-search.search-input route="usuarios.index" />
@@ -142,7 +142,7 @@
                                     :parametroDeRoute="$usuario->id_usuario" title="Esta seguro de eliminar al usuario"
                                     message="El usuario {{ $usuario->nombre }}
                                         {{ $usuario->segundo_nombre }} {{ $usuario->apellido_paterno }}
-                                        {{ $usuario->apellido_materno }} sera eliminado" />
+                                        {{ $usuario->apellido_materno }} será eliminado" />
                             </td>
                         </tr>
                     @endforeach

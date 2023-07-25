@@ -127,9 +127,9 @@
             </div>
             <div class="w-full md:w-1/2 px-3">
                 <div class="form-group">
-                    <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Seleccione la categoria<span class="text-red-600">*</span></label>
+                    <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Seleccione la categoría<span class="text-red-600">*</span></label>
                     <select id="countries" wire:model="categoria_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        <option selected>Seleccione la categoria</option>
+                        <option selected>Seleccione la categoría</option>
                         @foreach ($categoria as $category)
                         <option value="{{$category->id_categoria}}">{{$category->nombre}}</option>
                         @endforeach
@@ -155,7 +155,7 @@
             <br>
             <table class="w-full  text-left text-gray-500 dark:text-gray-400">
                 <tr class="border-b border-gray-200 dark:border-gray-700">
-                    <td class=" font-bold px-6 py-4">Codigo del curso</td>
+                    <td class=" font-bold px-6 py-4">Código del curso</td>
                     <td class=" font-bold px-6 py-4"><strong>{{$codigo}}</strong></td>
                 </tr>
                 <tr class="border-b border-gray-200 dark:border-gray-700">
@@ -179,7 +179,7 @@
                     @endforeach
                 </tr>
                 <tr class="border-b border-gray-200 dark:border-gray-700">
-                    <td class=" font-bold px-6 py-4">Categoria del curso</td>
+                    <td class=" font-bold px-6 py-4">Categoría del curso</td>
                     @foreach ($categoria as $category)
                     @if($category->id_categoria == $categoria_id)
                     <td class=" font-bold px-6 py-4"><strong>{{$category->nombre}}</strong></td>
