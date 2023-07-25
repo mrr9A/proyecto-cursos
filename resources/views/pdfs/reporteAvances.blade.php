@@ -213,8 +213,11 @@
             <p>Progreso total: <span>{{$usuario['progresoTotal']}}%</span></p>
             @endforeach
         </div>
-
-
+        @foreach ($datosUsuarios as $usuario)
+        <div>
+            <h1 class="title">Empleado: {{ $usuario['nombreUser'] }} {{ $usuario['segundo_Nombre'] }} {{ $usuario['apellido_paterno'] }} {{ $usuario['apellido_materno'] }}</h1>
+        </div>
+        @endforeach
         <div class="container-check">
             <h4 class="title-section">Cursos</h4>
             @foreach ($datosUsuarios as $usuario)
