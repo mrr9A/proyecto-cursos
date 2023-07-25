@@ -29,12 +29,6 @@
         <div class="bg-primary py-2 px-2 rounded-md mb-4">
             <div class="flex items-center justify-between">
                 <h2 class="font-poppins font-medium text-subtitle uppercase text-white">Historial</h2>
-                <form id="cierre_mes" class="cierre_mes" action="{{ route('reporte.general') }}" method="POST">
-                    @csrf
-                    <input  type="submit"
-                        class="bg-red-500 text-white uppercase font-semi-bold py-1 px-2 rounded-md cursor-pointer"
-                        value="Cierre de mes" />
-                </form>
             </div>
             <small class="text-white">El cierre de mes es automático, así que asegúrese de realizar los cambios correspondientes antes de las 11:59 PM de cada mes</small>
 
