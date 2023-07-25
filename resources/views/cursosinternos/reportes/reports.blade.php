@@ -1,5 +1,6 @@
 <x-app title="Generar reportes por Cursos">
-
+<x-messages.alert-message
+        text="Nota: Para poder filtrar es obligatorio seleccionar una sucursal o un curso para poder visualizar e importarlo a un Excel, de igual manera podrá filtrar seleccionando alguna sucursal y curso específico." />
     <div class="flex">
         <form action="{{ route('reportesinternos.index') }}" method="GET">
             @method('GET')
