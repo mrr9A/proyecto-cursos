@@ -1,4 +1,4 @@
-<nav class="sidebar close bg-nav max-w-[260px] h-[100vh] relative">
+<nav class="sidebar close bg-nav max-w-[260px] h-[100vh] relative flex flex-col justify-between">
     <ul class="nav-links">
         <li class="nav-item">
             <button class="" id="menu-button">
@@ -40,7 +40,7 @@
 
 
         <li class="nav-item">
-            <a href="{{ route('puestos.index') }}" class="{{ request()->routeIs('puestos.*')  ? 'item-active' : '' }}">
+            <a href="{{ route('puestos.index') }}" class="{{ request()->routeIs('puestos.*') ? 'item-active' : '' }}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
                     <path fill="currentColor"
                         d="M4 21q-.825 0-1.413-.588T2 19V8q0-.825.588-1.413T4 6h4V4q0-.825.588-1.413T10 2h4q.825 0 1.413.588T16 4v2h4q.825 0 1.413.588T22 8v11q0 .825-.588 1.413T20 21H4Zm6-15h4V4h-4v2Z" />
@@ -50,7 +50,8 @@
         </li>
 
         <li class="nav-item">
-            <div class="flex items-center justify-between  {{ request()->routeIs('cursos.*')  || request()->routeIs('planes.index') ? 'item-active' : '' }}">
+            <div
+                class="flex items-center justify-between  {{ request()->routeIs('cursos.*') || request()->routeIs('planes.index') ? 'item-active' : '' }}">
                 <a href="{{ route('cursos.home') }}"
                     class="{{ request()->routeIs('cursos.*') ? 'item-active' : '' }} flex gap-2">
                     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 512 512">
@@ -105,14 +106,14 @@
                 <span class="hidden">Reportes</span>
             </a>
         </li>
-        {{-- <li class="nav-item">
-            <a href="{{ route('configuracion.index') }}"
-                class="{{ request()->routeIs('configuracion.*') ? 'item-active' : '' }}  ">
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path fill="currentColor" d="m23.265 24.381l.9-.894c4.164.136 4.228-.01 4.411-.438l1.144-2.785l.085-.264l-.093-.231c-.049-.122-.2-.486-2.8-2.965V15.5c3-2.89 2.936-3.038 2.765-3.461l-1.139-2.814c-.171-.422-.236-.587-4.37-.474l-.9-.93a20.166 20.166 0 0 0-.141-4.106l-.116-.263l-2.974-1.3c-.438-.2-.592-.272-3.4 2.786l-1.262-.019c-2.891-3.086-3.028-3.03-3.461-2.855L9.149 3.182c-.433.175-.586.237-.418 4.437l-.893.89c-4.162-.136-4.226.012-4.407.438l-1.146 2.786l-.09.267l.094.232c.049.12.194.48 2.8 2.962v1.3c-3 2.89-2.935 3.038-2.763 3.462l1.138 2.817c.174.431.236.584 4.369.476l.9.935a20.243 20.243 0 0 0 .137 4.1l.116.265l2.993 1.308c.435.182.586.247 3.386-2.8l1.262.016c2.895 3.09 3.043 3.03 3.466 2.859l2.759-1.115c.436-.173.588-.234.413-4.436Zm-11.858-6.524a4.957 4.957 0 1 1 6.488 2.824a5.014 5.014 0 0 1-6.488-2.824Z"/></svg>
-                <span class="hidden">Configuracion</span>
-            </a>
-        </li> --}}
     </ul>
+    <li class="nav-item" >
+        <a 
+            class="{{ request()->routeIs('configuracion.*') ? 'item-active' : '' }}  ">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 1024 1024"><path fill="white" d="M1023.84 572.544c.096-21.056-3.217-100.496-5.745-123.216c-29.12-260.752-240.752-450-503.184-450c-273.344 0-494.815 210.624-509.84 489.904c-.32 6.096-2.56 49.344-2.72 75.088l-.08 14.32C.958 584.56.158 590.672.158 596.976v214.656c0 46.88 38.128 85.008 85.008 85.008h86.288c46.88 0 85.023-38.128 85.023-85.008v-214.64c0-46.88-38.16-85.008-85.024-85.008H85.15a85.65 85.65 0 0 0-17.184 1.744c.48-10.383.912-18.576 1.025-21.056C82.159 247.888 276.127 63.328 514.91 63.328c229.28 0 414.128 165.344 439.568 393.12c1.072 9.504 2.448 33.664 3.552 57.92c-6.193-1.44-12.577-2.385-19.2-2.385h-85.28c-46.88 0-85.008 38.128-85.008 85.008v213.664c0 32.368 18.4 60.256 45.09 74.592l-205.44 80.656v-5.216c0-17.664-14.337-32-32-32h-96c-17.665 0-32 14.336-32 32v32c0 17.664 14.335 32 32 32h96c.272 0 .512-.08.784-.08l57.36-.224L963.89 895.007c4.32-1.792 7.984-4.464 10.992-7.664c28.848-13.616 48.991-42.736 48.991-76.688V596.99c0-5.216-.64-10.288-1.552-15.233c.88-2.944 1.504-6 1.52-9.216zm-938.689 3.44h86.29c11.6 0 21.023 9.408 21.023 21.008v214.656c0 11.6-9.44 21.008-21.025 21.008H85.152c-11.6 0-21.007-9.409-21.007-21.008V596.992c.015-11.6 9.423-21.008 21.007-21.008zm747.377 21.008c0-11.6 9.41-21.008 21.009-21.008h85.28c11.6 0 21.023 9.408 21.023 21.008v213.664c0 11.6-9.44 21.008-21.024 21.008h-85.28c-11.6 0-21.008-9.408-21.008-21.008V596.992z"/></svg>
+            <span class="hidden">Manual</span>
+        </a>
+    </li>
 </nav>
 
 <script>
@@ -125,7 +126,7 @@
         })
     })
 
-    
+
     const menuButton = $('#menu-button')
     const allSpanItems = $$("span.hidden")
     const contentMenu = $("ul")
