@@ -95,6 +95,7 @@ class Sucursal extends Model
                         'objetivo' => $objetivo,
                         'real' => $porcentajeAprobadoPromedio,
                         'fecha' => $fechaActual,
+                        // 'fecha' => $fechaActual->subMonth(),
                         'tipo' => $nombreCurso,
                         'empleados' => $empleados,
                         'bajas' => $bajas,
