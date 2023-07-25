@@ -10,9 +10,17 @@ class Kernel extends ConsoleKernel
     /**
      * Define the application's command schedule.
      */
+
+     // agregando la ruta de la tarea automatica
+     protected $commands = [
+        \App\Console\Commands\CierreMes::class
+     ];
+
     protected function schedule(Schedule $schedule): void
     {
         // $schedule->command('inspire')->hourly();
+        // la cadena dentro de cron, indica la hora en la que ejecutara la tarea
+        $schedule->command('app:cierre-mes')->cron('59 23 L * *');
     }
 
     /**
