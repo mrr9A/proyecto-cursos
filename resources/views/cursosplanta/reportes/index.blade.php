@@ -82,10 +82,10 @@
                                     En progreso
                                 @endif
                                 @if ($usuario->estado === 0)
-                                    Reprovado
+                                    Reprobado
                                 @endif
                                 @if ($usuario->estado == 1 && $usuario->valor == 100)
-                                    Aprovado
+                                    Aprobado
                                 @endif
                             </td>
                         </tr>

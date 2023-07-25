@@ -68,10 +68,7 @@ Route::middleware('auth.admin')->group(function () {
     Route::resource("cursosplanta/calificaciones", CalificacionController::class, ["names" => "calificaciones"]);
     Route::resource("cursosplanta/reportes", ReporteController::class, ["names" => "reportes"]);
     Route::resource('categorias', CategoriaController::class, ["names" => "categorias"]);
-    Route::resource('configuracion', ConfiguracionController::class, ["names" => "configuracion"]);
-    Route::post('reporte-general', [ConfiguracionController::class, 'cierreMes'])->name('reporte.general');
-
-
+    // Route::resource('configuracion', ConfiguracionController::class, ["names" => "configuracion"]);
     Route::fallback(function () {
         return redirect('home');
     });
