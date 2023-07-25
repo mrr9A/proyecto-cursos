@@ -26,13 +26,18 @@
             </div>
         </div>
 
-        <div class="bg-primary py-2 px-2 rounded-md mb-4">
-            <div class="flex items-center justify-between">
-                <h2 class="font-poppins font-medium text-subtitle uppercase text-white">Historial</h2>
+        <div class="bg-primary py-2 px-2 rounded-md mb-4 hover:bg-[#01326a]">
+            <div id="acc-historial-header" class="cursor-pointer ">
+                <div class="flex items-center justify-between">
+                    <h2 class="font-poppins font-medium text-subtitle uppercase text-white">Historial</h2>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24"><path fill="white" d="m12 15l-4.243-4.242l1.415-1.414L12 12.172l2.828-2.828l1.415 1.414L12 15.001Z"/></svg>
+                </div>
+                <small class="text-white">El cierre de mes es automático, así que asegúrese de realizar los cambios
+                    correspondientes antes de las 11:59 PM de cada mes</small>
             </div>
-            <small class="text-white">El cierre de mes es automático, así que asegúrese de realizar los cambios correspondientes antes de las 11:59 PM de cada mes</small>
-
-            <x-tables.table-sucursal :data="$historial" :reporteMesActual="$reporteMesActual" />
+            <div id="acc-historial-body" class="hidden">
+                <x-tables.table-sucursal :data="$historial" :reporteMesActual="$reporteMesActual" />
+            </div>
         </div>
 
         <div>
@@ -240,33 +245,11 @@
             return respuesta
         }
 
-        const btnCierre = $("#cierre_mes")
+        const accHistorialHeader = $("#acc-historial-header");
+        const accHistorialBody = $("#acc-historial-body");
 
-        btnCierre.addEventListener("submit", (e) => {
-            e.preventDefault();
-
-            swal.fire({
-                title: 'Estas seguro de cerrar mes',
-                text: "una vez cerrado el mes este boton desaparecera y ya no podras cerrar mes, hasta finales del siguiente mes",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#252850',
-                confirmButtonText: 'Continuar',
-                cancelButtonText: 'Cancelar',
-                reverseButtons: true
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    btnCierre.submit();
-                    btnCierre.classList.add("hidden")
-                } else if (result.dismiss === Swal.DismissReason.cancel) {
-                    swal.fire(
-                        'Cancelado',
-                        'Cancelado correctamente',
-                        'error'
-                    )
-                }
-            })
-        });
+        accHistorialHeader.addEventListener('click', (e) => {
+            accHistorialBody.classList.toggle('hidden')
+        })
     </script>
 </x-app>
