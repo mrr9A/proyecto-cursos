@@ -1,11 +1,6 @@
 <div class="grid grid-cols-[repeat(auto-fit,minmax(40%,1fr))] gap-2 mb-4 h-auto">
     <div>
         <h2 class="text-gray-300 font-semi-bold text-section-subtitle">Progreso mes anterior</h2>
-        @if (count($data) < 1)
-            <div class="text-white mb-3 rounded-md overflow-hidden h-56">
-                <h2 class="font-semi-bold text-subtitle">Sin registros</h2>
-                <div>
-        @endif
         @foreach ($data as $sucursal => $datos)
             <div class="bg-white mb-3 rounded-md overflow-hidden h-56">
                 <h2 class="bg-blue-800 text-white font-medium uppercase pl-2">{{ $sucursal }}</h2>

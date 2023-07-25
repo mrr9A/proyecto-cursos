@@ -38,7 +38,7 @@
                         correspondientes antes de las 11:59 PM de cada mes</small>
                 </div>
                 <div id="acc-historial-body" >
-                    <x-tables.table-sucursal :data="$historial" :reporteMesActual="$reporteMesActual" />
+                    <x-historial.historial :data="$historial" :reporteMesActual2="$reporteMesActual"  />
                 </div>
             </div>
         </div>
