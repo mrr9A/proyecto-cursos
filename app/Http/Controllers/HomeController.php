@@ -29,7 +29,8 @@ class HomeController extends Controller
         })
             ->sortBy(function ($registros, $sucursal) {
                 return $sucursal; // Ordenar por el nombre de la sucursal
-            });;
+            });
+
 
 
         // Registros de la tabla historial a mostrar
