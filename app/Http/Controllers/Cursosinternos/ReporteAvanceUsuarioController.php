@@ -114,6 +114,10 @@ class ReporteAvanceUsuarioController extends Controller
                 'pendientes' => $pendientes,
                 'encurso' => $encurso,
                 'progresoTotal' => $progresoTotalUsuario,
+                'nombreUser' => $usuarios->nombre,
+                'segundo_Nombre' => $usuarios->segundo_nombre,
+                'apellido_paterno' => $usuarios->apellido_paterno,
+                'apellido_materno' => $usuarios->apellido_materno,
             ];
         // dd($datosUsuarios);
 
@@ -121,7 +125,7 @@ class ReporteAvanceUsuarioController extends Controller
         $pdf->setOptions(['defaultFont' => 'poppins']);
         $pdf->setPaper('letter', 'landscape');
 
-        return $pdf->stream("certificado.pdf");
+        return $pdf->stream("avances.pdf");
     }
 
     private function getExamenUsuario($examen, $id_usuario) //funcion para obtener los datos del examen por contenido
