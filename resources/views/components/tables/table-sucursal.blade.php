@@ -41,15 +41,17 @@
                         <div>
                             <h2 class="pl-2 font-semi-bold">{{ $fecha }}</h2>
                             <div class="">
-                                <div class="flex gap-2 justify-between py-1 px-2 bg-blue-200 font-medium uppercase">
+                                <div class="grid grid-cols-3 gap-2 py-1 px-2 bg-blue-200 font-medium uppercase">
                                     <span>tipos</span>
-                                    <span>progreso</span>
+                                    <span class="text-center">obj</span>
+                                    <span class="text-center">progreso</span>
                                 </div>
                                 @foreach ($fechas as $dato)
                                     <div
-                                        class="flex gap-2 justify-between py-1 px-2 bg-gray-100 hover:bg-gray-300 hover:cursor-pointer">
+                                        class="grid grid-cols-3 gap-2 py-1 px-2 bg-gray-100 hover:bg-gray-300 hover:cursor-pointer">
                                         <span>{{ $dato['nombre_curso'] }}</span>
-                                        <span>{{ $dato['porcentaje_aprobado_promedio'] }} %</span>
+                                        <span class="text-center">{{ $dato['porcentaje_aprobado_promedio'] + 16}}</span>
+                                        <span class="text-center">{{ $dato['porcentaje_aprobado_promedio'] }} %</span>
                                     </div>
                                 @endforeach
                             </div>

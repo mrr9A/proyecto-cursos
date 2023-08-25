@@ -102,7 +102,7 @@
                 <th scope="col" class="px-6 py-2 border-r-2">Personal</th>
                 <th scope="col" class="px-6 py-2 border-r-2">Puesto</th>
                 <th scope="col" class="px-6 py-2 border-r-2">Trabajos</th>
-                <th scope="col" class="w-full px-6 py-2">plan de formacion</th>
+                <th scope="col" class="w-full px-6 py-2">plan de formación</th>
                 <th><i class='bx bx-cog'></i></th>
             </tr>
         </thead>

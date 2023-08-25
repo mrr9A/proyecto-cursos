@@ -36,8 +36,7 @@
                         value="Cierre de mes" />
                 </form>
             </div>
-            <small class="text-white">Antes de cerrar mes verifique el progreso de los empleados. Una vez cerrado el
-                mes, podra ver los cambios guardados en el mes siguiente</small>
+            <small class="text-white">Antes de cerrar mes, verifique el progreso de los empleados. Una vez cerrado el mes, podrá ver los cambios guardados en el mes siguiente</small>
 
             <x-tables.table-sucursal :data="$historial" :reporteMesActual="$reporteMesActual" />
         </div>

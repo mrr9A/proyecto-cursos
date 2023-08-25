@@ -10,7 +10,7 @@
             <table class="min-w-full border-2">
                 <thead class="border-b uppercase bg-th-table text-th-table-text text-left">
                     <tr>
-                        <th class="px-6 py-2">Codigo</th>
+                        <th class="px-6 py-2">CÓDIGO</th>
                         <th class="px-6 py-2">Sucursal</th>
                         <th class="px-6 py-2">Dirección</th>
                         <th class="px-6 py-2">Estatus</th>
